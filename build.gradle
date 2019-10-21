@@ -1,0 +1,41 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+group = 'woowacrew'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws'
+    runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.springframework:spring-jdbc:+'
+    runtimeOnly 'commons-dbcp:commons-dbcp:1.4'
+    runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+
+    /*restAssured*/
+    testImplementation 'io.rest-assured:rest-assured:4.0.0'
+    testImplementation 'io.rest-assured:json-path:4.0.0'
+    testImplementation 'io.rest-assured:json-schema-validator:4.0.0'
+    testImplementation 'io.rest-assured:xml-path:4.0.0'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit'
+    }
+    testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+}
