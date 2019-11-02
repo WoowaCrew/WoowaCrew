@@ -1,9 +1,7 @@
 var i = 0;
-var myBar = document.getElementById("myBar")
 var date = Math.ceil(new Date().getMonth() / 12  * 100);
 
-myBar.style.width = date + "%"
-myBar.innerText = date + "%"
+move();
 
 function move() {
     if (i == 0) {

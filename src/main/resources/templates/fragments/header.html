@@ -12,12 +12,17 @@
         <li class="header-li"><a class="header-a" href="https://forms.gle/NorR1JHiQRhUo9hJ9">포수타</a></li>
         <li class="header-li"><a class="header-a" href="http://search-git.s3-website.ap-northeast-2.amazonaws.com/">Commit Search</a></li>
         <!--            <li class="header-li header-login"><a class="header-a" href="#login">로그인</a></li>-->
-        <li class="header-li header-user">
-            <a class="header-a" href="#login">홍길동</a>
-        </li>
-        <li class="header-li header-user">
-            <div id="myProgress">
-                <div id="myBar"></div>
+        <li class="header-li header-user" style="margin-right: 10px">
+            <div class="header-user-name">
+                </a>
+                <a href="#login">
+                    <span style="color: white"><i class="fa fa-bars"></i></span>  홍길동
+                </a>
+            </div>
+            <div id="myProgressBar">
+                <div id="myProgress" onclick="move()" style="float: right">
+                    <div id="myBar"></div>
+                </div>
             </div>
         </li>
     </ul>
