@@ -1,0 +1,52 @@
+
+.header-ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.header-li .header-a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.header-li .header-a:hover:not(.active) {
+    background-color: #111;
+}
+
+.header-active {
+    background-color: #4CAF50;
+}
+
+.header-user {
+    float: right;
+}
+
+/*게이지 바*/
+#myProgress {
+    width: 150px;
+    background-color: #ddd;
+    margin-top: 6%;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+#myBar {
+    height: 30px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 30px;
+    color: ghostwhite;
+
+    -moz-border-radius-topleft : 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+}

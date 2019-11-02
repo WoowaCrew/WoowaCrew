@@ -17,43 +17,9 @@ ul {
     height: 93%;
 }
 
-/* NAV BAR */
-#nav_bar {
-    float: right;
-}
-
-#nav_bar li {
-    display: inline-block;
-    padding: 8px;
-}
-
-#nav_bar #sign_in {
-    background: #4887ef;
-    margin-right: 25px;
-    padding: 7px 15px;
-    border-radius: 3px;
-    font-weight: bold;
-}
-
-.nav-links {
-    color: #404040;
-}
-
 a {
     text-decoration: none;
     color: inherit;
-}
-
-li.nav-links a:hover {
-    text-decoration: underline;
-}
-
-#sign_in:hover {
-    box-shadow: 1px 1px 5px #999;
-}
-
-#sign_in {
-    color: #fff;
 }
 
 /* GOOGLE AREA */
@@ -64,31 +30,6 @@ li.nav-links a:hover {
     clear: both;
     padding-top: 112px;
     padding-bottom: 20px;
-}
-
-.form {
-    text-align: center;
-}
-
-#form-search {
-    width: 450px;
-    line-height: 32px;
-    padding: 20px 10px;
-}
-
-.form #form-search {
-    padding: 0 8px;
-}
-
-/*#form-search:hover {
-  border-color: #e4e4e4;
-  padding-top: 0;
-}*/
-
-.buttons {
-    text-align: center;
-    padding-top: 30px;
-    margin-bottom: 300px;
 }
 
 /* FOOTER */

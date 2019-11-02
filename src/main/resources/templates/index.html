@@ -1,25 +1,21 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Google Homepage</title>
+    <title>WoowaCrew</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/header/indexHeader.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 </head>
 
 <body>
-<header>
-    <nav>
-        <ul id="nav_bar">
-            <li class="nav-links"><a href="https://dgh7qtsxun9z8.cloudfront.net/">테코브러리</a></li>
-            <li class="nav-links"><a href="https://forms.gle/NorR1JHiQRhUo9hJ9">포수타</a></li>
-            <li class="nav-links"><a href="http://search-git.s3-website.ap-northeast-2.amazonaws.com/">CommitSearch</a></li>
-            <li id="sign_in"><a href="#">Sign In</a></li>
-        </ul>
-    </nav>
-</header>
+<!--  HEADER  -->
+<th:block th:replace="fragments/header :: headerFragment"/>
 
 <!-- Main IMG -->
 <div class="woowacrew">
-    <a href="#" id="woowacrew_logo"><img src="/image/logo.png" alt="우아한크루"/></a>
+<!--    <a href="#" id="woowacrew_logo"><img src="/image/logo.png" alt="우아한크루"/></a>-->
+    <a href="#" id="woowacrew_logo"><img src="" alt="우아한크루"/></a>
 </div>
 
 <!-- FOOTER -->
@@ -35,5 +31,8 @@
         <li><a href="#">Settings</a></li>
     </ul>
 </footer>
+
+<!--  SCRIPT  -->
+<script src="/js/header/indexHeader.js"></script>
 </body>
 </html>
