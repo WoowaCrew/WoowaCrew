@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="headerFragment">
-    <div>
     <ul class="header-ul">
         <li class="header-li">
-            <a class="header-active header-a" href="/">
+            <a class="header-active header-a" onclick="toggleNav()">
                 <span style="color: white"><i class="fa fa-bars"></i></span>
             </a>
+
+            <!--  Side Nav -->
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+                <a href="#"><div class="sidenav-font">공지사항</div></a>
+                <a href="https://dgh7qtsxun9z8.cloudfront.net/"><div class="sidenav-font">테코브러리</div></a>
+                <a href="https://forms.gle/NorR1JHiQRhUo9hJ9"><div class="sidenav-font">포비의 수다 타임</div></a>
+                <a href="http://search-git.s3-website.ap-northeast-2.amazonaws.com/"><div class="sidenav-font">커밋 검색기</div></a>
+            </div>
         </li>
-        <li class="header-li"><a class="header-a" href="https://dgh7qtsxun9z8.cloudfront.net/">테코브러리</a></li>
-        <li class="header-li"><a class="header-a" href="https://forms.gle/NorR1JHiQRhUo9hJ9">포수타</a></li>
-        <li class="header-li"><a class="header-a" href="http://search-git.s3-website.ap-northeast-2.amazonaws.com/">Commit Search</a></li>
-        <!--            <li class="header-li header-login"><a class="header-a" href="#login">로그인</a></li>-->
+        <li class="header-li"><a class="header-user-name" href="/" style="color: white">홈</a></li>
+        <li class="header-li"><a class="header-user-name" href="/" style="color: white">공지사항</a></li>
+        <li class="dropdown">
+            <button class="dropbtn">서비스<i class="fa fa-caret-down"></i></button>
+
+            <div class="dropdown-content">
+                <a href="https://dgh7qtsxun9z8.cloudfront.net/">테코브러리</a>
+                <a href="https://forms.gle/NorR1JHiQRhUo9hJ9">포비의 수다 타임</a>
+                <a href="http://search-git.s3-website.ap-northeast-2.amazonaws.com/">커밋 검색기</a>
+            </div>
+        </li>
         <li class="header-li header-user" style="margin-right: 10px">
             <div class="header-user-name">
                 </a>
@@ -26,6 +41,5 @@
             </div>
         </li>
     </ul>
-    </div>
 </header>
 </html>
