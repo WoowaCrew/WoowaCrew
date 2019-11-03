@@ -22,7 +22,7 @@
 }
 
 .header-active {
-    background-color: #4CAF50;
+    background-color: rgb(155,82, 60)
 }
 
 .header-user {
@@ -54,7 +54,7 @@
 
 #myBar {
     height: 22px;
-    background-color: #4CAF50;
+    background-color: rgb(120, 159, 138);
     text-align: center;
     line-height: 22px;
     color: ghostwhite;
