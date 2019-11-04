@@ -18,7 +18,7 @@
 
 /* Add a red background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: rgb(93,138,168)
+    background-color: rgb(237, 056, 067);
 }
 
 /* Dropdown content (hidden by default) */
