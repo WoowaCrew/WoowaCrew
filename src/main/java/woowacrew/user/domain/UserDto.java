@@ -1,11 +1,16 @@
-package woowacrew.user;
+package woowacrew.user.domain;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UserVo {
+public class UserDto {
     @SerializedName("id")
     private String userId;
     private String url;
+
+    public UserDto(String userId, String url) {
+        this.userId = userId;
+        this.url = url;
+    }
 
     public String getUserId() {
         return userId;

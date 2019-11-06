@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import woowacrew.user.UserVo;
+import woowacrew.user.domain.UserDto;
 
 @Component
 public class GithubOauth {
@@ -35,7 +35,7 @@ public class GithubOauth {
         return accessToken.getAccessToken();
     }
 
-    public UserVo getUserInfo(String accessToken) {
+    public UserDto getUserInfo(String accessToken) {
         WebClient webClient = WebClient.builder()
                 .baseUrl(githubConfig.getUserInfoUri())
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -47,6 +47,6 @@ public class GithubOauth {
                 .bodyToMono(String.class)
                 .block();
 
-        return new Gson().fromJson(body, UserVo.class);
+        return new Gson().fromJson(body, UserDto.class);
     }
 }
