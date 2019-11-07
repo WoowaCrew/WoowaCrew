@@ -3,25 +3,48 @@ package woowacrew.oauth.github;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import woowacrew.oauth.OauthConfig;
 import woowacrew.utils.YamlPropertySourceFactory;
 
 @Configuration
 @PropertySource(value = "classpath:github.yml", factory = YamlPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "github.client")
-public class GithubConfig {
+public class GithubConfig implements OauthConfig {
     private String clientId;
     private String clientSecret;
     private String userAuthorizationUri;
     private String accessTokenUri;
     private String userInfoUri;
 
+    @Override
     public String getClientId() {
         return clientId;
     }
 
+    @Override
     public String getClientSecret() {
         return clientSecret;
     }
+
+    @Override
+    public String getUserAuthorizationUri() {
+        return userAuthorizationUri;
+    }
+
+    @Override
+    public String getAccessTokenUri() {
+        return accessTokenUri;
+    }
+
+    @Override
+    public String getUserInfoUri() {
+        return userInfoUri;
+    }
+
+    public void setUserAuthorizationUri(String userAuthorizationUri) {
+        this.userAuthorizationUri = userAuthorizationUri;
+    }
+
 
     public void setClientId(String clientId) {
         this.clientId = clientId;
@@ -31,25 +54,10 @@ public class GithubConfig {
         this.clientSecret = clientSecret;
     }
 
-    public String getUserAuthorizationUri() {
-        return userAuthorizationUri;
-    }
-
-    public void setUserAuthorizationUri(String userAuthorizationUri) {
-        this.userAuthorizationUri = userAuthorizationUri;
-    }
-
-    public String getAccessTokenUri() {
-        return accessTokenUri;
-    }
-
     public void setAccessTokenUri(String accessTokenUri) {
         this.accessTokenUri = accessTokenUri;
     }
 
-    public String getUserInfoUri() {
-        return userInfoUri;
-    }
 
     public void setUserInfoUri(String userInfoUri) {
         this.userInfoUri = userInfoUri;
