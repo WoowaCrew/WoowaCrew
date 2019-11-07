@@ -2,12 +2,9 @@ package woowacrew.oauth.github;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import woowacrew.oauth.OauthConfig;
-import woowacrew.utils.YamlPropertySourceFactory;
 
 @Configuration
-@PropertySource(value = "classpath:github.yml", factory = YamlPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "github.client")
 public class GithubConfig implements OauthConfig {
     private String clientId;
