@@ -8,9 +8,13 @@ import woowacrew.oauth.Oauth;
 import woowacrew.user.domain.UserDto;
 
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 public class LoginController {
+    public static final String USER = "user";
+    public static final String ACCESS_TOKEN = "accessToken";
+    
     private final Oauth oauth;
 
     public LoginController(Oauth oauth) {
@@ -18,7 +22,11 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public RedirectView login() {
+    public RedirectView login(HttpSession session) {
+        if (Objects.nonNull(session.getAttribute(USER))) {
+            return new RedirectView("/");
+        }
+
         return new RedirectView(oauth.getUserAuthorizationUri());
     }
 
@@ -27,8 +35,8 @@ public class LoginController {
         String accessToken = oauth.getAccessToken(code);
         UserDto user = oauth.getUserInfo(accessToken);
 
-        session.setAttribute("accessToken", accessToken);
-        session.setAttribute("user", user);
+        session.setAttribute(ACCESS_TOKEN, accessToken);
+        session.setAttribute(USER, user);
         return new RedirectView("/");
     }
 }
