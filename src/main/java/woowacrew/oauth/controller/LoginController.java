@@ -5,24 +5,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.oauth.Oauth;
-import woowacrew.oauth.OauthConfig;
 import woowacrew.user.domain.UserDto;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-    private final OauthConfig oauthConfig;
     private final Oauth oauth;
 
-    public LoginController(OauthConfig oauthConfig, Oauth oauth) {
-        this.oauthConfig = oauthConfig;
+    public LoginController(Oauth oauth) {
         this.oauth = oauth;
     }
 
     @GetMapping("/login")
     public RedirectView login() {
-        return new RedirectView(oauthConfig.getUserAuthorizationUri() + "?client_id=" + oauthConfig.getClientId());
+        return new RedirectView(oauth.getUserAuthorizationUri());
     }
 
     @GetMapping("/oauth/github")
