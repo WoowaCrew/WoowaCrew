@@ -21,20 +21,13 @@ function age() {
     var ageDiv = document.getElementById("userAge");
     var age = ageDiv.dataset.age;
 
-    if (age < 25) {
+    if (age <= 25) {
         ageDiv.innerText = "🐣";
-    } else if (25 <= age && age < 30) {
+    } else if (25 < age && age < 29) {
         ageDiv.innerText = "🐥";
-    } else if (age >= 30) {
-        ageDiv.innerText = "🐲";
-    }
-}
-
-function toggleNav() {
-    var sidenavDiv = document.getElementById("mySidenav");
-    if (sidenavDiv.style.width === "250px") {
-        sidenavDiv.style.width = "0px";
+    } else if (29 == age) {
+        ageDiv.innerText = "🐔";
     } else {
-        sidenavDiv.style.width = "250px";
+        ageDiv.innerText = "🐲";
     }
 }
