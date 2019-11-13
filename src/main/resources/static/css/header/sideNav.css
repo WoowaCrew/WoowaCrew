@@ -1,0 +1,43 @@
+/*  헤더 사이드 메뉴 */
+#mySidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+}
+
+#mySidenav .sidenav-contents {
+    min-width: 250px;
+}
+
+#mySidenav .sidenav-contents, .sidenav-close-btn {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.5s;
+}
+
+#mySidenav a.sidenav-contents:hover, a.sidenav-close-btn:hover {
+    color: #f1f1f1;
+}
+
+#mySidenav .sidenav-close-btn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 700px) {
+    #mySidenav {padding-top: 15px;}
+    #mySidenav .sidenav-contents, .sidenav-close-btn {font-size: 18px;}
+}
