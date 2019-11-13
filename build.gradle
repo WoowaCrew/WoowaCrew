@@ -34,6 +34,8 @@ dependencies {
     testImplementation 'io.rest-assured:json-path:4.0.0'
     testImplementation 'io.rest-assured:json-schema-validator:4.0.0'
     testImplementation 'io.rest-assured:xml-path:4.0.0'
+    
+    testImplementation 'org.mockito:mockito-junit-jupiter'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit'
