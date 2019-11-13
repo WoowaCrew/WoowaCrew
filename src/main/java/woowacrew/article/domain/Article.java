@@ -25,7 +25,7 @@ public class Article {
     @LastModifiedDate
     private Date lastModifiedDate;
 
-    public Article(String title, String content, User user, Date createdDate) {
+    public Article(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.user = user;
