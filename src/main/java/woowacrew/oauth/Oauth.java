@@ -6,4 +6,6 @@ public interface Oauth {
     String getAccessToken(String accessCode);
 
     UserDto getUserInfo(String accessToken);
+
+    String getUserAuthorizationUri();
 }

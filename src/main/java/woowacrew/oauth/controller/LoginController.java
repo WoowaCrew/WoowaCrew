@@ -5,24 +5,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.oauth.Oauth;
-import woowacrew.oauth.OauthConfig;
 import woowacrew.user.domain.UserDto;
 
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 public class LoginController {
-    private final OauthConfig oauthConfig;
+    public static final String USER = "user";
+    public static final String ACCESS_TOKEN = "accessToken";
+    
     private final Oauth oauth;
 
-    public LoginController(OauthConfig oauthConfig, Oauth oauth) {
-        this.oauthConfig = oauthConfig;
+    public LoginController(Oauth oauth) {
         this.oauth = oauth;
     }
 
     @GetMapping("/login")
-    public RedirectView login() {
-        return new RedirectView(oauthConfig.getUserAuthorizationUri() + "?client_id=" + oauthConfig.getClientId());
+    public RedirectView login(HttpSession session) {
+        if (Objects.nonNull(session.getAttribute(USER))) {
+            return new RedirectView("/");
+        }
+
+        return new RedirectView(oauth.getUserAuthorizationUri());
     }
 
     @GetMapping("/oauth/github")
@@ -30,8 +35,8 @@ public class LoginController {
         String accessToken = oauth.getAccessToken(code);
         UserDto user = oauth.getUserInfo(accessToken);
 
-        session.setAttribute("accessToken", accessToken);
-        session.setAttribute("user", user);
+        session.setAttribute(ACCESS_TOKEN, accessToken);
+        session.setAttribute(USER, user);
         return new RedirectView("/");
     }
 }

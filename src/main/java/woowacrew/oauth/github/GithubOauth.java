@@ -12,6 +12,10 @@ import woowacrew.user.domain.UserDto;
 
 @Component
 public class GithubOauth implements Oauth {
+    private static final String CLIENT_ID = "client_id";
+    private static final String CLIENT_SECRET = "client_secret";
+    private static final String CODE = "code";
+
     private final OauthConfig oauthConfig;
 
     public GithubOauth(OauthConfig oauthConfig) {
@@ -27,9 +31,9 @@ public class GithubOauth implements Oauth {
                 .build();
 
         String body = webClient.post()
-                .body(BodyInserters.fromFormData("client_id", oauthConfig.getClientId())
-                        .with("client_secret", oauthConfig.getClientSecret())
-                        .with("code", accessCode))
+                .body(BodyInserters.fromFormData(CLIENT_ID, oauthConfig.getClientId())
+                        .with(CLIENT_SECRET, oauthConfig.getClientSecret())
+                        .with(CODE, accessCode))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -52,5 +56,10 @@ public class GithubOauth implements Oauth {
                 .block();
 
         return new Gson().fromJson(body, UserDto.class);
+    }
+
+    @Override
+    public String getUserAuthorizationUri() {
+        return oauthConfig.getUserAuthorizationUri() + "?" + CLIENT_ID + "=" + oauthConfig.getClientId();
     }
 }
