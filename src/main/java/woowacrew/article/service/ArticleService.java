@@ -1,25 +1,25 @@
 package woowacrew.article.service;
 
 import org.springframework.stereotype.Service;
-import woowacrew.article.domain.*;
-import woowacrew.user.domain.User;
+import org.springframework.transaction.annotation.Transactional;
+import woowacrew.article.domain.Article;
+import woowacrew.article.domain.ArticleConverter;
+import woowacrew.article.domain.ArticleDto;
+import woowacrew.article.domain.ArticleResponse;
 import woowacrew.user.domain.UserDto;
 import woowacrew.user.service.UserInternalService;
 
 @Service
 public class ArticleService {
-    private ArticleRepository articleRepository;
+    private ArticleInternalService articleInternalService;
     private UserInternalService userInternalService;
 
-    public ArticleService(ArticleRepository articleRepository, UserInternalService userInternalService) {
-        this.articleRepository = articleRepository;
-        this.userInternalService = userInternalService;
+    public ArticleService(ArticleInternalService articleInternalService) {
+        this.articleInternalService = articleInternalService;
     }
 
     public ArticleResponse save(ArticleDto articleDto, UserDto userDto) {
-        User user = userInternalService.findByUserId(userDto.getUserId());
-        Article article = ArticleConverter.articleDtoToArticle(articleDto, user);
-        articleRepository.save(article);
+        Article article = articleInternalService.save(articleDto, userDto);
         return ArticleConverter.articleToArticleResponseDto(article);
     }
 }
