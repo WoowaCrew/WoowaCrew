@@ -16,10 +16,14 @@ div#search .search-form {
     transition: 0.5s;
 }
 
-.search-icon {
+.search-button {
     transition: 0.5s;
     font-size: 25px;
     color: #383838;
+    cursor: pointer;
+    outline: transparent;
+    border: transparent;
+    background-color: transparent;
 }
 
 div#search input.search-form:focus{
@@ -28,8 +32,13 @@ div#search input.search-form:focus{
     border-color: ghostwhite;
 }
 
-div#search input.search-form:focus + .search-icon {
+div#search input.search-form:focus + .search-button {
     font-size: 27px;
+    transition: 0.5s;
+    color: ghostwhite;
+}
+
+div#search button.search-button:hover {
     transition: 0.5s;
     color: ghostwhite;
 }
