@@ -1,0 +1,40 @@
+/*  HEADER  */
+.header-bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+.header-bar li {
+    float: left;
+    font-size: 18px;
+}
+
+.header-bar li .header-contents, .header-active {
+    display: block;
+    color: grey;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.header-bar .header-login {
+    float: right;
+}
+
+.header-bar li a.header-contents:hover, a.header-active:hover{
+    transition: 0.3s;
+    color: white;
+    font-size: 19px;
+    text-shadow: 1px 1px #111;
+}
+
+.header-bar li a.header-active:hover {
+    color: rgb(237, 056, 067);
+}
+

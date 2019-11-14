@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    background: black;
 }
 
 header {
@@ -10,45 +11,4 @@ header {
     top: 0;
     width: 100%;
     z-index: 1;
-}
-
-ul {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* WoowaCrew Service */
-div.woowaCrewService-row {
-    float: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-a.woowaCrewService {
-    float: left;
-
-    display: inline-block;
-}
-
-div.woowaCrewService-content{
-    margin: 10px;
-    width: 210px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    text-align: center;
-}
-
-div.woowaCrewService-header {
-    color: white;
-    padding: 10px;
-    font-size: 40px;
-}
-
-div.woowaCrewService-name {
-    padding: 10px;
 }

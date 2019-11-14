@@ -4,93 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
-
     <link href="/css/index.css" rel="stylesheet">
-    <link href="/css/header/indexHeader.css" rel="stylesheet">
-    <link href="/css/header/dropdown.css" rel="stylesheet">
-    <link href="/css/header/slideNav.css" rel="stylesheet">
-
+    <link href="/css/header/header.css" rel="stylesheet">
+    <link href="/css/header/sideNav.css" rel="stylesheet">
+    <link href="/css/userCard.css" rel="stylesheet">
+    <link href="/css/mainButton.css" rel="stylesheet">
     <title>WoowaCrew</title>
 </head>
 
 <body>
-<!--  HEADER  -->
-<div style="height: 70px">
-    <th:block th:replace="fragments/header :: headerFragment"/>
-</div>
-
-<!--  SERVICE LIST  -->
-<div class="woowaCrewService-row">
-    <a class="woowaCrewService" href="https://dgh7qtsxun9z8.cloudfront.net/">
-        <div class="woowaCrewService-content">
-            <div class="woowaCrewService-header" style="background-color: rgb(237, 056, 067)">
-                <h1>1</h1>
-            </div>
-            <div class="woowaCrewService-name">
-                <p>테코브러리</p>
-            </div>
-        </div>
-    </a>
-
-    <a class="woowaCrewService" href="https://forms.gle/NorR1JHiQRhUo9hJ9/">
-        <div class="woowaCrewService-content">
-            <div class="woowaCrewService-header" style="background-color: rgb(247, 193, 000)">
-                <h1>2</h1>
-            </div>
-            <div class="woowaCrewService-name">
-                <p>포비의 수다타임</p>
-            </div>
-        </div>
-    </a>
-
-    <a class="woowaCrewService" href="http://search-git.s3-website.ap-northeast-2.amazonaws.com/">
-        <div class="woowaCrewService-content">
-            <div class="woowaCrewService-header" style="background-color: rgb(000, 186, 201)">
-                <h1>3</h1>
-            </div>
-            <div class="woowaCrewService-name">
-                <p>커밋 검색기</p>
-            </div>
-        </div>
-    </a>
-
-    <a class="woowaCrewService" href="https://www.youtube.com/channel/UC-mOekGSesms0agFntnQang">
-        <div class="woowaCrewService-content">
-            <div class="woowaCrewService-header" style="background-color: rgb(140, 124, 091)">
-                <h1>4</h1>
-            </div>
-            <div class="woowaCrewService-name">
-                <p>우아한Tech</p>
-            </div>
-        </div>
-    </a>
-
-    <a class="woowaCrewService" href="https://techcourse.woowahan.com/">
-        <div class="woowaCrewService-content">
-            <div class="woowaCrewService-header" style="background-color: rgb(178, 209, 053)">
-                <h1>5</h1>
-            </div>
-            <div class="woowaCrewService-name">
-                <p>우아한테크코스</p>
-            </div>
-        </div>
-    </a>
-
-    <a class="woowaCrewService" href="#">
-        <div class="woowaCrewService-content">
-            <div class="woowaCrewService-header" style="background-color: rgb(124, 089, 119)">
-                <h1>6</h1>
-            </div>
-            <div class="woowaCrewService-name">
-                <p>기타</p>
-            </div>
-        </div>
-    </a>
-</div>
+<th:block th:replace="fragments/header :: headerFragment"/>
+<th:block th:replace="fragments/userCard :: userCard"/>
+<th:block th:replace="fragments/mainButton :: mainButton"/>
 
 <!--  SCRIPT  -->
 <script src="/js/header/indexHeader.js"></script>
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
 </body>
 </html>

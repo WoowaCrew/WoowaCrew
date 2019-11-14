@@ -1,0 +1,54 @@
+/*  메인 페이지 메인 버튼 8개  */
+#main-buttons {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+}
+
+#main-buttons a {
+    text-decoration:none;
+    color:#fff;
+    width:150px;
+    display:inline-block;
+    line-height:40px;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    background-color: black;
+    border:5px solid #fff;
+    box-shadow:1px 1px 0, 2px 2px 0, 3px 3px 0, 4px 4px 0,5px 5px 0;
+    position: relative;
+    margin: 2% auto auto 2%;
+}
+
+#main-buttons a:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width:100%;
+    z-index: -1;
+    background-color: #fff;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+
+#main-buttons a:hover{
+    background-color: transparent;
+}
+#main-buttons a:hover:after{
+    background-color: darkred;
+}
+
+#main-buttons a:active{
+    top:5px;
+    left:5px;
+    box-shadow:0 0 0 0;
+}
