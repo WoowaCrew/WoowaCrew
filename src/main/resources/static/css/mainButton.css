@@ -1,5 +1,6 @@
 /*  메인 페이지 메인 버튼 8개  */
 #main-buttons {
+    font-family: 'Wallpoet', cursive;
     position: absolute;
     top: 75%;
     left: 50%;
