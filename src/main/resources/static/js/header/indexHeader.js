@@ -31,3 +31,8 @@ function age() {
         ageDiv.innerText = "🐲";
     }
 }
+
+function search() {
+    var searchContent = document.getElementsByClassName("search-form")[0].value;
+    location.href="https://www.google.com/search?q=" + searchContent;
+}

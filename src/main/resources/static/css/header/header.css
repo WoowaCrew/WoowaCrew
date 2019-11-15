@@ -30,7 +30,6 @@
 .header-bar li a.header-contents:hover, a.header-active:hover{
     transition: 0.3s;
     color: white;
-    font-size: 19px;
     text-shadow: 1px 1px #111;
 }
 
