@@ -1,7 +1,6 @@
 package woowacrew.article.domain;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import woowacrew.common.domain.TimeEntity;
 import woowacrew.user.domain.User;
 
 import javax.persistence.*;
@@ -9,7 +8,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-public class Article {
+public class Article extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,11 +18,6 @@ public class Article {
     @JoinColumn(name = "author")
     @ManyToOne
     private User user;
-    @CreatedDate
-    @Column(updatable = false)
-    private Date createdDate;
-    @LastModifiedDate
-    private Date lastModifiedDate;
 
     public Article(String title, String content, User user) {
         this.title = title;
