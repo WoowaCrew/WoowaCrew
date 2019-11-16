@@ -18,6 +18,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/login", "/css/**", "/image/**", "/js/**", "/oauth/**");
+                .excludePathPatterns("/", "/login", "/css/**", "/image/**", "/js/**", "/oauth/**", "/search?**");
     }
 }
