@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="searchFragment">
-    <div id="search">
-        <input class="search-form" placeholder="Google 검색하기.."/>
-        <button class="search-button" onclick="search()"><i class="fa fa-search"></i></button>
-    </div>
+<div id="search" th:fragment="searchFragment">
+    <form action="/search">
+        <input name="content" class="search-form" placeholder="Google 검색하기.."/>
+        <button type="submit" class="search-button" onclick="search()"><i class="fa fa-search"></i></button>
+    </form>
 </div>
 </html>
