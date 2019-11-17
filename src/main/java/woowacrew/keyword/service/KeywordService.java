@@ -8,6 +8,7 @@ import woowacrew.keyword.domain.Keyword;
 import woowacrew.keyword.domain.KeywordRepository;
 import woowacrew.keyword.exception.NotFoundKeyword;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +40,9 @@ public class KeywordService {
         Optional<Keyword> maybeKeyword = keywordRepository.findById(id);
 
         return maybeKeyword.orElseThrow(NotFoundKeyword::new);
+    }
+
+    public List<Keyword> getKeywordRank() {
+        return keywordRepository.findTop10ByOrderByViewsDesc();
     }
 }

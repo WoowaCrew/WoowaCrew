@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import woowacrew.keyword.domain.Keyword;
 import woowacrew.keyword.service.KeywordService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 @Controller
 public class SearchController {
@@ -27,9 +30,19 @@ public class SearchController {
 
     @GetMapping("/search")
     public String search(@RequestParam String content) throws UnsupportedEncodingException {
-        logger.debug("Google search : {}", content);
+        long keywordId = keywordService.save(content);
+        logger.debug("Google search : {}, Keyword Id : {}", content, keywordId);
 
-        keywordService.save(content);
         return REDIRECT_GOOGLE_SEARCH_URL + URLEncoder.encode(content, UTF_8);
+    }
+
+    @GetMapping("/search/rank")
+    public ModelAndView searchRank() {
+        ModelAndView modelAndView = new ModelAndView("keywordRank");
+
+        List<Keyword> keywordRank = keywordService.getKeywordRank();
+        modelAndView.addObject("keywordRank", keywordRank);
+
+        return modelAndView;
     }
 }
