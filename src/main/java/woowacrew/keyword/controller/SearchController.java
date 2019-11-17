@@ -40,7 +40,7 @@ public class SearchController {
     public ModelAndView searchRank() {
         ModelAndView modelAndView = new ModelAndView("keywordRank");
 
-        List<Keyword> keywordRank = keywordService.getKeywordRank();
+        List<Keyword> keywordRank = keywordService.keywordRank();
         modelAndView.addObject("keywordRank", keywordRank);
 
         return modelAndView;

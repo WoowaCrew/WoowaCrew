@@ -42,7 +42,7 @@ public class KeywordService {
         return maybeKeyword.orElseThrow(NotFoundKeyword::new);
     }
 
-    public List<Keyword> getKeywordRank() {
+    public List<Keyword> keywordRank() {
         return keywordRepository.findTop10ByOrderByViewsDesc();
     }
 }
