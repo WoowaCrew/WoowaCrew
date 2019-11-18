@@ -57,12 +57,9 @@ class ArticleControllerTest extends CommonTestController {
                         .with("content", "content"))
                 .exchange()
                 .expectStatus()
-                .is2xxSuccessful()
-                .expectBody()
-                .consumeWith(response -> {
-                    String body = new String(response.getResponseBody());
-                    assertThat(body.contains("title")).isTrue();
-                    assertThat(body.contains("content")).isTrue();
-                });
+                .is3xxRedirection()
+                .expectHeader()
+                .value("Location", Matchers.containsString("/articles"));
+
     }
 }

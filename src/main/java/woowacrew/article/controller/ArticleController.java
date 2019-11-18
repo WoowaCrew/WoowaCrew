@@ -1,10 +1,9 @@
 package woowacrew.article.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.article.domain.ArticleDto;
 import woowacrew.article.domain.ArticleResponse;
 import woowacrew.article.service.ArticleService;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class ArticleController {
+    public static final String ARTICLES_URL = "/articles/";
     private ArticleService articleService;
 
     public ArticleController(ArticleService articleService) {
@@ -26,9 +26,9 @@ public class ArticleController {
     }
 
     @PostMapping("/articles")
-    public ResponseEntity<ArticleResponse> createArticle(HttpSession session, ArticleDto articleDto) {
+    public RedirectView createArticle(HttpSession session, ArticleDto articleDto) {
         UserDto user = (UserDto) session.getAttribute("user");
         ArticleResponse articleResponse = articleService.save(articleDto, user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(articleResponse);
+        return new RedirectView(ARTICLES_URL + articleResponse.getId());
     }
 }
