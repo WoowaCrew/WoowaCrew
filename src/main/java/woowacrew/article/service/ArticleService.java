@@ -1,7 +1,6 @@
 package woowacrew.article.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleConverter;
 import woowacrew.article.domain.ArticleDto;
@@ -12,7 +11,6 @@ import woowacrew.user.service.UserInternalService;
 @Service
 public class ArticleService {
     private ArticleInternalService articleInternalService;
-    private UserInternalService userInternalService;
 
     public ArticleService(ArticleInternalService articleInternalService) {
         this.articleInternalService = articleInternalService;
