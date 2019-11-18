@@ -19,6 +19,9 @@ public class Article extends TimeEntity {
     @ManyToOne
     private User user;
 
+    private Article() {
+    }
+
     public Article(String title, String content, User user) {
         this.title = title;
         this.content = content;
