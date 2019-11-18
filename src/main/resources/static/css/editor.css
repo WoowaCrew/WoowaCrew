@@ -1,0 +1,27 @@
+.te-preview {
+    background-color: white;
+}
+
+#article-edit {
+    margin-top: 50px;
+}
+
+#title {
+    width: 100%;
+    height: 30px;
+    font-size: 30px;
+    border: none;
+}
+
+.edit-bar {
+    margin-top: 3px;
+}
+
+.edit-bar > li {
+    float: right;
+    width: 50px;
+}
+
+.edit-bar > li > input {
+    width: 100%;
+}
