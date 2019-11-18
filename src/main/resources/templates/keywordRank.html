@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Wallpoet&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/header/header.css" rel="stylesheet">
+    <link href="/css/header/sideNav.css" rel="stylesheet">
+    <link href="/css/search/keywordRank.css" rel="stylesheet">
+    <title>WoowaCrew</title>
+</head>
+
+<body>
+<th:block th:replace="fragments/header :: headerFragment"/>
+<table id="keyword-rank">
+    <tr class="keyword-rank-title">
+        <p><td colspan = "3"><h2>실시간 검색어</h2></td></p>
+    </tr>
+    <tr class="keyword" th:each="keyword, iStat : ${keywordRank}">
+        <td class="keyword-number" th:text="${iStat.index + 1}"></td>
+        <td class="keyword-content" name="content" th:text="${keyword.content}"></td>
+        <td class="keyword-views">
+            <i class="fa fa-chevron-up"></i>
+            <span th:text="${keyword.views}"></span>
+        </td>
+    </tr>
+</table>
+<!--  SCRIPT  -->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/js/keywordRank.js"></script>
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+</body>
+</html>
