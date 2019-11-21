@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Wallpoet&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/header/header.css" rel="stylesheet">
+    <link href="/css/header/sideNav.css" rel="stylesheet">
+    <link href="/css/userCard.css" rel="stylesheet">
+    <link href="/css/mainButton.css" rel="stylesheet">
+    <link href="/css/search.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
+    <title>WoowaCrew</title>
+</head>
+
+<body>
+<th:block th:replace="fragments/header :: headerFragment"/>
+<div class="article-list">
+    <div id="article-header" th:each="article : ${articles}">
+        <div class="title" th:text="${article.title}"></div>
+        <div class="user">
+            <div class="userInfo" th:text="${article.userDto.userId}"></div>
+        </div>
+    </div>
+</div>
+</body>
+<!--  SCRIPT  -->
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+</html>
