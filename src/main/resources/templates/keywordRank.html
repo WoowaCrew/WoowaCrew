@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/header :: headerFragment"/>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
 <table id="keyword-rank">
     <tr class="keyword-rank-title">
         <p><td colspan = "3"><h2>실시간 검색어</h2></td></p>
@@ -31,14 +31,5 @@
 <!--  SCRIPT  -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/keywordRank.js"></script>
-<script>
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-    }
-
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>
 </body>
 </html>
