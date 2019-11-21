@@ -10,14 +10,29 @@ const editor = new tui.Editor({
   height: 'calc(100vh - 150px)'
 });
 
+const url = window.location.origin
+
 document.getElementById('save-button').addEventListener('click', function (e) {
-  if (document.getElementById('title').value.trim() === "") {
+  const title = document.getElementById('title').value;
+  const content = document.getElementById('article-contents').value;
+
+  if (title.trim() === "") {
     alert("제목을 입력해주세요")
     return
   }
-  if (document.getElementById('article-contents').value.trim() === "") {
+  if (content.trim() === "") {
     alert("본문을 입력해주세요")
     return
   }
-  document.getElementById('article-edit').submit();
+
+  const formData = new FormData()
+  formData.append('title', title)
+  formData.append('content', content)
+
+  fetch(url + "/articles", {
+    method: 'POST',
+    body: formData
+  }).then(function (response) {
+    window.location.href = response.headers.get('Location')
+  }).catch(error => alert('오류가 발생했습니다.'));
 })
