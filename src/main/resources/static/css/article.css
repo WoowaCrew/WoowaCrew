@@ -1,0 +1,23 @@
+.article-info {
+    margin-top: 50px;
+    color: grey;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.title {
+    font-size: 40px;
+}
+
+.content {
+    margin-top: 20px;
+    background: white;
+}
+
+.tui-editor-contents {
+    font-size: 20px;
+}
+
+.tui-editor-contents pre {
+    background-color: whitesmoke;
+}

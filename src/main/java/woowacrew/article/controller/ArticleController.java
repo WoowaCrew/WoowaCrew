@@ -2,7 +2,9 @@ package woowacrew.article.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import woowacrew.article.domain.ArticleDto;
 import woowacrew.article.domain.ArticleResponse;
@@ -24,6 +26,13 @@ public class ArticleController {
     @GetMapping("/article/new")
     public String articleForm() {
         return "article-edit";
+    }
+
+    @GetMapping("/articles/{articleId}")
+    public String showArticle(@PathVariable Long articleId, Model model) {
+        ArticleResponse articleResponse = articleService.findById(articleId);
+        model.addAttribute("article", articleResponse);
+        return "article";
     }
 
     @PostMapping("/articles")

@@ -16,15 +16,20 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
-    <link href="/css/editor.css" rel="stylesheet">
+    <link href="/css/article.css" rel="stylesheet">
     <title>WoowaCrew</title>
 </head>
 
 <body>
 <th:block th:replace="fragments/header :: headerFragment"/>
-
+<div class="article-info">
+    <div class="title" th:text="${article.title}"></div>
+    <input type="hidden" id="content" th:value="${article.content}"/>
+    <div id="viewerSection" class="content"></div>
+</div>
 </body>
 <!--  SCRIPT  -->
+<script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
 <script>
   function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -34,6 +39,13 @@
     document.getElementById("mySidenav").style.width = "0";
   }
 </script>
-<script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
-<script src="/js/article-edit.js"></script>
+<script>
+  const initValue = document.getElementById('content').value
+  const viewer = tui.Editor.factory({
+    el: document.querySelector('#viewerSection'),
+    viewer: true,
+    height: '100%',
+    initialValue: initValue
+  })
+</script>
 </html>
