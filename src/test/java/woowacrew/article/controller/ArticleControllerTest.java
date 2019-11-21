@@ -5,17 +5,14 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.domain.ArticleResponse;
 import woowacrew.common.controller.CommonTestController;
-import woowacrew.utils.configuration.WebMvcConfig;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(WebMvcConfig.class)
 class ArticleControllerTest extends CommonTestController {
     @Autowired
     private WebTestClient webTestClient;
@@ -44,12 +41,12 @@ class ArticleControllerTest extends CommonTestController {
                 .expectBody()
                 .consumeWith(response -> {
                     String body = response.toString();
-                    assertThat(body.contains("게시글 작성")).isTrue();
+                    assertThat(body.contains("/js/article-edit.js")).isTrue();
                 });
     }
 
     @Test
-    void 게시글_작성_후_상_페이지로_리다이렉트_한다() {
+    void 게시글_작성_후_해당_201응답이_온다() {
         String cookie = getLoginCookie();
 
         webTestClient.post()
