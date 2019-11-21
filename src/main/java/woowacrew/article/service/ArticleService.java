@@ -6,7 +6,6 @@ import woowacrew.article.domain.ArticleConverter;
 import woowacrew.article.domain.ArticleDto;
 import woowacrew.article.domain.ArticleResponse;
 import woowacrew.user.domain.UserDto;
-import woowacrew.user.service.UserInternalService;
 
 @Service
 public class ArticleService {
@@ -22,6 +21,6 @@ public class ArticleService {
     }
 
     public ArticleResponse findById(Long articleId) {
-        return null;
+        return ArticleConverter.articleToArticleResponseDto(articleInternalService.findById(articleId));
     }
 }
