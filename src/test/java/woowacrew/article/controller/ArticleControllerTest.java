@@ -72,4 +72,35 @@ class ArticleControllerTest extends CommonTestController {
                 });
 
     }
+
+    @Test
+    void 존재하는_게시글_번호일시_페이지_테스트() {
+        String cookie = getLoginCookie();
+        //게시글 작
+        webTestClient.post()
+                .uri("/articles")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", "title")
+                        .with("content", "content"))
+                .exchange()
+                .expectBody()
+                .consumeWith(body ->
+                {
+                    Gson gson = new Gson();
+                    ArticleResponse articleResponse = gson.fromJson(new String(body.getResponseBody()), ArticleResponse.class);
+                    Long articleId = articleResponse.getId();
+
+                    webTestClient.get()
+                            .uri("/articles/" + articleId)
+                            .header("Cookie", cookie)
+                            .exchange()
+                            .expectStatus()
+                            .is2xxSuccessful()
+                            .expectBody()
+                            .consumeWith(viewBody -> {
+                                String actualBody = new String(viewBody.getResponseBody());
+                                assertThat(actualBody.contains("<body>")).isTrue();
+                            });
+                });
+    }
 }
