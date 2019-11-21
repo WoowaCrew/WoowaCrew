@@ -1,0 +1,66 @@
+.article-info {
+    margin-top: 50px;
+    color: grey;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+}
+
+#article-header {
+    border-bottom: 1px dotted;
+    padding-bottom: 10px;
+    height: 40px;
+}
+
+.title {
+    font-size: 40px;
+    float: left;
+}
+
+.user {
+    float: right;
+    height: 40px;
+    position: relative;
+    width: 70px;
+}
+
+.userInfo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.content {
+    margin-top: 20px;
+    background: black;
+}
+
+.tui-editor-contents {
+    font-size: 20px;
+}
+
+.tui-editor-contents pre {
+    background-color: whitesmoke;
+}
+
+.tui-editor-contents p,
+.tui-editor-contents h1,
+.tui-editor-contents h2,
+.tui-editor-contents h3,
+.tui-editor-contents h4,
+.tui-editor-contents h5,
+.tui-editor-contents h6,
+.tui-editor-contents blockquote,
+.tui-editor-contents code,
+.tui-editor-contents table,
+.tui-editor-contents table th,
+.tui-editor-contents ul,
+.tui-editor-contents menu,
+.tui-editor-contents ol,
+.tui-editor-contents dir,
+.tui-editor-contents a,
+.tui-editor-contents a:hover {
+    color: #A0A0A0;
+}
+
+ㅌㅈ

@@ -16,8 +16,8 @@ public class TestLoginController {
 
     @PostMapping("/test/login")
     public String testLogin(HttpSession session) {
-        User user = new User("test", "test");
-        userRepository.save(user);
+        User testUser = new User("test", "test");
+        User user = userRepository.save(testUser);
         session.setAttribute("user", UserConverter.userToUserDto(user));
         return "index";
     }

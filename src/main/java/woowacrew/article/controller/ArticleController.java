@@ -1,15 +1,18 @@
 package woowacrew.article.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.article.domain.ArticleDto;
 import woowacrew.article.domain.ArticleResponse;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.domain.UserDto;
 
 import javax.servlet.http.HttpSession;
+import java.net.URI;
 
 @Controller
 public class ArticleController {
@@ -25,10 +28,17 @@ public class ArticleController {
         return "article-edit";
     }
 
+    @GetMapping("/articles/{articleId}")
+    public String showArticle(@PathVariable Long articleId, Model model) {
+        ArticleResponse articleResponse = articleService.findById(articleId);
+        model.addAttribute("article", articleResponse);
+        return "article";
+    }
+
     @PostMapping("/articles")
-    public RedirectView createArticle(HttpSession session, ArticleDto articleDto) {
+    public ResponseEntity<ArticleResponse> createArticle(HttpSession session, ArticleDto articleDto) {
         UserDto user = (UserDto) session.getAttribute("user");
         ArticleResponse articleResponse = articleService.save(articleDto, user);
-        return new RedirectView(ARTICLES_URL + articleResponse.getId());
+        return ResponseEntity.created(URI.create(ARTICLES_URL + articleResponse.getId())).body(articleResponse);
     }
 }
