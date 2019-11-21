@@ -1,5 +1,6 @@
 package woowacrew.article.controller;
 
+import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import woowacrew.article.domain.ArticleResponse;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.utils.configuration.WebMvcConfig;
 
@@ -47,7 +49,7 @@ class ArticleControllerTest extends CommonTestController {
     }
 
     @Test
-    void 게시글_작성_후_인덱스_페이지로_리다이렉트_한다() {
+    void 게시글_작성_후_상_페이지로_리다이렉트_한다() {
         String cookie = getLoginCookie();
 
         webTestClient.post()
@@ -57,9 +59,17 @@ class ArticleControllerTest extends CommonTestController {
                         .with("content", "content"))
                 .exchange()
                 .expectStatus()
-                .is3xxRedirection()
+                .is2xxSuccessful()
                 .expectHeader()
-                .value("Location", Matchers.containsString("/articles"));
+                .value("Location", Matchers.containsString("/articles"))
+                .expectBody()
+                .consumeWith(body ->
+                {
+                    Gson gson = new Gson();
+                    ArticleResponse articleResponse = gson.fromJson(new String(body.getResponseBody()), ArticleResponse.class);
+                    assertThat(articleResponse.getTitle()).isEqualTo("title");
+                    assertThat(articleResponse.getContent()).isEqualTo("content");
+                });
 
     }
 }
