@@ -39,6 +39,6 @@ public class ArticleInternalService {
     }
 
     public List<Article> findAll() {
-        return null;
+        return articleRepository.findAllByOrderByIdDesc();
     }
 }

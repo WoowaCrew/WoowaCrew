@@ -71,7 +71,7 @@ class ArticleInternalServiceTest {
     @Test
     void 게시글_전체_조회_테스트() {
         List<Article> articles = createArticles(10);
-        when(articleRepository.findAllByOrderByCreatedDateDesc()).thenReturn(articles);
+        when(articleRepository.findAllByOrderByIdDesc()).thenReturn(articles);
 
         List<Article> actualArticles = articleInternalService.findAll();
 
