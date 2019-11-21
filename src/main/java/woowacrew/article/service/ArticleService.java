@@ -20,4 +20,8 @@ public class ArticleService {
         Article article = articleInternalService.save(articleDto, userDto);
         return ArticleConverter.articleToArticleResponseDto(article);
     }
+
+    public ArticleResponse findById(Long articleId) {
+        return null;
+    }
 }
