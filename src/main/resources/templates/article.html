@@ -23,10 +23,15 @@
 <body>
 <th:block th:replace="fragments/header :: headerFragment"/>
 <div class="article-info">
-    <div class="title" th:text="${article.title}"></div>
-    <input type="hidden" id="content" th:value="${article.content}"/>
+    <div id="article-header">
+        <div class="title" th:text="${article.title}"></div>
+        <div class="user">
+            <div class="userInfo" th:text="${article.userDto.userId}"></div>
+        </div>
+    </div>
     <div id="viewerSection" class="content"></div>
 </div>
+<input type="hidden" id="content" th:value="${article.content}"/>
 </body>
 <!--  SCRIPT  -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
@@ -39,13 +44,5 @@
     document.getElementById("mySidenav").style.width = "0";
   }
 </script>
-<script>
-  const initValue = document.getElementById('content').value
-  const viewer = tui.Editor.factory({
-    el: document.querySelector('#viewerSection'),
-    viewer: true,
-    height: '100%',
-    initialValue: initValue
-  })
-</script>
+<script src="/js/article.js"></script>
 </html>
