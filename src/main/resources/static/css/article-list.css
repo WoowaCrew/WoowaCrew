@@ -1,0 +1,28 @@
+#article-list {
+    max-width: 700px;
+    margin-top: 50px;
+    color: #A0A0A0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-article-info, .article-info {
+    height: 30px;
+    font-size: 20px;
+    border: 1px solid;
+}
+
+.main-title, .title {
+    float: left;
+    width: 50%;
+    padding-left: 5px;
+}
+
+.main-userInfo, .userInfo {
+    float: left;
+    width: 18%;
+}
+
+.main-created-date, .created-date {
+    float: left;
+}
