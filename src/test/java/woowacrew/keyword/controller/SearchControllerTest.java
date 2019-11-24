@@ -20,7 +20,7 @@ class SearchControllerTest {
 
     @Test
     void 검색어를_정상적으로_저장한다() {
-        webTestClient.get()
+        webTestClient.post()
                 .uri("/search?content=test")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()

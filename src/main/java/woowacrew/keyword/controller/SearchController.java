@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import woowacrew.keyword.domain.Keyword;
+import woowacrew.keyword.domain.KeywordDto;
 import woowacrew.keyword.service.KeywordService;
 
 import java.io.UnsupportedEncodingException;
@@ -27,12 +29,12 @@ public class SearchController {
         this.keywordService = keywordService;
     }
 
-    @GetMapping("/search")
-    public String search(String content) throws UnsupportedEncodingException {
-        long keywordId = keywordService.save(content);
-        logger.debug("Google search : {}, Keyword Id : {}", content, keywordId);
+    @PostMapping("/search")
+    public String search(KeywordDto keywordDto) throws UnsupportedEncodingException {
+        long keywordId = keywordService.save(keywordDto.getContent());
+        logger.debug("Google search : {}, Keyword Id : {}", keywordDto.getContent(), keywordId);
 
-        return REDIRECT_GOOGLE_SEARCH_URL + URLEncoder.encode(content, UTF_8);
+        return REDIRECT_GOOGLE_SEARCH_URL + URLEncoder.encode(keywordDto.getContent(), UTF_8);
     }
 
     @GetMapping("/search/rank")
