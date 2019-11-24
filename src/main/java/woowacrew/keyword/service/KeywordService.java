@@ -26,7 +26,7 @@ public class KeywordService {
     public long save(String content) {
         Keyword keyword = createKeyword(content);
 
-        keyword.addViews();
+        keyword.increaseViews();
         return keyword.getId();
     }
 
