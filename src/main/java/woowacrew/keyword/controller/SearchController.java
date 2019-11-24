@@ -5,12 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import woowacrew.keyword.domain.Keyword;
 import woowacrew.keyword.domain.KeywordDto;
 import woowacrew.keyword.service.KeywordService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -19,7 +21,8 @@ import java.util.List;
 public class SearchController {
     private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
-    private static final String REDIRECT_GOOGLE_SEARCH_URL = "redirect:https://www.google.com/search?q=";
+    private static final String GOOGLE_SEARCH_URL = "https://www.google.com/search?q=";
+    private static final String REDIRECT = "redirect:";
     private static final String UTF_8 = "UTF-8";
 
     private KeywordService keywordService;
@@ -27,14 +30,6 @@ public class SearchController {
     @Autowired
     public SearchController(KeywordService keywordService) {
         this.keywordService = keywordService;
-    }
-
-    @PostMapping("/search")
-    public String search(KeywordDto keywordDto) throws UnsupportedEncodingException {
-        long keywordId = keywordService.save(keywordDto.getContent());
-        logger.debug("Google search : {}, Keyword Id : {}", keywordDto.getContent(), keywordId);
-
-        return REDIRECT_GOOGLE_SEARCH_URL + URLEncoder.encode(keywordDto.getContent(), UTF_8);
     }
 
     @GetMapping("/search/rank")
@@ -45,5 +40,22 @@ public class SearchController {
         modelAndView.addObject("keywordRank", keywordRank);
 
         return modelAndView;
+    }
+
+    @PostMapping("/search")
+    public String search(KeywordDto keywordDto) throws UnsupportedEncodingException {
+        long keywordId = keywordService.save(keywordDto.getContent());
+        logger.debug("Google search : {}, Keyword Id : {}", keywordDto.getContent(), keywordId);
+
+        return REDIRECT + GOOGLE_SEARCH_URL + URLEncoder.encode(keywordDto.getContent(), UTF_8);
+    }
+
+    @PostMapping("/search/{id}")
+    public void increaseViews(@PathVariable Long id, HttpServletResponse response) throws UnsupportedEncodingException {
+        String content = keywordService.increaseViews(id);
+        String url = GOOGLE_SEARCH_URL + URLEncoder.encode(content, UTF_8);
+
+        response.setHeader("Location", url);
+        logger.debug("Success keyword views to increase : {}", content);
     }
 }

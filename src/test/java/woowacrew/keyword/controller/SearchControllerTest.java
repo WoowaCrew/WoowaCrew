@@ -44,4 +44,13 @@ class SearchControllerTest {
                             .contains("최다 조회수 C");
                 });
     }
+
+    @Test
+    void 검색어_조회수를_증가시키고_검색한다() {
+        webTestClient.post()
+                .uri("/search/1")
+                .exchange()
+                .expectHeader()
+                .value("Location", Matchers.containsString("google.com"));
+    }
 }
