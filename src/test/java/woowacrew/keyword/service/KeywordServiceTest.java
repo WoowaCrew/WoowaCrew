@@ -61,7 +61,7 @@ class KeywordServiceTest {
     @Test
     @DisplayName("조회수가 높은 순으로 검색어를 10개 정렬한다.")
     void 인기순으로_검색어를_10개_찾기() {
-        List<Keyword> keywords = keywordService.keywordRank();
+        List<KeywordResponse> keywords = keywordService.keywordRank();
 
         assertTrue(keywords.size() <= 10);
 

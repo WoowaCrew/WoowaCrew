@@ -9,6 +9,7 @@ import woowacrew.keyword.exception.NotFoundKeyword;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class KeywordService {
@@ -41,8 +42,11 @@ public class KeywordService {
         return maybeKeyword.orElseThrow(NotFoundKeyword::new);
     }
 
-    public List<Keyword> keywordRank() {
-        return keywordRepository.findTop10ByOrderByViewsDesc();
+    public List<KeywordResponse> keywordRank() {
+        return keywordRepository.findTop10ByOrderByViewsDesc()
+                .stream()
+                .map(KeywordConverter::keywordToKeywordResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional

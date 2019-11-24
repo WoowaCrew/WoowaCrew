@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import woowacrew.keyword.domain.Keyword;
 import woowacrew.keyword.domain.KeywordDto;
 import woowacrew.keyword.domain.KeywordResponse;
 import woowacrew.keyword.service.KeywordService;
@@ -21,7 +20,6 @@ import java.util.List;
 @Controller
 public class SearchController {
     private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
-
     private static final String GOOGLE_SEARCH_URL = "https://www.google.com/search?q=";
     private static final String REDIRECT = "redirect:";
     private static final String UTF_8 = "UTF-8";
@@ -37,7 +35,7 @@ public class SearchController {
     public ModelAndView searchRank() {
         ModelAndView modelAndView = new ModelAndView("keywordRank");
 
-        List<Keyword> keywordRank = keywordService.keywordRank();
+        List<KeywordResponse> keywordRank = keywordService.keywordRank();
         modelAndView.addObject("keywordRank", keywordRank);
 
         return modelAndView;
