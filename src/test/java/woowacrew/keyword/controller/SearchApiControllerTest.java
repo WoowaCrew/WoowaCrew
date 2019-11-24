@@ -13,9 +13,9 @@ class SearchApiControllerTest {
     private WebTestClient webTestClient;
 
     @Test
-    void 정상적으로_구글에_검색한다() {
-        webTestClient.get()
-                .uri("/api/search?content=test")
+    void 검색어_조회수를_증가시키고_검색한다() {
+        webTestClient.post()
+                .uri("/search/1")
                 .exchange()
                 .expectHeader()
                 .value("Location", Matchers.containsString("google.com"));

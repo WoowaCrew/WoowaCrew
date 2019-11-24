@@ -45,4 +45,12 @@ public class KeywordService {
     public List<Keyword> keywordRank() {
         return keywordRepository.findTop10ByOrderByViewsDesc();
     }
+
+    @Transactional
+    public String increaseViews(Long id) {
+        Keyword keyword = findById(id);
+
+        keyword.increaseViews();
+        return keyword.getContent();
+    }
 }

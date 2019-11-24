@@ -3,8 +3,8 @@ package woowacrew.keyword.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import woowacrew.keyword.service.KeywordService;
 
@@ -25,13 +25,12 @@ public class SearchApiController {
         this.keywordService = keywordService;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
-    @GetMapping("/api/search")
-    public void search(String content, HttpServletResponse response) throws UnsupportedEncodingException {
-        long keywordId = keywordService.save(content);
+    @PostMapping("/search/{id}")
+    public void increaseViews(@PathVariable Long id, HttpServletResponse response) throws UnsupportedEncodingException {
+        String content = keywordService.increaseViews(id);
         String url = GOOGLE_SEARCH_URL + URLEncoder.encode(content, UTF_8);
-        logger.debug("Google search : {}, Keyword Id : {}", content, keywordId);
 
         response.setHeader("Location", url);
+        logger.debug("Success keyword views to increase : {}", content);
     }
 }
