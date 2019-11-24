@@ -7,6 +7,9 @@ import woowacrew.article.domain.ArticleDto;
 import woowacrew.article.domain.ArticleResponse;
 import woowacrew.user.domain.UserDto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ArticleService {
     private ArticleInternalService articleInternalService;
@@ -22,5 +25,11 @@ public class ArticleService {
 
     public ArticleResponse findById(Long articleId) {
         return ArticleConverter.articleToArticleResponseDto(articleInternalService.findById(articleId));
+    }
+
+    public List<ArticleResponse> findAll() {
+        return articleInternalService.findAll().stream()
+                .map(ArticleConverter::articleToArticleResponseDto)
+                .collect(Collectors.toList());
     }
 }

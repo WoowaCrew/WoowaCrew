@@ -46,7 +46,7 @@ class ArticleControllerTest extends CommonTestController {
     }
 
     @Test
-    void 게시글_작성_후_해당_201응답이_온다() {
+    void 게시글_작성_후_해당_201응답이_다() {
         String cookie = getLoginCookie();
 
         webTestClient.post()
@@ -99,5 +99,33 @@ class ArticleControllerTest extends CommonTestController {
                                 assertThat(actualBody.contains("<body>")).isTrue();
                             });
                 });
+    }
+
+    @Test
+    void 전체_게시글_조회_테스트() {
+        String cookie = getLoginCookie();
+        saveArticle(2, cookie);
+        webTestClient.get()
+                .uri("/articles")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(response -> {
+                    String body = new String(response.getResponseBody());
+                    assertThat(body.contains("title")).isTrue();
+                });
+    }
+
+    private void saveArticle(int numberOfArticle, String cookie) {
+        for (int i = 0; i < numberOfArticle; i++) {
+            webTestClient.post()
+                    .uri("/articles")
+                    .header("Cookie", cookie)
+                    .body(BodyInserters.fromFormData("title", "title")
+                            .with("content", "content"))
+                    .exchange();
+        }
     }
 }

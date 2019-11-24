@@ -28,6 +28,12 @@ public class ArticleController {
         return "article-edit";
     }
 
+    @GetMapping("/articles")
+    public String articles(Model model) {
+        model.addAttribute("articles", articleService.findAll());
+        return "article-list";
+    }
+
     @GetMapping("/articles/{articleId}")
     public String showArticle(@PathVariable Long articleId, Model model) {
         ArticleResponse articleResponse = articleService.findById(articleId);

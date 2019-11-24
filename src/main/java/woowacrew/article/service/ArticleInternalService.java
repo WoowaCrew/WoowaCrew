@@ -11,6 +11,8 @@ import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserDto;
 import woowacrew.user.service.UserInternalService;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ArticleInternalService {
@@ -34,5 +36,9 @@ public class ArticleInternalService {
     public Article findById(long articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("요청하신 게시글을 찾을 수 없습니다."));
+    }
+
+    public List<Article> findAll() {
+        return articleRepository.findAllByOrderByIdDesc();
     }
 }
