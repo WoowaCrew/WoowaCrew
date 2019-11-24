@@ -19,7 +19,7 @@
     <tr class="keyword-rank-title">
         <p><td colspan = "3"><h2>실시간 검색어</h2></td></p>
     </tr>
-    <tr class="keyword" th:each="keyword, iStat : ${keywordRank}">
+    <tr th:id="${keyword.id}" id="" class="keyword" th:each="keyword, iStat : ${keywordRank}">
         <td class="keyword-number" th:text="${iStat.index + 1}"></td>
         <td class="keyword-content" name="content" th:text="${keyword.content}"></td>
         <td class="keyword-views">
