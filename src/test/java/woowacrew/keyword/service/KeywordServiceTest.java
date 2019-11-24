@@ -18,13 +18,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class KeywordServiceTest {
-
-    @Autowired
-    private KeywordService keywordService;
 
     @Mock
     private KeywordRepository mockKeywordRepository;
@@ -32,30 +29,31 @@ class KeywordServiceTest {
     @InjectMocks
     private KeywordService mockKeywordService;
 
+    @Autowired
+    private KeywordService keywordService;
+
     @Test
     void 정상적으로_검색어_저장() {
+        Keyword mockKeyword = mock(Keyword.class);
         KeywordDto keywordDto = new KeywordDto("test");
-        assertThat(keywordService.save(keywordDto)).isNotNull();
-    }
 
-    @Test
-    void 저장된_검색어_찾기() {
-        assertDoesNotThrow(() -> keywordService.findById(1L));
-    }
+        when(mockKeywordRepository.findByContent(anyString())).thenReturn(null);
+        when(mockKeywordRepository.save(any())).thenReturn(mockKeyword);
 
-    @Test
-    @DisplayName("존재하지 않는 검색어를 찾는 경우 예외가 발생한다.")
-    void 없는_검색어를_찾기() {
-        assertThrows(NotFoundKeyword.class, () -> keywordService.findById(0L));
+        assertDoesNotThrow(() -> mockKeywordService.save(keywordDto));
+        verify(mockKeywordRepository, times(1)).save(any());
+        verify(mockKeyword, times(1)).increaseViews();
     }
 
     @Test
     @DisplayName("존재하는 검색어를 저장하면 조회수를 올린다.")
     void 중복된_검색어를_저장() {
-        KeywordDto keywordDto = new KeywordDto("중복된 검색어");
-        KeywordResponse keywordResponse = keywordService.save(keywordDto);
+        Keyword mockKeyword = mock(Keyword.class);
+        when(mockKeywordRepository.findByContent(anyString())).thenReturn(mockKeyword);
 
-        assertThat(keywordService.findById(keywordResponse.getId()).getViews()).isEqualTo(2L);
+        assertDoesNotThrow(() -> mockKeywordService.save(new KeywordDto("test")));
+        verify(mockKeywordRepository, times(0)).save(any());
+        verify(mockKeyword, times(1)).increaseViews();
     }
 
     @Test
