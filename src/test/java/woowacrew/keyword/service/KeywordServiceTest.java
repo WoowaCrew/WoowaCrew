@@ -7,7 +7,9 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import woowacrew.keyword.domain.Keyword;
+import woowacrew.keyword.domain.KeywordDto;
 import woowacrew.keyword.domain.KeywordRepository;
+import woowacrew.keyword.domain.KeywordResponse;
 import woowacrew.keyword.exception.NotFoundKeyword;
 
 import java.util.List;
@@ -32,7 +34,8 @@ class KeywordServiceTest {
 
     @Test
     void 정상적으로_검색어_저장() {
-        assertThat(keywordService.save("test")).isNotNull();
+        KeywordDto keywordDto = new KeywordDto("test");
+        assertThat(keywordService.save(keywordDto)).isNotNull();
     }
 
     @Test
@@ -49,9 +52,10 @@ class KeywordServiceTest {
     @Test
     @DisplayName("존재하는 검색어를 저장하면 조회수를 올린다.")
     void 중복된_검색어를_저장() {
-        long keywordId = keywordService.save("중복된 검색어");
+        KeywordDto keywordDto = new KeywordDto("중복된 검색어");
+        KeywordResponse keywordResponse = keywordService.save(keywordDto);
 
-        assertThat(keywordService.findById(keywordId).getViews()).isEqualTo(2L);
+        assertThat(keywordService.findById(keywordResponse.getId()).getViews()).isEqualTo(2L);
     }
 
     @Test

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import woowacrew.keyword.domain.Keyword;
 import woowacrew.keyword.domain.KeywordDto;
+import woowacrew.keyword.domain.KeywordResponse;
 import woowacrew.keyword.service.KeywordService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -44,10 +45,10 @@ public class SearchController {
 
     @PostMapping("/search")
     public String search(KeywordDto keywordDto) throws UnsupportedEncodingException {
-        long keywordId = keywordService.save(keywordDto.getContent());
-        logger.debug("Google search : {}, Keyword Id : {}", keywordDto.getContent(), keywordId);
+        KeywordResponse keywordResponse = keywordService.save(keywordDto);
+        logger.debug("Google search : {}, Keyword Id : {}", keywordResponse.getContent(), keywordResponse.getId());
 
-        return REDIRECT + GOOGLE_SEARCH_URL + URLEncoder.encode(keywordDto.getContent(), UTF_8);
+        return REDIRECT + GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponse.getContent(), UTF_8);
     }
 
     @PostMapping("/search/{id}")
