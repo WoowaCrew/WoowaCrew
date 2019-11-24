@@ -51,10 +51,10 @@ public class SearchController {
 
     @PostMapping("/search/{id}")
     public void increaseViews(@PathVariable Long id, HttpServletResponse response) throws UnsupportedEncodingException {
-        String content = keywordService.increaseViews(id);
-        String url = GOOGLE_SEARCH_URL + URLEncoder.encode(content, UTF_8);
+        KeywordResponse keywordResponse = keywordService.increaseViews(id);
+        String url = GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponse.getContent(), UTF_8);
 
         response.setHeader("Location", url);
-        logger.debug("Success keyword views to increase : {}", content);
+        logger.debug("Success keyword views to increase : {}", keywordResponse.getContent());
     }
 }

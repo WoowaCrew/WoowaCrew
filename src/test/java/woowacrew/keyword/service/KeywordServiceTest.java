@@ -76,7 +76,7 @@ class KeywordServiceTest {
 
         when(mockKeywordRepository.findById(anyLong())).thenReturn(Optional.of(keyword));
 
-        assertThat(mockKeywordService.increaseViews(1L)).isEqualTo(keyword.getContent());
+        assertThat(mockKeywordService.increaseViews(1L).getContent()).isEqualTo(keyword.getContent());
         assertTrue(keyword.getViews() != 0);
     }
 

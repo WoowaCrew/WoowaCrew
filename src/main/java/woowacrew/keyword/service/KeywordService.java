@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class KeywordService {
 
     private KeywordRepository keywordRepository;
@@ -22,7 +23,6 @@ public class KeywordService {
     }
 
     @Async
-    @Transactional
     public KeywordResponse save(KeywordDto keywordDto) {
         Keyword keyword = createKeyword(keywordDto.getContent());
 
@@ -36,12 +36,14 @@ public class KeywordService {
         return maybeKeyword.orElseGet(() -> keywordRepository.save(new Keyword(content)));
     }
 
+    @Transactional(readOnly = true)
     public Keyword findById(Long id) {
         Optional<Keyword> maybeKeyword = keywordRepository.findById(id);
 
         return maybeKeyword.orElseThrow(NotFoundKeyword::new);
     }
 
+    @Transactional(readOnly = true)
     public List<KeywordResponse> keywordRank() {
         return keywordRepository.findTop10ByOrderByViewsDesc()
                 .stream()
@@ -49,11 +51,10 @@ public class KeywordService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public String increaseViews(Long id) {
+    public KeywordResponse increaseViews(Long id) {
         Keyword keyword = findById(id);
 
         keyword.increaseViews();
-        return keyword.getContent();
+        return KeywordConverter.keywordToKeywordResponseDto(keyword);
     }
 }
