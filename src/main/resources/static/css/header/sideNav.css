@@ -1,5 +1,6 @@
 /*  헤더 사이드 메뉴 */
 #mySidenav {
+    font-family: 'Nanum Gothic', sans-serif;
     height: 100%;
     width: 0;
     position: fixed;
