@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/header :: headerFragment"/>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
 <div class="article-info">
     <div id="article-header">
         <div class="title" th:text="${article.title}"></div>
@@ -35,14 +35,5 @@
 </body>
 <!--  SCRIPT  -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
-<script>
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-  }
-
-  function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-  }
-</script>
 <script src="/js/article.js"></script>
 </html>

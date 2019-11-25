@@ -22,7 +22,7 @@ public class Keyword {
         this.views = 0L;
     }
 
-    public void addViews() {
+    public void increaseViews() {
         this.views++;
     }
 

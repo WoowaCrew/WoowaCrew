@@ -3,6 +3,7 @@ div#search {
     top: 15%;
     left: 50%;
     transform: translate(-50%);
+    white-space: nowrap;
 }
 
 div#search .search-form {

@@ -16,21 +16,12 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/header :: headerFragment"/>
-<th:block th:replace="fragments/search :: searchFragment"/>
-<th:block th:replace="fragments/userCard :: userCardFragment"/>
-<th:block th:replace="fragments/mainButton :: mainButtonFragment"/>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+<th:block th:replace="fragments/index/search :: searchFragment"/>
+<th:block th:replace="fragments/index/userCard :: userCardFragment"/>
+<th:block th:replace="fragments/index/mainButton :: mainButtonFragment"/>
 
 <!--  SCRIPT  -->
 <script src="/js/header/indexHeader.js"></script>
-<script>
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-    }
-
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>
 </body>
 </html>

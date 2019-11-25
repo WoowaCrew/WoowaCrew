@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/header :: headerFragment"/>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
 <div class="">
     <form id="article-edit" action="/articles" method="post">
         <input id="title" name="title" type="text" placeholder="제목을 입력해 주세요.">
@@ -40,15 +40,6 @@
 </body>
 
 <!--  SCRIPT  -->
-<script>
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-  }
-
-  function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-  }
-</script>
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
 <script src="/js/article-edit.js"></script>
 </html>

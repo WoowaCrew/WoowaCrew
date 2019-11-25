@@ -1,0 +1,31 @@
+#keyword-rank {
+    height: 600px;
+    width: 75%;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+
+    border-collapse: collapse;
+    text-align: center;
+    color: white;
+}
+
+.keyword-rank-title, .keyword-content {
+    text-align: left;
+}
+
+.keyword-number {
+    width: 30px;
+}
+
+.keyword-views {
+    text-align: right;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+
+#keyword-rank tr.keyword:hover {
+    cursor: pointer;
+    background-color: dodgerblue;
+    transition: 0.5s;
+}
