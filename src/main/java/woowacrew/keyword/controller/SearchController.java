@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import woowacrew.keyword.domain.KeywordDto;
-import woowacrew.keyword.domain.KeywordResponse;
+import woowacrew.keyword.domain.KeywordRequestDto;
+import woowacrew.keyword.domain.KeywordResponseDto;
 import woowacrew.keyword.service.KeywordService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,26 +35,26 @@ public class SearchController {
     public ModelAndView searchRank() {
         ModelAndView modelAndView = new ModelAndView("keywordRank");
 
-        List<KeywordResponse> keywordRank = keywordService.keywordRank();
+        List<KeywordResponseDto> keywordRank = keywordService.keywordRank();
         modelAndView.addObject("keywordRank", keywordRank);
 
         return modelAndView;
     }
 
     @PostMapping("/search")
-    public String search(KeywordDto keywordDto) throws UnsupportedEncodingException {
-        KeywordResponse keywordResponse = keywordService.save(keywordDto);
-        logger.debug("Google search : {}, Keyword Id : {}", keywordResponse.getContent(), keywordResponse.getId());
+    public String search(KeywordRequestDto keywordRequestDto) throws UnsupportedEncodingException {
+        KeywordResponseDto keywordResponseDto = keywordService.save(keywordRequestDto);
+        logger.debug("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
 
-        return REDIRECT + GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponse.getContent(), UTF_8);
+        return REDIRECT + GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponseDto.getContent(), UTF_8);
     }
 
     @PostMapping("/search/{id}")
     public void increaseViews(@PathVariable Long id, HttpServletResponse response) throws UnsupportedEncodingException {
-        KeywordResponse keywordResponse = keywordService.increaseViews(id);
-        String url = GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponse.getContent(), UTF_8);
+        KeywordResponseDto keywordResponseDto = keywordService.increaseViews(id);
+        String url = GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponseDto.getContent(), UTF_8);
 
         response.setHeader("Location", url);
-        logger.debug("Success keyword views to increase : {}", keywordResponse.getContent());
+        logger.debug("Success keyword views to increase : {}", keywordResponseDto.getContent());
     }
 }

@@ -1,11 +1,11 @@
 package woowacrew.keyword.domain;
 
-public class KeywordResponse {
+public class KeywordResponseDto {
     private Long id;
     private String content;
     private Long views;
 
-    public KeywordResponse(Long id, String content, Long views) {
+    public KeywordResponseDto(Long id, String content, Long views) {
         this.id = id;
         this.content = content;
         this.views = views;

@@ -23,8 +23,8 @@ public class KeywordService {
     }
 
     @Async
-    public KeywordResponse save(KeywordDto keywordDto) {
-        Keyword keyword = createKeyword(keywordDto.getContent());
+    public KeywordResponseDto save(KeywordRequestDto keywordRequestDto) {
+        Keyword keyword = createKeyword(keywordRequestDto.getContent());
 
         keyword.increaseViews();
         return KeywordConverter.keywordToKeywordResponseDto(keyword);
@@ -44,14 +44,14 @@ public class KeywordService {
     }
 
     @Transactional(readOnly = true)
-    public List<KeywordResponse> keywordRank() {
+    public List<KeywordResponseDto> keywordRank() {
         return keywordRepository.findTop10ByOrderByViewsDesc()
                 .stream()
                 .map(KeywordConverter::keywordToKeywordResponseDto)
                 .collect(Collectors.toList());
     }
 
-    public KeywordResponse increaseViews(Long id) {
+    public KeywordResponseDto increaseViews(Long id) {
         Keyword keyword = findById(id);
 
         keyword.increaseViews();

@@ -7,9 +7,9 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import woowacrew.keyword.domain.Keyword;
-import woowacrew.keyword.domain.KeywordDto;
+import woowacrew.keyword.domain.KeywordRequestDto;
 import woowacrew.keyword.domain.KeywordRepository;
-import woowacrew.keyword.domain.KeywordResponse;
+import woowacrew.keyword.domain.KeywordResponseDto;
 import woowacrew.keyword.exception.NotFoundKeyword;
 
 import java.util.List;
@@ -35,12 +35,12 @@ class KeywordServiceTest {
     @Test
     void 정상적으로_검색어_저장() {
         Keyword mockKeyword = mock(Keyword.class);
-        KeywordDto keywordDto = new KeywordDto("test");
+        KeywordRequestDto keywordRequestDto = new KeywordRequestDto("test");
 
         when(mockKeywordRepository.findByContent(anyString())).thenReturn(null);
         when(mockKeywordRepository.save(any())).thenReturn(mockKeyword);
 
-        assertDoesNotThrow(() -> mockKeywordService.save(keywordDto));
+        assertDoesNotThrow(() -> mockKeywordService.save(keywordRequestDto));
         verify(mockKeywordRepository, times(1)).save(any());
         verify(mockKeyword, times(1)).increaseViews();
     }
@@ -51,7 +51,7 @@ class KeywordServiceTest {
         Keyword mockKeyword = mock(Keyword.class);
         when(mockKeywordRepository.findByContent(anyString())).thenReturn(mockKeyword);
 
-        assertDoesNotThrow(() -> mockKeywordService.save(new KeywordDto("test")));
+        assertDoesNotThrow(() -> mockKeywordService.save(new KeywordRequestDto("test")));
         verify(mockKeywordRepository, times(0)).save(any());
         verify(mockKeyword, times(1)).increaseViews();
     }
@@ -59,7 +59,7 @@ class KeywordServiceTest {
     @Test
     @DisplayName("조회수가 높은 순으로 검색어를 10개 정렬한다.")
     void 인기순으로_검색어를_10개_찾기() {
-        List<KeywordResponse> keywords = keywordService.keywordRank();
+        List<KeywordResponseDto> keywords = keywordService.keywordRank();
 
         assertTrue(keywords.size() <= 10);
 
