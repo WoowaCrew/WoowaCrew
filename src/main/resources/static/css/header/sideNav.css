@@ -1,9 +1,10 @@
 /*  헤더 사이드 메뉴 */
 #mySidenav {
+    font-family: 'Nanum Gothic', sans-serif;
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 500;
     top: 0;
     left: 0;
     background-color: #111;

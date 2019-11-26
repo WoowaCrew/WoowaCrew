@@ -1,5 +1,6 @@
 /*  HEADER  */
 .header-bar {
+    font-family: 'Wallpoet', cursive;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -8,17 +9,19 @@
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0;
+    max-height: 47px;
+    text-transform:uppercase;
 }
 
-.header-bar li {
+.header-bar .header-li {
     float: left;
     font-size: 18px;
 }
 
-.header-bar li .header-contents, .header-active {
+.header-bar .header-li .header-contents, .header-active {
     display: block;
     color: grey;
-    text-align: center;
+    text-align: left;
     padding: 14px 16px;
     text-decoration: none;
 }
@@ -27,13 +30,17 @@
     float: right;
 }
 
-.header-bar li a.header-contents:hover, a.header-active:hover{
+.header-bar .header-li a.header-contents:hover, a.header-active:hover{
+    cursor: pointer;
     transition: 0.3s;
     color: white;
     text-shadow: 1px 1px #111;
 }
 
-.header-bar li a.header-active:hover {
+.header-bar .header-li a.header-active:hover {
     color: rgb(237, 056, 067);
 }
 
+.header-bar li.header-li:hover #header-dropdown {
+    display:block;
+}

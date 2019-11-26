@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="headerFragment">
+    <link href="/css/header/header.css" rel="stylesheet">
+    <link href="/css/header/sideNav.css" rel="stylesheet">
+    <link href="/css/header/dropdown.css" rel="stylesheet">
+
     <ul class="header-bar">
-        <li><th:block th:replace="fragments/header/sideNav::sideNavFragment"/></li>
-        <li><a class="header-contents" href="/">홈</a></li>
-        <li>
-            <a class="header-active" href="#">서비스 <i class="fa fa-caret-down"></i></a>
+        <li class="header-li"><th:block th:replace="fragments/header/sideNav::sideNavFragment"/></li>
+        <li class="header-li"><a class="header-contents" href="/">home</a></li>
+        <li class="header-li">
+            <a class="header-active" href="#">service <i class="fa fa-caret-down"></i></a>
+            <th:block th:replace="fragments/header/dropdown::dropdownFragment"/>
         </li>
-        <li class="header-login">
-            <a class="header-contents" href="/login">로그인</a>
+        <li class="header-li header-login">
+            <a class="header-contents" href="/login">login</a>
         </li>
     </ul>
 </header>
