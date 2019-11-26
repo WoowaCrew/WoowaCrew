@@ -4,7 +4,7 @@ import woowacrew.user.domain.UserDto;
 
 import java.util.Date;
 
-public class ArticleResponse {
+public class ArticleResponseDto {
     private final Long id;
     private final String title;
     private final String content;
@@ -12,7 +12,7 @@ public class ArticleResponse {
     private final Date createdDate;
     private final Date lastModifiedDate;
 
-    public ArticleResponse(Long id, String title, String content, UserDto userDto, Date createdDate, Date lastModifiedDate) {
+    public ArticleResponseDto(Long id, String title, String content, UserDto userDto, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;

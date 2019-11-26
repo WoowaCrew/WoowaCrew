@@ -13,8 +13,8 @@ class ArticleConverterTest {
         User user = new User("userId", "url");
         Article article = new Article(title, content, user);
 
-        ArticleResponse articleResponse = ArticleConverter.articleToArticleResponseDto(article);
-        assertThat(articleResponse.getTitle()).isEqualTo(title);
-        assertThat(articleResponse.getContent()).isEqualTo(content);
+        ArticleResponseDto articleResponseDto = ArticleConverter.articleToArticleResponseDto(article);
+        assertThat(articleResponseDto.getTitle()).isEqualTo(title);
+        assertThat(articleResponseDto.getContent()).isEqualTo(content);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-import woowacrew.article.domain.ArticleResponse;
+import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.common.controller.CommonTestController;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,9 +63,9 @@ class ArticleControllerTest extends CommonTestController {
                 .consumeWith(body ->
                 {
                     Gson gson = new Gson();
-                    ArticleResponse articleResponse = gson.fromJson(new String(body.getResponseBody()), ArticleResponse.class);
-                    assertThat(articleResponse.getTitle()).isEqualTo("title");
-                    assertThat(articleResponse.getContent()).isEqualTo("content");
+                    ArticleResponseDto articleResponseDto = gson.fromJson(new String(body.getResponseBody()), ArticleResponseDto.class);
+                    assertThat(articleResponseDto.getTitle()).isEqualTo("title");
+                    assertThat(articleResponseDto.getContent()).isEqualTo("content");
                 });
 
     }
@@ -84,8 +84,8 @@ class ArticleControllerTest extends CommonTestController {
                 .consumeWith(body ->
                 {
                     Gson gson = new Gson();
-                    ArticleResponse articleResponse = gson.fromJson(new String(body.getResponseBody()), ArticleResponse.class);
-                    Long articleId = articleResponse.getId();
+                    ArticleResponseDto articleResponseDto = gson.fromJson(new String(body.getResponseBody()), ArticleResponseDto.class);
+                    Long articleId = articleResponseDto.getId();
 
                     webTestClient.get()
                             .uri("/articles/" + articleId)
