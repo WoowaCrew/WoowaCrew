@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import woowacrew.article.domain.ArticleDto;
-import woowacrew.article.domain.ArticleResponse;
+import woowacrew.article.domain.ArticleRequestDto;
+import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.domain.UserDto;
 
@@ -36,15 +36,15 @@ public class ArticleController {
 
     @GetMapping("/articles/{articleId}")
     public String showArticle(@PathVariable Long articleId, Model model) {
-        ArticleResponse articleResponse = articleService.findById(articleId);
-        model.addAttribute("article", articleResponse);
+        ArticleResponseDto articleResponseDto = articleService.findById(articleId);
+        model.addAttribute("article", articleResponseDto);
         return "article";
     }
 
     @PostMapping("/articles")
-    public ResponseEntity<ArticleResponse> createArticle(HttpSession session, ArticleDto articleDto) {
+    public ResponseEntity<ArticleResponseDto> createArticle(HttpSession session, ArticleRequestDto articleRequestDto) {
         UserDto user = (UserDto) session.getAttribute("user");
-        ArticleResponse articleResponse = articleService.save(articleDto, user);
-        return ResponseEntity.created(URI.create(ARTICLES_URL + articleResponse.getId())).body(articleResponse);
+        ArticleResponseDto articleResponseDto = articleService.save(articleRequestDto, user);
+        return ResponseEntity.created(URI.create(ARTICLES_URL + articleResponseDto.getId())).body(articleResponseDto);
     }
 }

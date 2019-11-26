@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.article.domain.Article;
-import woowacrew.article.domain.ArticleResponse;
+import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.user.domain.User;
 
 import java.util.ArrayList;
@@ -29,12 +29,12 @@ class ArticleServiceTest {
         Long articleId = 1L;
         when(articleInternalService.findById(articleId)).thenReturn(article);
 
-        ArticleResponse articleResponse = articleService.findById(articleId);
+        ArticleResponseDto articleResponseDto = articleService.findById(articleId);
 
-        assertThat(articleResponse.getTitle()).isEqualTo("title");
-        assertThat(articleResponse.getContent()).isEqualTo("content");
-        assertThat(articleResponse.getUserDto().getUserId()).isEqualTo("userId");
-        assertThat(articleResponse.getUserDto().getUrl()).isEqualTo("url");
+        assertThat(articleResponseDto.getTitle()).isEqualTo("title");
+        assertThat(articleResponseDto.getContent()).isEqualTo("content");
+        assertThat(articleResponseDto.getUserDto().getUserId()).isEqualTo("userId");
+        assertThat(articleResponseDto.getUserDto().getUrl()).isEqualTo("url");
     }
 
     @Test
@@ -42,9 +42,9 @@ class ArticleServiceTest {
         List<Article> articles = createArticles(10);
         when(articleInternalService.findAll()).thenReturn(articles);
 
-        List<ArticleResponse> articleResponses = articleService.findAll();
+        List<ArticleResponseDto> articleResponsDtos = articleService.findAll();
 
-        assertThat(articleResponses.size()).isEqualTo(10);
+        assertThat(articleResponsDtos.size()).isEqualTo(10);
     }
 
     private List<Article> createArticles(int numberOfArticle) {

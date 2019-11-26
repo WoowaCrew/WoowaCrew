@@ -3,8 +3,8 @@ package woowacrew.article.service;
 import org.springframework.stereotype.Service;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleConverter;
-import woowacrew.article.domain.ArticleDto;
-import woowacrew.article.domain.ArticleResponse;
+import woowacrew.article.domain.ArticleRequestDto;
+import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.user.domain.UserDto;
 
 import java.util.List;
@@ -18,16 +18,16 @@ public class ArticleService {
         this.articleInternalService = articleInternalService;
     }
 
-    public ArticleResponse save(ArticleDto articleDto, UserDto userDto) {
-        Article article = articleInternalService.save(articleDto, userDto);
+    public ArticleResponseDto save(ArticleRequestDto articleRequestDto, UserDto userDto) {
+        Article article = articleInternalService.save(articleRequestDto, userDto);
         return ArticleConverter.articleToArticleResponseDto(article);
     }
 
-    public ArticleResponse findById(Long articleId) {
+    public ArticleResponseDto findById(Long articleId) {
         return ArticleConverter.articleToArticleResponseDto(articleInternalService.findById(articleId));
     }
 
-    public List<ArticleResponse> findAll() {
+    public List<ArticleResponseDto> findAll() {
         return articleInternalService.findAll().stream()
                 .map(ArticleConverter::articleToArticleResponseDto)
                 .collect(Collectors.toList());

@@ -1,10 +1,10 @@
 package woowacrew.article.domain;
 
-public class ArticleDto {
+public class ArticleRequestDto {
     private String title;
     private String content;
 
-    public ArticleDto(String title, String content) {
+    public ArticleRequestDto(String title, String content) {
         this.title = title;
         this.content = content;
     }

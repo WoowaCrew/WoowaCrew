@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleConverter;
-import woowacrew.article.domain.ArticleDto;
+import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleRepository;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserDto;
@@ -25,9 +25,9 @@ public class ArticleInternalService {
         this.userInternalService = userInternalService;
     }
 
-    public Article save(ArticleDto articleDto, UserDto userDto) {
+    public Article save(ArticleRequestDto articleRequestDto, UserDto userDto) {
         User user = userInternalService.findByUserId(userDto.getUserId());
-        Article article = ArticleConverter.articleDtoToArticle(articleDto, user);
+        Article article = ArticleConverter.articleDtoToArticle(articleRequestDto, user);
         articleRepository.save(article);
         return article;
     }

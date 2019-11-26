@@ -1,9 +1,9 @@
 package woowacrew.keyword.domain;
 
-public class KeywordDto {
+public class KeywordRequestDto {
     private String content;
 
-    public KeywordDto(String content) {
+    public KeywordRequestDto(String content) {
         this.content = content;
     }
 

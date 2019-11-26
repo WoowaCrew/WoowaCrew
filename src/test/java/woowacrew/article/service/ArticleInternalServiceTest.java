@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.article.domain.Article;
-import woowacrew.article.domain.ArticleDto;
+import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleRepository;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserDto;
@@ -34,11 +34,11 @@ class ArticleInternalServiceTest {
     void 게시글_생성_테스트() {
         UserDto userDto = new UserDto("asd", "asd");
         User user = new User("asd", "asd");
-        ArticleDto articleDto = new ArticleDto("hello", "bonjour");
+        ArticleRequestDto articleRequestDto = new ArticleRequestDto("hello", "bonjour");
 
         when(userInternalService.findByUserId(userDto.getUserId())).thenReturn(user);
 
-        Article article = articleInternalService.save(articleDto, userDto);
+        Article article = articleInternalService.save(articleRequestDto, userDto);
 
         assertThat(article.getTitle()).isEqualTo("hello");
         assertThat(article.getContent()).isEqualTo("bonjour");
