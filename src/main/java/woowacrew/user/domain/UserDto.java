@@ -3,7 +3,7 @@ package woowacrew.user.domain;
 import com.google.gson.annotations.SerializedName;
 
 public class UserDto {
-    @SerializedName("login")
+    @SerializedName("id")
     private String userId;
     private String url;
 
