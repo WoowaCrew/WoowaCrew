@@ -9,6 +9,7 @@
     width: 140px;
     z-index:200;
     font-size: 15px;
+    background-color: black;
 }
 
 #header-dropdown li a {

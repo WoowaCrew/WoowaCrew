@@ -1,13 +1,16 @@
 #keyword-rank {
-    height: 600px;
     width: 75%;
-    margin-top: 5%;
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
 
     border-collapse: collapse;
     text-align: center;
     color: white;
+}
+
+.keyword {
+    height: 70px;
 }
 
 .keyword-rank-title, .keyword-content {
