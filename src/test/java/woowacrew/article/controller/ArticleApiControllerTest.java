@@ -38,7 +38,7 @@ class ArticleApiControllerTest extends CommonTestController {
         String cookie = getLoginCookie();
 
         ArticleResponseDto article1 = webTestClient.get()
-                .uri("/api/article/1")
+                .uri("/api/articles/1")
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk()

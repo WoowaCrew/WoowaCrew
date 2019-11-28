@@ -30,7 +30,7 @@ function articleEdit() {
     formData.append('title', title)
     formData.append('content', content)
 
-    fetch(url + "/articles", {
+    fetch(url + "/api/articles", {
       method: 'POST',
       body: formData
     }).then(function (response) {
