@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="fragments/config :: configFragment"/>
+    <link href="/css/userUpdateForm.css" rel="stylesheet">
+    <title>WoowaCrew</title>
 </head>
-<body>
 
+<body>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+<div class="container">
+    <div class="wrapper">
+        <h1 class="title">추가 정보 입력</h1>
+        <form method="post">
+            <label class="update-label" for="nickname">
+                <input id="nickname" name="nickname" />
+                <span>닉네임</span>
+            </label>
+            <label class="update-label" for="birthday">
+                <input id="birthday" type="date" name="birthday" />
+                <span>생년월일</span>
+            </label>
+            <div class="form__buttons">
+                <a class="form-button" href="/">취소</a>
+                <button class="form-button" href="https://techcourse.woowahan.com/">수정</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
