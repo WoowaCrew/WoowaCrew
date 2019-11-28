@@ -29,6 +29,14 @@ public class Article extends TimeEntity {
         this.user = user;
     }
 
+    public void update(User user, String title, String content) {
+        if (this.user.equals(user)) {
+            articleFrom.updateArticle(title, content);
+        }
+
+        throw new IllegalArgumentException();
+    }
+
     public Long getId() {
         return id;
     }
