@@ -11,6 +11,6 @@ public class UserConverter {
     }
 
     public static UserResponseDto userToUserResponseDto(User user) {
-        return new UserResponseDto(user.getUserId(), user.getNickname(), user.getBirthday());
+        return new UserResponseDto(user.getId(), user.getUserId(), user.getNickname(), user.getBirthday());
     }
 }
