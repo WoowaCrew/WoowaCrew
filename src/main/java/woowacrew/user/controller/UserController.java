@@ -19,7 +19,7 @@ public class UserController {
     public ModelAndView updateForm(@PathVariable Long id, ModelAndView modelAndView) {
         UserResponseDto user = userService.findById(id);
 
-        modelAndView.addObject(user);
+        modelAndView.addObject("user", user);
         modelAndView.setViewName("user-update-form");
         return modelAndView;
     }

@@ -11,7 +11,7 @@
 <div class="container">
     <div class="wrapper">
         <h1 class="title">추가 정보 입력</h1>
-        <form method="post">
+        <form th:action="@{/users/{id}/update(id=${user.id})}" method="post">
             <label class="update-label" for="nickname">
                 <input id="nickname" name="nickname" />
                 <span>닉네임</span>
