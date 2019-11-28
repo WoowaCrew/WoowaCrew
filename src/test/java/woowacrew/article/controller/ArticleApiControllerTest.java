@@ -32,4 +32,21 @@ class ArticleApiControllerTest extends CommonTestController {
 
         assertThat(articles.get(0).getTitle()).isEqualTo("article A");
     }
+
+    @Test
+    void 게시글_상_조회() {
+        String cookie = getLoginCookie();
+
+        ArticleResponseDto article1 = webTestClient.get()
+                .uri("/api/article/1")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(article1.getTitle()).isEqualTo("article A");
+        assertThat(article1.getContent()).isEqualTo("content");
+    }
 }
