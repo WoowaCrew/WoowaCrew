@@ -9,4 +9,8 @@ public class UserConverter {
         }
         return new UserDto(user.getUserId(), user.getUrl());
     }
+
+    public static UserResponseDto userToUserResponseDto(User user) {
+        return new UserResponseDto(user.getUserId(), user.getNickname(), user.getBirthday());
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.oauth.Oauth;
 import woowacrew.oauth.service.LoginService;
 import woowacrew.user.domain.UserDto;
+import woowacrew.user.domain.UserResponseDto;
 
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
@@ -38,8 +39,8 @@ public class LoginController {
     @GetMapping("/oauth/github")
     public RedirectView oauth(HttpSession session, @RequestParam String code) {
         String accessToken = oauth.getAccessToken(code);
-        UserDto user = oauth.getUserInfo(accessToken);
-        loginService.save(user);
+        UserDto userDto = oauth.getUserInfo(accessToken);
+        UserResponseDto user = loginService.save(userDto);
 
         session.setAttribute(ACCESS_TOKEN, accessToken);
         session.setAttribute(USER, user);

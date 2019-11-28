@@ -5,8 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 public class UserInternalService {
@@ -18,7 +16,7 @@ public class UserInternalService {
 
     @Transactional(readOnly = true)
     public User findByUserId(String userId) {
-        return Optional.ofNullable(userRepository.findByUserId(userId))
+        return userRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User를 찾을 수 없습니다."));
     }
 }
