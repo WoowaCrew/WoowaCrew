@@ -29,8 +29,7 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public String articles(Model model) {
-        model.addAttribute("articles", articleService.findAll());
+    public String articles() {
         return "article-list";
     }
 
