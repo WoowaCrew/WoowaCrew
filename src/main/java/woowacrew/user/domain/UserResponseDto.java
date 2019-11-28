@@ -30,4 +30,14 @@ public class UserResponseDto {
     public LocalDate getBirthday() {
         return birthday;
     }
+
+    @Override
+    public String toString() {
+        return "UserResponseDto{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", birthday=" + birthday +
+                '}';
+    }
 }
