@@ -7,6 +7,9 @@ public class UserDto {
     private String userId;
     private String url;
 
+    private UserDto() {
+    }
+
     public UserDto(String userId, String url) {
         this.userId = userId;
         this.url = url;
