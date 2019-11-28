@@ -42,13 +42,13 @@ public class LoginController {
         UserDto userDto = oauth.getUserInfo(accessToken);
         UserResponseDto user = loginService.save(userDto);
 
-        String nickname = user.getNickname();
-        if ("".equals(nickname) || nickname == null) {
-            return new RedirectView("/users/" + user.getId() + "/update");
-        }
-
         session.setAttribute(ACCESS_TOKEN, accessToken);
         session.setAttribute(USER, user);
+
+        String nickname = user.getNickname();
+        if ("".equals(nickname) || nickname == null) {
+            return new RedirectView("/users/" + user.getId() + "/form");
+        }
         return new RedirectView("/");
     }
 }
