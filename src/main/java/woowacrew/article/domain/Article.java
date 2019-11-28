@@ -9,12 +9,14 @@ import java.util.Objects;
 
 @Entity
 public class Article extends TimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    @Lob
-    private String content;
+
+    @Embedded
+    private ArticleFrom articleFrom;
+
     @JoinColumn(name = "author")
     @ManyToOne
     private User user;
@@ -23,8 +25,7 @@ public class Article extends TimeEntity {
     }
 
     public Article(String title, String content, User user) {
-        this.title = title;
-        this.content = content;
+        this.articleFrom = new ArticleFrom(title, content);
         this.user = user;
     }
 
@@ -33,11 +34,11 @@ public class Article extends TimeEntity {
     }
 
     public String getTitle() {
-        return title;
+        return articleFrom.getTitle();
     }
 
     public String getContent() {
-        return content;
+        return articleFrom.getContent();
     }
 
     public User getUser() {
@@ -56,8 +57,8 @@ public class Article extends TimeEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
-        return Objects.equals(id, article.id);
+        Article that = (Article) o;
+        return id.equals(that.id);
     }
 
     @Override
@@ -69,8 +70,7 @@ public class Article extends TimeEntity {
     public String toString() {
         return "Article{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
+                ", articleFrom=" + articleFrom +
                 ", user=" + user +
                 ", createdDate=" + createdDate +
                 ", lastModifiedDate=" + lastModifiedDate +
