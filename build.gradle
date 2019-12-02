@@ -31,12 +31,6 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
-
-    /*restAssured*/
-    testImplementation 'io.rest-assured:rest-assured:4.0.0'
-    testImplementation 'io.rest-assured:json-path:4.0.0'
-    testImplementation 'io.rest-assured:json-schema-validator:4.0.0'
-    testImplementation 'io.rest-assured:xml-path:4.0.0'
     
     testImplementation 'org.mockito:mockito-junit-jupiter'
 
