@@ -13,10 +13,10 @@ function article() {
       </div>`
 
   const articleUrl = window.location.href.split("/")
-
   const articleId = articleUrl[articleUrl.length - 1]
+  const origin = window.location.origin
 
-  fetch("http://localhost:8080/api/articles/" + articleId, {
+  fetch(origin + "/api/articles/" + articleId, {
     method: 'GET'
   }).then(response => response.json())
       .then(article => {

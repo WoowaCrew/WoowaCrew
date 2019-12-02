@@ -11,7 +11,7 @@ function articleEdit() {
     height: 'calc(100vh - 150px)'
   });
 
-  const url = window.location.origin
+  const origin = window.location.origin
 
   document.getElementById('save-button').addEventListener('click', function (e) {
     const title = document.getElementById('title').value;
@@ -30,7 +30,7 @@ function articleEdit() {
     formData.append('title', title)
     formData.append('content', content)
 
-    fetch(url + "/api/articles", {
+    fetch(origin + "/api/articles", {
       method: 'POST',
       body: formData
     }).then(function (response) {

@@ -1,11 +1,23 @@
 function articleList() {
-  document.getElementById('article-list').addEventListener('mouseover', function (e) {
+  const articleList = document.getElementById('article-list')
+
+  const origin = window.location.origin
+
+  const articleListFrom = (article) =>
+      `<div class="article-info">
+        <input class="article-id" type="hidden" value="${article.id}"/>
+        <div class="title">${article.title}</div>
+        <div class="userInfo">${article.userDto.userId}</div>
+        <div class="created-date">${article.createdDate}</div>
+    </div>`
+
+  articleList.addEventListener('mouseover', function (e) {
     const node = e.target.parentNode
     if (node.className === 'article-info') {
       this.style.cursor = 'pointer'
     }
   })
-  document.getElementById('article-list').addEventListener('click', function (e) {
+  articleList.addEventListener('click', function (e) {
     const node = e.target.parentNode
     if (node.className === 'article-info') {
       const url = window.location.origin
@@ -14,17 +26,7 @@ function articleList() {
     }
   })
 
-  const articleList = document.getElementById('article-list')
-
-  const articleListFrom = (article) =>
-     `<div class="article-info">
-        <input class="article-id" type="hidden" value="${article.id}"/>
-        <div class="title">${article.title}</div>
-        <div class="userInfo">${article.userDto.userId}</div>
-        <div class="created-date">${article.createdDate}</div>
-    </div>`
-
-  fetch("http://localhost:8080/api/articles", {
+  fetch(origin + "/api/articles", {
     method: 'GET'
   }).then(response => response.json())
       .then(articles => {
