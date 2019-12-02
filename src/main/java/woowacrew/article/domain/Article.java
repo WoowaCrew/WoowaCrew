@@ -15,7 +15,7 @@ public class Article extends TimeEntity {
     private Long id;
 
     @Embedded
-    private ArticleFrom articleFrom;
+    private ArticleForm articleForm;
 
     @JoinColumn(name = "author")
     @ManyToOne
@@ -25,13 +25,13 @@ public class Article extends TimeEntity {
     }
 
     public Article(String title, String content, User user) {
-        this.articleFrom = new ArticleFrom(title, content);
+        this.articleForm = new ArticleForm(title, content);
         this.user = user;
     }
 
     public void update(User user, String title, String content) {
         if (this.user.equals(user)) {
-            articleFrom.updateArticle(title, content);
+            articleForm.updateArticle(title, content);
         }
 
         throw new IllegalArgumentException();
@@ -42,11 +42,11 @@ public class Article extends TimeEntity {
     }
 
     public String getTitle() {
-        return articleFrom.getTitle();
+        return articleForm.getTitle();
     }
 
     public String getContent() {
-        return articleFrom.getContent();
+        return articleForm.getContent();
     }
 
     public User getUser() {
@@ -78,7 +78,7 @@ public class Article extends TimeEntity {
     public String toString() {
         return "Article{" +
                 "id=" + id +
-                ", articleFrom=" + articleFrom +
+                ", articleForm=" + articleForm +
                 ", user=" + user +
                 ", createdDate=" + createdDate +
                 ", lastModifiedDate=" + lastModifiedDate +

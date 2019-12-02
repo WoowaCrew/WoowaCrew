@@ -5,15 +5,15 @@ import javax.persistence.Lob;
 import java.util.Objects;
 
 @Embeddable
-public class ArticleFrom {
+public class ArticleForm {
     private String title;
     @Lob
     private String content;
 
-    private ArticleFrom() {
+    private ArticleForm() {
     }
 
-    public ArticleFrom(String title, String content) {
+    public ArticleForm(String title, String content) {
         this.title = title;
         this.content = content;
     }
@@ -35,7 +35,7 @@ public class ArticleFrom {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ArticleFrom that = (ArticleFrom) o;
+        ArticleForm that = (ArticleForm) o;
         return Objects.equals(title, that.title) &&
                 Objects.equals(content, that.content);
     }
