@@ -5,9 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Mono;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.domain.UserUpdateDto;
+import woowacrew.user.service.exception.InvalidBirthdayException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest extends CommonTestController {
@@ -47,5 +51,24 @@ public class UserControllerTest extends CommonTestController {
                 .body(Mono.just(userUpdateDto), UserUpdateDto.class)
                 .exchange()
                 .expectStatus().is3xxRedirection();
+    }
+
+    @Test
+    void 올바르지_않은_추가정보_입력값을_받을때_400_badRequest을_응답한다() {
+        String cookie = getLoginCookie();
+        UserUpdateDto userUpdateDto = new UserUpdateDto("test", "1995-13-08");
+
+        ErrorMessage errorMessage = webTestClient.post()
+                .uri("/users/1/update")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("nickname", "test")
+                        .with("birthday", "1995-13-08"))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ErrorMessage.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(errorMessage.getMessage()).isEqualTo(InvalidBirthdayException.ERROR_MESSAGE);
     }
 }
