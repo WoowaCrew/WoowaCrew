@@ -9,7 +9,6 @@ import woowacrew.article.service.ArticleService;
 
 @Controller
 public class ArticleController {
-    public static final String ARTICLES_URL = "/articles/";
     private ArticleService articleService;
 
     public ArticleController(ArticleService articleService) {
