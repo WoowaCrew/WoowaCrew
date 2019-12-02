@@ -9,11 +9,21 @@ function articleList() {
 
   const articleListFrom = (article) =>
       `<div class="article-info">
-        <input class="article-id" type="hidden" value="${article.id}"/>
-        <div class="title">${article.title}</div>
-        <div class="userInfo">${article.userDto.userId}</div>
-        <div class="created-date">${convertTime(article.createdDate)}</div>
-    </div>`
+        <div class="article-info-article-id">
+            <div id="article-info-article-id-content" value=${article.id}>
+                ${article.id}
+            </div>
+        </div>
+        <div class="article-info-title">${article.title}</div>
+        <div class="article-info-created-date">${convertTime(article.createdDate)}</div>
+        <div class="article-info-userInfo">${article.userDto.userId}</div>
+        <div class="article-info-views">
+            <div class="article-info-views-content">
+                <i class="fa fa-eye"></i>
+                1
+            </div>
+        </div>
+      </div>`
 
   articleList.addEventListener('mouseover', function (e) {
     const node = e.target.parentNode
@@ -21,12 +31,12 @@ function articleList() {
       this.style.cursor = 'pointer'
     }
   })
+
   articleList.addEventListener('click', function (e) {
     const node = e.target.parentNode
     if (node.className === 'article-info') {
-      const url = window.location.origin
-      const articleId = node.getElementsByClassName('article-id')[0].value
-      window.location.href = url + '/articles/' + articleId
+      const articleId = document.getElementById('article-info-article-id-content').getAttribute('value')
+      window.location.href = origin + '/articles/' + articleId
     }
   })
 

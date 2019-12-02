@@ -1,28 +1,63 @@
 #article-list {
     max-width: 700px;
-    margin-top: 50px;
+    margin-top: 100px;
     color: #A0A0A0;
     margin-left: auto;
     margin-right: auto;
 }
 
-.main-article-info, .article-info {
+#article-list-title {
+    color: #A0A0A0;
+    font-size: 50px;
+    width: 50px;
+    word-wrap: break-word;
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+.article-info {
+    height: 50px;
+    font-size: 25px;
+}
+
+.article-info-article-id {
+    float: left;
+    width: 10%;
+    height: 50px;
+    color: white;
+}
+
+.article-info-title {
+    float: left;
+    width: 70%;
     height: 30px;
+    color: white;
+}
+
+.article-info-created-date {
+    float: left;
+    width: 25%;
+    height: 20px;
+}
+
+.article-info-userInfo {
+    float: left;
+    width: 45%;
+    height: 20px;
+}
+
+.article-info-userInfo, .article-info-created-date {
+    font-size: 15px;
+}
+
+.article-info-views {
+    height: 50px;
     font-size: 20px;
-    border: 1px solid;
 }
 
-.main-title, .title {
-    float: left;
-    width: 50%;
-    padding-left: 5px;
-}
-
-.main-userInfo, .userInfo {
-    float: left;
-    width: 18%;
-}
-
-.main-created-date, .created-date {
-    float: left;
+#article-info-article-id-content, .article-info-views-content {
+    margin-top: 12.5px;
+    text-align: center;
 }
