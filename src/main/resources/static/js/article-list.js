@@ -3,12 +3,16 @@ function articleList() {
 
   const origin = window.location.origin
 
+  const convertTime = (time) => {
+       return time.split('T')[0]
+  }
+
   const articleListFrom = (article) =>
       `<div class="article-info">
         <input class="article-id" type="hidden" value="${article.id}"/>
         <div class="title">${article.title}</div>
         <div class="userInfo">${article.userDto.userId}</div>
-        <div class="created-date">${article.createdDate}</div>
+        <div class="created-date">${convertTime(article.createdDate)}</div>
     </div>`
 
   articleList.addEventListener('mouseover', function (e) {
