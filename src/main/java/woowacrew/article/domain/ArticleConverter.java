@@ -6,7 +6,7 @@ import woowacrew.user.domain.UserConverter;
 public class ArticleConverter {
     public static ArticleResponseDto articleToArticleResponseDto(Article article) {
         return new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent(),
-                UserConverter.userToUserDto(article.getUser()), article.getCreatedDate(), article.getLastModifiedDate());
+                UserConverter.userToUserContextDto(article.getUser()), article.getCreatedDate(), article.getLastModifiedDate());
     }
 
     public static Article articleDtoToArticle(ArticleRequestDto articleRequestDto, User user) {

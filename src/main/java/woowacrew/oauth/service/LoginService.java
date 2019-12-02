@@ -15,11 +15,11 @@ public class LoginService {
         this.userRepository = userRepository;
     }
 
-    public UserResponseDto save(UserDto userDto) {
-        User user = userRepository.findByUserId(userDto.getUserId())
+    public UserResponseDto save(UserContext userContext) {
+        User user = userRepository.findByUserId(userContext.getUserId())
                 .orElseGet(() -> {
-                    log.debug("{} : 신규 유저 생성", userDto.getUserId());
-                    User newUser = new User(userDto.getUserId(), userDto.getUrl());
+                    log.debug("{} : 신규 유저 생성", userContext.getUserId());
+                    User newUser = new User(userContext.getUserId(), userContext.getUrl());
                     return userRepository.save(newUser);
                 });
 

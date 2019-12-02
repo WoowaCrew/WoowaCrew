@@ -4,6 +4,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserContext;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,8 +14,8 @@ public class SocialPostAuthorizationToken extends UsernamePasswordAuthentication
         super(principal, credentials, authorities);
     }
 
-    public SocialPostAuthorizationToken(User user) {
-        super(user, user, parseAuthorities(user.getUserId()));
+    public SocialPostAuthorizationToken(UserContext userContext) {
+        super(userContext, userContext, parseAuthorities(userContext.getUserId()));
     }
 
     private static Collection<? extends GrantedAuthority> parseAuthorities(String role) {

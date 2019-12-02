@@ -1,5 +1,6 @@
 package woowacrew.security.provider;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
 import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserContext;
 import woowacrew.user.domain.UserRepository;
 
 import java.util.Arrays;
@@ -24,7 +26,8 @@ public class TestLoginProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         User user = userRepository.findByUserId("1234")
                 .orElseGet(() -> userRepository.save(new User("userId", "url")));
-        return new SocialPostAuthorizationToken(user, user, Arrays.asList(new SimpleGrantedAuthority((String) authentication.getPrincipal())));
+        UserContext userContext = new ModelMapper().map(user, UserContext.class);
+        return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority((String) authentication.getPrincipal())));
     }
 
     @Override

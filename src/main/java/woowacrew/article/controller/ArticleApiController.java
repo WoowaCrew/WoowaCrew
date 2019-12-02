@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.article.service.ArticleService;
-import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserConverter;
-import woowacrew.user.domain.UserDto;
+import woowacrew.user.domain.UserContext;
 import woowacrew.utils.annotation.AuthenticationUser;
 
-import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.util.List;
 
@@ -38,9 +35,8 @@ public class ArticleApiController {
     }
 
     @PostMapping("/api/articles")
-    public ResponseEntity<ArticleResponseDto> createArticle(@AuthenticationUser User user, ArticleRequestDto articleRequestDto) {
-        UserDto userDto = UserConverter.userToUserDto(user);
-        ArticleResponseDto articleResponseDto = articleService.save(articleRequestDto, userDto);
+    public ResponseEntity<ArticleResponseDto> createArticle(@AuthenticationUser UserContext userContext, ArticleRequestDto articleRequestDto) {
+        ArticleResponseDto articleResponseDto = articleService.save(articleRequestDto, userContext);
         return ResponseEntity.created(URI.create(ARTICLES_URL + articleResponseDto.getId())).body(articleResponseDto);
     }
 }

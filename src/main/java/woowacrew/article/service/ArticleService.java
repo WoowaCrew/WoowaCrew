@@ -5,7 +5,7 @@ import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleConverter;
 import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleResponseDto;
-import woowacrew.user.domain.UserDto;
+import woowacrew.user.domain.UserContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +18,8 @@ public class ArticleService {
         this.articleInternalService = articleInternalService;
     }
 
-    public ArticleResponseDto save(ArticleRequestDto articleRequestDto, UserDto userDto) {
-        Article article = articleInternalService.save(articleRequestDto, userDto);
+    public ArticleResponseDto save(ArticleRequestDto articleRequestDto, UserContext userContext) {
+        Article article = articleInternalService.save(articleRequestDto, userContext);
         return ArticleConverter.articleToArticleResponseDto(article);
     }
 

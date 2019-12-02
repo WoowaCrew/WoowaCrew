@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserDto;
+import woowacrew.user.domain.UserContext;
 import woowacrew.user.domain.UserRepository;
 import woowacrew.user.domain.UserResponseDto;
 
@@ -32,12 +32,12 @@ class LoginServiceTest {
     @Test
     @DisplayName("존재하지 않는 유저라면, Oauth로 전달 받은 유저 ID, URL로만 유저를 생성한다.")
     void saveUser() {
-        UserDto userDto = new UserDto("123", "123");
+        UserContext userContext = new UserContext("123", "123");
 
         when(userRepository.findByUserId(anyString())).thenReturn(Optional.empty());
         when(userRepository.save(any())).thenReturn(new User("123", "123"));
 
-        UserResponseDto actual = loginService.save(userDto);
+        UserResponseDto actual = loginService.save(userContext);
 
         assertThat(actual.getUserId()).isEqualTo("123");
         assertNull(actual.getNickname());
@@ -47,13 +47,13 @@ class LoginServiceTest {
     @Test
     @DisplayName("유저가 저장되어 있으면 해당 유저 정보 반환한다.")
     void save_ifUserSaved_thenUserResponseDtoBySavedUser() {
-        UserDto userDto = new UserDto("123", "123");
+        UserContext userContext = new UserContext("123", "123");
         User user = new User("123", "123");
         user.updateUserInfo("hyojae", LocalDate.of(1995, 6, 8));
 
         when(userRepository.findByUserId(anyString())).thenReturn(Optional.of(user));
 
-        UserResponseDto actual = loginService.save(userDto);
+        UserResponseDto actual = loginService.save(userContext);
 
         assertThat(actual.getUserId()).isEqualTo("123");
         assertThat(actual.getNickname()).isEqualTo("hyojae");

@@ -1,5 +1,6 @@
 package woowacrew.security.provider;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -8,6 +9,7 @@ import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
 import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserContext;
 import woowacrew.user.domain.UserOauthDto;
 import woowacrew.user.domain.UserRepository;
 
@@ -26,11 +28,11 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
         SocialPreAuthorizationToken token = (SocialPreAuthorizationToken) authentication;
         String code = token.getCode();
         String accessToken = oauthService.getAccessToken(code);
-        UserOauthDto userDto = oauthService.getUserInfo(accessToken);
-        User user = userRepository.findByUserId(userDto.getUserId())
-                .orElseGet(() -> registerUser(userDto));
-        //Todo UserContext를 만들어서 리턴해주자. UserContext의 정보는 User Entity의 컬럼이 나오면 적용
-        return new SocialPostAuthorizationToken(user);
+        UserOauthDto userOauthDto = oauthService.getUserInfo(accessToken);
+        User user = userRepository.findByUserId(userOauthDto.getUserId())
+                .orElseGet(() -> registerUser(userOauthDto));
+        UserContext userContext = new ModelMapper().map(user, UserContext.class);
+        return new SocialPostAuthorizationToken(userContext);
     }
 
     @Override
@@ -38,8 +40,8 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
         return SocialPreAuthorizationToken.class.isAssignableFrom(authentication);
     }
 
-    private User registerUser(UserOauthDto userDto) {
+    private User registerUser(UserOauthDto userOauthDto) {
         //Todo User 엔티티의 createUser() 사용 예정
-        return userRepository.save(new User(userDto.getUserId(), null));
+        return userRepository.save(new User(userOauthDto.getUserId(), null));
     }
 }

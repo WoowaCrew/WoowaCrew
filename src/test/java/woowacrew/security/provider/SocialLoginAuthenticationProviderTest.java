@@ -11,6 +11,7 @@ import woowacrew.oauth.github.GithubOauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
 import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserContext;
 import woowacrew.user.domain.UserOauthDto;
 import woowacrew.user.domain.UserRepository;
 
@@ -59,7 +60,7 @@ class SocialLoginAuthenticationProviderTest {
         when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(user));
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);
-        User exceptedUser = (User) postToken.getPrincipal();
+        UserContext exceptedUser = (UserContext) postToken.getPrincipal();
         assertThat(exceptedUser.getUserId()).isEqualTo(userId);
     }
 
@@ -79,7 +80,7 @@ class SocialLoginAuthenticationProviderTest {
         when(userRepository.save(any())).thenReturn(user);
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);
-        User exceptedUser = (User) postToken.getPrincipal();
+        UserContext exceptedUser = (UserContext) postToken.getPrincipal();
         assertThat(exceptedUser.getUserId()).isEqualTo(userId);
     }
 }
