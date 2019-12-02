@@ -1,5 +1,6 @@
 function articleList() {
   const articleList = document.getElementById('article-list')
+  const articleCreateIcon = document.getElementById('article-create-icon')
 
   const origin = window.location.origin
 
@@ -38,6 +39,10 @@ function articleList() {
       const articleId = document.getElementById('article-info-article-id-content').getAttribute('value')
       window.location.href = origin + '/articles/' + articleId
     }
+  })
+
+  articleCreateIcon.addEventListener('click', function (e) {
+      window.location.href = origin + '/article/new'
   })
 
   fetch(origin + "/api/articles", {
