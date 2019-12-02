@@ -1,16 +1,14 @@
 package woowacrew.oauth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.oauth.Oauth;
 import woowacrew.oauth.service.LoginService;
-import woowacrew.user.domain.UserDto;
-
-import javax.servlet.http.HttpSession;
-import java.util.Objects;
+import woowacrew.user.domain.User;
+import woowacrew.utils.annotation.AuthenticationUser;
 
 @Controller
 public class LoginController {
@@ -27,22 +25,25 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public RedirectView login(HttpSession session) {
-        if (Objects.nonNull(session.getAttribute(USER))) {
-            return new RedirectView("/");
-        }
-
-        return new RedirectView(oauth.getUserAuthorizationUri());
+    public String login() {
+        return "login";
     }
 
-    @GetMapping("/oauth/github")
-    public RedirectView oauth(HttpSession session, @RequestParam String code) {
-        String accessToken = oauth.getAccessToken(code);
-        UserDto user = oauth.getUserInfo(accessToken);
-        loginService.save(user);
+    @GetMapping("/userPage")
+    @PreAuthorize("hasRole('USER')")
+    public String user(@AuthenticationUser User user) {
+        return "userPage";
+    }
 
-        session.setAttribute(ACCESS_TOKEN, accessToken);
-        session.setAttribute(USER, user);
-        return new RedirectView("/");
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String admin() {
+        return "admin";
+    }
+
+    @GetMapping("/hello")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<User> hello(@AuthenticationUser User user) {
+        return ResponseEntity.ok(user);
     }
 }
