@@ -18,7 +18,7 @@ public class TestLoginController {
     public String testLogin(HttpSession session) {
         User testUser = new User("test", "test");
         User user = userRepository.save(testUser);
-        session.setAttribute("user", UserConverter.userToUserDto(user));
+        session.setAttribute("user", UserConverter.userToUserResponseDto(user));
         return "index";
     }
 }

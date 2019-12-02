@@ -11,7 +11,7 @@ import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.domain.UserUpdateDto;
 import woowacrew.user.service.exception.InvalidBirthdayException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest extends CommonTestController {
@@ -54,21 +54,30 @@ public class UserControllerTest extends CommonTestController {
     }
 
     @Test
-    void 올바르지_않은_추가정보_입력값을_받을때_400_badRequest을_응답한다() {
+    void 올바르지_않은_추가정보_입력값을_받을때_수정_폼에_에러메세지를_포함한다() {
         String cookie = getLoginCookie();
-        UserUpdateDto userUpdateDto = new UserUpdateDto("test", "1995-13-08");
+        String redirectLocation = "/users/1/form";
 
-        ErrorMessage errorMessage = webTestClient.post()
+        webTestClient.post()
                 .uri("/users/1/update")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("nickname", "test")
                         .with("birthday", "1995-13-08"))
                 .exchange()
-                .expectStatus().isOk()
-                .expectBody(ErrorMessage.class)
-                .returnResult()
-                .getResponseBody();
+                .expectStatus().is3xxRedirection()
+                .expectHeader()
+                .value("Location", Matchers.containsString(redirectLocation))
+                .expectBody()
+                .consumeWith(body -> {
+                    String responseBody = webTestClient.get()
+                            .uri(redirectLocation)
+                            .header("Cookie", cookie)
+                            .exchange()
+                            .expectBody(String.class)
+                            .returnResult()
+                            .getResponseBody();
 
-        assertThat(errorMessage.getMessage()).isEqualTo(InvalidBirthdayException.ERROR_MESSAGE);
+                    assertTrue(responseBody.contains(InvalidBirthdayException.ERROR_MESSAGE));
+                });
     }
 }
