@@ -46,11 +46,11 @@ class ArticleControllerTest extends CommonTestController {
     }
 
     @Test
-    void 게시글_작성_후_해당_201응답이_다() {
+    void 게시글_작성_후_해당_201응답이다() {
         String cookie = getLoginCookie();
 
         webTestClient.post()
-                .uri("/articles")
+                .uri("/api/articles")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("title", "title")
                         .with("content", "content"))
@@ -75,7 +75,7 @@ class ArticleControllerTest extends CommonTestController {
         String cookie = getLoginCookie();
         //게시글 작
         webTestClient.post()
-                .uri("/articles")
+                .uri("/api/articles")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("title", "title")
                         .with("content", "content"))

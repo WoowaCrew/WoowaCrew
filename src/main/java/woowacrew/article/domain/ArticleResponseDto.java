@@ -5,12 +5,15 @@ import woowacrew.user.domain.UserDto;
 import java.util.Date;
 
 public class ArticleResponseDto {
-    private final Long id;
-    private final String title;
-    private final String content;
-    private final UserDto userDto;
-    private final Date createdDate;
-    private final Date lastModifiedDate;
+    private Long id;
+    private String title;
+    private String content;
+    private UserDto userDto;
+    private Date createdDate;
+    private Date lastModifiedDate;
+
+    private ArticleResponseDto() {
+    }
 
     public ArticleResponseDto(Long id, String title, String content, UserDto userDto, Date createdDate, Date lastModifiedDate) {
         this.id = id;

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleConverter;
-import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleRepository;
+import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserDto;
 import woowacrew.user.service.UserInternalService;
@@ -38,6 +38,7 @@ public class ArticleInternalService {
                 .orElseThrow(() -> new IllegalArgumentException("요청하신 게시글을 찾을 수 없습니다."));
     }
 
+    @Transactional(readOnly = true)
     public List<Article> findAll() {
         return articleRepository.findAllByOrderByIdDesc();
     }
