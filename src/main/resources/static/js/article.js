@@ -6,7 +6,7 @@ function article() {
           <div id="article-header">
               <div class="title">${article.title}</div>
               <div class="user">
-                  <div class="userInfo">${article.userDto.userId}</div>
+                  <div class="userInfo">${article.userResponseDto.userId}</div>
               </div>
           </div>
           <div id="viewerSection" class="content"></div>

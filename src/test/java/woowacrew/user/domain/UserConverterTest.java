@@ -18,12 +18,6 @@ class UserConverterTest {
     }
 
     @Test
-    void 유저값에_null이_존재_때_UserDto가_정상_출력() {
-        User user = new User("userId", null);
-        assertThrows(IllegalArgumentException.class, () -> UserConverter.userToUserContextDto(user));
-    }
-
-    @Test
     void 유저_정보를_정상적으로_반환한다() {
         User user = new User("123", "https");
         user.updateUserInfo("hyojae", LocalDate.of(1995, 6, 8));
