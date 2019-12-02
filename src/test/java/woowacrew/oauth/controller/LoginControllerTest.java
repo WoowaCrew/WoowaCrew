@@ -25,7 +25,7 @@ class LoginControllerTest {
                 .expectBody()
                 .consumeWith(response -> {
                     String body = new String(response.getResponseBody());
-                    assertThat(body.contains("https://github.com/login/oauth/authorize?clientId=")).isTrue();
+                    assertThat(body.contains("https://github.com/login/oauth/authorize?client_id=")).isTrue();
                 });
     }
 

@@ -8,6 +8,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -24,7 +26,7 @@ class UserInternalServiceTest {
         String userId = "userId";
         String url = "url";
         User user = new User(userId, url);
-        when(userRepository.findByUserId(userId)).thenReturn(user);
+        when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(user));
 
         User expectUser = userInternalService.findByUserId(userId);
 

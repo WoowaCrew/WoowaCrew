@@ -14,6 +14,8 @@ import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserOauthDto;
 import woowacrew.user.domain.UserRepository;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -54,7 +56,7 @@ class SocialLoginAuthenticationProviderTest {
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
         when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
-        when(userRepository.findByUserId(userId)).thenReturn(user);
+        when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(user));
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);
         User exceptedUser = (User) postToken.getPrincipal();
@@ -73,7 +75,7 @@ class SocialLoginAuthenticationProviderTest {
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
         when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
-        when(userRepository.findByUserId(userId)).thenReturn(null);
+        when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(null));
         when(userRepository.save(any())).thenReturn(user);
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);

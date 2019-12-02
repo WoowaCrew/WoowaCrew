@@ -13,16 +13,7 @@
 
 <body>
 <th:block th:replace="fragments/header/header :: headerFragment"/>
-<div class="article-info">
-    <div id="article-header">
-        <div class="title" th:text="${article.title}"></div>
-        <div class="user">
-            <div class="userInfo" th:text="${article.userDto.userId}"></div>
-        </div>
-    </div>
-    <div id="viewerSection" class="content"></div>
-</div>
-<input type="hidden" id="content" th:value="${article.content}"/>
+
 </body>
 <!--  SCRIPT  -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>

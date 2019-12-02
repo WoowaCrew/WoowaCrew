@@ -1,9 +1,12 @@
 package woowacrew.user.domain;
 
+import woowacrew.user.domain.exception.NotExistNicknameException;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -16,12 +19,29 @@ public class User {
 
     private String url;
 
+    private String nickname;
+
+    private LocalDate birthday;
+
     private User() {
     }
 
     public User(String userId, String url) {
         this.userId = userId;
         this.url = url;
+    }
+
+    public void updateUserInfo(String nickname, LocalDate birthday) {
+        validNickname(nickname);
+
+        this.nickname = nickname;
+        this.birthday = birthday;
+    }
+
+    private void validNickname(String nickname) {
+        if (nickname == null || "".equals(nickname)) {
+            throw new NotExistNicknameException();
+        }
     }
 
     public Long getId() {
@@ -34,6 +54,14 @@ public class User {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
     @Override

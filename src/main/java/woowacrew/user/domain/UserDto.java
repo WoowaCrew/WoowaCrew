@@ -3,9 +3,12 @@ package woowacrew.user.domain;
 import com.google.gson.annotations.SerializedName;
 
 public class UserDto {
-    @SerializedName("login")
+    @SerializedName("id")
     private String userId;
     private String url;
+
+    private UserDto() {
+    }
 
     public UserDto(String userId, String url) {
         this.userId = userId;

@@ -11,7 +11,6 @@ import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 @Component
 public class TestLoginProvider implements AuthenticationProvider {
@@ -23,7 +22,7 @@ public class TestLoginProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        User user = Optional.ofNullable(userRepository.findByUserId("userId"))
+        User user = userRepository.findByUserId("1234")
                 .orElseGet(() -> userRepository.save(new User("userId", "url")));
         return new SocialPostAuthorizationToken(user, user, Arrays.asList(new SimpleGrantedAuthority((String) authentication.getPrincipal())));
     }

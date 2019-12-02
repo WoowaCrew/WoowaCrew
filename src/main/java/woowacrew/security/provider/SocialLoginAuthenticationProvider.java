@@ -11,8 +11,6 @@ import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserOauthDto;
 import woowacrew.user.domain.UserRepository;
 
-import java.util.Optional;
-
 @Component
 public class SocialLoginAuthenticationProvider implements AuthenticationProvider {
     private final UserRepository userRepository;
@@ -29,7 +27,7 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
         String code = token.getCode();
         String accessToken = oauthService.getAccessToken(code);
         UserOauthDto userDto = oauthService.getUserInfo(accessToken);
-        User user = Optional.ofNullable(userRepository.findByUserId(userDto.getUserId()))
+        User user = userRepository.findByUserId(userDto.getUserId())
                 .orElseGet(() -> registerUser(userDto));
         //Todo UserContext를 만들어서 리턴해주자. UserContext의 정보는 User Entity의 컬럼이 나오면 적용
         return new SocialPostAuthorizationToken(user);

@@ -5,33 +5,17 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.common.controller.CommonTestController;
-import woowacrew.security.provider.WithCustomUser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ArticleControllerTest extends CommonTestController {
     @Autowired
-    private ApplicationContext context;
-
-    @Autowired
     private WebTestClient webTestClient;
-
-    void test() {
-        webTestClient.get()
-                .uri("/oauth/github")
-                .exchange()
-                .expectBody()
-                .consumeWith(response -> {
-                    response.getStatus();
-                    String body = new String(response.getResponseBody());
-                });
-    }
 
     @Test
     void 로그인이_되어있지_않으면_로그인페이지가_리다이렉트() {
@@ -45,7 +29,6 @@ class ArticleControllerTest extends CommonTestController {
     }
 
     @Test
-    @WithCustomUser
     void 로그인이_되어있다면_게시글_작성_페이지가_보여진다() {
         String cookie = loginWithUser();
         webTestClient
@@ -63,11 +46,11 @@ class ArticleControllerTest extends CommonTestController {
     }
 
     @Test
-    void 게시글_작성_후_해당_201응답이_다() {
+    void 게시글_작성_후_해당_201응답이다() {
         String cookie = loginWithUser();
 
         webTestClient.post()
-                .uri("/articles")
+                .uri("/api/articles")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("title", "title")
                         .with("content", "content"))
@@ -92,7 +75,7 @@ class ArticleControllerTest extends CommonTestController {
         String cookie = loginWithUser();
         //게시글 작
         webTestClient.post()
-                .uri("/articles")
+                .uri("/api/articles")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("title", "title")
                         .with("content", "content"))
