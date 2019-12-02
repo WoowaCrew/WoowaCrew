@@ -1,4 +1,5 @@
 .container {
+    font-family: 'Wallpoet', cursive;
     margin-top: 100px;
     display: flex;
     justify-content: center;
@@ -27,7 +28,7 @@ form .update-label {
 
 .update-label input {
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: 0.2rem;
     width: 100%;
     background-color: transparent;
     border: none;
@@ -50,7 +51,7 @@ form .form__buttons {
 .form__buttons .form-button {
     text-decoration:none;
     color:#fff;
-    width:75px;
+    width:115px;
     display:inline-block;
     line-height:40px;
     text-align: center;
