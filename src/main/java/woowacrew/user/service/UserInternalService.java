@@ -18,9 +18,10 @@ public class UserInternalService {
     @Transactional(readOnly = true)
     public User findByUserId(String userId) {
         return userRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User를 찾을 수 없습니다."));
+                .orElseThrow(NotExistUserException::new);
     }
 
+    @Transactional(readOnly = true)
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(NotExistUserException::new);
