@@ -11,13 +11,13 @@
 <div class="container">
     <div class="wrapper">
         <h1 class="title">추가 정보 입력</h1>
-        <form th:action="@{/users/{id}/update(id=${user.id})}" method="post">
+        <form autocomplete="off" method="post" th:action="@{/users/{id}/update(id=${user.id})}">
             <label class="update-label" for="nickname">
-                <input id="nickname" name="nickname" />
+                <input id="nickname" name="nickname"/>
                 <span>닉네임</span>
             </label>
             <label class="update-label" for="birthday">
-                <input id="birthday" type="date" name="birthday" />
+                <input id="birthday" type="date" name="birthday"/>
                 <span>생년월일</span>
             </label>
             <div class="error" th:if="${error}" th:text="${error}"></div>
