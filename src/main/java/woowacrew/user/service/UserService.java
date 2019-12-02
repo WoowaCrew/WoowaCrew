@@ -27,7 +27,7 @@ public class UserService {
 
     public UserResponseDto update(Long id, UserUpdateDto userUpdateDto) {
         String nickname = userUpdateDto.getNickname();
-        LocalDate birthday = LocalDate.parse(userUpdateDto.getBirthday());
+        LocalDate birthday = BirthdayConverter.convert(userUpdateDto.getBirthday());
 
         User user = userInternalService.findById(id);
         user.updateUserInfo(nickname, birthday);

@@ -8,9 +8,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserResponseDto;
 import woowacrew.user.domain.UserUpdateDto;
+import woowacrew.user.service.exception.InvalidBirthdayException;
 import woowacrew.user.service.exception.NotExistUserException;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -53,5 +55,32 @@ class UserServiceTest {
         assertThat(updateUser.getUserId()).isEqualTo("test");
         assertThat(updateUser.getNickname()).isEqualTo("test nickname");
         assertThat(updateUser.getBirthday()).isEqualTo(LocalDate.of(1995, 6, 8));
+    }
+
+    @Test
+    void birthday_날짜가_오늘_날짜_이후인_경우_예외가_발생한다() {
+        String birthdayAfterMonth = LocalDate.now()
+                .plusMonths(1)
+                .format(DateTimeFormatter.ISO_DATE);
+        UserUpdateDto userUpdateDto = new UserUpdateDto("test nickname", birthdayAfterMonth);
+
+        assertThatThrownBy(() -> userService.update(1L, userUpdateDto))
+                .isInstanceOf(InvalidBirthdayException.class);
+    }
+
+    @Test
+    void birthday_날짜가_날짜_범위에_벗어난_경우_예외가_발생한다() {
+        UserUpdateDto userUpdateDto = new UserUpdateDto("test nickname", "1995-01-32");
+
+        assertThatThrownBy(() -> userService.update(1L, userUpdateDto))
+                .isInstanceOf(InvalidBirthdayException.class);
+    }
+
+    @Test
+    void birthday_월이_범위에_벗어난_경우_예외가_발생한다() {
+        UserUpdateDto userUpdateDto = new UserUpdateDto("test nickname", "1995-13-01");
+
+        assertThatThrownBy(() -> userService.update(1L, userUpdateDto))
+                .isInstanceOf(InvalidBirthdayException.class);
     }
 }
