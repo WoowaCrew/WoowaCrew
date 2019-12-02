@@ -20,12 +20,12 @@
                 <input id="birthday" type="date" name="birthday" />
                 <span>생년월일</span>
             </label>
+            <div class="error" th:if="${error}" th:text="${error}"></div>
             <div class="form__buttons">
                 <a class="form-button" href="/">취소</a>
                 <button class="form-button" href="https://techcourse.woowahan.com/">수정</button>
             </div>
         </form>
-        <div class="error" th:text="${error}"></div>
     </div>
 </div>
 </body>

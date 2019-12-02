@@ -90,12 +90,19 @@ form .form__buttons {
 .form__buttons .form-button:hover{
     background-color: transparent;
 }
-.form__buttons .form-button:hover:after{
+
+.form__buttons .form-button:hover:after {
     background-color: darkred;
 }
 
-.form__buttons .form-button:active{
-    top:5px;
-    left:5px;
-    box-shadow:0 0 0 0;
+.form__buttons .form-button:active {
+    top: 5px;
+    left: 5px;
+    box-shadow: 0 0 0 0;
+}
+
+.error {
+    padding: 10px;
+    background-color: #8b0000;
+    color: #fff;
 }
