@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserConverter;
 import woowacrew.user.domain.UserRepository;
+import woowacrew.user.service.exception.NotExistUserException;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +18,8 @@ public class TestLoginController {
 
     @PostMapping("/test/login")
     public String testLogin(HttpSession session) {
-        User user = userRepository.findById(TEST_USER_ID).get();
+        User user = userRepository.findById(TEST_USER_ID)
+                .orElseThrow(NotExistUserException::new);
         session.setAttribute("user", UserConverter.userToUserResponseDto(user));
         return "index";
     }
