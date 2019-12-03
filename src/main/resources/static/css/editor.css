@@ -45,3 +45,7 @@
 .te-mode-switch-section {
     background: gray;
 }
+
+.tui-editor-contents {
+    color: white;
+}
