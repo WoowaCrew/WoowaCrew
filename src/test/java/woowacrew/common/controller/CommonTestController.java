@@ -13,24 +13,18 @@ public class CommonTestController {
     private WebTestClient webTestClient;
 
     protected String loginWithUser() {
-        final String[] cookie = new String[1];
-        webTestClient.get()
-                .uri("/oauth/github?role=ROLE_USER")
-                .exchange()
-                .expectBody()
-                .consumeWith(response -> {
-                    List<ResponseCookie> jsessionid = response.getResponseCookies().get("JSESSIONID");
-                    cookie[0] = jsessionid.get(0).getName() + "=" + jsessionid.get(0).getValue();
-
-                });
-
-        return cookie[0];
+        return loginWith("USER");
     }
 
     protected String loginWithAdmin() {
+        return loginWith("ADMIN");
+    }
+
+    private String loginWith(String role) {
         final String[] cookie = new String[1];
+
         webTestClient.get()
-                .uri("/oauth/github?role=ROLE_ADMIN")
+                .uri("/oauth/github?role=ROLE_" + role)
                 .exchange()
                 .expectBody()
                 .consumeWith(response -> {
@@ -38,6 +32,7 @@ public class CommonTestController {
                     cookie[0] = jsessionid.get(0).getName() + "=" + jsessionid.get(0).getValue();
 
                 });
+
         return cookie[0];
     }
 }
