@@ -38,6 +38,10 @@
     color: white;
 }
 
+.te-preview .tui-editor-contents * {
+    color: white;
+}
+
 .tui-editor-defaultUI-toolbar {
     background: #414447;
 }
