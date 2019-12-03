@@ -9,38 +9,35 @@ import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CommonTestController {
-    private static String cookie;
-
     @Autowired
     private WebTestClient webTestClient;
 
     protected String loginWithUser() {
-        if (cookie == null) {
-            webTestClient.get()
-                    .uri("/oauth/github?role=ROLE_USER")
-                    .exchange()
-                    .expectBody()
-                    .consumeWith(response -> {
-                        List<ResponseCookie> jsessionid = response.getResponseCookies().get("JSESSIONID");
-                        cookie = jsessionid.get(0).getName() + "=" + jsessionid.get(0).getValue();
+        final String[] cookie = new String[1];
+        webTestClient.get()
+                .uri("/oauth/github?role=ROLE_USER")
+                .exchange()
+                .expectBody()
+                .consumeWith(response -> {
+                    List<ResponseCookie> jsessionid = response.getResponseCookies().get("JSESSIONID");
+                    cookie[0] = jsessionid.get(0).getName() + "=" + jsessionid.get(0).getValue();
 
-                    });
-        }
-        return cookie;
+                });
+
+        return cookie[0];
     }
 
     protected String loginWithAdmin() {
-        if (cookie == null) {
-            webTestClient.get()
-                    .uri("/oauth/github?role=ROLE_ADMIN")
-                    .exchange()
-                    .expectBody()
-                    .consumeWith(response -> {
-                        List<ResponseCookie> jsessionid = response.getResponseCookies().get("JSESSIONID");
-                        cookie = jsessionid.get(0).getName() + "=" + jsessionid.get(0).getValue();
+        final String[] cookie = new String[1];
+        webTestClient.get()
+                .uri("/oauth/github?role=ROLE_ADMIN")
+                .exchange()
+                .expectBody()
+                .consumeWith(response -> {
+                    List<ResponseCookie> jsessionid = response.getResponseCookies().get("JSESSIONID");
+                    cookie[0] = jsessionid.get(0).getName() + "=" + jsessionid.get(0).getValue();
 
-                    });
-        }
-        return cookie;
+                });
+        return cookie[0];
     }
 }
