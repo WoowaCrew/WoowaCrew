@@ -11,6 +11,8 @@
     height: 30px;
     font-size: 30px;
     border: none;
+    background: black;
+    color: white;
 }
 
 .edit-bar {
@@ -24,4 +26,30 @@
 
 .edit-bar > li > input {
     width: 100%;
+}
+
+.CodeMirror-scroll {
+    background: #414447;
+    color: white;
+}
+
+.te-preview {
+    background: #414447;
+    color: white;
+}
+
+.te-preview .tui-editor-contents * {
+    color: white;
+}
+
+.tui-editor-defaultUI-toolbar {
+    background: #414447;
+}
+
+.te-mode-switch-section {
+    background: gray;
+}
+
+.tui-editor-contents {
+    color: white;
 }
