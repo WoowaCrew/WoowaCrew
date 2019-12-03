@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="headerFragment">
     <ul class="header-bar">
         <li class="header-li"><th:block th:replace="fragments/header/sideNav::sideNavFragment"/></li>
@@ -8,8 +8,11 @@
             <a class="header-active" href="#">service <i class="fa fa-caret-down"></i></a>
             <th:block th:replace="fragments/header/dropdown::dropdownFragment"/>
         </li>
-        <li class="header-li header-login">
+        <li class="header-li header-login" sec:authorize="isAnonymous()">
             <a class="header-contents" href="/login">login</a>
+        </li>
+        <li class="header-li header-login" sec:authorize="isAuthenticated()">
+            <a class="header-contents" href="/logout">logout</a>
         </li>
     </ul>
 </header>
