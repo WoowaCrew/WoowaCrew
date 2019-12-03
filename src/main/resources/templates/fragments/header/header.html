@@ -12,8 +12,19 @@
             <a class="header-contents" href="/login">login</a>
         </li>
         <li class="header-li header-login" sec:authorize="isAuthenticated()">
-            <a class="header-contents" href="/logout">logout</a>
+            <a class="header-active header-login-user"href="#" sec:authentication="principal.nickname">닉네임 미설정<i class="fa fa-caret-down"></i></a>
+            <span id="user-id" sec:authentication="principal.id"></span>
+            <ul id="header-dropdown">
+                <li><a href="#" id="update-form">개인정보 수정</a></li>
+                <li><a href="/logout">logout</a></li>
+            </ul>
         </li>
     </ul>
+
+    <script>
+      const userId = document.getElementById('user-id').innerHTML
+      const updateFormUrl = "/users/" + userId + "/form"
+      document.getElementById('update-form').setAttribute('href', updateFormUrl)
+    </script>
 </header>
 </html>

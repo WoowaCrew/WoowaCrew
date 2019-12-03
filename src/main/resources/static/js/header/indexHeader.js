@@ -32,8 +32,15 @@ function indexHeader() {
         }
     }
 
+    function setUpdateForm() {
+        const userId = document.getElementById('user-id').innerHTML
+        const updateFormUrl = "/users/" + userId + "/form"
+        document.getElementById('update-form').setAttribute('href', updateFormUrl)
+    }
+
     move();
     age();
+    setUpdateForm();
 }
 
 indexHeader();
