@@ -9,30 +9,40 @@
 #article-header {
     border-bottom: 1px dotted;
     padding-bottom: 10px;
-    height: 40px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .title {
     font-size: 40px;
     float: left;
+    width:80%
+    color: white;
 }
 
 .user {
-    float: right;
-    height: 40px;
-    position: relative;
-    width: 70px;
-}
-
-.userInfo {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    float: left;
+    height: 20px;
 }
 
 .content {
     margin-top: 20px;
     background: black;
+}
+
+.article-button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-edit {
+    font-size: 3.2em;
+}
+
+.article-delete-button {
+    margin-left: 1rem;
 }
 
 .tui-editor-contents {
@@ -62,5 +72,3 @@
 .tui-editor-contents a:hover {
     color: #A0A0A0;
 }
-
-ㅌㅈ
