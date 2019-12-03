@@ -2,18 +2,29 @@ package woowacrew.user.domain;
 
 import java.time.LocalDate;
 
-public class UserResponseDto {
+public class UserContext {
     private Long id;
+
     private String userId;
+
+    private String url;
+
     private String nickname;
+
     private LocalDate birthday;
 
-    private UserResponseDto() {
+    private UserContext() {
     }
 
-    public UserResponseDto(Long id, String userId, String nickname, LocalDate birthday) {
+    public UserContext(String userId, String url) {
+        this.userId = userId;
+        this.url = url;
+    }
+
+    public UserContext(Long id, String userId, String url, String nickname, LocalDate birthday) {
         this.id = id;
         this.userId = userId;
+        this.url = url;
         this.nickname = nickname;
         this.birthday = birthday;
     }
@@ -34,6 +45,14 @@ public class UserResponseDto {
         this.userId = userId;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getNickname() {
         return nickname;
     }
@@ -48,15 +67,5 @@ public class UserResponseDto {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
-    }
-
-    @Override
-    public String toString() {
-        return "UserResponseDto{" +
-                "id=" + id +
-                ", userId='" + userId + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", birthday=" + birthday +
-                '}';
     }
 }

@@ -1,6 +1,6 @@
 package woowacrew.article.domain;
 
-import woowacrew.user.domain.UserDto;
+import woowacrew.user.domain.UserResponseDto;
 
 import java.util.Date;
 
@@ -8,18 +8,18 @@ public class ArticleResponseDto {
     private Long id;
     private String title;
     private String content;
-    private UserDto userDto;
+    private UserResponseDto userResponseDto;
     private Date createdDate;
     private Date lastModifiedDate;
 
     private ArticleResponseDto() {
     }
 
-    public ArticleResponseDto(Long id, String title, String content, UserDto userDto, Date createdDate, Date lastModifiedDate) {
+    public ArticleResponseDto(Long id, String title, String content, UserResponseDto userResponseDto, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.userDto = userDto;
+        this.userResponseDto = userResponseDto;
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;
     }
@@ -36,8 +36,8 @@ public class ArticleResponseDto {
         return content;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public UserResponseDto getUserResponseDto() {
+        return userResponseDto;
     }
 
     public Date getCreatedDate() {

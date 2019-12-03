@@ -33,8 +33,7 @@ class ArticleServiceTest {
 
         assertThat(articleResponseDto.getTitle()).isEqualTo("title");
         assertThat(articleResponseDto.getContent()).isEqualTo("content");
-        assertThat(articleResponseDto.getUserDto().getUserId()).isEqualTo("userId");
-        assertThat(articleResponseDto.getUserDto().getUrl()).isEqualTo("url");
+        assertThat(articleResponseDto.getUserResponseDto().getUserId()).isEqualTo("userId");
     }
 
     @Test

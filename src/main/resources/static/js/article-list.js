@@ -17,7 +17,7 @@ function articleList() {
         </div>
         <div class="article-info-title">${article.title}</div>
         <div class="article-info-created-date">${convertTime(article.createdDate)}</div>
-        <div class="article-info-userInfo">${article.userDto.userId}</div>
+        <div class="article-info-userInfo">${article.userResponseDto.userId}</div>
         <div class="article-info-views">
             <div class="article-info-views-content">
                 <i class="fa fa-eye"></i>

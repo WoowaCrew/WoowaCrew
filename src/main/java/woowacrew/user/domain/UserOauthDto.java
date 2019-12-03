@@ -2,24 +2,15 @@ package woowacrew.user.domain;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UserDto {
+public class UserOauthDto {
     @SerializedName("id")
     private String userId;
-    private String url;
 
-    private UserDto() {
-    }
-
-    public UserDto(String userId, String url) {
+    public UserOauthDto(String userId) {
         this.userId = userId;
-        this.url = url;
     }
 
     public String getUserId() {
         return userId;
-    }
-
-    public String getUrl() {
-        return url;
     }
 }

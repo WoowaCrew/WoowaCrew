@@ -9,6 +9,7 @@ version 'unspecified'
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 group = 'woowacrew'
@@ -20,20 +21,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'org.modelmapper:modelmapper:2.3.2'
+
     runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.springframework:spring-jdbc:+'
     runtimeOnly 'commons-dbcp:commons-dbcp:1.4'
     runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
-
-    /*restAssured*/
-    testImplementation 'io.rest-assured:rest-assured:4.0.0'
-    testImplementation 'io.rest-assured:json-path:4.0.0'
-    testImplementation 'io.rest-assured:json-schema-validator:4.0.0'
-    testImplementation 'io.rest-assured:xml-path:4.0.0'
     
     testImplementation 'org.mockito:mockito-junit-jupiter'
 

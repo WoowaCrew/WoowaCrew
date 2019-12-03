@@ -37,6 +37,7 @@ public class UserController {
 
     @PostMapping("/users/{id}/update")
     public RedirectView update(@PathVariable Long id, UserUpdateDto userUpdateDto, HttpSession session) {
+        //TODO 본인 확인에 대한 인가가 추가되었으면 좋겠음
         UserResponseDto user = userService.update(id, userUpdateDto);
         session.setAttribute("user", user);
 

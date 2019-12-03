@@ -1,16 +1,13 @@
 package woowacrew.user.domain;
 
-import java.util.Objects;
+import org.modelmapper.ModelMapper;
 
 public class UserConverter {
-    public static UserDto userToUserDto(User user) {
-        if (Objects.isNull(user.getUserId()) || Objects.isNull(user.getUrl())) {
-            throw new IllegalArgumentException("아이디나 url은 null이 될 수 없습니다.");
-        }
-        return new UserDto(user.getUserId(), user.getUrl());
+    public static UserContext userToUserContextDto(User user) {
+        return new ModelMapper().map(user, UserContext.class);
     }
 
     public static UserResponseDto userToUserResponseDto(User user) {
-        return new UserResponseDto(user.getId(), user.getUserId(), user.getNickname(), user.getBirthday());
+        return new ModelMapper().map(user, UserResponseDto.class);
     }
 }

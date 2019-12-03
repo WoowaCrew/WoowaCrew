@@ -6,19 +6,19 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import woowacrew.oauth.Oauth;
+import woowacrew.oauth.OauthService;
 import woowacrew.oauth.OauthConfig;
-import woowacrew.user.domain.UserDto;
+import woowacrew.user.domain.UserOauthDto;
 
 @Component
-public class GithubOauth implements Oauth {
+public class GithubOauthService implements OauthService {
     private static final String CLIENT_ID = "client_id";
     private static final String CLIENT_SECRET = "client_secret";
     private static final String CODE = "code";
 
     private final OauthConfig oauthConfig;
 
-    public GithubOauth(OauthConfig oauthConfig) {
+    public GithubOauthService(OauthConfig oauthConfig) {
         this.oauthConfig = oauthConfig;
     }
 
@@ -43,7 +43,7 @@ public class GithubOauth implements Oauth {
     }
 
     @Override
-    public UserDto getUserInfo(String accessToken) {
+    public UserOauthDto getUserInfo(String accessToken) {
         WebClient webClient = WebClient.builder()
                 .baseUrl(oauthConfig.getUserInfoUri())
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -55,11 +55,6 @@ public class GithubOauth implements Oauth {
                 .bodyToMono(String.class)
                 .block();
 
-        return new Gson().fromJson(body, UserDto.class);
-    }
-
-    @Override
-    public String getUserAuthorizationUri() {
-        return oauthConfig.getUserAuthorizationUri() + "?" + CLIENT_ID + "=" + oauthConfig.getClientId();
+        return new Gson().fromJson(body, UserOauthDto.class);
     }
 }

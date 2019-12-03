@@ -9,7 +9,7 @@ import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleRepository;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserDto;
+import woowacrew.user.domain.UserContext;
 import woowacrew.user.service.UserInternalService;
 
 import java.util.ArrayList;
@@ -32,13 +32,13 @@ class ArticleInternalServiceTest {
 
     @Test
     void 게시글_생성_테스트() {
-        UserDto userDto = new UserDto("asd", "asd");
+        UserContext userContext = new UserContext("asd", "asd");
         User user = new User("asd", "asd");
         ArticleRequestDto articleRequestDto = new ArticleRequestDto("hello", "bonjour");
 
-        when(userInternalService.findByUserId(userDto.getUserId())).thenReturn(user);
+        when(userInternalService.findByUserId(userContext.getUserId())).thenReturn(user);
 
-        Article article = articleInternalService.save(articleRequestDto, userDto);
+        Article article = articleInternalService.save(articleRequestDto, userContext);
 
         assertThat(article.getTitle()).isEqualTo("hello");
         assertThat(article.getContent()).isEqualTo("bonjour");
