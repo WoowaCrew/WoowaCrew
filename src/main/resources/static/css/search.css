@@ -43,3 +43,19 @@ div#search button.search-button:hover {
     transition: 0.5s;
     color: ghostwhite;
 }
+
+@media screen and (max-height: 700px) {
+    div#search {
+        top: 9%;
+    }
+}
+
+@media screen and (max-height: 900px) {
+    div#search .search-form {
+        width: 200px;
+    }
+
+    div#search input.search-form:focus{
+        width: 260px;
+    }
+}

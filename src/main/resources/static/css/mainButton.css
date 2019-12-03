@@ -53,3 +53,9 @@
     left:5px;
     box-shadow:0 0 0 0;
 }
+
+@media screen and (max-height: 700px) {
+    #main-buttons {
+        top: 84%;
+    }
+}
