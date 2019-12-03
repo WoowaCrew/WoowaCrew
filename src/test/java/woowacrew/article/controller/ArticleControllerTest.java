@@ -1,6 +1,5 @@
 package woowacrew.article.controller;
 
-import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +47,7 @@ class ArticleControllerTest extends CommonTestController {
     @Test
     void 게시글_작성_후_해당_201응답이다() {
         String cookie = loginWithUser();
-
-        webTestClient.post()
+        ArticleResponseDto articleResponseDto = webTestClient.post()
                 .uri("/api/articles")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("title", "title")
@@ -59,45 +57,38 @@ class ArticleControllerTest extends CommonTestController {
                 .is2xxSuccessful()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/articles"))
-                .expectBody()
-                .consumeWith(body ->
-                {
-                    Gson gson = new Gson();
-                    ArticleResponseDto articleResponseDto = gson.fromJson(new String(body.getResponseBody()), ArticleResponseDto.class);
-                    assertThat(articleResponseDto.getTitle()).isEqualTo("title");
-                    assertThat(articleResponseDto.getContent()).isEqualTo("content");
-                });
+                .expectBody(ArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
 
+        assertThat(articleResponseDto.getTitle()).isEqualTo("title");
+        assertThat(articleResponseDto.getContent()).isEqualTo("content");
     }
 
     @Test
     void 존재하는_게시글_번호일시_페이지_테스트() {
         String cookie = loginWithUser();
-        //게시글 작
-        webTestClient.post()
+
+        ArticleResponseDto articleResponseDto = webTestClient.post()
                 .uri("/api/articles")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("title", "title")
                         .with("content", "content"))
                 .exchange()
-                .expectBody()
-                .consumeWith(body ->
-                {
-                    Gson gson = new Gson();
-                    ArticleResponseDto articleResponseDto = gson.fromJson(new String(body.getResponseBody()), ArticleResponseDto.class);
-                    Long articleId = articleResponseDto.getId();
+                .expectBody(ArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
 
-                    webTestClient.get()
-                            .uri("/articles/" + articleId)
-                            .header("Cookie", cookie)
-                            .exchange()
-                            .expectStatus()
-                            .is2xxSuccessful()
-                            .expectBody()
-                            .consumeWith(viewBody -> {
-                                String actualBody = new String(viewBody.getResponseBody());
-                                assertThat(actualBody.contains("<body>")).isTrue();
-                            });
+        webTestClient.get()
+                .uri("/articles/" + articleResponseDto.getId())
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(viewBody -> {
+                    String actualBody = new String(viewBody.getResponseBody());
+                    assertThat(actualBody.contains("<body>")).isTrue();
                 });
     }
 

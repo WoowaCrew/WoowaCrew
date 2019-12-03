@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-import reactor.core.publisher.Mono;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.domain.UserUpdateDto;
 import woowacrew.user.service.exception.InvalidBirthdayException;
@@ -48,7 +47,8 @@ public class UserControllerTest extends CommonTestController {
         webTestClient.post()
                 .uri("/users/1/update")
                 .header("Cookie", cookie)
-                .body(Mono.just(userUpdateDto), UserUpdateDto.class)
+                .body(BodyInserters.fromFormData("nickname", "test")
+                        .with("birthday", "1995-06-08"))
                 .exchange()
                 .expectStatus().is3xxRedirection();
     }

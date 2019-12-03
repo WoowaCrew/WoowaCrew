@@ -7,7 +7,7 @@ import java.time.format.DateTimeParseException;
 
 public class BirthdayConverter {
 
-    public static LocalDate convert(String rawBirthday) {
+    public static LocalDate     convert(String rawBirthday) {
         try {
             LocalDate birthday = LocalDate.parse(rawBirthday);
             validBirthday(birthday);
