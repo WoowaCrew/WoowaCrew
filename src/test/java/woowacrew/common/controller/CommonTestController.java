@@ -14,27 +14,27 @@ public class CommonTestController {
     private WebTestClient webTestClient;
 
     protected String loginWithPrecourse() {
-        return loginWith(UserRole.ROLE_PRECOURSE.toString());
+        return loginWith("precousre", UserRole.ROLE_PRECOURSE.toString());
     }
 
     protected String loginWithCrew() {
-        return loginWith(UserRole.ROLE_CREW.toString());
+        return loginWith("crew", UserRole.ROLE_CREW.toString());
     }
 
 
     protected String loginWithCoach() {
-        return loginWith(UserRole.ROLE_COACH.toString());
+        return loginWith("coach", UserRole.ROLE_COACH.toString());
     }
 
     protected String loginWithAdmin() {
-        return loginWith(UserRole.ROLE_ADMIN.toString());
+        return loginWith("admin", UserRole.ROLE_ADMIN.toString());
     }
 
-    private String loginWith(String role) {
+    private String loginWith(String oauthId, String role) {
         final String[] cookie = new String[1];
 
         webTestClient.get()
-                .uri("/oauth/github?role=" + role)
+                .uri("/oauth/github?role=" + role + "&oauthId=" + oauthId)
                 .exchange()
                 .expectBody()
                 .consumeWith(response -> {

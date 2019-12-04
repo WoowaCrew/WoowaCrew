@@ -26,8 +26,9 @@ public class TestLoginProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         Degree degree = degreeRepository.findByNumber(0)
                 .orElseThrow(IllegalArgumentException::new);
-        User user = userRepository.findByOauthId("1234")
-                .orElseGet(() -> userRepository.save(new User("userId", degree)));
+        String oauthId = (String) authentication.getCredentials();
+        User user = userRepository.findByOauthId(oauthId)
+                .orElseGet(() -> userRepository.save(new User(oauthId, degree)));
 
         UserContext userContext = new ModelMapper().map(user, UserContext.class);
         return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority((String) authentication.getPrincipal())));
