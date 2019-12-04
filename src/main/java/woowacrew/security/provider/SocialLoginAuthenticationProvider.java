@@ -40,7 +40,6 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
     }
 
     private User registerUser(UserOauthDto userOauthDto) {
-        //Todo User 엔티티의 createUser() 사용 예정
         Degree degree = degreeRepository.findByNumber(0)
                 .orElseThrow(IllegalArgumentException::new);
         return userRepository.save(new User(userOauthDto.getOauthId(), degree));
