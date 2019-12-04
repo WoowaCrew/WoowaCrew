@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserOauthDto {
     @SerializedName("id")
-    private String userId;
+    private String oauthId;
 
-    public UserOauthDto(String userId) {
-        this.userId = userId;
+    public UserOauthDto(String oauthId) {
+        this.oauthId = oauthId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getOauthId() {
+        return oauthId;
     }
 }

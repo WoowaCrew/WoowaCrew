@@ -3,7 +3,6 @@ package woowacrew.security.token;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserContext;
 
 import java.util.Arrays;
@@ -15,7 +14,7 @@ public class SocialPostAuthorizationToken extends UsernamePasswordAuthentication
     }
 
     public SocialPostAuthorizationToken(UserContext userContext) {
-        super(userContext, userContext, parseAuthorities(userContext.getUserId()));
+        super(userContext, userContext, parseAuthorities(userContext.getOauthId()));
     }
 
     private static Collection<? extends GrantedAuthority> parseAuthorities(String role) {

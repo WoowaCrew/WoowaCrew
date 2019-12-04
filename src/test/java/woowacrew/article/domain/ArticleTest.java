@@ -3,6 +3,7 @@ package woowacrew.article.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import woowacrew.common.service.FieldSetter;
+import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,8 +15,8 @@ class ArticleTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("vsh123", "vsh123");
-        user2 = new User("hyunssooo", "hyunssooo");
+        user = new User("vsh123", Degree.defaultDegree());
+        user2 = new User("hyunssooo", Degree.defaultDegree());
         FieldSetter.set(user, "id", 1L);
     }
 

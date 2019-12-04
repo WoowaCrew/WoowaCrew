@@ -8,18 +8,17 @@ import org.springframework.stereotype.Component;
 import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserContext;
-import woowacrew.user.domain.UserOauthDto;
-import woowacrew.user.domain.UserRepository;
+import woowacrew.user.domain.*;
 
 @Component
 public class SocialLoginAuthenticationProvider implements AuthenticationProvider {
     private final UserRepository userRepository;
+    private final DegreeRepository degreeRepository;
     private final OauthService oauthService;
 
-    public SocialLoginAuthenticationProvider(UserRepository userRepository, OauthService oauthService) {
+    public SocialLoginAuthenticationProvider(UserRepository userRepository, DegreeRepository degreeRepository, OauthService oauthService) {
         this.userRepository = userRepository;
+        this.degreeRepository = degreeRepository;
         this.oauthService = oauthService;
     }
 
@@ -29,7 +28,7 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
         String code = token.getCode();
         String accessToken = oauthService.getAccessToken(code);
         UserOauthDto userOauthDto = oauthService.getUserInfo(accessToken);
-        User user = userRepository.findByUserId(userOauthDto.getUserId())
+        User user = userRepository.findByOauthId(userOauthDto.getOauthId())
                 .orElseGet(() -> registerUser(userOauthDto));
         UserContext userContext = new ModelMapper().map(user, UserContext.class);
         return new SocialPostAuthorizationToken(userContext);
@@ -42,6 +41,8 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
 
     private User registerUser(UserOauthDto userOauthDto) {
         //Todo User 엔티티의 createUser() 사용 예정
-        return userRepository.save(new User(userOauthDto.getUserId(), null));
+        Degree degree = degreeRepository.findByNumber(0)
+                .orElseThrow(IllegalArgumentException::new);
+        return userRepository.save(new User(userOauthDto.getOauthId(), degree));
     }
 }
