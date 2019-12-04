@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments/config :: configFragment"/>
+
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
+    <style>
+        button {
+            background: black;
+            color: gray;
+            border: none;
+            position: relative;
+            height: 60px;
+            font-size: 20px;
+            padding: 0 2em;
+            cursor: pointer;
+            transition: 800ms ease all;
+            outline: none;
+        }
+
+        button:hover {
+            color: white;
+        }
+
+        button:before, button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 2px;
+            width: 0;
+            background: pink;
+            transition: 400ms ease all;
+        }
+
+        button:after {
+            right: inherit;
+            top: inherit;
+            left: 0;
+            bottom: 0;
+        }
+
+        button:hover:before, button:hover:after {
+            width: 100%;
+            transition: 800ms ease all;
+        }
+
+        .error-message {
+            font-family: 'Nanum Gothic', sans-serif;
+            margin-top: 450px;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .message-content {
+            margin-bottom: 20px
+        }
+    </style>
+    <title>WoowaCrew</title>
+</head>
+
+<body>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+
+<div class="error-message" sec:authorize="hasRole('PRECOURSE')">
+    <div th:if="${#authentication.principal.nickname} != null">
+        <div class="message-content">관리자의 승인이 필요합니다! 조금만 기다려 주세요 :)</div>
+        <button type="button" onclick="location.href='/'">메인 페이지로 돌아가기</button>
+    </div>
+    <div th:if="${#authentication.principal.nickname} == null">
+        <div class="message-content">닉네임 등록이 필요합니다! 닉네임을 등록해 주세요~</div>
+        <button type="button" onclick="location.href='/users/form'">닉네임 등록하러 가기</button>
+    </div>
+</div>
+</div>
+
+<div class="error-message" sec:authorize="hasAnyRole('CREW','COACH')">
+    <div class="message-content">접근할 수 없는 페이지에 접근하려 하시는군요..!</div>
+    <button type="button" onclick="location.href='/'">메인 페이지로 돌아가기</button>
+</div>
+
+</body>
+</html>

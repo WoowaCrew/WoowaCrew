@@ -6,11 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import woowacrew.common.controller.CommonTestController;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(properties = "spring.config.location=classpath:/github.yml", webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class   LoginControllerTest {
+class LoginControllerTest extends CommonTestController {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -38,5 +39,37 @@ class   LoginControllerTest {
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/login"));
+    }
+
+    @Test
+    @DisplayName("승인이 나지 않은 사람이 /aritcle/new에 접근하면 accessdeny된다.")
+    void accessDenyTest() {
+        String cookie = loginWithPrecourse();
+
+        webTestClient.get()
+                .uri("/article/new")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().is3xxRedirection()
+                .expectHeader()
+                .value("Location", Matchers.containsString("/accessdeny"));
+    }
+
+    @Test
+    @DisplayName("승인이 나지 않은 사람이 /article/new에 접근하면 accessdeny되며 관리자 승인 대기하라고 나온다.")
+    void accessDenyTest2() {
+        String cookie = loginWithPrecourse();
+
+        webTestClient.get()
+                .uri("/accessdeny")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(response -> {
+                    String body = new String(response.getResponseBody());
+                    assertThat(body.contains("관리자의")).isTrue();
+                });
     }
 }
