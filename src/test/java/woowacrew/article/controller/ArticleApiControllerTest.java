@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.common.controller.CommonTestController;
 
@@ -34,7 +35,7 @@ class ArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 게시글_상_조회() {
+    void 게시글_상세_조회() {
         String cookie = loginWithUser();
 
         ArticleResponseDto article1 = webTestClient.get()
@@ -48,5 +49,34 @@ class ArticleApiControllerTest extends CommonTestController {
 
         assertThat(article1.getTitle()).isEqualTo("article A");
         assertThat(article1.getContent()).isEqualTo("content");
+    }
+
+    @Test
+    void 게시글_수정() {
+        String cookie = loginWithUser();
+
+        String updateTitle = "Update Title";
+        String updateContent = "Update Content";
+
+        webTestClient.put()
+                .uri("/api/articles/1")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("articleId", "1")
+                        .with("title", updateTitle)
+                        .with("content", updateContent))
+                .exchange()
+                .expectStatus().isOk();
+
+        ArticleResponseDto article = webTestClient.get()
+                .uri("/api/articles/1")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(article.getTitle()).isEqualTo(updateTitle);
+        assertThat(article.getContent()).isEqualTo(updateContent);
     }
 }

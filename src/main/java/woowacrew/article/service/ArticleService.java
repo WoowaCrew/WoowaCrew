@@ -1,10 +1,7 @@
 package woowacrew.article.service;
 
 import org.springframework.stereotype.Service;
-import woowacrew.article.domain.Article;
-import woowacrew.article.domain.ArticleConverter;
-import woowacrew.article.domain.ArticleRequestDto;
-import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.domain.*;
 import woowacrew.user.domain.UserContext;
 
 import java.util.List;
@@ -31,5 +28,9 @@ public class ArticleService {
         return articleInternalService.findAll().stream()
                 .map(ArticleConverter::articleToArticleResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    public ArticleResponseDto update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
+        return ArticleConverter.articleToArticleResponseDto(articleInternalService.update(articleUpdateDto, userContext));
     }
 }

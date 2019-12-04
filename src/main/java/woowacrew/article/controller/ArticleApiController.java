@@ -1,12 +1,10 @@
 package woowacrew.article.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.domain.ArticleUpdateDto;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.domain.UserContext;
 import woowacrew.utils.annotation.AuthenticationUser;
@@ -38,5 +36,10 @@ public class ArticleApiController {
     public ResponseEntity<ArticleResponseDto> createArticle(@AuthenticationUser UserContext userContext, ArticleRequestDto articleRequestDto) {
         ArticleResponseDto articleResponseDto = articleService.save(articleRequestDto, userContext);
         return ResponseEntity.created(URI.create(ARTICLES_URL + articleResponseDto.getId())).body(articleResponseDto);
+    }
+
+    @PutMapping("/api/articles/{articleId}")
+    public ResponseEntity<ArticleResponseDto> updateArticle(@AuthenticationUser UserContext userContext, ArticleUpdateDto articleUpdateDto) {
+        return ResponseEntity.ok(articleService.update(articleUpdateDto, userContext));
     }
 }
