@@ -8,24 +8,27 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserContext;
-import woowacrew.user.domain.UserRepository;
+import woowacrew.user.domain.*;
 
 import java.util.Arrays;
 
 @Component
 public class TestLoginProvider implements AuthenticationProvider {
     private final UserRepository userRepository;
+    private final DegreeRepository degreeRepository;
 
-    public TestLoginProvider(UserRepository userRepository) {
+    public TestLoginProvider(UserRepository userRepository, DegreeRepository degreeRepository) {
         this.userRepository = userRepository;
+        this.degreeRepository = degreeRepository;
     }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        User user = userRepository.findByUserId("1234")
-                .orElseGet(() -> userRepository.save(new User("userId")));
+        Degree degree = degreeRepository.findByNumber(0)
+                .orElseThrow(IllegalArgumentException::new);
+        User user = userRepository.findByOauthId("1234")
+                .orElseGet(() -> userRepository.save(new User("userId", degree)));
+
         UserContext userContext = new ModelMapper().map(user, UserContext.class);
         return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority((String) authentication.getPrincipal())));
     }

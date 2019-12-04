@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
+    private String oauthId;
 
     private String nickname;
 
@@ -24,18 +24,19 @@ public class User {
 
     @OneToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_DEGREE"))
-    private Degree degree = new Degree();
+    private Degree degree;
 
     private User() {
     }
 
-    public User(String userId) {
-        this(userId, UserRole.ROLE_PRECOURSE);
+    public User(String oauthId, Degree degree) {
+        this(oauthId, UserRole.ROLE_PRECOURSE, degree);
     }
 
-    public User(String userId, UserRole role) {
-        this.userId = userId;
+    public User(String oauthId, UserRole role, Degree degree) {
+        this.oauthId = oauthId;
         this.role = role;
+        this.degree = degree;
     }
 
     public void updateUserInfo(String nickname, LocalDate birthday) {
@@ -64,8 +65,8 @@ public class User {
         return id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getOauthId() {
+        return oauthId;
     }
 
     public String getNickname() {
@@ -101,7 +102,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userId='" + userId + '\'' +
+                ", userId='" + oauthId + '\'' +
                 '}';
     }
 }

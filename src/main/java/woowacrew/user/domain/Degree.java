@@ -22,6 +22,10 @@ public class Degree {
     public Degree() {
     }
 
+    public static Degree defaultDegree() {
+        return new Degree();
+    }
+
     public void update(int updateDegree) {
         if (updateDegree < NONE_DEGREE || updateDegree > MAX_BOUND) {
             throw new DegreeBoundException();

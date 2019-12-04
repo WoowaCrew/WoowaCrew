@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class UserContext {
     private Long id;
 
-    private String userId;
+    private String oauthId;
 
     private String nickname;
 
@@ -14,13 +14,13 @@ public class UserContext {
     private UserContext() {
     }
 
-    public UserContext(String userId) {
-        this.userId = userId;
+    public UserContext(String oauthId) {
+        this.oauthId = oauthId;
     }
 
-    public UserContext(Long id, String userId, String nickname, LocalDate birthday) {
+    public UserContext(Long id, String oauthId, String nickname, LocalDate birthday) {
         this.id = id;
-        this.userId = userId;
+        this.oauthId = oauthId;
         this.nickname = nickname;
         this.birthday = birthday;
     }
@@ -33,12 +33,12 @@ public class UserContext {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getOauthId() {
+        return oauthId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setOauthId(String oauthId) {
+        this.oauthId = oauthId;
     }
 
     public String getNickname() {

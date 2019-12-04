@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserResponseDto;
 import woowacrew.user.domain.UserUpdateDto;
@@ -30,10 +31,10 @@ class UserServiceTest {
 
     @Test
     void 정상적으로_유저를_찾는다() {
-        User user = new User("test");
+        User user = new User("test", Degree.defaultDegree());
         when(userInternalService.findById(anyLong())).thenReturn(user);
 
-        assertThat(userService.findById(1L).getUserId()).isEqualTo("test");
+        assertThat(userService.findById(1L).getOauthId()).isEqualTo("test");
     }
 
     @Test
@@ -45,14 +46,14 @@ class UserServiceTest {
 
     @Test
     void 정상적으로_유저의_정보를_업데이트한다() {
-        User user = new User("test");
+        User user = new User("test", Degree.defaultDegree());
 
         when(userInternalService.findById(anyLong())).thenReturn(user);
 
         UserUpdateDto userUpdateDto = new UserUpdateDto("test nickname", "1995-06-08");
         UserResponseDto updateUser = userService.update(1L, userUpdateDto);
 
-        assertThat(updateUser.getUserId()).isEqualTo("test");
+        assertThat(updateUser.getOauthId()).isEqualTo("test");
         assertThat(updateUser.getNickname()).isEqualTo("test nickname");
         assertThat(updateUser.getBirthday()).isEqualTo(LocalDate.of(1995, 6, 8));
     }
