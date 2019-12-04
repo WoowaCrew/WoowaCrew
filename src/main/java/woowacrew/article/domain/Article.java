@@ -5,7 +5,6 @@ import woowacrew.user.domain.User;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 public class Article extends TimeEntity {
@@ -30,11 +29,11 @@ public class Article extends TimeEntity {
     }
 
     public void update(User user, String title, String content) {
-        if (this.user.equals(user)) {
-            articleForm.updateArticle(title, content);
+        if (!this.user.equals(user)) {
+            throw new IllegalArgumentException();
         }
 
-        throw new IllegalArgumentException();
+        articleForm.updateArticle(title, content);
     }
 
     public Long getId() {
@@ -69,10 +68,6 @@ public class Article extends TimeEntity {
         return id.equals(that.id);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @Override
     public String toString() {
