@@ -54,7 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .and()
-                .exceptionHandling().accessDeniedPage("/accessdeny");
+                .exceptionHandling().accessDeniedPage("/accessdeny")
+                .and()
+                .logout()
+                .logoutSuccessUrl("/");
         http
                 .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
