@@ -54,12 +54,12 @@ public class User {
         }
     }
 
-    public void updateRole(User admin, UserRole roleCrew, int updateDegree) {
-        if (!admin.role.matchAdmin()) {
+    public void updateRole(User user, UserRole role, int updateDegree) {
+        if (!user.role.matchAdmin()) {
             throw new ForbiddenUserException();
         }
 
-        this.role = roleCrew;
+        this.role = role;
         degree.update(updateDegree);
     }
 
