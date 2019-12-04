@@ -1,6 +1,7 @@
 package woowacrew.article.domain;
 
 import org.junit.jupiter.api.Test;
+import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,7 +11,7 @@ class ArticleConverterTest {
     void ArticleToArticleResponse() {
         String title = "hello";
         String content = "bonjour";
-        User user = new User("userId", "url");
+        User user = new User("userId", Degree.defaultDegree());
         Article article = new Article(title, content, user);
 
         ArticleResponseDto articleResponseDto = ArticleConverter.articleToArticleResponseDto(article);

@@ -10,21 +10,22 @@ import woowacrew.oauth.OauthService;
 import woowacrew.oauth.github.GithubOauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserContext;
-import woowacrew.user.domain.UserOauthDto;
-import woowacrew.user.domain.UserRepository;
+import woowacrew.user.domain.*;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SocialLoginAuthenticationProviderTest {
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private DegreeRepository degreeRepository;
 
     @Mock
     private OauthService oauthService;
@@ -51,17 +52,17 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, "url");
+        User user = new User(userId, Degree.defaultDegree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
         when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
-        when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(user));
+        when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(user));
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);
         UserContext exceptedUser = (UserContext) postToken.getPrincipal();
-        assertThat(exceptedUser.getUserId()).isEqualTo(userId);
+        assertThat(exceptedUser.getOauthId()).isEqualTo(userId);
     }
 
     @Test
@@ -70,17 +71,18 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, "url");
+        User user = new User(userId, Degree.defaultDegree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
         when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
-        when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(null));
+        when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(null));
+        when(degreeRepository.findByNumber(anyInt())).thenReturn(Optional.of(Degree.defaultDegree()));
         when(userRepository.save(any())).thenReturn(user);
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);
         UserContext exceptedUser = (UserContext) postToken.getPrincipal();
-        assertThat(exceptedUser.getUserId()).isEqualTo(userId);
+        assertThat(exceptedUser.getOauthId()).isEqualTo(userId);
     }
 }

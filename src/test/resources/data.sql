@@ -1,4 +1,4 @@
-INSERT INTO user (id, user_id, url) VALUES (1, '1234', 'test@test.test');
+INSERT INTO user (id, oauth_id) VALUES (1, '1234');
 
 INSERT INTO article (id, title, content, author) VALUES (1, 'article A', 'content', 1);
 

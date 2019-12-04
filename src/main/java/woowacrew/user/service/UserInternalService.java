@@ -16,8 +16,8 @@ public class UserInternalService {
     }
 
     @Transactional(readOnly = true)
-    public User findByUserId(String userId) {
-        return userRepository.findByUserId(userId)
+    public User findByOauthId(String oauthId) {
+        return userRepository.findByOauthId(oauthId)
                 .orElseThrow(NotExistUserException::new);
     }
 

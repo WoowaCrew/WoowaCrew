@@ -1,11 +1,9 @@
 package woowacrew.user.domain;
 
+import woowacrew.user.domain.exception.ForbiddenUserException;
 import woowacrew.user.domain.exception.NotExistNicknameException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,20 +13,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
-
-    private String url;
+    private String oauthId;
 
     private String nickname;
 
     private LocalDate birthday;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    @OneToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_DEGREE"))
+    private Degree degree;
+
     private User() {
     }
 
-    public User(String userId, String url) {
-        this.userId = userId;
-        this.url = url;
+    public User(String oauthId, Degree degree) {
+        this(oauthId, UserRole.ROLE_PRECOURSE, degree);
+    }
+
+    public User(String oauthId, UserRole role, Degree degree) {
+        this.oauthId = oauthId;
+        this.role = role;
+        this.degree = degree;
     }
 
     public void updateUserInfo(String nickname, LocalDate birthday) {
@@ -44,16 +52,21 @@ public class User {
         }
     }
 
+    public void updateRole(User user, UserRole role, int updateDegree) {
+        if (!user.role.matchAdmin()) {
+            throw new ForbiddenUserException();
+        }
+
+        this.role = role;
+        degree.update(updateDegree);
+    }
+
     public Long getId() {
         return id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getUrl() {
-        return url;
+    public String getOauthId() {
+        return oauthId;
     }
 
     public String getNickname() {
@@ -62,6 +75,14 @@ public class User {
 
     public LocalDate getBirthday() {
         return birthday;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public Degree getDegree() {
+        return degree;
     }
 
     @Override
@@ -81,8 +102,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userId='" + userId + '\'' +
-                ", url='" + url + '\'' +
+                ", userId='" + oauthId + '\'' +
                 '}';
     }
 }

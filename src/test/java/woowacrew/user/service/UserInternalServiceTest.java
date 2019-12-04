@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 
@@ -22,15 +23,13 @@ class UserInternalServiceTest {
     private UserInternalService userInternalService;
 
     @Test
-    void findByUserId() {
+    void findByOauthId() {
         String userId = "userId";
-        String url = "url";
-        User user = new User(userId, url);
-        when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(user));
+        User user = new User(userId, Degree.defaultDegree());
+        when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(user));
 
-        User expectUser = userInternalService.findByUserId(userId);
+        User expectUser = userInternalService.findByOauthId(userId);
 
-        assertThat(expectUser.getUserId()).isEqualTo(userId);
-        assertThat(expectUser.getUrl()).isEqualTo(url);
+        assertThat(expectUser.getOauthId()).isEqualTo(userId);
     }
 }

@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ class ArticleServiceTest {
 
     @Test
     void 원하는_게시글을_ArticleResponse로_변환해준다() {
-        Article article = new Article("title", "content", new User("userId", "url"));
+        Article article = new Article("title", "content", new User("userId", Degree.defaultDegree()));
         Long articleId = 1L;
         when(articleInternalService.findById(articleId)).thenReturn(article);
 
@@ -33,7 +34,7 @@ class ArticleServiceTest {
 
         assertThat(articleResponseDto.getTitle()).isEqualTo("title");
         assertThat(articleResponseDto.getContent()).isEqualTo("content");
-        assertThat(articleResponseDto.getUserResponseDto().getUserId()).isEqualTo("userId");
+        assertThat(articleResponseDto.getUserResponseDto().getOauthId()).isEqualTo("userId");
     }
 
     @Test
@@ -47,7 +48,7 @@ class ArticleServiceTest {
     }
 
     private List<Article> createArticles(int numberOfArticle) {
-        User user = new User("userId", "url");
+        User user = new User("userId", Degree.defaultDegree());
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < numberOfArticle; i++) {
             articles.add(new Article(String.valueOf(i), String.valueOf(i), user));

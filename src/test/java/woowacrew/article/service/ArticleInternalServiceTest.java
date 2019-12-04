@@ -6,8 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.article.domain.Article;
-import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleRepository;
+import woowacrew.article.domain.ArticleRequestDto;
+import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserContext;
 import woowacrew.user.service.UserInternalService;
@@ -32,11 +33,11 @@ class ArticleInternalServiceTest {
 
     @Test
     void 게시글_생성_테스트() {
-        UserContext userContext = new UserContext("asd", "asd");
-        User user = new User("asd", "asd");
+        UserContext userContext = new UserContext("asd");
+        User user = new User("asd", Degree.defaultDegree());
         ArticleRequestDto articleRequestDto = new ArticleRequestDto("hello", "bonjour");
 
-        when(userInternalService.findByUserId(userContext.getUserId())).thenReturn(user);
+        when(userInternalService.findByOauthId(userContext.getOauthId())).thenReturn(user);
 
         Article article = articleInternalService.save(articleRequestDto, userContext);
 
@@ -48,7 +49,7 @@ class ArticleInternalServiceTest {
     void 게시글_조회_테스트() {
         String title = "title";
         String content = "content";
-        User user = new User("asd", "asd");
+        User user = new User("asd", Degree.defaultDegree());
         Article article = new Article(title, content, user);
         when(articleRepository.findById(1L)).thenReturn(Optional.of(article));
 
@@ -61,7 +62,7 @@ class ArticleInternalServiceTest {
     void 없는_게시글_조회_테스트() {
         String title = "title";
         String content = "content";
-        User user = new User("asd", "asd");
+        User user = new User("asd", Degree.defaultDegree());
         Article article = new Article(title, content, user);
         when(articleRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -79,7 +80,7 @@ class ArticleInternalServiceTest {
     }
 
     private List<Article> createArticles(int numberOfArticle) {
-        User user = new User("userId", "url");
+        User user = new User("userId", Degree.defaultDegree());
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < numberOfArticle; i++) {
             articles.add(new Article(String.valueOf(i), String.valueOf(i), user));
