@@ -29,7 +29,7 @@ class ArticleControllerTest extends CommonTestController {
 
     @Test
     void 로그인이_되어있다면_게시글_작성_페이지가_보여진다() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
         webTestClient
                 .get()
                 .uri("/article/new")
@@ -46,7 +46,7 @@ class ArticleControllerTest extends CommonTestController {
 
     @Test
     void 게시글_작성_후_해당_201응답이다() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
         ArticleResponseDto articleResponseDto = webTestClient.post()
                 .uri("/api/articles")
                 .header("Cookie", cookie)
@@ -67,7 +67,7 @@ class ArticleControllerTest extends CommonTestController {
 
     @Test
     void 존재하는_게시글_번호일시_페이지_테스트() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
 
         ArticleResponseDto articleResponseDto = webTestClient.post()
                 .uri("/api/articles")
@@ -94,7 +94,7 @@ class ArticleControllerTest extends CommonTestController {
 
     @Test
     void 전체_게시글_조회_테스트() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
         saveArticle(2, cookie);
         webTestClient.get()
                 .uri("/articles")
