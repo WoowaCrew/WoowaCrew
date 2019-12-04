@@ -6,7 +6,7 @@ public enum UserRole {
     ROLE_COACH("COACH"),
     ROLE_ADMIN("ADMIN");
 
-    String roleName;
+    private final String roleName;
 
     UserRole(String roleName) {
         this.roleName = roleName;
