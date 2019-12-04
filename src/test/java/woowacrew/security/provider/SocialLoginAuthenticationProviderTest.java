@@ -51,7 +51,7 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, "url");
+        User user = new User(userId);
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
@@ -70,7 +70,7 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, "url");
+        User user = new User(userId);
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 

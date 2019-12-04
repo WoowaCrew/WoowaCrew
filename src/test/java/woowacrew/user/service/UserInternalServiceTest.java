@@ -24,13 +24,11 @@ class UserInternalServiceTest {
     @Test
     void findByUserId() {
         String userId = "userId";
-        String url = "url";
-        User user = new User(userId, url);
+        User user = new User(userId);
         when(userRepository.findByUserId(userId)).thenReturn(Optional.ofNullable(user));
 
         User expectUser = userInternalService.findByUserId(userId);
 
         assertThat(expectUser.getUserId()).isEqualTo(userId);
-        assertThat(expectUser.getUrl()).isEqualTo(url);
     }
 }

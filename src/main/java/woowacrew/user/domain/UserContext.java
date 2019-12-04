@@ -7,8 +7,6 @@ public class UserContext {
 
     private String userId;
 
-    private String url;
-
     private String nickname;
 
     private LocalDate birthday;
@@ -16,15 +14,13 @@ public class UserContext {
     private UserContext() {
     }
 
-    public UserContext(String userId, String url) {
+    public UserContext(String userId) {
         this.userId = userId;
-        this.url = url;
     }
 
-    public UserContext(Long id, String userId, String url, String nickname, LocalDate birthday) {
+    public UserContext(Long id, String userId, String nickname, LocalDate birthday) {
         this.id = id;
         this.userId = userId;
-        this.url = url;
         this.nickname = nickname;
         this.birthday = birthday;
     }
@@ -43,14 +39,6 @@ public class UserContext {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getNickname() {

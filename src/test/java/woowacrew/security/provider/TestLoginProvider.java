@@ -25,7 +25,7 @@ public class TestLoginProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         User user = userRepository.findByUserId("1234")
-                .orElseGet(() -> userRepository.save(new User("userId", "url")));
+                .orElseGet(() -> userRepository.save(new User("userId")));
         UserContext userContext = new ModelMapper().map(user, UserContext.class);
         return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority((String) authentication.getPrincipal())));
     }

@@ -18,7 +18,7 @@ class UserTest {
     void updateUserInfo() {
         LocalDate birthday = LocalDate.of(1995, 6, 8);
         String nickname = "test nickname";
-        User user = new User("test", "test");
+        User user = new User("test");
 
         user.updateUserInfo(nickname, birthday);
 
@@ -29,7 +29,7 @@ class UserTest {
     @Test
     @DisplayName("생년월일이 입력되지 않아도 정상적으로 동작한다.")
     void updateUserInfo_ifBirthdayIsEmpty_thenSuccess() {
-        User user = new User("test", "test");
+        User user = new User("test");
 
         assertDoesNotThrow(() -> user.updateUserInfo("nickname", null));
     }
@@ -38,7 +38,7 @@ class UserTest {
     @DisplayName("닉네임이 null 이거나 빈 값인 경우 예외가 발생한다.")
     void updateUserInfoFail() {
         LocalDate birthday = LocalDate.of(1995, 6, 8);
-        User user = new User("test", "test");
+        User user = new User("test");
 
         assertThrows(NotExistNicknameException.class, () -> user.updateUserInfo(null, birthday));
         assertThrows(NotExistNicknameException.class, () -> user.updateUserInfo("", birthday));
@@ -47,8 +47,8 @@ class UserTest {
     @Test
     @DisplayName("관리자는 유저의 Role과 기수를 업데이트 할 수 있다.")
     void updateUserRole() {
-        User admin = new User("admin", "test", UserRole.ROLE_ADMIN);
-        User user = new User("user", "test");
+        User admin = new User("admin", UserRole.ROLE_ADMIN);
+        User user = new User("user");
 
         int updateDegree = 1;
         user.updateRole(admin, UserRole.ROLE_CREW, updateDegree);
@@ -60,8 +60,8 @@ class UserTest {
     @Test
     @DisplayName("권한이 없는 유저가 업데이트를 하는 경우 ForbiddenUserException가 발생한다.")
     void updateUserRole_ifUserRoleIsCrew_thenForbiddenUserException() {
-        User admin = new User("admin", "test", UserRole.ROLE_CREW);
-        User user = new User("user", "test");
+        User admin = new User("admin", UserRole.ROLE_CREW);
+        User user = new User("user");
 
         int updateDegree = 1;
         assertThatThrownBy(() -> user.updateRole(admin, UserRole.ROLE_CREW, updateDegree))

@@ -15,8 +15,6 @@ public class User {
 
     private String userId;
 
-    private String url;
-
     private String nickname;
 
     private LocalDate birthday;
@@ -25,19 +23,18 @@ public class User {
     private UserRole role;
 
     @OneToOne
-    @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "FK_USER_DEGREE"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_DEGREE"))
     private Degree degree = new Degree();
 
     private User() {
     }
 
-    public User(String userId, String url) {
-        this(userId, url, UserRole.ROLE_PRECOURSE);
+    public User(String userId) {
+        this(userId, UserRole.ROLE_PRECOURSE);
     }
 
-    public User(String userId, String url, UserRole role) {
+    public User(String userId, UserRole role) {
         this.userId = userId;
-        this.url = url;
         this.role = role;
     }
 
@@ -71,10 +68,6 @@ public class User {
         return userId;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -104,13 +97,11 @@ public class User {
         return Objects.hash(id);
     }
 
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", userId='" + userId + '\'' +
-                ", url='" + url + '\'' +
                 '}';
     }
 }

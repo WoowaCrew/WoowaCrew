@@ -10,7 +10,7 @@ class ArticleConverterTest {
     void ArticleToArticleResponse() {
         String title = "hello";
         String content = "bonjour";
-        User user = new User("userId", "url");
+        User user = new User("userId");
         Article article = new Article(title, content, user);
 
         ArticleResponseDto articleResponseDto = ArticleConverter.articleToArticleResponseDto(article);
