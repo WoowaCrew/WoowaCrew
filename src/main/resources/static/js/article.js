@@ -1,12 +1,16 @@
 function article() {
   const body = document.getElementsByTagName("BODY")[0]
 
-  const articleFrom = (article) =>
+  const articleForm = (article) =>
       `<div class="article-info">
           <div id="article-header">
-              <div class="title">${article.title}</div>
-              <div class="user">
+              <div class="article-title">
+                  <div class="title">${article.title}</div>
                   <div class="userInfo">${article.userResponseDto.userId}</div>
+              </div>
+              <div class="article-button-group">
+                <div class="article-edit-button"><i class="fa fa-edit"></i></div>
+                <div class="article-delete-button"><i class="fa fa-3x fa-trash"></i></div>
               </div>
           </div>
           <div id="viewerSection" class="content"></div>
@@ -20,7 +24,7 @@ function article() {
     method: 'GET'
   }).then(response => response.json())
       .then(article => {
-        body.insertAdjacentHTML("beforeend", articleFrom(article))
+        body.insertAdjacentHTML("beforeend", articleForm(article))
         const viewer = tui.Editor.factory({
           el: document.querySelector('#viewerSection'),
           viewer: true,

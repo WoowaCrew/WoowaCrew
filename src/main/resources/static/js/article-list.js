@@ -8,7 +8,7 @@ function articleList() {
        return time.split('T')[0]
   }
 
-  const articleListFrom = (article) =>
+  const articleListForm = (article) =>
       `<div class="article-info">
         <div class="article-info-article-id">
             <div id="article-info-article-id-content" value=${article.id}>
@@ -50,7 +50,7 @@ function articleList() {
   }).then(response => response.json())
       .then(articles => {
         articles.forEach(article => {
-          articleList.insertAdjacentHTML("beforeend", articleListFrom(article))
+          articleList.insertAdjacentHTML("beforeend", articleListForm(article))
         })
       })
       .catch(error => alert('오류가 발생했습니다.'));

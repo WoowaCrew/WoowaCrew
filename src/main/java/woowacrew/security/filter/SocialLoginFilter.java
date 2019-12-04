@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SocialLoginFilter extends AbstractAuthenticationProcessingFilter {
-    public  SocialLoginFilter(String defaultFilterProcessesUrl) {
+    public SocialLoginFilter(String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl);
     }
 
@@ -32,6 +32,6 @@ public class SocialLoginFilter extends AbstractAuthenticationProcessingFilter {
         context.setAuthentication(authResult);
         SecurityContextHolder.setContext(context);
 
-        response.sendRedirect("/hello");
+        response.sendRedirect("/");
     }
 }

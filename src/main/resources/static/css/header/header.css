@@ -10,7 +10,7 @@
     position: sticky;
     top: 0;
     max-height: 47px;
-    text-transform:uppercase;
+    text-transform: uppercase;
 }
 
 .header-bar .header-li {
@@ -30,7 +30,7 @@
     float: right;
 }
 
-.header-bar .header-li a.header-contents:hover, a.header-active:hover{
+.header-bar .header-li a.header-contents:hover, a.header-active:hover {
     cursor: pointer;
     transition: 0.3s;
     color: white;
@@ -42,5 +42,18 @@
 }
 
 .header-bar li.header-li:hover #header-dropdown {
-    display:block;
+    display: block;
+}
+
+.header-login-user {
+    min-width: 100px;
+    max-width: 120px;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#user-id {
+    display: none;
 }

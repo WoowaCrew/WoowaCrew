@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>로그인 페이지</title>
+    <th:block th:replace="fragments/config :: configFragment"/>
+    <link href="/css/login.css" rel="stylesheet">
+    <title>WoowaCrew</title>
+
 </head>
-<body>
-<a href="https://github.com/login/oauth/authorize?client_id=013cc23d4922a77a88b9" class="">github으로 로그인 하기</a>
+<body><th:block th:replace="fragments/header/header :: headerFragment"/>
+<button onclick="location.href='https://github.com/login/oauth/authorize?client_id=013cc23d4922a77a88b9'">LOGIN WITH GITHUB</button>
 </body>
 </html>
