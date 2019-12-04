@@ -33,8 +33,7 @@ function indexHeader() {
     }
 
     function setUpdateForm() {
-        const userId = document.getElementById('user-id').innerHTML
-        const updateFormUrl = "/users/" + userId + "/form"
+        const updateFormUrl = "/users/form"
         document.getElementById('update-form').setAttribute('href', updateFormUrl)
     }
 

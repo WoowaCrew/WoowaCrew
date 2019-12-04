@@ -14,6 +14,6 @@ public class UserControllerAdvice {
     public RedirectView exceptBirthday(InvalidBirthdayException exception, RedirectAttributes redirectAttributes, @AuthenticationUser UserContext userContext) {
         redirectAttributes.addFlashAttribute("error", exception.getMessage());
 
-        return new RedirectView("/users/" + userContext.getId() + "/form");
+        return new RedirectView("/users/form");
     }
 }

@@ -23,7 +23,7 @@ public class UserControllerTest extends CommonTestController {
         String cookie = loginWithUser();
 
         webTestClient.get()
-                .uri("/users/1/form")
+                .uri("/users/form")
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk();
@@ -32,7 +32,7 @@ public class UserControllerTest extends CommonTestController {
     @Test
     void 비로그인시_로그인_페이지로_이동한다() {
         webTestClient.get()
-                .uri("/users/1/form")
+                .uri("/users/form")
                 .exchange()
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
@@ -45,7 +45,7 @@ public class UserControllerTest extends CommonTestController {
         UserUpdateDto userUpdateDto = new UserUpdateDto("test", "1995-06-08");
 
         webTestClient.post()
-                .uri("/users/1/update")
+                .uri("/users/update")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("nickname", "test")
                         .with("birthday", "1995-06-08"))
@@ -56,10 +56,10 @@ public class UserControllerTest extends CommonTestController {
     @Test
     void 올바르지_않은_추가정보_입력값을_받을때_수정_폼에_에러메세지를_포함한다() {
         String cookie = loginWithUser();
-        String redirectLocation = "/users/1/form";
+        String redirectLocation = "/users/form";
 
         webTestClient.post()
-                .uri("/users/1/update")
+                .uri("/users/update")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("nickname", "test")
                         .with("birthday", "1995-13-08"))
