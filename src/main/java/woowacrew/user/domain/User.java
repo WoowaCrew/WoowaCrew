@@ -1,11 +1,9 @@
 package woowacrew.user.domain;
 
+import woowacrew.user.domain.exception.ForbiddenUserException;
 import woowacrew.user.domain.exception.NotExistNicknameException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -23,12 +21,24 @@ public class User {
 
     private LocalDate birthday;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    @OneToOne
+    @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "FK_USER_DEGREE"))
+    private Degree degree = new Degree();
+
     private User() {
     }
 
     public User(String userId, String url) {
+        this(userId, url, UserRole.ROLE_PRECOURSE);
+    }
+
+    public User(String userId, String url, UserRole role) {
         this.userId = userId;
         this.url = url;
+        this.role = role;
     }
 
     public void updateUserInfo(String nickname, LocalDate birthday) {
@@ -42,6 +52,15 @@ public class User {
         if (nickname == null || "".equals(nickname)) {
             throw new NotExistNicknameException();
         }
+    }
+
+    public void updateRole(User admin, UserRole roleCrew, int updateDegree) {
+        if (!admin.role.matchAdmin()) {
+            throw new ForbiddenUserException();
+        }
+
+        this.role = roleCrew;
+        degree.update(updateDegree);
     }
 
     public Long getId() {
@@ -64,6 +83,14 @@ public class User {
         return birthday;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public Degree getDegree() {
+        return degree;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,6 +103,7 @@ public class User {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 
     @Override
     public String toString() {

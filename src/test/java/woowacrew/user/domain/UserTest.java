@@ -2,11 +2,13 @@ package woowacrew.user.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import woowacrew.user.domain.exception.ForbiddenUserException;
 import woowacrew.user.domain.exception.NotExistNicknameException;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -40,5 +42,29 @@ class UserTest {
 
         assertThrows(NotExistNicknameException.class, () -> user.updateUserInfo(null, birthday));
         assertThrows(NotExistNicknameException.class, () -> user.updateUserInfo("", birthday));
+    }
+
+    @Test
+    @DisplayName("관리자는 유저의 Role과 기수를 업데이트 할 수 있다.")
+    void updateUserRole() {
+        User admin = new User("admin", "test", UserRole.ROLE_ADMIN);
+        User user = new User("user", "test");
+
+        int updateDegree = 1;
+        user.updateRole(admin, UserRole.ROLE_CREW, updateDegree);
+
+        assertThat(user.getRole()).isEqualTo(UserRole.ROLE_CREW);
+        assertThat(user.getDegree().getNumber()).isEqualTo(updateDegree);
+    }
+
+    @Test
+    @DisplayName("권한이 없는 유저가 업데이트를 하는 경우 ForbiddenUserException가 발생한다.")
+    void updateUserRole_ifUserRoleIsCrew_thenForbiddenUserException() {
+        User admin = new User("admin", "test", UserRole.ROLE_CREW);
+        User user = new User("user", "test");
+
+        int updateDegree = 1;
+        assertThatThrownBy(() -> user.updateRole(admin, UserRole.ROLE_CREW, updateDegree))
+                .isInstanceOf(ForbiddenUserException.class);
     }
 }
