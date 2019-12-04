@@ -23,7 +23,7 @@ public class Degree {
     }
 
     public void update(int updateDegree) {
-        if (updateDegree < 0 || updateDegree > MAX_BOUND) {
+        if (updateDegree < NONE_DEGREE || updateDegree > MAX_BOUND) {
             throw new DegreeBoundException();
         }
 
