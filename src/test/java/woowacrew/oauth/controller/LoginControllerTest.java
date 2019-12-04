@@ -56,7 +56,7 @@ class LoginControllerTest extends CommonTestController {
     }
 
     @Test
-    @DisplayName("승인이 나지 않은 사람이 /article/new에 접근하면 accessdeny되며 관리자 승인 대기하라고 나온다.")
+    @DisplayName("닉네임을 입력하지 않은 사람이 /article/new에 접근하면 닉네임 입력하라고 나온다.")
     void accessDenyTest2() {
         String cookie = loginWithPrecourse();
 
@@ -69,7 +69,7 @@ class LoginControllerTest extends CommonTestController {
                 .expectBody()
                 .consumeWith(response -> {
                     String body = new String(response.getResponseBody());
-                    assertThat(body.contains("관리자의")).isTrue();
+                    assertThat(body.contains("닉네임")).isTrue();
                 });
     }
 }
