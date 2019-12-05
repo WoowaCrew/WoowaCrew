@@ -7,8 +7,7 @@ import woowacrew.user.domain.exception.NotExistNicknameException;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -50,11 +49,12 @@ class UserTest {
         User admin = new User("admin", UserRole.ROLE_ADMIN, Degree.defaultDegree());
         User user = new User("user", Degree.defaultDegree());
 
-        int updateDegree = 1;
-        user.updateRole(admin, UserRole.ROLE_CREW, updateDegree);
+        Degree updateDegree = Degree.defaultDegree();
+        updateDegree.update(1);
+        user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree);
 
         assertThat(user.getRole()).isEqualTo(UserRole.ROLE_CREW);
-        assertThat(user.getDegree().getNumber()).isEqualTo(updateDegree);
+        assertThat(user.getDegree().getNumber()).isEqualTo(updateDegree.getNumber());
     }
 
     @Test
@@ -63,8 +63,9 @@ class UserTest {
         User admin = new User("admin", UserRole.ROLE_CREW, Degree.defaultDegree());
         User user = new User("user", Degree.defaultDegree());
 
-        int updateDegree = 1;
-        assertThatThrownBy(() -> user.updateRole(admin, UserRole.ROLE_CREW, updateDegree))
+        Degree updateDegree = Degree.defaultDegree();
+        updateDegree.update(1);
+        assertThatThrownBy(() -> user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree))
                 .isInstanceOf(ForbiddenUserException.class);
     }
 }

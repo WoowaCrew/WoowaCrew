@@ -52,13 +52,25 @@ public class User {
         }
     }
 
-    public void updateRole(User user, UserRole role, int updateDegree) {
+    public void updateByAdmin(User user, UserRole role, Degree degree) {
         if (!user.role.matchAdmin()) {
             throw new ForbiddenUserException();
         }
 
+        updateRole(role);
+        updateDegree(degree);
+    }
+
+    private void updateRole(UserRole role) {
         this.role = role;
-        degree.update(updateDegree);
+    }
+
+    private void updateDegree(Degree degree) {
+        this.degree = degree;
+    }
+
+    public boolean isApproved() {
+        return this.role.isApproved();
     }
 
     public Long getId() {

@@ -12,6 +12,10 @@ public enum UserRole {
         this.roleName = roleName;
     }
 
+    public boolean isApproved() {
+        return this != ROLE_PRECOURSE;
+    }
+
     public boolean matchAdmin() {
         return this == ROLE_ADMIN;
     }

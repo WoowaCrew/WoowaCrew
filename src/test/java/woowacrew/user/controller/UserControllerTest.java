@@ -12,7 +12,6 @@ import woowacrew.user.service.exception.InvalidBirthdayException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest extends CommonTestController {
 
     @Autowired
