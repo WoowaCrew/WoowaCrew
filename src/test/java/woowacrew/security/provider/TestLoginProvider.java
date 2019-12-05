@@ -24,14 +24,19 @@ public class TestLoginProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        Degree degree = degreeRepository.findByNumber(0)
+        Degree degree = degreeRepository.findByNumber(Degree.NONE_DEGREE)
                 .orElseThrow(IllegalArgumentException::new);
         String oauthId = (String) authentication.getCredentials();
+        String role = (String) authentication.getPrincipal();
+
+        UserRole userRole = Arrays.stream(UserRole.values()).filter(value -> value.toString().equals(role))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("권한 못찾음"));
         User user = userRepository.findByOauthId(oauthId)
-                .orElseGet(() -> userRepository.save(new User(oauthId, degree)));
+                .orElseGet(() -> userRepository.save(new User(oauthId, userRole, degree)));
 
         UserContext userContext = new ModelMapper().map(user, UserContext.class);
-        return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority((String) authentication.getPrincipal())));
+        return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority(userRole.toString())));
     }
 
     @Override
