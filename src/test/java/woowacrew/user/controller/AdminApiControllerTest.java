@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserApiControllerTest extends CommonTestController {
+class AdminApiControllerTest extends CommonTestController {
 
     @Autowired
     private WebTestClient webTestClient;
