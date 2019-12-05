@@ -7,27 +7,30 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
-    <link href="/css/article.css" rel="stylesheet">
+    <link href="/css/editor.css" rel="stylesheet">
     <title>WoowaCrew</title>
 </head>
 
 <body>
 <th:block th:replace="fragments/header/header :: headerFragment"/>
-<div class="article-info">
-    <div id="article-header">
-        <div class="article-title">
-            <div class="title" id="article-title"></div>
-            <div class="userInfo" id="article-userInfo"></div>
-        </div>
-        <div class="article-button-group">
-            <div class="article-edit-button" id="article-edit-button"><i class="fa fa-edit"></i></div>
-            <div class="article-delete-button" id="article-delete-button"><i class="fa fa-3x fa-trash"></i></div>
-        </div>
-    </div>
-    <div id="viewerSection" class="content"></div>
+<div class="">
+    <form id="article-edit" action="/articles" method="post">
+        <input id="title" name="title" type="text" placeholder="제목을 입력해 주세요.">
+        <div id="editSection"></div>
+        <input id="article-contents" name="content" type="hidden">
+    </form>
 </div>
+<ul class="edit-bar">
+    <li>
+        <input type="button" id="save-button" value="저장"/>
+    </li>
+    <li>
+        <input type="button" id="cancel-button" value="취소" onclick="location.href='/articles'"/>
+    </li>
+</ul>
 </body>
+
 <!--  SCRIPT  -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
-<script src="/js/article.js"></script>
+<script src="/js/article-create.js"></script>
 </html>
