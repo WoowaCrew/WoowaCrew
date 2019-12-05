@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.domain.*;
+import woowacrew.article.exception.MisMatchUserException;
+import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserContext;
 import woowacrew.user.service.UserInternalService;
@@ -32,7 +34,7 @@ public class ArticleInternalService {
     @Transactional(readOnly = true)
     public Article findById(long articleId) {
         return articleRepository.findById(articleId)
-                .orElseThrow(() -> new IllegalArgumentException("요청하신 게시글을 찾을 수 없습니다."));
+                .orElseThrow(NotFoundArticleException::new);
     }
 
     @Transactional(readOnly = true)
@@ -54,7 +56,7 @@ public class ArticleInternalService {
         Article article = findById(articleId);
 
         if (!article.isAuthor(user)) {
-            throw new IllegalArgumentException("작성자가 아닙니다.");
+            throw new MisMatchUserException();
         }
 
         articleRepository.delete(article);

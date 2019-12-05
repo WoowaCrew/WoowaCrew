@@ -2,6 +2,7 @@ package woowacrew.article.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.common.service.FieldSetter;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
@@ -34,6 +35,6 @@ class ArticleTest {
         Article article = new Article("test", "testContent", user);
         FieldSetter.set(user2, "id", 2L);
 
-       assertThrows(IllegalArgumentException.class, () -> article.update(user2, "updateTitle", "updateContent"));
+       assertThrows(MisMatchUserException.class, () -> article.update(user2, "updateTitle", "updateContent"));
     }
 }

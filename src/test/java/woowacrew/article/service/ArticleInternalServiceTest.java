@@ -9,6 +9,8 @@ import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleRepository;
 import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleUpdateDto;
+import woowacrew.article.exception.MisMatchUserException;
+import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.common.service.FieldSetter;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
@@ -68,7 +70,7 @@ class ArticleInternalServiceTest {
         Article article = new Article(title, content, user);
         when(articleRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> articleInternalService.findById(1L));
+        assertThrows(NotFoundArticleException.class, () -> articleInternalService.findById(1L));
     }
 
     @Test
@@ -123,7 +125,7 @@ class ArticleInternalServiceTest {
         when(userInternalService.findById(userContext.getId())).thenReturn(user2);
         when(articleRepository.findById(1L)).thenReturn(Optional.of(article));
 
-        assertThrows(IllegalArgumentException.class, () -> articleInternalService.update(articleUpdateDto, userContext));
+        assertThrows(MisMatchUserException.class, () -> articleInternalService.update(articleUpdateDto, userContext));
     }
 
     private List<Article> createArticles(int numberOfArticle) {

@@ -1,5 +1,6 @@
 package woowacrew.article.domain;
 
+import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.common.domain.TimeEntity;
 import woowacrew.user.domain.User;
 
@@ -30,7 +31,7 @@ public class Article extends TimeEntity {
 
     public void update(User user, String title, String content) {
         if (!this.user.equals(user)) {
-            throw new IllegalArgumentException();
+            throw new MisMatchUserException();
         }
 
         articleForm.updateArticle(title, content);
