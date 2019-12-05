@@ -36,10 +36,10 @@ public class AdminApiController {
         return ResponseEntity.ok(users);
     }
 
-    @PutMapping("/{id}/approve")
+    @PutMapping("/{userId}/approve")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity approve(@PathVariable Long id, UserContext userContext, @RequestBody UserApproveDto userApproveDto) {
-        userService.approveUserFor(id, userContext, userApproveDto);
+    public ResponseEntity approve(@PathVariable Long userId, UserContext userContext, @RequestBody UserApproveDto userApproveDto) {
+        userService.approveUserFor(userId, userContext, userApproveDto);
 
         return ResponseEntity.ok().build();
     }
