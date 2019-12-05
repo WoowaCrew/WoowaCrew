@@ -53,6 +53,10 @@
     background-color: whitesmoke;
 }
 
+#article-edit-button, #article-delete-button {
+    cursor: pointer;
+}
+
 .tui-editor-contents p,
 .tui-editor-contents h1,
 .tui-editor-contents h2,

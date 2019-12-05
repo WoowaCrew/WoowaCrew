@@ -8,6 +8,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleRepository;
 import woowacrew.article.domain.ArticleRequestDto;
+import woowacrew.article.domain.ArticleUpdateDto;
+import woowacrew.article.exception.MisMatchUserException;
+import woowacrew.article.exception.NotFoundArticleException;
+import woowacrew.common.service.FieldSetter;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserContext;
@@ -66,7 +70,7 @@ class ArticleInternalServiceTest {
         Article article = new Article(title, content, user);
         when(articleRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> articleInternalService.findById(1L));
+        assertThrows(NotFoundArticleException.class, () -> articleInternalService.findById(1L));
     }
 
     @Test
@@ -77,6 +81,51 @@ class ArticleInternalServiceTest {
         List<Article> actualArticles = articleInternalService.findAll();
 
         assertThat(actualArticles.size()).isEqualTo(10);
+    }
+
+    @Test
+    void 게시글_업데이트_작성자일_경우_테스트() {
+        String title = "title";
+        String content = "content";
+        String updateTitle = "title1";
+        String updateContent = "content1";
+
+        UserContext userContext = new UserContext("asd");
+        User user = new User("asd", Degree.defaultDegree());
+        FieldSetter.set(user, "id", 1L);
+
+        Article article = new Article(title, content, user);
+        ArticleUpdateDto articleUpdateDto = new ArticleUpdateDto(1L, updateTitle, updateContent);
+        when(userInternalService.findById(userContext.getId())).thenReturn(user);
+        when(articleRepository.findById(1L)).thenReturn(Optional.of(article));
+
+        Article updateArticle = articleInternalService.update(articleUpdateDto, userContext);
+
+        assertThat(updateArticle.getId()).isEqualTo(article.getId());
+        assertThat(updateArticle.getTitle()).isEqualTo(updateTitle);
+        assertThat(updateArticle.getContent()).isEqualTo(updateContent);
+    }
+
+    @Test
+    void 게시글_업데이트_작성자가_아닐_경우_테스트() {
+        String title = "title";
+        String content = "content";
+        String updateTitle = "title1";
+        String updateContent = "content1";
+
+        UserContext userContext = new UserContext("asd");
+        User user1 = new User("asd", Degree.defaultDegree());
+        FieldSetter.set(user1, "id", 1L);
+
+        User user2 = new User("asd", Degree.defaultDegree());
+        FieldSetter.set(user2, "id", 2L);
+
+        Article article = new Article(title, content, user1);
+        ArticleUpdateDto articleUpdateDto = new ArticleUpdateDto(1L, updateTitle, updateContent);
+        when(userInternalService.findById(userContext.getId())).thenReturn(user2);
+        when(articleRepository.findById(1L)).thenReturn(Optional.of(article));
+
+        assertThrows(MisMatchUserException.class, () -> articleInternalService.update(articleUpdateDto, userContext));
     }
 
     private List<Article> createArticles(int numberOfArticle) {
