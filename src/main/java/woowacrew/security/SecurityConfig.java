@@ -51,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/search", "/search/**").permitAll()
+                //TODO: 임시권한입니다. 추후 삭제 필요
+                .antMatchers("/role/**").permitAll()
                 .antMatchers("/accessdeny", "/users/form", "/users/update").authenticated()
                 .anyRequest().hasAnyRole(UserRole.ROLE_CREW.getRoleName(), UserRole.ROLE_COACH.getRoleName(), UserRole.ROLE_ADMIN.getRoleName())
                 .and()
