@@ -40,7 +40,7 @@ class ArticleControllerTest extends CommonTestController {
                 .expectBody()
                 .consumeWith(response -> {
                     String body = response.toString();
-                    assertThat(body.contains("/js/article-edit.js")).isTrue();
+                    assertThat(body.contains("/js/article-create.js")).isTrue();
                 });
     }
 

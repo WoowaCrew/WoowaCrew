@@ -19,6 +19,21 @@ class ArticleApiControllerTest extends CommonTestController {
     private WebTestClient webTestClient;
 
     @Test
+    void 게시글_생성_테스트() {
+        String cookie = loginWithCrew();
+        String title = "title";
+        String content = "content";
+
+        webTestClient.post()
+                .uri("/api/articles")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", title)
+                        .with("content", content))
+                .exchange()
+                .expectStatus().isCreated();
+    }
+
+    @Test
     void 게시글_목록_조회() {
         String cookie = loginWithCrew();
 
@@ -35,7 +50,7 @@ class ArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 게시글_상_조회() {
+    void 게시글_상세_조회() {
         String cookie = loginWithCrew();
 
         ArticleResponseDto article1 = webTestClient.get()
@@ -58,17 +73,19 @@ class ArticleApiControllerTest extends CommonTestController {
         String updateTitle = "Update Title";
         String updateContent = "Update Content";
 
+        Long articleId = createArticle(cookie, "title", "content");
+
         webTestClient.put()
-                .uri("/api/articles/1")
+                .uri("/api/articles/" + articleId)
                 .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("articleId", "1")
+                .body(BodyInserters.fromFormData("articleId", Long.toString(articleId))
                         .with("title", updateTitle)
                         .with("content", updateContent))
                 .exchange()
                 .expectStatus().isOk();
 
         ArticleResponseDto article = webTestClient.get()
-                .uri("/api/articles/1")
+                .uri("/api/articles/" + articleId)
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk()
@@ -84,17 +101,36 @@ class ArticleApiControllerTest extends CommonTestController {
     void 게시글_삭제() {
         String cookie = loginWithCrew();
 
+        Long articleId = createArticle(cookie, "title", "content");
+
         webTestClient.delete()
-                .uri("/api/articles/2")
+                .uri("/api/articles/" + articleId)
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk();
 
          webTestClient.get()
-                .uri("/api/articles/2")
+                .uri("/api/articles/" + articleId)
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();
+    }
+
+    private Long createArticle(String cookie, String title, String content) {
+        ArticleResponseDto articleResponseDto = webTestClient.post()
+                .uri("/api/articles")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", title)
+                        .with("content", content))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(ArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assert articleResponseDto != null;
+
+        return articleResponseDto.getId();
     }
 }
