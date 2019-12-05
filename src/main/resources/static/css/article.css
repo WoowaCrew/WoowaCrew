@@ -9,15 +9,12 @@
 #article-header {
     border-bottom: 1px dotted;
     padding-bottom: 10px;
-    height: 70px;
     display: flex;
     justify-content: space-between;
 }
 
 .title {
     font-size: 40px;
-    float: left;
-    width:80%;
     color: white;
 }
 
