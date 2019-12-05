@@ -21,7 +21,7 @@ class UserRepositoryTest {
 
         for (User user : users) {
             UserRole userRole = user.getRole();
-            assertTrue(userRole.isApprovedUser());
+            assertTrue(userRole.isApproved());
         }
     }
 
@@ -31,7 +31,7 @@ class UserRepositoryTest {
 
         for (User user : users) {
             UserRole userRole = user.getRole();
-            assertFalse(userRole.isApprovedUser());
+            assertFalse(userRole.isApproved());
         }
     }
 }

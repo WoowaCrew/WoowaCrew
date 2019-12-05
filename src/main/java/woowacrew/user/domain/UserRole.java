@@ -12,7 +12,7 @@ public enum UserRole {
         this.roleName = roleName;
     }
 
-    public boolean isApprovedUser() {
+    public boolean isApproved() {
         return this != ROLE_PRECOURSE;
     }
 
