@@ -40,10 +40,10 @@ button:hover:before, button:hover:after {
 
 .error-message {
     font-family: 'Nanum Gothic', sans-serif;
-    margin-top: 450px;
     color: white;
     text-align: center;
     font-size: 20px;
+    margin-top: 25%;
 }
 
 .message-content {
