@@ -20,8 +20,7 @@ class UserRepositoryTest {
         List<User> users = userRepository.findByRoleNotIn(UserRole.ROLE_PRECOURSE);
 
         for (User user : users) {
-            UserRole userRole = user.getRole();
-            assertTrue(userRole.isApproved());
+            assertTrue(user.isApproved());
         }
     }
 
@@ -30,8 +29,7 @@ class UserRepositoryTest {
         List<User> users = userRepository.findByRole(UserRole.ROLE_PRECOURSE);
 
         for (User user : users) {
-            UserRole userRole = user.getRole();
-            assertFalse(userRole.isApproved());
+            assertFalse(user.isApproved());
         }
     }
 }

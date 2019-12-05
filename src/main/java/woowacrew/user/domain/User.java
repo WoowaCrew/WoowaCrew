@@ -61,6 +61,10 @@ public class User {
         this.degree = degree;
     }
 
+    public boolean isApproved() {
+        return this.role.isApproved();
+    }
+
     public Long getId() {
         return id;
     }
