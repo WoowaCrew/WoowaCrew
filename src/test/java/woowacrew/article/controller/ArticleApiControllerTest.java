@@ -35,7 +35,7 @@ class ArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 게시글_상세_조회() {
+    void 게시글_상_조회() {
         String cookie = loginWithCrew();
 
         ArticleResponseDto article1 = webTestClient.get()
