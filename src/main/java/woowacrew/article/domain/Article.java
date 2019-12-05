@@ -1,11 +1,11 @@
 package woowacrew.article.domain;
 
+import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.common.domain.TimeEntity;
 import woowacrew.user.domain.User;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 public class Article extends TimeEntity {
@@ -30,11 +30,15 @@ public class Article extends TimeEntity {
     }
 
     public void update(User user, String title, String content) {
-        if (this.user.equals(user)) {
-            articleForm.updateArticle(title, content);
+        if (!this.user.equals(user)) {
+            throw new MisMatchUserException();
         }
 
-        throw new IllegalArgumentException();
+        articleForm.updateArticle(title, content);
+    }
+
+    public boolean isAuthor(User user) {
+        return this.user.equals(user);
     }
 
     public Long getId() {
@@ -69,10 +73,6 @@ public class Article extends TimeEntity {
         return id.equals(that.id);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @Override
     public String toString() {

@@ -3,10 +3,9 @@ package woowacrew.article.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woowacrew.article.domain.Article;
-import woowacrew.article.domain.ArticleConverter;
-import woowacrew.article.domain.ArticleRepository;
-import woowacrew.article.domain.ArticleRequestDto;
+import woowacrew.article.domain.*;
+import woowacrew.article.exception.MisMatchUserException;
+import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserContext;
 import woowacrew.user.service.UserInternalService;
@@ -35,11 +34,31 @@ public class ArticleInternalService {
     @Transactional(readOnly = true)
     public Article findById(long articleId) {
         return articleRepository.findById(articleId)
-                .orElseThrow(() -> new IllegalArgumentException("요청하신 게시글을 찾을 수 없습니다."));
+                .orElseThrow(NotFoundArticleException::new);
     }
 
     @Transactional(readOnly = true)
     public List<Article> findAll() {
         return articleRepository.findAllByOrderByIdDesc();
+    }
+
+    public Article update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
+        User user = userInternalService.findById(userContext.getId());
+        Article article = findById(articleUpdateDto.getArticleId());
+
+        article.update(user, articleUpdateDto.getTitle(), articleUpdateDto.getContent());
+
+        return article;
+    }
+
+    public void delete(Long articleId, UserContext userContext) {
+        User user = userInternalService.findById(userContext.getId());
+        Article article = findById(articleId);
+
+        if (!article.isAuthor(user)) {
+            throw new MisMatchUserException();
+        }
+
+        articleRepository.delete(article);
     }
 }
