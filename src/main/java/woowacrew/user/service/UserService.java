@@ -2,12 +2,10 @@ package woowacrew.user.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserConverter;
-import woowacrew.user.domain.UserResponseDto;
-import woowacrew.user.domain.UserUpdateDto;
+import woowacrew.user.domain.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,5 +31,17 @@ public class UserService {
         user.updateUserInfo(nickname, birthday);
 
         return UserConverter.userToUserResponseDto(user);
+    }
+
+    public List<UserResponseDto> findApprovedUser() {
+        List<User> approvedUsers = userInternalService.findByRoleNotIn(UserRole.ROLE_PRECOURSE);
+
+        return UserConverter.usersToUserResponseDtos(approvedUsers);
+    }
+
+    public List<UserResponseDto> findDisapprovedUser() {
+        List<User> disapprovedUsers = userInternalService.findByRole(UserRole.ROLE_PRECOURSE);
+
+        return UserConverter.usersToUserResponseDtos(disapprovedUsers);
     }
 }

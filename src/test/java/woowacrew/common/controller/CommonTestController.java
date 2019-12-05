@@ -21,7 +21,6 @@ public class CommonTestController {
         return loginWith("crew", UserRole.ROLE_CREW.toString());
     }
 
-
     protected String loginWithCoach() {
         return loginWith("coach", UserRole.ROLE_COACH.toString());
     }
