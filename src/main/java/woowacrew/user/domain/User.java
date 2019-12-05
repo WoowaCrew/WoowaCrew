@@ -52,13 +52,13 @@ public class User {
         }
     }
 
-    public void updateRole(User user, UserRole role, int updateDegree) {
+    public void updateRole(User user, UserRole role, Degree degree) {
         if (!user.role.matchAdmin()) {
             throw new ForbiddenUserException();
         }
 
         this.role = role;
-        degree.update(updateDegree);
+        this.degree = degree;
     }
 
     public Long getId() {

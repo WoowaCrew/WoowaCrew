@@ -48,7 +48,8 @@ public class UserService {
     public void approveUserFor(Long id, UserContext userContext, UserApproveDto userApproveDto) {
         User user = userInternalService.findById(id);
         User admin = userInternalService.findById(userContext.getId());
+        Degree degree = userInternalService.findDegreeByNumber(userApproveDto.getDegreeNumber());
 
-        user.updateRole(admin, userApproveDto.getRole(), userApproveDto.getDegreeNumber());
+        user.updateRole(admin, userApproveDto.getRole(), degree);
     }
 }
