@@ -51,7 +51,7 @@ class UserTest {
 
         Degree updateDegree = Degree.defaultDegree();
         updateDegree.update(1);
-        user.updateRole(admin, UserRole.ROLE_CREW, updateDegree);
+        user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree);
 
         assertThat(user.getRole()).isEqualTo(UserRole.ROLE_CREW);
         assertThat(user.getDegree().getNumber()).isEqualTo(updateDegree.getNumber());
@@ -65,7 +65,7 @@ class UserTest {
 
         Degree updateDegree = Degree.defaultDegree();
         updateDegree.update(1);
-        assertThatThrownBy(() -> user.updateRole(admin, UserRole.ROLE_CREW, updateDegree))
+        assertThatThrownBy(() -> user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree))
                 .isInstanceOf(ForbiddenUserException.class);
     }
 }

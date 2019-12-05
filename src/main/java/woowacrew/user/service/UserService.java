@@ -50,6 +50,6 @@ public class UserService {
         User admin = userInternalService.findById(userContext.getId());
         Degree degree = userInternalService.findDegreeByNumber(userApproveDto.getDegreeNumber());
 
-        user.updateRole(admin, userApproveDto.getRole(), degree);
+        user.updateByAdmin(admin, userApproveDto.getRole(), degree);
     }
 }
