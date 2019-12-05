@@ -42,4 +42,10 @@ public class ArticleApiController {
     public ResponseEntity<ArticleResponseDto> updateArticle(@AuthenticationUser UserContext userContext, ArticleUpdateDto articleUpdateDto) {
         return ResponseEntity.ok(articleService.update(articleUpdateDto, userContext));
     }
+
+    @DeleteMapping("/api/articles/{articleId}")
+    public ResponseEntity deleteArticle(@AuthenticationUser UserContext userContext, @PathVariable Long articleId) {
+        articleService.delete(articleId, userContext);
+        return ResponseEntity.ok().build();
+    }
 }

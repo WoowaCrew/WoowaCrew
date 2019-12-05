@@ -33,4 +33,8 @@ public class ArticleService {
     public ArticleResponseDto update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
         return ArticleConverter.articleToArticleResponseDto(articleInternalService.update(articleUpdateDto, userContext));
     }
+
+    public void delete(Long articleId, UserContext userContext) {
+        articleInternalService.delete(articleId, userContext);
+    }
 }

@@ -36,6 +36,10 @@ public class Article extends TimeEntity {
         articleForm.updateArticle(title, content);
     }
 
+    public boolean isAuthor(User user) {
+        return this.user.equals(user);
+    }
+
     public Long getId() {
         return id;
     }

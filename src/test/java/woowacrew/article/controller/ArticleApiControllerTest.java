@@ -31,7 +31,7 @@ class ArticleApiControllerTest extends CommonTestController {
                 .returnResult()
                 .getResponseBody();
 
-        assertThat(articles.get(0).getTitle()).isEqualTo("article A");
+        assertThat(articles.get(articles.size() - 1).getTitle()).isEqualTo("article A");
     }
 
     @Test
@@ -78,5 +78,23 @@ class ArticleApiControllerTest extends CommonTestController {
 
         assertThat(article.getTitle()).isEqualTo(updateTitle);
         assertThat(article.getContent()).isEqualTo(updateContent);
+    }
+
+    @Test
+    void 게시글_삭제() {
+        String cookie = loginWithUser();
+
+        webTestClient.delete()
+                .uri("/api/articles/2")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+
+         webTestClient.get()
+                .uri("/api/articles/2")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .is5xxServerError();
     }
 }

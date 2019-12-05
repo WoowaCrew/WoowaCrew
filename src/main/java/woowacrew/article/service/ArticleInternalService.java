@@ -48,4 +48,15 @@ public class ArticleInternalService {
 
         return article;
     }
+
+    public void delete(Long articleId, UserContext userContext) {
+        User user = userInternalService.findById(userContext.getId());
+        Article article = findById(articleId);
+
+        if (!article.isAuthor(user)) {
+            throw new IllegalArgumentException("작성자가 아닙니다.");
+        }
+
+        articleRepository.delete(article);
+    }
 }
