@@ -1,0 +1,51 @@
+button {
+    background: black;
+    color: gray;
+    border: none;
+    position: relative;
+    height: 60px;
+    font-size: 20px;
+    padding: 0 2em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+button:hover {
+    color: white;
+}
+
+button:before, button:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: pink;
+    transition: 400ms ease all;
+}
+
+button:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+button:hover:before, button:hover:after {
+    width: 100%;
+    transition: 800ms ease all;
+}
+
+.error-message {
+    font-family: 'Nanum Gothic', sans-serif;
+    margin-top: 450px;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+}
+
+.message-content {
+    margin-bottom: 20px
+}

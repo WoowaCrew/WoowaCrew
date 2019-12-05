@@ -1,7 +1,5 @@
 package woowacrew.user.domain;
 
-import java.time.LocalDate;
-
 public class UserContext {
     private Long id;
 
@@ -9,20 +7,20 @@ public class UserContext {
 
     private String nickname;
 
-    private LocalDate birthday;
+    private UserRole role;
 
     private UserContext() {
     }
 
-    public UserContext(String oauthId) {
-        this.oauthId = oauthId;
-    }
-
-    public UserContext(Long id, String oauthId, String nickname, LocalDate birthday) {
+    public UserContext(Long id, String oauthId, String nickname, UserRole role) {
         this.id = id;
         this.oauthId = oauthId;
         this.nickname = nickname;
-        this.birthday = birthday;
+        this.role = role;
+    }
+
+    public UserContext(String oauthId) {
+        this.oauthId = oauthId;
     }
 
     public Long getId() {
@@ -49,11 +47,11 @@ public class UserContext {
         this.nickname = nickname;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseCookie;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import woowacrew.user.domain.UserRole;
 
 import java.util.List;
 
@@ -12,19 +13,28 @@ public class CommonTestController {
     @Autowired
     private WebTestClient webTestClient;
 
-    protected String loginWithUser() {
-        return loginWith("USER");
+    protected String loginWithPrecourse() {
+        return loginWith("precousre", UserRole.ROLE_PRECOURSE.toString());
+    }
+
+    protected String loginWithCrew() {
+        return loginWith("crew", UserRole.ROLE_CREW.toString());
+    }
+
+
+    protected String loginWithCoach() {
+        return loginWith("coach", UserRole.ROLE_COACH.toString());
     }
 
     protected String loginWithAdmin() {
-        return loginWith("ADMIN");
+        return loginWith("admin", UserRole.ROLE_ADMIN.toString());
     }
 
-    private String loginWith(String role) {
+    private String loginWith(String oauthId, String role) {
         final String[] cookie = new String[1];
 
         webTestClient.get()
-                .uri("/oauth/github?role=ROLE_" + role)
+                .uri("/oauth/github?role=" + role + "&oauthId=" + oauthId)
                 .exchange()
                 .expectBody()
                 .consumeWith(response -> {

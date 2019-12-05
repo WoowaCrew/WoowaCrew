@@ -20,7 +20,7 @@ public class UserControllerTest extends CommonTestController {
 
     @Test
     void 유저_추가정보_수정_페이지로_이동한다() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
 
         webTestClient.get()
                 .uri("/users/form")
@@ -41,7 +41,7 @@ public class UserControllerTest extends CommonTestController {
 
     @Test
     void 정상적으로_유저_추가정보를_저장한다() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
         UserUpdateDto userUpdateDto = new UserUpdateDto("test", "1995-06-08");
 
         webTestClient.post()
@@ -55,7 +55,7 @@ public class UserControllerTest extends CommonTestController {
 
     @Test
     void 올바르지_않은_추가정보_입력값을_받을때_수정_폼에_에러메세지를_포함한다() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
         String redirectLocation = "/users/form";
 
         webTestClient.post()
