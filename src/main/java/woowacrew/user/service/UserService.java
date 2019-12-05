@@ -18,16 +18,16 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserResponseDto findById(Long id) {
-        User user = userInternalService.findById(id);
+    public UserResponseDto findById(Long userId) {
+        User user = userInternalService.findById(userId);
         return UserConverter.userToUserResponseDto(user);
     }
 
-    public UserResponseDto update(Long id, UserUpdateDto userUpdateDto) {
+    public UserResponseDto update(Long userId, UserUpdateDto userUpdateDto) {
         String nickname = userUpdateDto.getNickname();
         LocalDate birthday = BirthdayConverter.convert(userUpdateDto.getBirthday());
 
-        User user = userInternalService.findById(id);
+        User user = userInternalService.findById(userId);
         user.updateUserInfo(nickname, birthday);
 
         return UserConverter.userToUserResponseDto(user);
@@ -45,8 +45,8 @@ public class UserService {
         return UserConverter.usersToUserResponseDtos(disapprovedUsers);
     }
 
-    public void approveUserFor(Long id, UserContext userContext, UserApproveDto userApproveDto) {
-        User user = userInternalService.findById(id);
+    public void approveUserFor(Long userId, UserContext userContext, UserApproveDto userApproveDto) {
+        User user = userInternalService.findById(userId);
         User admin = userInternalService.findById(userContext.getId());
         Degree degree = userInternalService.findDegreeByNumber(userApproveDto.getDegreeNumber());
 
