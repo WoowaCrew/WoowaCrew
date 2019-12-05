@@ -19,12 +19,4 @@ public class UserApproveDto {
     public int getDegreeNumber() {
         return degreeNumber;
     }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    public void setDegreeNumber(int degreeNumber) {
-        this.degreeNumber = degreeNumber;
-    }
 }
