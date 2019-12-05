@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 import woowacrew.common.controller.CommonTestController;
+import woowacrew.user.domain.UserApproveDto;
 import woowacrew.user.domain.UserResponseDto;
 import woowacrew.user.domain.UserRole;
 
@@ -84,5 +86,18 @@ class UserApiControllerTest extends CommonTestController {
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/accessdeny"));
+    }
+
+    @Test
+    void 관리자가_권한_변경_요청을_보내면_해당_id의_유저_권한을_변경한다() {
+        String adminCookie = loginWithAdmin();
+        UserApproveDto userApproveDto = new UserApproveDto(UserRole.ROLE_CREW, 1);
+
+        webTestClient.put()
+                .uri("/api/users/{id}/approve", 2)
+                .body(Mono.just(userApproveDto), UserApproveDto.class)
+                .header("Cookie", adminCookie)
+                .exchange()
+                .expectStatus().isOk();
     }
 }

@@ -44,4 +44,11 @@ public class UserService {
 
         return UserConverter.usersToUserResponseDtos(disapprovedUsers);
     }
+
+    public void approveUserFor(Long id, UserContext userContext, UserApproveDto userApproveDto) {
+        User user = userInternalService.findById(id);
+        User admin = userInternalService.findById(userContext.getId());
+
+        user.updateRole(admin, userApproveDto.getRole(), userApproveDto.getDegreeNumber());
+    }
 }

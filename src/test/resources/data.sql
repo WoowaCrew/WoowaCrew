@@ -14,9 +14,9 @@ INSERT INTO keyword(content, views) VALUES ('최다 조회수 A', 300L);
 INSERT INTO keyword(content, views) VALUES ('최다 조회수 B', 200L);
 INSERT INTO keyword(content, views) VALUES ('최다 조회수 C', 100L);
 
-INSERT INTO user (id, oauth_id, role) VALUES (2, '10', 'ROLE_PRECOURSE');
-INSERT INTO user (id, oauth_id, role) VALUES (3, '11', 'ROLE_PRECOURSE');
-INSERT INTO user (id, oauth_id, role) VALUES (4, '12', 'ROLE_PRECOURSE');
-INSERT INTO user (id, oauth_id, role) VALUES (5, '13', 'ROLE_ADMIN');
-INSERT INTO user (id, oauth_id, role) VALUES (6, '14', 'ROLE_COACH');
-INSERT INTO user (id, oauth_id, role) VALUES (7, '15', 'ROLE_CREW');
+INSERT INTO user (id, oauth_id, role, degree_id) VALUES (2, '10', 'ROLE_PRECOURSE', 1);
+INSERT INTO user (id, oauth_id, role, degree_id) VALUES (3, '11', 'ROLE_PRECOURSE', 1);
+INSERT INTO user (id, oauth_id, role, degree_id) VALUES (4, '12', 'ROLE_PRECOURSE', 1);
+INSERT INTO user (id, oauth_id, role, degree_id) VALUES (5, '13', 'ROLE_ADMIN', 1);
+INSERT INTO user (id, oauth_id, role, degree_id) VALUES (6, '14', 'ROLE_COACH', 1);
+INSERT INTO user (id, oauth_id, role, degree_id) VALUES (7, '15', 'ROLE_CREW', 2);
