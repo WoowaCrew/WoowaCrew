@@ -21,8 +21,9 @@ public class SocialLoginTestFilter extends AbstractAuthenticationProcessingFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         String role = request.getParameter("role");
+        String oauthId = request.getParameter("oauthId");
 
-        return super.getAuthenticationManager().authenticate(new SocialPreAuthorizationToken(role, role));
+        return super.getAuthenticationManager().authenticate(new SocialPreAuthorizationToken(role, oauthId));
     }
 
     @Override

@@ -7,6 +7,7 @@ public class UserResponseDto {
     private String oauthId;
     private String nickname;
     private LocalDate birthday;
+    private UserRole userRole;
 
     private UserResponseDto() {
     }
@@ -50,13 +51,22 @@ public class UserResponseDto {
         this.birthday = birthday;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     @Override
     public String toString() {
         return "UserResponseDto{" +
                 "id=" + id +
-                ", userId='" + oauthId + '\'' +
+                ", oauthId='" + oauthId + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", birthday=" + birthday +
+                ", userRole=" + userRole +
                 '}';
     }
 }

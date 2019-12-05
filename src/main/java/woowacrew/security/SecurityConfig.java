@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import woowacrew.security.filter.SocialLoginFilter;
+import woowacrew.security.handler.AccessDenyHandler;
 import woowacrew.security.provider.SocialLoginAuthenticationProvider;
+import woowacrew.user.domain.UserRole;
 
 @Configuration
 @EnableWebSecurity
@@ -49,12 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/search", "/search/**").permitAll()
-                .anyRequest().authenticated()
+                //TODO: 임시권한입니다. 추후 삭제 필요
+                .antMatchers("/role/**").permitAll()
+                .antMatchers("/accessdeny", "/users/form", "/users/update").authenticated()
+                .anyRequest().hasAnyRole(UserRole.ROLE_CREW.getRoleName(), UserRole.ROLE_COACH.getRoleName(), UserRole.ROLE_ADMIN.getRoleName())
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .and()
-                .exceptionHandling().accessDeniedPage("/accessdeny")
+                .exceptionHandling().accessDeniedHandler(new AccessDenyHandler())
                 .and()
                 .logout()
                 .logoutSuccessUrl("/");

@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import woowacrew.security.token.SocialPreAuthorizationToken;
+import woowacrew.user.domain.UserContext;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,6 +33,12 @@ public class SocialLoginFilter extends AbstractAuthenticationProcessingFilter {
         context.setAuthentication(authResult);
         SecurityContextHolder.setContext(context);
 
+
+        UserContext userContext = (UserContext) authResult.getPrincipal();
+        if(userContext.getNickname() == null) {
+            response.sendRedirect("/users/form");
+            return;
+        }
         response.sendRedirect("/");
     }
 }

@@ -20,7 +20,7 @@ class ArticleApiControllerTest extends CommonTestController {
 
     @Test
     void 게시글_목록_조회() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
 
         List<ArticleResponseDto> articles = webTestClient.get()
                 .uri("/api/articles")
@@ -36,7 +36,7 @@ class ArticleApiControllerTest extends CommonTestController {
 
     @Test
     void 게시글_상세_조회() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
 
         ArticleResponseDto article1 = webTestClient.get()
                 .uri("/api/articles/1")
@@ -53,7 +53,7 @@ class ArticleApiControllerTest extends CommonTestController {
 
     @Test
     void 게시글_수정() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
 
         String updateTitle = "Update Title";
         String updateContent = "Update Content";
@@ -82,7 +82,7 @@ class ArticleApiControllerTest extends CommonTestController {
 
     @Test
     void 게시글_삭제() {
-        String cookie = loginWithUser();
+        String cookie = loginWithCrew();
 
         webTestClient.delete()
                 .uri("/api/articles/2")

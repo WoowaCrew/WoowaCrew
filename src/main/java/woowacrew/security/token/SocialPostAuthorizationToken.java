@@ -4,6 +4,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import woowacrew.user.domain.UserContext;
+import woowacrew.user.domain.UserRole;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,11 +15,10 @@ public class SocialPostAuthorizationToken extends UsernamePasswordAuthentication
     }
 
     public SocialPostAuthorizationToken(UserContext userContext) {
-        super(userContext, userContext, parseAuthorities(userContext.getOauthId()));
+        super(userContext, userContext, parseAuthorities(userContext.getRole()));
     }
 
-    private static Collection<? extends GrantedAuthority> parseAuthorities(String role) {
-        //Todo 추후 UserContext의 Role이 담길 예정
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+    private static Collection<? extends GrantedAuthority> parseAuthorities(UserRole role) {
+        return Arrays.asList(new SimpleGrantedAuthority(role.toString()));
     }
 }
