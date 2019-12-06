@@ -6,8 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import woowacrew.oauth.OauthService;
 import woowacrew.oauth.OauthConfig;
+import woowacrew.oauth.OauthService;
 import woowacrew.user.domain.UserOauthDto;
 
 @Component
@@ -56,5 +56,10 @@ public class GithubOauthService implements OauthService {
                 .block();
 
         return new Gson().fromJson(body, UserOauthDto.class);
+    }
+
+    @Override
+    public String getAuthorizationUrl() {
+        return oauthConfig.getUserAuthorizationUri() + "?client_id=" + oauthConfig.getClientId();
     }
 }
