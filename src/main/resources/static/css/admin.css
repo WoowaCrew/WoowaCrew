@@ -1,0 +1,75 @@
+.container {
+    font-family: 'Nanum Gothic', sans-serif;
+    height: 90vh;
+    margin-top: 60px;
+    color: grey;
+}
+
+.left-bar {
+    float: left;
+    height: 100%;
+    width: 100px;
+    text-align: right;
+    padding-right: 10px;
+    border-right: 1px solid;
+}
+
+.main-content {
+    height: 100%;
+    width: 100%;
+    margin-left: 120px;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.user-oauth-id {
+    float: left;
+    width: 100px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-nickname {
+    float: left;
+    margin-left: 10px;
+    width: 100px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.approve-button {
+    float: left;
+    margin-left: 10px;
+    width: 100px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.role-select-box, .degree-select-box {
+    float: left;
+    margin-left: 10px;
+    width: 100px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-info::after {
+    content: '';
+    clear: both;
+    display: inline-block;
+}
+
+.user-info {
+    margin-bottom: 10px;
+    width: 700px;
+}

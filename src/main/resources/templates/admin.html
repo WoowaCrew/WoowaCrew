@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="fragments/config :: configFragment"/>
+
+    <link href="/css/admin.css" rel="stylesheet">
+    <title>관리자 페이지</title>
 </head>
+
 <body>
-관리자 페이지
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+<div class="container">
+    <div class="left-bar">
+        <div>회원가입 확인</div>
+    </div>
+    <div class="main-content">
+        <div class="title">회원가입 확인</div>
+        <button id="approve-wait-list-button">승인 대기 회원</button>
+        <div id="content">
+            <div class="user-info">
+                <div class="user-oauth-id">유저 아이디</div>
+                <div class="user-nickname">유저 닉네임</div>
+                <div class="degree-select-box">기수 설정</div>
+                <div class="role-select-box">권한 설정</div>
+                <div class="approve-button">승인</div>
+            </div>
+            <div id="disapprove-list"></div>
+        </div>
+    </div>
+</div>
 </body>
+<!--  SCRIPT  -->
+<script src="/js/admin.js"></script>
 </html>
