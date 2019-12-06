@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/search", "/search/**").permitAll()
+                .antMatchers("/", "/login", "/login/**", "/search", "/search/**").permitAll()
                 //TODO: 임시권한입니다. 추후 삭제 필요
                 .antMatchers("/role/**").permitAll()
                 .antMatchers("/accessdeny", "/users/form", "/users/update").authenticated()

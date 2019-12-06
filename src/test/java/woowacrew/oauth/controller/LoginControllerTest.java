@@ -26,7 +26,7 @@ class LoginControllerTest extends CommonTestController {
                 .expectBody()
                 .consumeWith(response -> {
                     String body = new String(response.getResponseBody());
-                    assertThat(body.contains("https://github.com/login/oauth/authorize?client_id=")).isTrue();
+                    assertThat(body.contains("/login/github")).isTrue();
                 });
     }
 
@@ -39,6 +39,18 @@ class LoginControllerTest extends CommonTestController {
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/login"));
+    }
+
+
+    @Test
+    @DisplayName("/login/github 요청시 client_id를 포함한 redirect url을 응답한다")
+    void loginTest3() {
+        webTestClient.get()
+                .uri("/login/github")
+                .exchange()
+                .expectStatus().is3xxRedirection()
+                .expectHeader()
+                .value("Location", Matchers.containsString("https://github.com/login/oauth/authorize?client_id="));
     }
 
     @Test
