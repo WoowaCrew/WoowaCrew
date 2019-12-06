@@ -11,7 +11,7 @@ function articleList() {
   const articleListForm = (article) =>
       `<div class="article-info">
         <div class="article-info-article-id">
-            <div id="article-info-article-id-content" value=${article.id}>
+            <div class="article-info-article-id-content" value=${article.id}>
                 ${article.id}
             </div>
         </div>
@@ -36,7 +36,7 @@ function articleList() {
   articleList.addEventListener('click', function (e) {
     const node = e.target.parentNode
     if (node.className === 'article-info') {
-      const articleId = document.getElementById('article-info-article-id-content').getAttribute('value')
+      const articleId = node.querySelector('.article-info-article-id-content').getAttribute('value')
       window.location.href = origin + '/articles/' + articleId
     }
   })
