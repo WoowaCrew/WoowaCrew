@@ -1,10 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="fragments/config :: configFragment"/>
+
+    <link href="/css/mainButton.css" rel="stylesheet">
+    <title>관리자 페이지</title>
+    <style>
+        .container {
+            font-family: 'Nanum Gothic', sans-serif;
+            height: 90vh;
+            margin-top: 60px;
+            color: grey;
+        }
+
+        .left-bar {
+            float: left;
+            height: 100%;
+            width: 100px;
+            text-align: right;
+            padding-right: 10px;
+            border-right: 1px solid;
+        }
+
+        .main-content {
+            height: 100%;
+            width: 100%;
+            margin-left: 120px;
+        }
+
+        .title {
+            margin-bottom: 10px;
+        }
+
+        .user-id {
+            float: left;
+            width: 100px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-nickname {
+            float: left;
+            margin-left: 10px;
+            width: 100px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .auth-button {
+            float: left;
+            margin-left: 10px;
+            width: 100px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .role-select-box, .degree-select-box {
+            float: left;
+            margin-left: 10px;
+            width: 100px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-info::after {
+            content: '';
+            clear: both;
+            display: inline-block;
+        }
+
+        .user-info {
+            margin-bottom: 10px;
+            width: 700px;
+        }
+    </style>
 </head>
 <body>
-관리자 페이지
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+<div class="container">
+    <div class="left-bar">
+        <div>회원가입 확인</div>
+    </div>
+    <div class="main-content">
+        <div class="title">
+            회원가입 확인
+        </div>
+        <div id="content">
+            <div class="user-info">
+                <div class="user-id">유저 아이디</div>
+                <div class="user-nickname">유저 닉네임</div>
+                <div class="degree-select-box">기수 설정</div>
+                <div class="role-select-box">권한 설정</div>
+                <div class="auth-button">승인</div>
+            </div>
+            <div class="user-info">
+                <div class="user-id">adfqewrfav</div>
+                <div class="user-nickname">qkstjsgh</div>
+                <div class="degree-select-box">
+                    <select name="degree">
+                        <option value="CREW_NONE" selected="selected">크루 아님</option>
+                        <option value="CREW_1">1기</option>
+                    </select>
+                </div>
+                <div class="role-select-box">
+                    <select name="role">
+                        <option value="ROLE_PRECOURSE" selected="selected">프리코스</option>
+                        <option value="ROLE_CREW">크루</option>
+                        <option value="ROLE_COACH">코치</option>
+                        <option value="ROLE_ADMIN">관리자</option>
+                    </select>
+                </div>
+                <button class="auth-button">승인</button>
+            </div>
+            <div class="user-info">
+                <div class="user-id">adfqewrfav</div>
+                <div class="user-nickname">qkstjsgh</div>
+                <div class="degree-select-box">
+                    <select name="degree">
+                        <option value="CREW_NONE" selected="selected">크루 아님</option>
+                        <option value="CREW_1">1기</option>
+                    </select>
+                </div>
+                <div class="role-select-box">
+                    <select name="role">
+                        <option value="ROLE_PRECOURSE" selected="selected">프리코스</option>
+                        <option value="ROLE_CREW">크루</option>
+                        <option value="ROLE_COACH">코치</option>
+                        <option value="ROLE_ADMIN">관리자</option>
+                    </select>
+                </div>
+                <button class="auth-button">승인</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+  const origin = window.location.origin
+  const content = document.getElementById('content')
+
+  const signRequestForm = (user) =>
+    `<div class="user-info">
+                <div class="user-id" value=${user.id}>${user.id}</div>
+                <div class="user-nickname">qkstjsgh</div>
+                <div class="degree-select-box">
+                    <select name="degree">
+                        <option value="CREW_NONE" selected="selected">크루 아님</option>
+                        <option value="CREW_1">1기</option>
+                    </select>
+                </div>
+                <div class="role-select-box">
+                    <select name="role">
+                        <option value="ROLE_PRECOURSE" selected="selected">프리코스</option>
+                        <option value="ROLE_CREW">크루</option>
+                        <option value="ROLE_COACH">코치</option>
+                        <option value="ROLE_ADMIN">관리자</option>
+                    </select>
+                </div>
+                <button class="auth-button">승인</button>
+            </div>`
+
+  function loadUser() {
+    fetch(origin + "/api/articles", {
+      method: 'GET'
+    }).then(response => response.json())
+      .then(users => {
+        users.forEach(user => {
+          content.insertAdjacentHTML("beforeend", signRequestForm(user))
+        })
+      })
+      .catch(error => alert('오류가 발생했습니다.'));
+  }
+</script>
 </html>
