@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/search", "/search/**").permitAll()
+                .antMatchers("/", "/login", "/login/**", "/search", "/search/**").permitAll()
                 .antMatchers("/accessdeny", "/users/form", "/users/update").authenticated()
                 .anyRequest().hasAnyRole(UserRole.ROLE_CREW.getRoleName(), UserRole.ROLE_COACH.getRoleName(), UserRole.ROLE_ADMIN.getRoleName())
                 .and()
