@@ -1,3 +1,7 @@
+.te-preview * {
+    color: #A0A0A0;
+}
+
 /* article-editor-preview.css, article-contents.css 같은 내용 */
 /* 클래스 명만 다름*/
 .te-preview p,
