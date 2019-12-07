@@ -28,10 +28,12 @@
 }
 
 .tui-editor-contents h1 {
+    border: none;
     font-size: 2rem;
 }
 
 .tui-editor-contents h2 {
+    border: none;
     font-size: 1.8rem;
 }
 
