@@ -77,3 +77,7 @@
 .tui-editor-defaultUI-toolbar {
     background-color: white !important;
 }
+
+.CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
+    z-index: 0;
+}
