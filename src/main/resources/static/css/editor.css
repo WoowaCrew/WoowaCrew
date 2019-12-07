@@ -4,6 +4,7 @@
 
 #article-edit {
     margin-top: 50px;
+    padding: 0 10% 10%;
 }
 
 #title {
@@ -13,6 +14,8 @@
     border: none;
     background: black;
     color: white;
+    outline: none;
+    margin-bottom: 10px;
 }
 
 .edit-bar {
@@ -29,8 +32,8 @@
 }
 
 .CodeMirror-scroll {
-    background: #414447;
-    color: white;
+    background: #dddddd;
+    color: black;
 }
 
 .te-preview {
@@ -52,4 +55,25 @@
 
 .tui-editor-contents {
     color: white;
+}
+
+.tui-editor-contents strong {
+    color: indianred !important;
+}
+
+.cm-header, .cm-em, .cm-strong {
+    color: darkred !important;
+}
+
+.cm-comment, .tui-editor-contents pre, .te-preview code {
+    background-color: #333333 !important;
+    color: coral !important;
+}
+
+.CodeMirror {
+    font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+.tui-editor-defaultUI-toolbar {
+    background-color: white !important;
 }
