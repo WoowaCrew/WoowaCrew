@@ -2,10 +2,6 @@
     font-size: 1rem;
 }
 
-.tui-editor-contents h2 {
-    font-size: 2.5rem;
-}
-
 /* article-editor-preview.css, article-contents.css 같은 내용 */
 /* 클래스 명만 다름*/
 .tui-editor-contents p,
@@ -32,11 +28,15 @@
 }
 
 .tui-editor-contents h1 {
-    font-size: 3rem;
+    font-size: 2rem;
+}
+
+.tui-editor-contents h2 {
+    font-size: 1.8rem;
 }
 
 .tui-editor-contents h3 {
-    font-size: 2rem;
+    font-size: 1.6rem;
 }
 
 .tui-editor-contents strong {
