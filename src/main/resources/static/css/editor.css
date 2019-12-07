@@ -14,19 +14,6 @@
     margin-bottom: 10px;
 }
 
-.edit-bar {
-    margin-top: 3px;
-}
-
-.edit-bar > li {
-    float: right;
-    width: 50px;
-}
-
-.edit-bar > li > input {
-    width: 100%;
-}
-
 .CodeMirror-scroll {
     background: whitesmoke;
     color: black;
@@ -71,4 +58,19 @@
 
 .CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
     z-index: 0;
+}
+
+.edit-button-group {
+    color: gray;
+    text-align: right;
+    margin-top: 1%;
+}
+
+#article-save-button, #article-update-button, #edit-cancel-button {
+    cursor: pointer;
+    padding-left: 1%;
+}
+
+#article-save-button, #article-update-button {
+    color: white;
 }
