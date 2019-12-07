@@ -19,16 +19,16 @@
         <input id="title" name="title" type="text" placeholder="제목을 입력해 주세요.">
         <div id="editSection"></div>
         <input id="article-contents" name="content" type="hidden">
+        <ul class="edit-bar">
+            <li>
+                <input type="button" id="edit-button" value="수정"/>
+            </li>
+            <li>
+                <input type="button" id="cancel-button" value="취소" onclick="location.href='/articles'"/>
+            </li>
+        </ul>
     </form>
 </div>
-<ul class="edit-bar">
-    <li>
-        <input type="button" id="edit-button" value="수정"/>
-    </li>
-    <li>
-        <input type="button" id="cancel-button" value="취소" onclick="location.href='/articles'"/>
-    </li>
-</ul>
 </body>
 
 <!--  SCRIPT  -->
