@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,5 +32,12 @@ class UserRepositoryTest {
         for (User user : users) {
             assertFalse(user.isApproved());
         }
+    }
+
+    @Test
+    void 닉네임이_등록된_유저_중_인가되지_않은_유저_목록_조회() {
+        List<User> users = userRepository.findByRoleAndNicknameNotNull(UserRole.ROLE_PRECOURSE);
+
+        assertThat(users.size()).isNotZero();
     }
 }

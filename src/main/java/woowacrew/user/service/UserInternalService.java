@@ -39,6 +39,10 @@ public class UserInternalService {
         return userRepository.findByRole(role);
     }
 
+    public List<User> findByRoleAndNicknameNotNull(UserRole role) {
+        return userRepository.findByRoleAndNicknameNotNull(role);
+    }
+
     public Degree findDegreeByNumber(int numberOfDegree) {
         return degreeRepository.findByNumber(numberOfDegree)
                 .orElseThrow(DegreeBoundException::new);
