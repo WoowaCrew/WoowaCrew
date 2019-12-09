@@ -1,11 +1,11 @@
 package woowacrew.security.provider;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
 import woowacrew.user.domain.*;
@@ -13,13 +13,16 @@ import woowacrew.user.domain.*;
 import java.util.Arrays;
 
 @Component
-public class TestLoginProvider implements AuthenticationProvider {
+public class TestLoginProvider extends SocialLoginAuthenticationProvider {
     private final UserRepository userRepository;
     private final DegreeRepository degreeRepository;
+    private final OauthService oauthService;
 
-    public TestLoginProvider(UserRepository userRepository, DegreeRepository degreeRepository) {
+    public TestLoginProvider(UserRepository userRepository, DegreeRepository degreeRepository, OauthService oauthService) {
+        super(userRepository, degreeRepository, oauthService);
         this.userRepository = userRepository;
         this.degreeRepository = degreeRepository;
+        this.oauthService = oauthService;
     }
 
     @Override
@@ -37,10 +40,5 @@ public class TestLoginProvider implements AuthenticationProvider {
 
         UserContext userContext = new ModelMapper().map(user, UserContext.class);
         return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority(userRole.toString())));
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return SocialPreAuthorizationToken.class.isAssignableFrom(authentication);
     }
 }
