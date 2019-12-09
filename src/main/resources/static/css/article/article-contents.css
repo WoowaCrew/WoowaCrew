@@ -1,0 +1,70 @@
+.tui-editor-contents {
+    font-size: 1rem;
+}
+
+/* article-editor-preview.css, article-contents.css 같은 내용 */
+/* 클래스 명만 다름*/
+.tui-editor-contents p,
+.tui-editor-contents h6,
+.tui-editor-contents blockquote,
+.tui-editor-contents code,
+.tui-editor-contents table,
+.tui-editor-contents table th,
+.tui-editor-contents ul,
+.tui-editor-contents menu,
+.tui-editor-contents ol,
+.tui-editor-contents dir,
+.tui-editor-contents a,
+.tui-editor-contents a:hover {
+    color: #A0A0A0;
+}
+
+.tui-editor-contents h1,
+.tui-editor-contents h2,
+.tui-editor-contents h3,
+.tui-editor-contents h4,
+.tui-editor-contents h5 {
+    color: white;
+}
+
+.tui-editor-contents h1 {
+    border: none;
+    font-size: 2rem;
+}
+
+.tui-editor-contents h2 {
+    border: none;
+    font-size: 1.8rem;
+}
+
+.tui-editor-contents h3 {
+    font-size: 1.6rem;
+}
+
+.tui-editor-contents strong {
+    color: indianred;
+}
+
+.tui-editor-contents pre {
+    margin: 8px 0 8px;
+    background-color: #222222;
+}
+
+.tui-editor-contents pre code {
+    color: lawngreen !important;
+}
+
+.tui-editor-contents a {
+    text-decoration: underline;
+    text-underline-position: under;
+    color: dodgerblue !important;
+}
+
+.tui-editor-contents code {
+    background-color: gray;
+    color: whitesmoke;
+}
+
+.tui-editor-contents em {
+    color: whitesmoke;
+}

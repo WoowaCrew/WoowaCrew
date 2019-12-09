@@ -13,7 +13,7 @@ function articleCreate() {
 
   const origin = window.location.origin
 
-  document.getElementById('save-button').addEventListener('click', function (e) {
+  document.getElementById('article-save-button').addEventListener('click', function (e) {
     const title = document.getElementById('title').value;
     const content = document.getElementById('article-contents').value;
 

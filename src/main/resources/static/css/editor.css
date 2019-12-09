@@ -1,9 +1,6 @@
-.te-preview {
-    background-color: white;
-}
-
 #article-edit {
     margin-top: 50px;
+    padding: 0 10% 10%;
 }
 
 #title {
@@ -13,32 +10,16 @@
     border: none;
     background: black;
     color: white;
-}
-
-.edit-bar {
-    margin-top: 3px;
-}
-
-.edit-bar > li {
-    float: right;
-    width: 50px;
-}
-
-.edit-bar > li > input {
-    width: 100%;
+    outline: none;
+    margin-bottom: 10px;
 }
 
 .CodeMirror-scroll {
-    background: #414447;
-    color: white;
+    background: whitesmoke;
+    color: black;
 }
 
-.te-preview {
-    background: #414447;
-    color: white;
-}
-
-.te-preview .tui-editor-contents * {
+.tui-editor-contents * {
     color: white;
 }
 
@@ -51,5 +32,45 @@
 }
 
 .tui-editor-contents {
+    color: white;
+}
+
+.tui-editor-contents strong {
+    color: indianred !important;
+}
+
+.cm-header, .cm-em, .cm-strong {
+    color: darkred !important;
+}
+
+.cm-comment, .tui-editor-contents pre {
+    background-color: #333333 !important;
+    color: coral !important;
+}
+
+.CodeMirror {
+    font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+.tui-editor-defaultUI-toolbar {
+    background-color: white !important;
+}
+
+.CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
+    z-index: 0;
+}
+
+.edit-button-group {
+    color: gray;
+    text-align: right;
+    margin-top: 1%;
+}
+
+#article-save-button, #article-update-button, #edit-cancel-button {
+    cursor: pointer;
+    padding-left: 1%;
+}
+
+#article-save-button, #article-update-button {
     color: white;
 }
