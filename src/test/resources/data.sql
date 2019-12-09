@@ -21,3 +21,4 @@ INSERT INTO user (id, oauth_id, role, degree_id) VALUES (4, '12', 'ROLE_PRECOURS
 INSERT INTO user (id, oauth_id, role, degree_id) VALUES (5, '13', 'ROLE_ADMIN', 1);
 INSERT INTO user (id, oauth_id, role, degree_id) VALUES (6, '14', 'ROLE_COACH', 1);
 INSERT INTO user (id, oauth_id, role, degree_id) VALUES (7, '15', 'ROLE_CREW', 2);
+INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (8, '15','woowacrew','ROLE_PRECOURSE', 1);
