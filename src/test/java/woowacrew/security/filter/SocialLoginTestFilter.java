@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SocialLoginTestFilter extends AbstractAuthenticationProcessingFilter {
+public class SocialLoginTestFilter extends SocialLoginFilter {
     public SocialLoginTestFilter(String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl);
     }
@@ -24,15 +24,5 @@ public class SocialLoginTestFilter extends AbstractAuthenticationProcessingFilte
         String oauthId = request.getParameter("oauthId");
 
         return super.getAuthenticationManager().authenticate(new SocialPreAuthorizationToken(role, oauthId));
-    }
-
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-
-        context.setAuthentication(authResult);
-        SecurityContextHolder.setContext(context);
-
-        response.sendRedirect("/");
     }
 }
