@@ -1,10 +1,14 @@
 package woowacrew.article.controller;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.article.domain.ArticleUpdateDto;
+import woowacrew.article.service.ArticleInternalService;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.dto.UserContext;
 
@@ -23,8 +27,9 @@ public class ArticleApiController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ArticleResponseDto>> list() {
-        return ResponseEntity.ok(articleService.findAll());
+    public ResponseEntity<List<ArticleResponseDto>> list
+            (@PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(articleService.findAll(pageable));
     }
 
     @GetMapping("/{articleId}")

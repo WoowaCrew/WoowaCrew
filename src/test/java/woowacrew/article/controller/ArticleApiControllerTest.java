@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.service.ArticleInternalService;
 import woowacrew.common.controller.CommonTestController;
 
 import java.util.List;
@@ -38,7 +39,7 @@ class ArticleApiControllerTest extends CommonTestController {
         String cookie = loginWithCrew();
 
         List<ArticleResponseDto> articles = webTestClient.get()
-                .uri("/api/articles")
+                .uri("/api/articles?page=1")
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk()
@@ -46,7 +47,7 @@ class ArticleApiControllerTest extends CommonTestController {
                 .returnResult()
                 .getResponseBody();
 
-        assertThat(articles.get(articles.size() - 1).getTitle()).isEqualTo("article A");
+        assertThat(articles.size()).isLessThanOrEqualTo(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
     }
 
     @Test
@@ -109,7 +110,7 @@ class ArticleApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk();
 
-         webTestClient.get()
+        webTestClient.get()
                 .uri("/api/articles/" + articleId)
                 .header("Cookie", cookie)
                 .exchange()
