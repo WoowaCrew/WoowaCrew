@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserResponseDto;
-import woowacrew.user.domain.UserUpdateDto;
+import woowacrew.user.dto.UserResponseDto;
+import woowacrew.user.dto.UserUpdateDto;
 import woowacrew.user.service.exception.InvalidBirthdayException;
 import woowacrew.user.service.exception.NotExistUserException;
 
@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +31,7 @@ class UserServiceTest {
 
     @Test
     void 정상적으로_유저를_찾는다() {
-        User user = new User("test", Degree.defaultDegree());
+        User user = new User("test", new Degree());
         when(userInternalService.findById(anyLong())).thenReturn(user);
 
         assertThat(userService.findById(1L).getOauthId()).isEqualTo("test");
@@ -46,9 +46,10 @@ class UserServiceTest {
 
     @Test
     void 정상적으로_유저의_정보를_업데이트한다() {
-        User user = new User("test", Degree.defaultDegree());
+        User user = new User("test", new Degree());
+        user.updateUserInfo("test nickname", LocalDate.of(1995, 6,8));
 
-        when(userInternalService.findById(anyLong())).thenReturn(user);
+        when(userInternalService.update(anyLong(), anyString(), any())).thenReturn(user);
 
         UserUpdateDto userUpdateDto = new UserUpdateDto("test nickname", "1995-06-08");
         UserResponseDto updateUser = userService.update(1L, userUpdateDto);

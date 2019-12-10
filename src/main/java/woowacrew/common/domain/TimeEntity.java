@@ -7,14 +7,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
+import java.time.LocalDate;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TimeEntity {
     @CreatedDate
     @Column(updatable = false)
-    protected Date createdDate;
+    protected LocalDate createdDate;
     @LastModifiedDate
-    protected Date lastModifiedDate;
+    protected LocalDate lastModifiedDate;
 }

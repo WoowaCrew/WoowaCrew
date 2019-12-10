@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import woowacrew.oauth.OauthConfig;
 import woowacrew.oauth.OauthService;
-import woowacrew.user.domain.UserOauthDto;
+import woowacrew.user.dto.UserOauthDto;
 
 @Component
 public class GithubOauthService implements OauthService {

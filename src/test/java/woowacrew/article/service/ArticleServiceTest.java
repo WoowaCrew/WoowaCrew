@@ -26,7 +26,7 @@ class ArticleServiceTest {
 
     @Test
     void 원하는_게시글을_ArticleResponse로_변환해준다() {
-        Article article = new Article("title", "content", new User("userId", Degree.defaultDegree()));
+        Article article = new Article("title", "content", new User("userId", new Degree()));
         Long articleId = 1L;
         when(articleInternalService.findById(articleId)).thenReturn(article);
 
@@ -48,7 +48,7 @@ class ArticleServiceTest {
     }
 
     private List<Article> createArticles(int numberOfArticle) {
-        User user = new User("userId", Degree.defaultDegree());
+        User user = new User("userId", new Degree());
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < numberOfArticle; i++) {
             articles.add(new Article(String.valueOf(i), String.valueOf(i), user));

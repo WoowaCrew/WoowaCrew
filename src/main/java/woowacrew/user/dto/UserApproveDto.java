@@ -1,4 +1,6 @@
-package woowacrew.user.domain;
+package woowacrew.user.dto;
+
+import woowacrew.user.domain.UserRole;
 
 public class UserApproveDto {
     private UserRole role;

@@ -16,8 +16,8 @@ class ArticleTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("vsh123", Degree.defaultDegree());
-        user2 = new User("hyunssooo", Degree.defaultDegree());
+        user = new User("vsh123", new Degree());
+        user2 = new User("hyunssooo", new Degree());
         FieldSetter.set(user, "id", 1L);
     }
 

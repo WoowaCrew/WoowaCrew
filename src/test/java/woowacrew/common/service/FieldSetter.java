@@ -12,7 +12,7 @@ public class FieldSetter {
 
     @Test
     void set_Test() {
-        User user = new User("testId", Degree.defaultDegree());
+        User user = new User("testId", new Degree());
         assertThat(user.getId()).isEqualTo(null);
 
         set(user, "id", 1L);

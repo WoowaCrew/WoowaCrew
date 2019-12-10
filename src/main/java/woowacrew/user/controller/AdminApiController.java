@@ -3,9 +3,9 @@ package woowacrew.user.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import woowacrew.user.domain.UserApproveDto;
-import woowacrew.user.domain.UserContext;
-import woowacrew.user.domain.UserResponseDto;
+import woowacrew.user.dto.UserApproveDto;
+import woowacrew.user.dto.UserContext;
+import woowacrew.user.dto.UserResponseDto;
 import woowacrew.user.service.UserService;
 
 import java.util.List;

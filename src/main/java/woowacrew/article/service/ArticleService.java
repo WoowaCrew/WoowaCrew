@@ -2,7 +2,7 @@ package woowacrew.article.service;
 
 import org.springframework.stereotype.Service;
 import woowacrew.article.domain.*;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 
 import java.util.List;
 import java.util.stream.Collectors;

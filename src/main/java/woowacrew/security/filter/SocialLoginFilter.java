@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

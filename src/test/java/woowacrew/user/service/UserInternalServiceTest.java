@@ -25,7 +25,7 @@ class UserInternalServiceTest {
     @Test
     void findByOauthId() {
         String userId = "userId";
-        User user = new User(userId, Degree.defaultDegree());
+        User user = new User(userId, new Degree());
         when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(user));
 
         User expectUser = userInternalService.findByOauthId(userId);

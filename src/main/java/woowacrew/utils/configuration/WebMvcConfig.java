@@ -5,7 +5,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import woowacrew.user.domain.UserRoleConverter;
+import woowacrew.user.utils.UserRoleConverter;
 import woowacrew.utils.resolver.CustomHandlerMethodArgumentResolver;
 
 import java.util.List;

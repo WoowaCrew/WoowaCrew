@@ -5,7 +5,7 @@ import woowacrew.common.domain.TimeEntity;
 import woowacrew.user.domain.User;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Article extends TimeEntity {
@@ -57,11 +57,11 @@ public class Article extends TimeEntity {
         return user;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDate getLastModifiedDate() {
         return lastModifiedDate;
     }
 

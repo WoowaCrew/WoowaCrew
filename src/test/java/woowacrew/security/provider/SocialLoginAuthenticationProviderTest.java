@@ -10,7 +10,12 @@ import woowacrew.oauth.OauthService;
 import woowacrew.oauth.github.GithubOauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.user.domain.*;
+import woowacrew.user.domain.Degree;
+import woowacrew.user.domain.DegreeRepository;
+import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserRepository;
+import woowacrew.user.dto.UserContext;
+import woowacrew.user.dto.UserOauthDto;
 
 import java.util.Optional;
 
@@ -52,7 +57,7 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, Degree.defaultDegree());
+        User user = new User(userId, new Degree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
@@ -71,14 +76,14 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, Degree.defaultDegree());
+        User user = new User(userId, new Degree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
         when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
         when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(null));
-        when(degreeRepository.findByNumber(anyInt())).thenReturn(Optional.of(Degree.defaultDegree()));
+        when(degreeRepository.findByNumber(anyInt())).thenReturn(Optional.of(new Degree()));
         when(userRepository.save(any())).thenReturn(user);
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);

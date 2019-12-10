@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.article.service.ArticleInternalService;
 import woowacrew.article.service.ArticleService;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 
 @Controller
 public class ArticleController {
@@ -41,4 +41,5 @@ public class ArticleController {
         articleInternalService.checkAuthor(articleId, userContext);
         return "article-edit";
     }
+
 }
