@@ -1,6 +1,7 @@
 package woowacrew.user.domain;
 
 import org.modelmapper.ModelMapper;
+import woowacrew.user.dto.UserResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

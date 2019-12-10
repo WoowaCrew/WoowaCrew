@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserResponseDto;
-import woowacrew.user.domain.UserUpdateDto;
+import woowacrew.user.dto.UserResponseDto;
+import woowacrew.user.dto.UserUpdateDto;
 import woowacrew.user.service.exception.InvalidBirthdayException;
 import woowacrew.user.service.exception.NotExistUserException;
 

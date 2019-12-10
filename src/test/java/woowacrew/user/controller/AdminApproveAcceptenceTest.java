@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import woowacrew.common.controller.CommonTestController;
-import woowacrew.user.domain.UserApproveDto;
+import woowacrew.user.dto.UserApproveDto;
 import woowacrew.user.domain.UserRole;
 
 public class AdminApproveAcceptenceTest extends CommonTestController {

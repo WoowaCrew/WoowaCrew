@@ -1,4 +1,4 @@
-package woowacrew.user.domain;
+package woowacrew.user.dto;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,6 +1,6 @@
 package woowacrew.oauth;
 
-import woowacrew.user.domain.UserOauthDto;
+import woowacrew.user.dto.UserOauthDto;
 
 public interface OauthService {
     String getAccessToken(String accessCode);

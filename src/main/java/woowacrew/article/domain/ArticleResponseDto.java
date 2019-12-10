@@ -1,6 +1,6 @@
 package woowacrew.article.domain;
 
-import woowacrew.user.domain.UserResponseDto;
+import woowacrew.user.dto.UserResponseDto;
 
 import java.util.Date;
 

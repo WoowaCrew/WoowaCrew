@@ -10,8 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.security.SecurityContextSupport;
 import woowacrew.user.domain.UserContext;
-import woowacrew.user.domain.UserResponseDto;
-import woowacrew.user.domain.UserUpdateDto;
+import woowacrew.user.dto.UserResponseDto;
+import woowacrew.user.dto.UserUpdateDto;
 import woowacrew.user.service.UserService;
 import woowacrew.utils.annotation.AuthenticationUser;
 

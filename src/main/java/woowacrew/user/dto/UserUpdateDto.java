@@ -1,4 +1,4 @@
-package woowacrew.user.domain;
+package woowacrew.user.dto;
 
 public class UserUpdateDto {
     private String nickname;

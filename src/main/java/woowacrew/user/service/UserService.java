@@ -2,6 +2,9 @@ package woowacrew.user.service;
 
 import org.springframework.stereotype.Service;
 import woowacrew.user.domain.*;
+import woowacrew.user.dto.UserApproveDto;
+import woowacrew.user.dto.UserResponseDto;
+import woowacrew.user.dto.UserUpdateDto;
 
 import java.time.LocalDate;
 import java.util.List;
