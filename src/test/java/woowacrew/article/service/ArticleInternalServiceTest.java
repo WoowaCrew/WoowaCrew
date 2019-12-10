@@ -38,7 +38,7 @@ class ArticleInternalServiceTest {
     @Test
     void 게시글_생성_테스트() {
         UserContext userContext = new UserContext("asd");
-        User user = new User("asd", Degree.defaultDegree());
+        User user = new User("asd", new Degree());
         ArticleRequestDto articleRequestDto = new ArticleRequestDto("hello", "bonjour");
 
         when(userInternalService.findByOauthId(userContext.getOauthId())).thenReturn(user);
@@ -53,7 +53,7 @@ class ArticleInternalServiceTest {
     void 게시글_조회_테스트() {
         String title = "title";
         String content = "content";
-        User user = new User("asd", Degree.defaultDegree());
+        User user = new User("asd", new Degree());
         Article article = new Article(title, content, user);
         when(articleRepository.findById(1L)).thenReturn(Optional.of(article));
 
@@ -66,7 +66,7 @@ class ArticleInternalServiceTest {
     void 없는_게시글_조회_테스트() {
         String title = "title";
         String content = "content";
-        User user = new User("asd", Degree.defaultDegree());
+        User user = new User("asd", new Degree());
         Article article = new Article(title, content, user);
         when(articleRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -91,7 +91,7 @@ class ArticleInternalServiceTest {
         String updateContent = "content1";
 
         UserContext userContext = new UserContext("asd");
-        User user = new User("asd", Degree.defaultDegree());
+        User user = new User("asd", new Degree());
         FieldSetter.set(user, "id", 1L);
 
         Article article = new Article(title, content, user);
@@ -114,10 +114,10 @@ class ArticleInternalServiceTest {
         String updateContent = "content1";
 
         UserContext userContext = new UserContext("asd");
-        User user1 = new User("asd", Degree.defaultDegree());
+        User user1 = new User("asd", new Degree());
         FieldSetter.set(user1, "id", 1L);
 
-        User user2 = new User("asd", Degree.defaultDegree());
+        User user2 = new User("asd", new Degree());
         FieldSetter.set(user2, "id", 2L);
 
         Article article = new Article(title, content, user1);
@@ -129,7 +129,7 @@ class ArticleInternalServiceTest {
     }
 
     private List<Article> createArticles(int numberOfArticle) {
-        User user = new User("userId", Degree.defaultDegree());
+        User user = new User("userId", new Degree());
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < numberOfArticle; i++) {
             articles.add(new Article(String.valueOf(i), String.valueOf(i), user));

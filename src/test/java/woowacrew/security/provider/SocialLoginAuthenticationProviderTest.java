@@ -52,7 +52,7 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, Degree.defaultDegree());
+        User user = new User(userId, new Degree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
@@ -71,14 +71,14 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, Degree.defaultDegree());
+        User user = new User(userId, new Degree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
         when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
         when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(null));
-        when(degreeRepository.findByNumber(anyInt())).thenReturn(Optional.of(Degree.defaultDegree()));
+        when(degreeRepository.findByNumber(anyInt())).thenReturn(Optional.of(new Degree()));
         when(userRepository.save(any())).thenReturn(user);
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserConverterTest {
     @Test
     void 올바른_유저를_입력했을_때_UserDto가_정상_출력() {
-        User user = new User("userId", Degree.defaultDegree());
+        User user = new User("userId", new Degree());
         UserContext userContext = UserConverter.userToUserContextDto(user);
 
         assertThat(userContext.getOauthId()).isEqualTo("userId");
@@ -17,7 +17,7 @@ class UserConverterTest {
 
     @Test
     void 유저_정보를_정상적으로_반환한다() {
-        User user = new User("123", Degree.defaultDegree());
+        User user = new User("123", new Degree());
         user.updateUserInfo("hyojae", LocalDate.of(1995, 6, 8));
 
         UserResponseDto actual = UserConverter.userToUserResponseDto(user);

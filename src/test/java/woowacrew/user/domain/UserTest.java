@@ -17,7 +17,7 @@ class UserTest {
     void updateUserInfo() {
         LocalDate birthday = LocalDate.of(1995, 6, 8);
         String nickname = "test nickname";
-        User user = new User("test", Degree.defaultDegree());
+        User user = new User("test", new Degree());
 
         user.updateUserInfo(nickname, birthday);
 
@@ -28,7 +28,7 @@ class UserTest {
     @Test
     @DisplayName("생년월일이 입력되지 않아도 정상적으로 동작한다.")
     void updateUserInfo_ifBirthdayIsEmpty_thenSuccess() {
-        User user = new User("test", Degree.defaultDegree());
+        User user = new User("test", new Degree());
 
         assertDoesNotThrow(() -> user.updateUserInfo("nickname", null));
     }
@@ -37,7 +37,7 @@ class UserTest {
     @DisplayName("닉네임이 null 이거나 빈 값인 경우 예외가 발생한다.")
     void updateUserInfoFail() {
         LocalDate birthday = LocalDate.of(1995, 6, 8);
-        User user = new User("test", Degree.defaultDegree());
+        User user = new User("test", new Degree());
 
         assertThrows(NotExistNicknameException.class, () -> user.updateUserInfo(null, birthday));
         assertThrows(NotExistNicknameException.class, () -> user.updateUserInfo("", birthday));
@@ -46,10 +46,10 @@ class UserTest {
     @Test
     @DisplayName("관리자는 유저의 Role과 기수를 업데이트 할 수 있다.")
     void updateUserRole() {
-        User admin = new User("admin", UserRole.ROLE_ADMIN, Degree.defaultDegree());
-        User user = new User("user", Degree.defaultDegree());
+        User admin = new User("admin", UserRole.ROLE_ADMIN, new Degree());
+        User user = new User("user", new Degree());
 
-        Degree updateDegree = Degree.defaultDegree();
+        Degree updateDegree = new Degree();
         updateDegree.update(1);
         user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree);
 
@@ -60,10 +60,10 @@ class UserTest {
     @Test
     @DisplayName("권한이 없는 유저가 업데이트를 하는 경우 ForbiddenUserException가 발생한다.")
     void updateUserRole_ifUserRoleIsCrew_thenForbiddenUserException() {
-        User admin = new User("admin", UserRole.ROLE_CREW, Degree.defaultDegree());
-        User user = new User("user", Degree.defaultDegree());
+        User admin = new User("admin", UserRole.ROLE_CREW, new Degree());
+        User user = new User("user", new Degree());
 
-        Degree updateDegree = Degree.defaultDegree();
+        Degree updateDegree = new Degree();
         updateDegree.update(1);
         assertThatThrownBy(() -> user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree))
                 .isInstanceOf(ForbiddenUserException.class);

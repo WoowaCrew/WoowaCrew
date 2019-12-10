@@ -11,7 +11,7 @@ class ArticleConverterTest {
     void ArticleToArticleResponse() {
         String title = "hello";
         String content = "bonjour";
-        User user = new User("userId", Degree.defaultDegree());
+        User user = new User("userId", new Degree());
         Article article = new Article(title, content, user);
 
         ArticleResponseDto articleResponseDto = ArticleConverter.articleToArticleResponseDto(article);

@@ -31,7 +31,7 @@ class UserServiceTest {
 
     @Test
     void 정상적으로_유저를_찾는다() {
-        User user = new User("test", Degree.defaultDegree());
+        User user = new User("test", new Degree());
         when(userInternalService.findById(anyLong())).thenReturn(user);
 
         assertThat(userService.findById(1L).getOauthId()).isEqualTo("test");
@@ -46,7 +46,7 @@ class UserServiceTest {
 
     @Test
     void 정상적으로_유저의_정보를_업데이트한다() {
-        User user = new User("test", Degree.defaultDegree());
+        User user = new User("test", new Degree());
 
         when(userInternalService.findById(anyLong())).thenReturn(user);
 
