@@ -65,7 +65,7 @@
 }
 
 #article-create-icon {
-    float: right;
+    display: inline-block;
     color: white;
     margin-right: 60px;
     cursor: pointer;
@@ -73,5 +73,40 @@
 
 #article-info-article-id-content, .article-info-views-content {
     margin-top: 12.5px;
+    text-align: center;
+}
+
+#page-bar {
+    color: grey;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.page-number, .prev-bar, .next-bar {
+    display: inline-block;
+    padding: 0 10px;
+}
+
+div.page-number:hover, div.prev-bar:hover, div.next-bar:hover {
+    cursor: pointer;
+}
+
+.selected-page {
+    color: white;
+}
+
+.search-form {
+    display: inline-block;
+}
+
+.search-button {
+    display: inline-block;
+}
+
+.search-type-select-box {
+    display: inline-block;
+}
+
+#edit-bar {
     text-align: center;
 }
