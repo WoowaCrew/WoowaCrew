@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.domain.*;
-import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserContext;
@@ -55,10 +54,16 @@ public class ArticleInternalService {
         User user = userInternalService.findById(userContext.getId());
         Article article = findById(articleId);
 
-        if (!article.isAuthor(user)) {
-            throw new MisMatchUserException();
-        }
+        article.checkAuthor(user);
 
         articleRepository.delete(article);
+    }
+
+    @Transactional(readOnly = true)
+    public void checkAuthor(Long articleId, UserContext userContext) {
+        Article article = findById(articleId);
+        User user = userInternalService.findById(userContext.getId());
+
+        article.checkAuthor(user);
     }
 }

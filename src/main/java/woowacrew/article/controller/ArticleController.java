@@ -5,16 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.service.ArticleInternalService;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.domain.UserContext;
-import woowacrew.utils.annotation.AuthenticationUser;
 
 @Controller
 public class ArticleController {
-    private ArticleService articleService;
+    private final ArticleService articleService;
+    private final ArticleInternalService articleInternalService;
 
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, ArticleInternalService articleInternalService) {
         this.articleService = articleService;
+        this.articleInternalService = articleInternalService;
     }
 
     @GetMapping("/article/new")
@@ -35,8 +37,8 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{articleId}/edit")
-    public String articleEditForm(@AuthenticationUser UserContext userContext) {
+    public String articleEditForm(@PathVariable Long articleId, UserContext userContext) {
+        articleInternalService.checkAuthor(articleId, userContext);
         return "article-edit";
     }
-
 }

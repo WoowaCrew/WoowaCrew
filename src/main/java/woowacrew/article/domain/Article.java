@@ -30,15 +30,15 @@ public class Article extends TimeEntity {
     }
 
     public void update(User user, String title, String content) {
-        if (!this.user.equals(user)) {
-            throw new MisMatchUserException();
-        }
+        checkAuthor(user);
 
         articleForm.updateArticle(title, content);
     }
 
-    public boolean isAuthor(User user) {
-        return this.user.equals(user);
+    public void checkAuthor(User user) {
+        if (!this.user.equals(user)) {
+            throw new MisMatchUserException();
+        }
     }
 
     public Long getId() {

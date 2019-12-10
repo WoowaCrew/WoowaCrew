@@ -10,9 +10,11 @@ import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.common.controller.CommonTestController;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static woowacrew.article.controller.ArticleApiControllerTest.createArticle;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ArticleControllerTest extends CommonTestController {
+
     @Autowired
     private WebTestClient webTestClient;
 
@@ -68,19 +70,10 @@ class ArticleControllerTest extends CommonTestController {
     @Test
     void 존재하는_게시글_번호일시_페이지_테스트() {
         String cookie = loginWithCrew();
-
-        ArticleResponseDto articleResponseDto = webTestClient.post()
-                .uri("/api/articles")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", "title")
-                        .with("content", "content"))
-                .exchange()
-                .expectBody(ArticleResponseDto.class)
-                .returnResult()
-                .getResponseBody();
+        Long articleId = createArticle(webTestClient, cookie, "title", "title");
 
         webTestClient.get()
-                .uri("/articles/" + articleResponseDto.getId())
+                .uri("/articles/" + articleId)
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus()
@@ -109,10 +102,35 @@ class ArticleControllerTest extends CommonTestController {
                 });
     }
 
+    @Test
+    void 작성자인_경우_수정_페이지로_이동_가능() {
+        String cookie = loginWithCrew();
+        Long articleId = createArticle(webTestClient, cookie, "title", "content");
+
+        webTestClient.get()
+                .uri("/articles/{articleId}/edit", articleId)
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void 작성자가_아닌_경우_수정_페이지로_이동_불가능() {
+        String cookie = loginWithCrew("1");
+        String otherCookie = loginWithCrew("2");
+        Long articleId = createArticle(webTestClient, cookie, "title", "content");
+
+        webTestClient.get()
+                .uri("/articles/{articleId}/edit", articleId)
+                .header("Cookie", otherCookie)
+                .exchange()
+                .expectStatus().is5xxServerError();
+    }
+
     private void saveArticle(int numberOfArticle, String cookie) {
         for (int i = 0; i < numberOfArticle; i++) {
             webTestClient.post()
-                    .uri("/articles")
+                    .uri("/api/articles")
                     .header("Cookie", cookie)
                     .body(BodyInserters.fromFormData("title", "title")
                             .with("content", "content"))
