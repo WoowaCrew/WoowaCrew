@@ -34,7 +34,7 @@ public class ArticleController {
         return "article";
     }
 
-    @GetMapping("/articles/edit/{articleId}")
+    @GetMapping("/articles/{articleId}/edit")
     public String articleEditForm(@AuthenticationUser UserContext userContext) {
         return "article-edit";
     }

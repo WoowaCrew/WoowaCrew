@@ -1,7 +1,7 @@
 function articleEdit() {
   const origin = window.location.origin
   const articleUrl = window.location.href.split("/")
-  const articleId = articleUrl[articleUrl.length - 1]
+  const articleId = articleUrl[articleUrl.length - 2]
 
   fetch(origin + "/api/articles/" + articleId, {
     method: 'GET'
@@ -30,8 +30,6 @@ function articleEdit() {
       console.log(error)
       alert('오류가 발생했습니다.')
     })
-
-
 
   document.getElementById('article-update-button').addEventListener('click', function (e) {
     const title = document.getElementById('title').value;
