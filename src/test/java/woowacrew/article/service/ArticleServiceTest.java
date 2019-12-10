@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.article.domain.Article;
-import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDto;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 

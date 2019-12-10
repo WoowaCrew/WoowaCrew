@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDto;
 import woowacrew.article.service.ArticleInternalService;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.dto.UserContext;

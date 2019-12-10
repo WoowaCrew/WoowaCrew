@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDto;
 import woowacrew.common.controller.CommonTestController;
 
 import static org.assertj.core.api.Assertions.assertThat;

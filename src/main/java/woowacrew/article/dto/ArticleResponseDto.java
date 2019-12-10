@@ -1,4 +1,4 @@
-package woowacrew.article.domain;
+package woowacrew.article.dto;
 
 import woowacrew.user.dto.UserResponseDto;
 
