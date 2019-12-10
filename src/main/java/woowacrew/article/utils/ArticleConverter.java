@@ -1,5 +1,8 @@
-package woowacrew.article.domain;
+package woowacrew.article.utils;
 
+import woowacrew.article.domain.Article;
+import woowacrew.article.dto.ArticleRequestDto;
+import woowacrew.article.dto.ArticleResponseDto;
 import woowacrew.user.domain.User;
 import woowacrew.user.utils.UserConverter;
 

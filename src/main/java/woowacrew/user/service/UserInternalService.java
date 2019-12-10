@@ -2,7 +2,10 @@ package woowacrew.user.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woowacrew.user.domain.*;
+import woowacrew.user.domain.Degree;
+import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserRepository;
+import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserApproveDto;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.exception.NotExistUserException;

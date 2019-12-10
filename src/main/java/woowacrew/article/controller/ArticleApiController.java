@@ -2,9 +2,9 @@ package woowacrew.article.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import woowacrew.article.domain.ArticleRequestDto;
-import woowacrew.article.domain.ArticleResponseDto;
-import woowacrew.article.domain.ArticleUpdateDto;
+import woowacrew.article.dto.ArticleRequestDto;
+import woowacrew.article.dto.ArticleResponseDto;
+import woowacrew.article.dto.ArticleUpdateDto;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.dto.UserContext;
 
