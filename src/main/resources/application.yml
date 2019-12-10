@@ -4,8 +4,3 @@ spring:
       enabled: true
   freemarker:
     cache: false
-  data:
-    web:
-      pageable:
-        max-page-size: 20
-        one-indexed-parameters: true
