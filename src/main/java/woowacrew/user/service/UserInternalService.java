@@ -9,7 +9,7 @@ import woowacrew.user.service.exception.NotExistUserException;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserInternalService {
     private DegreeRepository degreeRepository;
     private UserRepository userRepository;
@@ -19,13 +19,11 @@ public class UserInternalService {
         this.userRepository = userRepository;
     }
 
-    @Transactional(readOnly = true)
     public User findByOauthId(String oauthId) {
         return userRepository.findByOauthId(oauthId)
                 .orElseThrow(NotExistUserException::new);
     }
 
-    @Transactional(readOnly = true)
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(NotExistUserException::new);
