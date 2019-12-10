@@ -7,13 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import woowacrew.article.dto.ArticleRequestDto;
 import woowacrew.article.dto.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDtos;
 import woowacrew.article.dto.ArticleUpdateDto;
 import woowacrew.article.service.ArticleInternalService;
 import woowacrew.article.service.ArticleService;
 import woowacrew.user.dto.UserContext;
 
 import java.net.URI;
-import java.util.List;
 
 @RequestMapping("/api/articles")
 @RestController
@@ -27,7 +27,7 @@ public class ArticleApiController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ArticleResponseDto>> list
+    public ResponseEntity<ArticleResponseDtos> list
             (@PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(articleService.findAll(pageable));
     }

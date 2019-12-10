@@ -6,10 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.dto.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDtos;
 import woowacrew.article.service.ArticleInternalService;
 import woowacrew.common.controller.CommonTestController;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,16 +37,16 @@ class ArticleApiControllerTest extends CommonTestController {
     void 게시글_목록_조회() {
         String cookie = loginWithCrew();
 
-        List<ArticleResponseDto> articles = webTestClient.get()
+        ArticleResponseDtos articles = webTestClient.get()
                 .uri("/api/articles?page=1")
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(ArticleResponseDto.class)
+                .expectBody(ArticleResponseDtos.class)
                 .returnResult()
                 .getResponseBody();
 
-        assertThat(articles.size()).isLessThanOrEqualTo(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
+        assertThat(articles.getArticles().size()).isLessThanOrEqualTo(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
     }
 
     @Test

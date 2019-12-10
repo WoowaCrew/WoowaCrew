@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -84,14 +85,13 @@ class ArticleInternalServiceTest {
         Pageable pageable = PageRequest.of(1, ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
         when(articleRepository.findAll(pageable)).thenReturn(new PageImpl<>(articles));
 
-        List<Article> actualArticles = articleInternalService.findAll(pageable);
+        Page<Article> actualArticles = articleInternalService.findAll(pageable);
 
-        assertThat(actualArticles.size()).isEqualTo(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
+        assertThat(actualArticles.getTotalElements()).isEqualTo(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
     }
 
     @Test
     void 게시글_페이징_사이즈가_20이_아니면_에러가_발생한다() {
-        List<Article> articles = createArticles(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
         Pageable pageable = PageRequest.of(1, 5);
 
         assertThatThrownBy(() -> articleInternalService.findAll(pageable)).isInstanceOf(InvalidPageRequstException.class);

@@ -1,10 +1,12 @@
 package woowacrew.article.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import woowacrew.article.domain.Article;
 import woowacrew.article.dto.ArticleRequestDto;
 import woowacrew.article.dto.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDtos;
 import woowacrew.article.dto.ArticleUpdateDto;
 import woowacrew.article.utils.ArticleConverter;
 import woowacrew.user.dto.UserContext;
@@ -29,10 +31,12 @@ public class ArticleService {
         return ArticleConverter.articleToArticleResponseDto(articleInternalService.findById(articleId));
     }
 
-    public List<ArticleResponseDto> findAll(Pageable pageable) {
-        return articleInternalService.findAll(pageable).stream()
+    public ArticleResponseDtos findAll(Pageable pageable) {
+        Page<Article> articlePages = articleInternalService.findAll(pageable);
+        List<ArticleResponseDto> articleResponseDtos = articlePages.stream()
                 .map(ArticleConverter::articleToArticleResponseDto)
                 .collect(Collectors.toList());
+        return new ArticleResponseDtos(pageable.getPageNumber(), articlePages.getTotalPages(), articleResponseDtos);
     }
 
     public ArticleResponseDto update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {

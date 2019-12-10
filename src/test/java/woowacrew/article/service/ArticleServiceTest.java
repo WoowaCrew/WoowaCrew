@@ -5,10 +5,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.article.domain.Article;
 import woowacrew.article.dto.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDtos;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 
@@ -43,11 +45,11 @@ class ArticleServiceTest {
     void 전체_게시글을_ArticleResponse로_변환해준다() {
         List<Article> articles = createArticles(10);
         Pageable pageable = PageRequest.of(1, 10);
-        when(articleInternalService.findAll(pageable)).thenReturn(articles);
+        when(articleInternalService.findAll(pageable)).thenReturn(new PageImpl<>(articles));
 
-        List<ArticleResponseDto> articleResponseDtos = articleService.findAll(pageable);
+        ArticleResponseDtos articleResponseDtos = articleService.findAll(pageable);
 
-        assertThat(articleResponseDtos.size()).isEqualTo(10);
+        assertThat(articleResponseDtos.getArticles().size()).isEqualTo(10);
     }
 
     private List<Article> createArticles(int numberOfArticle) {
