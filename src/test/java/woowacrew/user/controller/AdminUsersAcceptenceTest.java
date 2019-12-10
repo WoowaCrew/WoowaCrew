@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import woowacrew.common.controller.CommonTestController;
-import woowacrew.user.domain.UserResponseDto;
+import woowacrew.user.dto.UserResponseDto;
 import woowacrew.user.domain.UserRole;
 
 import java.util.List;

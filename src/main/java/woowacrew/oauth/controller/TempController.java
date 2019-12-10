@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import woowacrew.security.SecurityContextSupport;
 import woowacrew.user.domain.*;
+import woowacrew.user.dto.UserContext;
 
 //임시 권한 변경을 위한 controller
 @Controller

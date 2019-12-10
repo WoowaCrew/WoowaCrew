@@ -3,11 +3,10 @@ package woowacrew.user.controller;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
-import woowacrew.user.domain.UserUpdateDto;
+import woowacrew.user.dto.UserUpdateDto;
 import woowacrew.user.service.exception.InvalidBirthdayException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -1,7 +1,7 @@
 package woowacrew.article.domain;
 
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserConverter;
+import woowacrew.user.utils.UserConverter;
 
 public class ArticleConverter {
     public static ArticleResponseDto articleToArticleResponseDto(Article article) {

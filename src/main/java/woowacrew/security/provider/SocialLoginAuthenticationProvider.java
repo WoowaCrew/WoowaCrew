@@ -9,6 +9,8 @@ import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
 import woowacrew.user.domain.*;
+import woowacrew.user.dto.UserContext;
+import woowacrew.user.dto.UserOauthDto;
 
 @Component
 public class SocialLoginAuthenticationProvider implements AuthenticationProvider {

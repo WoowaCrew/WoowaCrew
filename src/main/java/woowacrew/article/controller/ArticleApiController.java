@@ -6,7 +6,7 @@ import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleResponseDto;
 import woowacrew.article.domain.ArticleUpdateDto;
 import woowacrew.article.service.ArticleService;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 
 import java.net.URI;
 import java.util.List;

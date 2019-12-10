@@ -1,14 +1,17 @@
 package woowacrew.user.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import woowacrew.user.domain.*;
+import woowacrew.user.dto.UserApproveDto;
+import woowacrew.user.dto.UserContext;
+import woowacrew.user.dto.UserResponseDto;
+import woowacrew.user.dto.UserUpdateDto;
+import woowacrew.user.utils.UserConverter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserService {
 
     private UserInternalService userInternalService;
@@ -17,19 +20,8 @@ public class UserService {
         this.userInternalService = userInternalService;
     }
 
-    @Transactional(readOnly = true)
     public UserResponseDto findById(Long userId) {
         User user = userInternalService.findById(userId);
-        return UserConverter.userToUserResponseDto(user);
-    }
-
-    public UserResponseDto update(Long userId, UserUpdateDto userUpdateDto) {
-        String nickname = userUpdateDto.getNickname();
-        LocalDate birthday = BirthdayConverter.convert(userUpdateDto.getBirthday());
-
-        User user = userInternalService.findById(userId);
-        user.updateUserInfo(nickname, birthday);
-
         return UserConverter.userToUserResponseDto(user);
     }
 
@@ -45,11 +37,15 @@ public class UserService {
         return UserConverter.usersToUserResponseDtos(disapprovedUsers);
     }
 
-    public void approveUserFor(Long userId, UserContext userContext, UserApproveDto userApproveDto) {
-        User user = userInternalService.findById(userId);
-        User admin = userInternalService.findById(userContext.getId());
-        Degree degree = userInternalService.findDegreeByNumber(userApproveDto.getDegreeNumber());
+    public UserResponseDto update(Long userId, UserUpdateDto userUpdateDto) {
+        String nickname = userUpdateDto.getNickname();
+        LocalDate birthday = BirthdayConverter.convert(userUpdateDto.getBirthday());
 
-        user.updateByAdmin(admin, userApproveDto.getRole(), degree);
+        User updatedUser = userInternalService.update(userId, nickname, birthday);
+        return UserConverter.userToUserResponseDto(updatedUser);
+    }
+
+    public void approveUserFor(Long userId, UserContext userContext, UserApproveDto userApproveDto) {
+        userInternalService.approveUserFor(userId, userContext, userApproveDto);
     }
 }
