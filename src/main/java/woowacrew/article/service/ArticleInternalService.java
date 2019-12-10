@@ -1,9 +1,12 @@
 package woowacrew.article.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.domain.*;
+import woowacrew.article.exception.InvalidPageRequstException;
 import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.user.domain.User;
@@ -15,6 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 public class ArticleInternalService {
+    public static final int DEFAULT_ARTICLE_PAGE_SIZE = 20;
     private ArticleRepository articleRepository;
     private UserInternalService userInternalService;
 
@@ -38,8 +42,12 @@ public class ArticleInternalService {
     }
 
     @Transactional(readOnly = true)
-    public List<Article> findAll() {
-        return articleRepository.findAllByOrderByIdDesc();
+    public List<Article> findAll(Pageable pageable) {
+        if(pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
+            throw new InvalidPageRequstException();
+        }
+
+        return articleRepository.findAll(pageable).getContent();
     }
 
     public Article update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {

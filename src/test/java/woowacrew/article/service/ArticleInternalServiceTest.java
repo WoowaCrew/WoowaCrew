@@ -5,10 +5,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleRepository;
 import woowacrew.article.domain.ArticleRequestDto;
 import woowacrew.article.domain.ArticleUpdateDto;
+import woowacrew.article.exception.InvalidPageRequstException;
 import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.common.service.FieldSetter;
@@ -22,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -75,12 +80,21 @@ class ArticleInternalServiceTest {
 
     @Test
     void 게시글_전체_조회_테스트() {
-        List<Article> articles = createArticles(10);
-        when(articleRepository.findAllByOrderByIdDesc()).thenReturn(articles);
+        List<Article> articles = createArticles(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
+        Pageable pageable = PageRequest.of(1, ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
+        when(articleRepository.findAll(pageable)).thenReturn(new PageImpl<>(articles));
 
-        List<Article> actualArticles = articleInternalService.findAll();
+        List<Article> actualArticles = articleInternalService.findAll(pageable);
 
-        assertThat(actualArticles.size()).isEqualTo(10);
+        assertThat(actualArticles.size()).isEqualTo(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
+    }
+
+    @Test
+    void 게시글_페이징_사이즈가_20이_아니면_에러가_발생한다() {
+        List<Article> articles = createArticles(ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE);
+        Pageable pageable = PageRequest.of(1, 5);
+
+        assertThatThrownBy(() -> articleInternalService.findAll(pageable)).isInstanceOf(InvalidPageRequstException.class);
     }
 
     @Test
