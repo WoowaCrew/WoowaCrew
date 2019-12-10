@@ -10,7 +10,10 @@ import woowacrew.oauth.OauthService;
 import woowacrew.oauth.github.GithubOauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.user.domain.*;
+import woowacrew.user.domain.Degree;
+import woowacrew.user.domain.DegreeRepository;
+import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserRepository;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserOauthDto;
 

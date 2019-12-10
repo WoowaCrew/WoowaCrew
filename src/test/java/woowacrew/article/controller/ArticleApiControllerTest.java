@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDto;
 import woowacrew.article.service.ArticleInternalService;
 import woowacrew.common.controller.CommonTestController;
 
@@ -74,7 +74,7 @@ class ArticleApiControllerTest extends CommonTestController {
         String updateTitle = "Update Title";
         String updateContent = "Update Content";
 
-        Long articleId = createArticle(cookie, "title", "content");
+        Long articleId = createArticle(webTestClient, cookie, "title", "content");
 
         webTestClient.put()
                 .uri("/api/articles/" + articleId)
@@ -102,7 +102,7 @@ class ArticleApiControllerTest extends CommonTestController {
     void 게시글_삭제() {
         String cookie = loginWithCrew();
 
-        Long articleId = createArticle(cookie, "title", "content");
+        Long articleId = createArticle(webTestClient, cookie, "title", "content");
 
         webTestClient.delete()
                 .uri("/api/articles/" + articleId)
@@ -118,7 +118,7 @@ class ArticleApiControllerTest extends CommonTestController {
                 .is5xxServerError();
     }
 
-    private Long createArticle(String cookie, String title, String content) {
+    public static Long createArticle(WebTestClient webTestClient, String cookie, String title, String content) {
         ArticleResponseDto articleResponseDto = webTestClient.post()
                 .uri("/api/articles")
                 .header("Cookie", cookie)

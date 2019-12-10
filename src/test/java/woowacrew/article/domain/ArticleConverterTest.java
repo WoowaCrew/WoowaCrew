@@ -1,6 +1,8 @@
 package woowacrew.article.domain;
 
 import org.junit.jupiter.api.Test;
+import woowacrew.article.dto.ArticleResponseDto;
+import woowacrew.article.utils.ArticleConverter;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 

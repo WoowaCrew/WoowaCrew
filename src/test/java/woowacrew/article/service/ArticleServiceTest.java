@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.article.domain.Article;
-import woowacrew.article.domain.ArticleResponseDto;
+import woowacrew.article.dto.ArticleResponseDto;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
 

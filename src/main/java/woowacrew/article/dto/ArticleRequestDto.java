@@ -1,4 +1,4 @@
-package woowacrew.article.domain;
+package woowacrew.article.dto;
 
 public class ArticleRequestDto {
     private String title;

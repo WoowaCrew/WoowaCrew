@@ -26,7 +26,7 @@ function article() {
       });
 
   const editButton = document.getElementById('article-edit-button')
-  editButton.addEventListener('click', () => window.location.href = origin + "/articles/edit/" + articleId)
+  editButton.addEventListener('click', () => window.location.href = origin + "/articles/" + articleId + "/edit")
 
   const deleteButton = document.getElementById('article-delete-button')
   deleteButton.addEventListener('click', () => {

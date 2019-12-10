@@ -1,7 +1,8 @@
 package woowacrew.user.service;
 
 import org.springframework.stereotype.Service;
-import woowacrew.user.domain.*;
+import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserApproveDto;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
