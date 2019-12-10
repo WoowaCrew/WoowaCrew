@@ -1,6 +1,7 @@
-package woowacrew.user.domain;
+package woowacrew.user.utils;
 
 import org.springframework.core.convert.converter.Converter;
+import woowacrew.user.domain.UserRole;
 
 public class UserRoleConverter implements Converter<String, UserRole> {
 

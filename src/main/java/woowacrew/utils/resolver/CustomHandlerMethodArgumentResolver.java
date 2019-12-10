@@ -7,8 +7,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 
 public class CustomHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
     @Override

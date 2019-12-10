@@ -1,4 +1,6 @@
-package woowacrew.user.domain;
+package woowacrew.user.dto;
+
+import woowacrew.user.domain.UserRole;
 
 public class UserContext {
     private Long id;

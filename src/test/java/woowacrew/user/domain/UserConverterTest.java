@@ -1,7 +1,9 @@
 package woowacrew.user.domain;
 
 import org.junit.jupiter.api.Test;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
+import woowacrew.user.utils.UserConverter;
 
 import java.time.LocalDate;
 

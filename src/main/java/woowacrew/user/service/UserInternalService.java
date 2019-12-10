@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.user.domain.*;
 import woowacrew.user.dto.UserApproveDto;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.exception.NotExistUserException;
 
 import java.time.LocalDate;

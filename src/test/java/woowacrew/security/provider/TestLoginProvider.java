@@ -7,8 +7,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
-import woowacrew.security.token.SocialPreAuthorizationToken;
 import woowacrew.user.domain.*;
+import woowacrew.user.dto.UserContext;
 
 import java.util.Arrays;
 

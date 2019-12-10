@@ -3,7 +3,7 @@ package woowacrew.security.token;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.domain.UserRole;
 
 import java.util.Arrays;

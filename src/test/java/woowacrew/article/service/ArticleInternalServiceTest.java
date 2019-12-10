@@ -14,7 +14,7 @@ import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.common.service.FieldSetter;
 import woowacrew.user.domain.Degree;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.UserInternalService;
 
 import java.util.ArrayList;

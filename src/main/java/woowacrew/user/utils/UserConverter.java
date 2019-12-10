@@ -1,6 +1,8 @@
-package woowacrew.user.domain;
+package woowacrew.user.utils;
 
 import org.modelmapper.ModelMapper;
+import woowacrew.user.domain.User;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package woowacrew.security;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import woowacrew.security.token.SocialPostAuthorizationToken;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 
 public class SecurityContextSupport {
     public static void updateContext(UserContext userContext) {

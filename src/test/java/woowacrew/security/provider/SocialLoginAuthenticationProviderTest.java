@@ -11,6 +11,7 @@ import woowacrew.oauth.github.GithubOauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
 import woowacrew.user.domain.*;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserOauthDto;
 
 import java.util.Optional;

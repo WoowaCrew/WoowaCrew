@@ -7,7 +7,7 @@ import woowacrew.article.domain.*;
 import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserContext;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.UserInternalService;
 
 import java.util.List;
