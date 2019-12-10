@@ -1,5 +1,6 @@
 package woowacrew.article.service;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import woowacrew.article.domain.*;
 import woowacrew.user.dto.UserContext;
@@ -24,8 +25,8 @@ public class ArticleService {
         return ArticleConverter.articleToArticleResponseDto(articleInternalService.findById(articleId));
     }
 
-    public List<ArticleResponseDto> findAll() {
-        return articleInternalService.findAll().stream()
+    public List<ArticleResponseDto> findAll(Pageable pageable) {
+        return articleInternalService.findAll(pageable).stream()
                 .map(ArticleConverter::articleToArticleResponseDto)
                 .collect(Collectors.toList());
     }
