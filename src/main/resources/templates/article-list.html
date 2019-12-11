@@ -29,11 +29,16 @@
         </div>
         <input type="text" class="search-form">
         <button type="button" class="search-button">검색</button>
-        <i class="fa fa-lg fa-pencil" id="article-create-icon"></i>
+        <i class="fa fa-lg fa-pencil" id="article-create-icon" onclick="ArticleListApp.showArticleEditPage()"></i>
     </div>
 </div>
 </body>
 <!--  SCRIPT  -->
+<script src="/js/article-template.js"></script>
+<script src="/js/article-list.js"></script>
+<script>
+    ArticleListApp.showArticles(1)
+</script>
 <script>
   function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -43,5 +48,4 @@
     document.getElementById("mySidenav").style.width = "0";
   }
 </script>
-<script src="/js/article-list.js"></script>
 </html>

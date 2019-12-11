@@ -110,3 +110,7 @@ div.page-number:hover, div.prev-bar:hover, div.next-bar:hover {
 #edit-bar {
     text-align: center;
 }
+
+.article-info:hover {
+    cursor: pointer;
+}
