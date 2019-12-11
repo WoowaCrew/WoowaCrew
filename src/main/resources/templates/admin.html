@@ -2,27 +2,24 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/config :: configFragment"/>
-
     <link href="/css/admin.css" rel="stylesheet">
     <title>관리자 페이지</title>
 </head>
-
 <body>
 <th:block th:replace="fragments/header/header :: headerFragment"/>
 <div class="container">
-    <div class="left-bar">
-        <div>회원가입 확인</div>
+    <div id="left-bar">
+        <div class="left-bar-title-woowacrew">WoowaCrew</div>
+        <div id="approve-wait-list-button" class="left-bar-title">승인 대기 회원</div>
+        <div id="approve-complete-list-button" class="left-bar-title">승인 완료 회원</div>
     </div>
     <div class="main-content">
-        <div class="title">회원가입 확인</div>
-        <button id="approve-wait-list-button">승인 대기 회원</button>
         <div id="content">
-            <div class="user-info">
-                <div class="user-oauth-id">유저 아이디</div>
-                <div class="user-nickname">유저 닉네임</div>
-                <div class="degree-select-box">기수 설정</div>
-                <div class="role-select-box">권한 설정</div>
-                <div class="approve-button">승인</div>
+            <div class="user-info-title">
+                <div class="user-info-title-id">아이디</div>
+                <div class="user-info-title-nickname">닉네임</div>
+                <div class="user-info-title-degree">기수</div>
+                <div class="user-info-title-role">권한</div>
             </div>
             <div id="disapprove-list"></div>
         </div>

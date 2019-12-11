@@ -3,27 +3,38 @@
     height: 90vh;
     margin-top: 60px;
     color: grey;
+    padding: 0 10%;
 }
-
-.left-bar {
+#left-bar {
     float: left;
     height: 100%;
-    width: 100px;
-    text-align: right;
-    padding-right: 10px;
-    border-right: 1px solid;
+    width: 150px;
+    border: 1px solid;
+    border-right: 0;
 }
-
+#left-bar .left-bar-title {
+    cursor: pointer;
+    padding: 10px 10px;
+    text-align: center;
+}
+#left-bar .left-bar-title-woowacrew {
+    padding: 15px 15px;
+    text-align: center;
+    color: white;
+}
+#left-bar .left-bar-active {
+    transition: 400ms;
+    color: white;
+    background-color: firebrick;
+}
 .main-content {
+    overflow: scroll;
     height: 100%;
-    width: 100%;
-    margin-left: 120px;
+    border: 1px solid;
 }
-
 .title {
     margin-bottom: 10px;
 }
-
 .user-oauth-id {
     float: left;
     width: 100px;
@@ -32,7 +43,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .user-nickname {
     float: left;
     margin-left: 10px;
@@ -42,17 +52,19 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .approve-button {
     float: left;
     margin-left: 10px;
-    width: 100px;
+    width: 60px;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top: 2px;
 }
-
+.user-list-button {
+    margin: 10px;
+}
 .role-select-box, .degree-select-box {
     float: left;
     margin-left: 10px;
@@ -62,14 +74,34 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.role-select-box .role, .degree-select-box .degree {
+    background-color: white;
+    height: 19px;
+}
 .user-info::after {
     content: '';
     clear: both;
     display: inline-block;
 }
-
 .user-info {
     margin-bottom: 10px;
-    width: 700px;
+}
+.user-info-title {
+    background-color: black;
+    color: white;
+    margin-bottom: 10px;
+    /*position: fixed;*/
+    /*border-bottom: 1px solid;*/
+    overflow: hidden;
+}
+.user-info-title-id,
+.user-info-title-nickname,
+.user-info-title-degree,
+.user-info-title-role {
+    width: 100px;
+    text-align: center;
+    margin-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    float: left;
 }
