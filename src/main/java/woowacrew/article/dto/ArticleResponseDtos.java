@@ -3,6 +3,7 @@ package woowacrew.article.dto;
 import java.util.List;
 
 public class ArticleResponseDtos {
+    public static final int INDEX_PARAMETER = 1;
     private int pageNumber;
     private int totalPages;
     private List<ArticleResponseDto> articles;
@@ -11,7 +12,7 @@ public class ArticleResponseDtos {
     }
 
     public ArticleResponseDtos(int pageNumber, int totalPages, List<ArticleResponseDto> articles) {
-        this.pageNumber = pageNumber + 1;
+        this.pageNumber = pageNumber + INDEX_PARAMETER;
         this.totalPages = totalPages;
         this.articles = articles;
     }
