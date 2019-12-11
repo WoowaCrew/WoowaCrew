@@ -46,6 +46,33 @@ const AdminApp = (() => {
       }).catch(error => alert("에러가 발생했습니다."))
     }
 
+    async showApprovedUser() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+      fetch(origin + "/api/users/approve", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(users => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.userInfoTitle())
+          users.forEach(user => {
+            let template = AdminTemplates.approvedUserListTemplate(user);
+            let element = document.createElement('div')
+            element.innerHTML = template;
+            const roleSelectedBox = element.querySelector('.role')
+            const options = roleSelectedBox.options
+            for (const option of options) {
+              if (option.value === user.userRole) {
+                option.selected = true
+              }
+            }
+            infoContent.insertAdjacentElement("beforeend", element)
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
     async showDegrees() {
       const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
@@ -87,6 +114,12 @@ const AdminApp = (() => {
 
     approveUser(userId) {
       this.adminService.approveUser(userId)
+    }
+
+    showApprovedUser() {
+      this.adminService.showApprovedUser()
+      const leftBar = document.getElementById('approve-complete-list-button');
+      this.adminService.activeButton(leftBar)
     }
 
     showDegrees() {
