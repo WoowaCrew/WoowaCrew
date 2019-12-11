@@ -7,6 +7,7 @@ import woowacrew.user.dto.UserApproveDto;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
 import woowacrew.user.dto.UserUpdateDto;
+import woowacrew.user.utils.BirthdayConverter;
 import woowacrew.user.utils.UserConverter;
 
 import java.time.LocalDate;

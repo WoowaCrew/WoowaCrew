@@ -1,4 +1,4 @@
-package woowacrew.user.service;
+package woowacrew.user.utils;
 
 import woowacrew.user.service.exception.InvalidBirthdayException;
 
