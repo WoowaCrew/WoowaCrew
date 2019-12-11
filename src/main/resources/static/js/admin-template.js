@@ -70,8 +70,15 @@ const AdminTemplates = (() => {
     degreeListTemplate(degree) {
       return `<div class="info-content" id="degree-${degree.id}">
                 <div class="info-cell">${degree.id}</div>
-                <div class="info-cell margin-left-10">${degree.number}</div>
+                <div class="info-cell margin-left-10">${this.convertDegree(degree.number)}</div>
             </div>`
+    }
+
+    convertDegree(degreeNumber) {
+      if(degreeNumber === 0) {
+        return '크루아님'
+      }
+      return  degreeNumber + ''
     }
   }
 

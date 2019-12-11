@@ -58,19 +58,24 @@ const AdminApp = (() => {
           infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.userInfoTitle())
           users.forEach(user => {
             let template = AdminTemplates.approvedUserListTemplate(user);
-            let element = document.createElement('div')
-            element.innerHTML = template;
-            const roleSelectedBox = element.querySelector('.role')
-            const options = roleSelectedBox.options
-            for (const option of options) {
-              if (option.value === user.userRole) {
-                option.selected = true
-              }
-            }
+            let element = this.selectRole(template, user.userRole)
             infoContent.insertAdjacentElement("beforeend", element)
           })
         })
         .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    selectRole(template, userRole) {
+      let element = document.createElement('div')
+      element.innerHTML = template;
+      const roleSelectedBox = element.querySelector('.role')
+      const options = roleSelectedBox.options
+      for (const option of options) {
+        if (option.value === userRole) {
+          option.selected = true
+        }
+      }
+      return element
     }
 
     async showDegrees() {
