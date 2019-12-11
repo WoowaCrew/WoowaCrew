@@ -1,59 +1,74 @@
-function articleList() {
-  const articleList = document.getElementById('article-list')
-  const articleCreateIcon = document.getElementById('article-create-icon')
+"use strict";
 
-  const origin = window.location.origin
+const ArticleListApp = (() => {
+  const BASE_URL = window.location.origin
 
-  const convertTime = (time) => {
-       return time.split('T')[0]
+  class ArticleService {
+    async showArticles(numberOfPage) {
+      const articleList = document.getElementById('article-list')
+
+      fetch(BASE_URL + "/api/articles?page=" + numberOfPage, {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(articleResponse => {
+          this.renderPageBar(articleResponse.pageNumber, articleResponse.totalPages)
+          articleList.innerHTML = ''
+          articleResponse.articles.forEach(article => {
+            articleList.insertAdjacentHTML("beforeend", ArticleTemplates.articleListTemplate(article))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    static showDetailArticle(articleId) {
+      window.location.href = BASE_URL + '/articles/' + articleId
+    }
+
+    static showArticleEditPage() {
+      window.location.href = BASE_URL + '/article/new'
+    }
+
+    renderPageBar(pageNumber, totalPages) {
+      const pageBar = document.getElementById('page-bar')
+
+      pageBar.innerHTML = ''
+
+      const startPageNumber = (pageNumber - 5) > 0 ? pageNumber - 5 : 1
+      if (startPageNumber !== 1) {
+        pageBar.insertAdjacentHTML("beforeend", ArticleTemplates.prevBarTemplate(startPageNumber - 1))
+      }
+      const lastPageNumber = (pageNumber + 5) <= totalPages ? pageNumber + 5 : totalPages
+      for (let numberOfPage = startPageNumber; numberOfPage <= lastPageNumber; numberOfPage++) {
+        if (numberOfPage === pageNumber) {
+          pageBar.insertAdjacentHTML("beforeend", ArticleTemplates.selectedPageBarTemplate(numberOfPage))
+        } else {
+          pageBar.insertAdjacentHTML("beforeend", ArticleTemplates.pageBarTemplate(numberOfPage))
+        }
+      }
+      if (lastPageNumber !== totalPages) {
+        pageBar.insertAdjacentHTML("beforeend", ArticleTemplates.nextBarTemplate(parseInt(lastPageNumber) + 1))
+      }
+    }
   }
 
-  const articleListForm = (article) =>
-      `<div class="article-info">
-        <div class="article-info-article-id">
-            <div class="article-info-article-id-content" value=${article.id}>
-                ${article.id}
-            </div>
-        </div>
-        <div class="article-info-title">${article.title}</div>
-        <div class="article-info-created-date">${convertTime(article.createdDate)}</div>
-        <div class="article-info-userInfo">${article.userResponseDto.nickname}</div>
-        <div class="article-info-views">
-            <div class="article-info-views-content">
-                <i class="fa fa-eye"></i>
-                1
-            </div>
-        </div>
-      </div>`
 
-  articleList.addEventListener('mouseover', function (e) {
-    const node = e.target.parentNode
-    if (node.className === 'article-info') {
-      this.style.cursor = 'pointer'
+  class Controller {
+    constructor(articleService) {
+      this.articleService = articleService
     }
-  })
 
-  articleList.addEventListener('click', function (e) {
-    const node = e.target.parentNode
-    if (node.className === 'article-info') {
-      const articleId = node.querySelector('.article-info-article-id-content').getAttribute('value')
-      window.location.href = origin + '/articles/' + articleId
+    showArticles(numberOfPage) {
+      this.articleService.showArticles(numberOfPage)
     }
-  })
 
-  articleCreateIcon.addEventListener('click', function (e) {
-      window.location.href = origin + '/article/new'
-  })
+    showDetailArticle(articleId) {
+      ArticleService.showDetailArticle(articleId)
+    }
 
-  fetch(origin + "/api/articles", {
-    method: 'GET'
-  }).then(response => response.json())
-      .then(articles => {
-        articles.forEach(article => {
-          articleList.insertAdjacentHTML("beforeend", articleListForm(article))
-        })
-      })
-      .catch(error => alert('오류가 발생했습니다.'));
-}
+    showArticleEditPage() {
+      ArticleService.showArticleEditPage()
+    }
+  }
 
-articleList()
+  return new Controller(new ArticleService())
+})()

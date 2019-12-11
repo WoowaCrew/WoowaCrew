@@ -1,23 +1,25 @@
 package woowacrew.article.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.domain.Article;
 import woowacrew.article.domain.ArticleRepository;
 import woowacrew.article.dto.ArticleRequestDto;
 import woowacrew.article.dto.ArticleUpdateDto;
+import woowacrew.article.exception.InvalidPageRequstException;
 import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.article.utils.ArticleConverter;
 import woowacrew.user.domain.User;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.UserInternalService;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class ArticleInternalService {
+    public static final int DEFAULT_ARTICLE_PAGE_SIZE = 20;
     private ArticleRepository articleRepository;
     private UserInternalService userInternalService;
 
@@ -41,8 +43,12 @@ public class ArticleInternalService {
     }
 
     @Transactional(readOnly = true)
-    public List<Article> findAll() {
-        return articleRepository.findAllByOrderByIdDesc();
+    public Page<Article> findAll(Pageable pageable) {
+        if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
+            throw new InvalidPageRequstException();
+        }
+
+        return articleRepository.findAll(pageable);
     }
 
     public Article update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
