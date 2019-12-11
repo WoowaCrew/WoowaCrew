@@ -1,10 +1,10 @@
 const AdminTemplates = (() => {
   class Templates {
     signRequestListTemplate(user) {
-      return `<div class="user-info" id="user-${user.id}">
-                <div class="user-oauth-id">${user.oauthId}</div>
+      return `<div class="info-content" id="user-${user.id}">
+                <div class="info-cell">${user.oauthId}</div>
                 <input class="user-id" type="hidden" value=${user.id}>
-                <div class="user-nickname">${user.nickname}</div>
+                <div class="info-cell margin-left-10">${user.nickname}</div>
                 <div class="degree-select-box">
                     <select class="degree">
                         <option value="0" selected="selected">크루 아님</option>
@@ -24,10 +24,22 @@ const AdminTemplates = (() => {
     }
 
     userInfoTitle() {
-      return  `<div class="user-info-title-id">아이디</div>
-                <div class="user-info-title-nickname">닉네임</div>
-                <div class="user-info-title-degree">기수</div>
-                <div class="user-info-title-role">권한</div>`
+      return `<div class="info-title-id cell">아이디</div>
+                <div class="info-title-nickname cell">닉네임</div>
+                <div class="info-title-degree cell">기수</div>
+                <div class="info-title-role cell">권한</div>`
+    }
+
+    degreeInfoTitle() {
+      return `<div class="info-title-id cell">아이디</div>
+                <div class="info-title-degree cell">기수</div> `
+    }
+
+    degreeListTemplate(degree) {
+      return `<div class="info-content" id="degree-${degree.id}">
+                <div class="info-cell">${degree.id}</div>
+                <div class="info-cell margin-left-10">${degree.number}</div>
+            </div>`
     }
   }
 

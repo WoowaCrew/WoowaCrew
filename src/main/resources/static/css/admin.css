@@ -35,7 +35,7 @@
 .title {
     margin-bottom: 10px;
 }
-.user-oauth-id {
+.info-cell {
     float: left;
     width: 100px;
     text-align: center;
@@ -43,15 +43,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.user-nickname {
-    float: left;
+.margin-left-10 {
     margin-left: 10px;
-    width: 100px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
+
 .approve-button {
     float: left;
     margin-left: 10px;
@@ -62,9 +57,7 @@
     text-overflow: ellipsis;
     margin-top: 2px;
 }
-.user-list-button {
-    margin: 10px;
-}
+
 .role-select-box, .degree-select-box {
     float: left;
     margin-left: 10px;
@@ -78,26 +71,21 @@
     background-color: white;
     height: 19px;
 }
-.user-info::after {
+.info-content::after {
     content: '';
     clear: both;
     display: inline-block;
 }
-.user-info {
+.info-content {
     margin-bottom: 10px;
 }
 #info-title {
     background-color: black;
     color: white;
     margin-bottom: 10px;
-    /*position: fixed;*/
-    /*border-bottom: 1px solid;*/
     overflow: hidden;
 }
-.user-info-title-id,
-.user-info-title-nickname,
-.user-info-title-degree,
-.user-info-title-role {
+.cell {
     width: 100px;
     text-align: center;
     margin-right: 10px;

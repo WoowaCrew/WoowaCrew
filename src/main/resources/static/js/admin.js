@@ -6,17 +6,17 @@ const AdminApp = (() => {
   class AdminService {
     async showSignRequestList() {
       const infoTitle = document.getElementById('info-title')
-      const disapproveList = document.getElementById('disapprove-list')
+      const infoContent = document.getElementById('info-content')
 
       fetch(BASE_URL + "/api/users/disapprove", {
         method: 'GET'
       }).then(response => response.json())
         .then(users => {
           infoTitle.innerHTML = ''
-          disapproveList.innerHTML = ''
+          infoContent.innerHTML = ''
           infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.userInfoTitle())
           users.forEach(user => {
-            disapproveList.insertAdjacentHTML("beforeend", AdminTemplates.signRequestListTemplate(user))
+            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.signRequestListTemplate(user))
           })
         })
         .catch(error => alert('오류가 발생했습니다.'));
@@ -45,6 +45,32 @@ const AdminApp = (() => {
         userInfo.remove()
       }).catch(error => alert("에러가 발생했습니다."))
     }
+
+    async showDegrees() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+
+      fetch(BASE_URL + "/api/degrees", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(degrees => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.degreeInfoTitle())
+          degrees.forEach(degree => {
+            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.degreeListTemplate(degree))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    activeButton(leftBar) {
+      const activeButton = document.getElementsByClassName("left-bar-active")[0]
+      if (activeButton != null) {
+        activeButton.classList.remove("left-bar-active")
+      }
+      leftBar.classList.add("left-bar-active")
+    }
   }
 
 
@@ -55,10 +81,18 @@ const AdminApp = (() => {
 
     showSignRequestList() {
       this.adminService.showSignRequestList()
+      const leftBar = document.getElementById('approve-wait-list-button');
+      this.adminService.activeButton(leftBar)
     }
 
     approveUser(userId) {
       this.adminService.approveUser(userId)
+    }
+
+    showDegrees() {
+      this.adminService.showDegrees()
+      const leftBar = document.getElementById('degree-manage-button');
+      this.adminService.activeButton(leftBar)
     }
   }
 
