@@ -2,10 +2,7 @@ package woowacrew.user.domain;
 
 import woowacrew.user.domain.exception.DegreeBoundException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +14,7 @@ public class Degree {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private int number = NONE_DEGREE;
 
     public void update(int updateDegree) {
