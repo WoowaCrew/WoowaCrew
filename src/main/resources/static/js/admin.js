@@ -1,77 +1,66 @@
-function admin() {
-    const approveWaitListButton = document.getElementById('approve-wait-list-button')
-    const content = document.getElementById('disapprove-list')
-    const origin = window.location.origin
+"use strict";
 
-    const signRequestForm = (user) =>
-        `<div class="user-info">
-                <div class="user-oauth-id">${user.oauthId}</div>
-                <input class="user-id" type="hidden" value=${user.id}>
-                <div class="user-nickname">${user.nickname}</div>
-                <div class="degree-select-box">
-                    <select class="degree">
-                        <option value="0" selected="selected">크루 아님</option>
-                        <option value="1">1기</option>
-                    </select>
-                </div>
-                <div class="role-select-box">
-                    <select class="role">
-                        <option value="ROLE_PRECOURSE" selected="selected">프리코스</option>
-                        <option value="ROLE_CREW">크루</option>
-                        <option value="ROLE_COACH">코치</option>
-                        <option value="ROLE_ADMIN">관리자</option>
-                    </select>
-                </div>
-                <button class="approve-button">승인</button>
-            </div>`
+const AdminApp = (() => {
+  const BASE_URL = window.location.origin
 
-    function loadUser() {
-        fetch(origin + "/api/users/disapprove", {
-            method: 'GET'
-        }).then(response => response.json())
-            .then(users => {
-                content.innerHTML = ""
-                users.forEach(user => {
-                    content.insertAdjacentHTML("beforeend", signRequestForm(user))
-                })
-            })
-            .catch(error => alert('오류가 발생했습니다.'));
+  class AdminService {
+    async showSignRequestList() {
+      const infoTitle = document.getElementById('info-title')
+      const disapproveList = document.getElementById('disapprove-list')
+
+      fetch(BASE_URL + "/api/users/disapprove", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(users => {
+          infoTitle.innerHTML = ''
+          disapproveList.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.userInfoTitle())
+          users.forEach(user => {
+            disapproveList.insertAdjacentHTML("beforeend", AdminTemplates.signRequestListTemplate(user))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
     }
 
-    function approve(e) {
-        const target = e.target
+    async approveUser(userId) {
+      const userInfo = document.getElementById("user-" + userId)
+      const degreeDiv = userInfo.querySelector(".degree")
+      const roleDiv = userInfo.querySelector(".role")
 
-        if (target.className === "approve-button") {
-            const userDiv = target.parentNode
-            const degreeDiv = userDiv.querySelector(".degree")
-            const roleDiv = userDiv.querySelector(".role")
+      const degree = degreeDiv.options[degreeDiv.selectedIndex].value
+      const role = roleDiv.options[roleDiv.selectedIndex].value
 
-            const degree = degreeDiv.options[degreeDiv.selectedIndex].value
-            const role = roleDiv.options[roleDiv.selectedIndex].value
-            const userId = userDiv.querySelector(".user-id").value
+      const data = new Object()
+      data.role = role
+      data.degreeNumber = degree
 
-            console.log(userDiv.querySelector(".user-id"))
-            console.log(userId);
-
-            const data = new Object()
-            data.role = role
-            data.degreeNumber =degree
-
-            fetch(origin + "/api/users/" + userId + "/approve", {
-                method: 'PUT',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => {
-                alert("정상적으로 승인 되었습니다.")
-                userDiv.remove()
-            }).catch(error => alert("에러가 발생했습니다."))
+      fetch(BASE_URL + "/api/users/" + userId + "/approve", {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
         }
+      }).then(response => {
+        alert("정상적으로 승인 되었습니다.")
+        userInfo.remove()
+      }).catch(error => alert("에러가 발생했습니다."))
+    }
+  }
+
+
+  class Controller {
+    constructor(adminService) {
+      this.adminService = adminService
     }
 
-    content.addEventListener("click", approve)
-    approveWaitListButton.addEventListener("click", loadUser)
-}
+    showSignRequestList() {
+      this.adminService.showSignRequestList()
+    }
 
-admin()
+    approveUser(userId) {
+      this.adminService.approveUser(userId)
+    }
+  }
+
+  return new Controller(new AdminService())
+})()
