@@ -1,4 +1,4 @@
-INSERT INTO user (id, oauth_id) VALUES (1, '1234');
+INSERT INTO user (id, oauth_id, role, degree_id) VALUES (1, '1234','ROLE_ADMIN',1);
 
 INSERT INTO article (id, title, content, author) VALUES (1, 'article A', 'content', 1);
 INSERT INTO article (id, title, content, author) VALUES (2, 'delete article', 'delete content', 1);

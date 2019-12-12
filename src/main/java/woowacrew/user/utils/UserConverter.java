@@ -1,6 +1,7 @@
 package woowacrew.user.utils;
 
 import org.modelmapper.ModelMapper;
+import woowacrew.degree.utils.DegreeConverter;
 import woowacrew.user.domain.User;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
@@ -14,7 +15,9 @@ public class UserConverter {
     }
 
     public static UserResponseDto userToUserResponseDto(User user) {
-        return new ModelMapper().map(user, UserResponseDto.class);
+        UserResponseDto responseDto = new ModelMapper().map(user, UserResponseDto.class);
+        responseDto.setDegreeResponseDto(DegreeConverter.degreeToResponseDto(user.getDegree()));
+        return responseDto;
     }
 
     public static List<UserResponseDto> usersToUserResponseDtos(List<User> users) {
