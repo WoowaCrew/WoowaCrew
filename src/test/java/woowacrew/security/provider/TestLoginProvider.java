@@ -29,7 +29,7 @@ public class TestLoginProvider extends SocialLoginAuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        Degree degree = degreeRepository.findByNumber(Degree.NONE_DEGREE)
+        Degree degree = degreeRepository.findByDegreeNumber(Degree.NONE_DEGREE)
                 .orElseThrow(IllegalArgumentException::new);
         String oauthId = (String) authentication.getCredentials();
         String role = (String) authentication.getPrincipal();

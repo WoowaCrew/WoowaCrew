@@ -15,22 +15,22 @@ public class Degree {
     private Long id;
 
     @Column(unique = true)
-    private int number = NONE_DEGREE;
+    private int degreeNumber = NONE_DEGREE;
 
     public void update(int updateDegree) {
         if (updateDegree < NONE_DEGREE || updateDegree > MAX_BOUND) {
             throw new DegreeBoundException();
         }
 
-        this.number = updateDegree;
+        this.degreeNumber = updateDegree;
     }
 
     public Long getId() {
         return id;
     }
 
-    public int getNumber() {
-        return number;
+    public int getDegreeNumber() {
+        return degreeNumber;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Degree {
     public String toString() {
         return "Degree{" +
                 "id=" + id +
-                ", number=" + number +
+                ", degreeNumber=" + degreeNumber +
                 '}';
     }
 }

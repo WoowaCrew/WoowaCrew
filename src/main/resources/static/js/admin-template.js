@@ -69,8 +69,8 @@ const AdminTemplates = (() => {
 
     degreeListTemplate(degree) {
       return `<div class="info-content" id="degree-${degree.id}">
-                <div class="info-cell">${this.convertDegree(degree.number)}</div>
-                <div class="info-cell margin-left-10">${degree.numberOfUser}</div>
+                <div class="info-cell">${this.convertDegree(degree.degreeNumber)}</div>
+                <div class="info-cell margin-left-10">${degree.userCount}</div>
                 <div class="info-cell margin-left-10 hover-pointer" onclick="AdminApp.showDetailUsersOfDegree(${degree.id})">상세 보기</div>
             </div>`
     }

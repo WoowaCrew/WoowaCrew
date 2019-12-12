@@ -53,7 +53,7 @@ public class TempController {
     @PostMapping("/login/temp")
     public RedirectView loginAdmin(String id) {
         if ("1234".equals(id)) {
-            Degree degree = degreeRepository.findByNumber(0).get();
+            Degree degree = degreeRepository.findByDegreeNumber(0).get();
             User user = new User("1", UserRole.ROLE_ADMIN, degree);
             userRepository.findByOauthId(user.getOauthId()).orElse(userRepository.save(user));
             SecurityContextSupport.updateContext(new ModelMapper().map(user, UserContext.class));

@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import woowacrew.degree.domain.Degree;
 import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.user.domain.exception.DegreeBoundException;
-import woowacrew.user.service.UserInternalService;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class DegreeInternalService {
 
     @Transactional(readOnly = true)
     public Degree findDegreeByNumber(int numberOfDegree) {
-        return degreeRepository.findByNumber(numberOfDegree)
+        return degreeRepository.findByDegreeNumber(numberOfDegree)
                 .orElseThrow(DegreeBoundException::new);
     }
 

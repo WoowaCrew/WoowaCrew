@@ -20,7 +20,7 @@ class DegreeTest {
     @Test
     @DisplayName("기수는 NONE_DEGREE(0) 값을 가진채로 생성한다.")
     void create() {
-        assertThat(degree.getNumber()).isEqualTo(Degree.NONE_DEGREE);
+        assertThat(degree.getDegreeNumber()).isEqualTo(Degree.NONE_DEGREE);
     }
 
     @Test
@@ -28,7 +28,7 @@ class DegreeTest {
     void update() {
         degree.update(1);
 
-        assertThat(degree.getNumber()).isEqualTo(1);
+        assertThat(degree.getDegreeNumber()).isEqualTo(1);
     }
 
     @Test

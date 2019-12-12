@@ -45,7 +45,7 @@ class AdminDegreeApiControllerTest extends CommonTestController {
                 .getResponseBody();
 
         DegreeWithUserCountResponseDto course1 = response.get(1);
-        assertThat(course1.getNumberOfUser()).isNotZero();
+        assertThat(course1.getUserCount()).isNotZero();
     }
 
     @Test

@@ -2,16 +2,16 @@ package woowacrew.degree.dto;
 
 public class DegreeWithUserCountResponseDto {
     private Long id;
-    private int number;
-    private int numberOfUser;
+    private int degreeNumber;
+    private int userCount;
 
     private DegreeWithUserCountResponseDto() {
     }
 
-    public DegreeWithUserCountResponseDto(Long id, int number, int numberOfUser) {
+    public DegreeWithUserCountResponseDto(Long id, int degreeNumber, int userCount) {
         this.id = id;
-        this.number = number;
-        this.numberOfUser = numberOfUser;
+        this.degreeNumber = degreeNumber;
+        this.userCount = userCount;
     }
 
     public Long getId() {
@@ -22,19 +22,19 @@ public class DegreeWithUserCountResponseDto {
         this.id = id;
     }
 
-    public int getNumber() {
-        return number;
+    public int getDegreeNumber() {
+        return degreeNumber;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setDegreeNumber(int degreeNumber) {
+        this.degreeNumber = degreeNumber;
     }
 
-    public int getNumberOfUser() {
-        return numberOfUser;
+    public int getUserCount() {
+        return userCount;
     }
 
-    public void setNumberOfUser(int numberOfUser) {
-        this.numberOfUser = numberOfUser;
+    public void setUserCount(int userCount) {
+        this.userCount = userCount;
     }
 }

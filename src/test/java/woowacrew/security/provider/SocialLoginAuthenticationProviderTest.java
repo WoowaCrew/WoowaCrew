@@ -83,7 +83,7 @@ class SocialLoginAuthenticationProviderTest {
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
         when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
         when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(null));
-        when(degreeRepository.findByNumber(anyInt())).thenReturn(Optional.of(new Degree()));
+        when(degreeRepository.findByDegreeNumber(anyInt())).thenReturn(Optional.of(new Degree()));
         when(userRepository.save(any())).thenReturn(user);
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);

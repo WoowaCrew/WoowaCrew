@@ -43,7 +43,7 @@ class DegreeServiceTest {
         List<DegreeWithUserCountResponseDto> degreeWithUserCountResponseDtos = degreeService.findAllWithUserCount();
 
         assertThat(degreeWithUserCountResponseDtos.size()).isEqualTo(2);
-        assertThat(degreeWithUserCountResponseDtos.get(0).getNumberOfUser()).isEqualTo(1);
+        assertThat(degreeWithUserCountResponseDtos.get(0).getUserCount()).isEqualTo(1);
     }
 
     @Test

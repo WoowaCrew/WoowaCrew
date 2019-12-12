@@ -27,7 +27,8 @@ class DegreeInternalServiceTest {
         List<Degree> degrees = new ArrayList<>();
         degrees.add(new Degree());
         Degree degree = new Degree();
-        degree.update(1);
+        int degreeNumber = 1;
+        degree.update(degreeNumber);
         degrees.add(degree);
 
         when(degreeRepository.findAll()).thenReturn(degrees);

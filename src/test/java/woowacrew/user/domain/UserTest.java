@@ -56,7 +56,7 @@ class UserTest {
         user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree);
 
         assertThat(user.getRole()).isEqualTo(UserRole.ROLE_CREW);
-        assertThat(user.getDegree().getNumber()).isEqualTo(updateDegree.getNumber());
+        assertThat(user.getDegree().getDegreeNumber()).isEqualTo(updateDegree.getDegreeNumber());
     }
 
     @Test

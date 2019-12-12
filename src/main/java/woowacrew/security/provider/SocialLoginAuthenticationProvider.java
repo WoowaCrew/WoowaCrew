@@ -45,7 +45,7 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
     }
 
     private User registerUser(UserOauthDto userOauthDto) {
-        Degree degree = degreeRepository.findByNumber(0)
+        Degree degree = degreeRepository.findByDegreeNumber(0)
                 .orElseThrow(IllegalArgumentException::new);
         return userRepository.save(new User(userOauthDto.getOauthId(), degree));
     }

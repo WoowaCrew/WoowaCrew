@@ -12,7 +12,7 @@ class DegreeConverterTest {
         Degree degree = new Degree();
         DegreeWithUserCountResponseDto degreeWithUserCountResponseDto = DegreeConverter.degreeToWithUserCountReponseDto(degree, 0);
 
-        assertThat(degreeWithUserCountResponseDto.getNumber()).isEqualTo(Degree.NONE_DEGREE);
-        assertThat(degreeWithUserCountResponseDto.getNumberOfUser()).isEqualTo(0);
+        assertThat(degreeWithUserCountResponseDto.getDegreeNumber()).isEqualTo(Degree.NONE_DEGREE);
+        assertThat(degreeWithUserCountResponseDto.getUserCount()).isEqualTo(0);
     }
 }

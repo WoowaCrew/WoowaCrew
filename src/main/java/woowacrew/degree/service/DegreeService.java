@@ -23,8 +23,8 @@ public class DegreeService {
     public List<DegreeWithUserCountResponseDto> findAllWithUserCount() {
         return degreeInternalService.findAll().stream()
                 .map(degree -> {
-                    int numberOfUser = userInternalService.countByDegreeId(degree.getId());
-                    return DegreeConverter.degreeToWithUserCountReponseDto(degree, numberOfUser);
+                    int userCount = userInternalService.countByDegreeId(degree.getId());
+                    return DegreeConverter.degreeToWithUserCountReponseDto(degree, userCount);
                 })
                 .collect(Collectors.toList());
     }
