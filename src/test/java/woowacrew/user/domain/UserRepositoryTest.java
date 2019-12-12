@@ -44,7 +44,7 @@ class UserRepositoryTest {
     @Test
     void 기수에_맞는_유저를_출력한다() {
         Long degreeId = 1L;
-        List<User> users = userRepository.findByDegreeId(degreeId);
+        List<User> users = userRepository.findByDegreeIdAndNicknameNotNull(degreeId);
 
         assertThat(users.size()).isNotZero();
     }
@@ -52,7 +52,7 @@ class UserRepositoryTest {
     @Test
     void 기수에_맞는_유저의_수를_출력한다() {
         Long degreeId = 1L;
-        int numberOfUser = userRepository.countByDegreeId(degreeId);
+        int numberOfUser = userRepository.countByDegreeIdAndNicknameNotNull(degreeId);
 
         assertThat(numberOfUser).isNotZero();
     }

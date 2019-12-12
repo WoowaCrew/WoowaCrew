@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public List<UserResponseDto> findDisapprovedUser() {
-        List<User> disapprovedUsers = userInternalService.findByRoleAndNicknameNotNull(UserRole.ROLE_PRECOURSE);
+        List<User> disapprovedUsers = userInternalService.findByRole(UserRole.ROLE_PRECOURSE);
 
         return UserConverter.usersToUserResponseDtos(disapprovedUsers);
     }

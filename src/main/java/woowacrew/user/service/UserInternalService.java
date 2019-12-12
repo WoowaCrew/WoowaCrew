@@ -40,19 +40,15 @@ public class UserInternalService {
     }
 
     public List<User> findByRole(UserRole role) {
-        return userRepository.findByRole(role);
-    }
-
-    public List<User> findByRoleAndNicknameNotNull(UserRole role) {
         return userRepository.findByRoleAndNicknameNotNull(role);
     }
 
     public List<User> findByDegreeId(Long degreeId) {
-        return userRepository.findByDegreeId(degreeId);
+        return userRepository.findByDegreeIdAndNicknameNotNull(degreeId);
     }
 
     public int countByDegreeId(Long degreeId) {
-        return userRepository.countByDegreeId(degreeId);
+        return userRepository.countByDegreeIdAndNicknameNotNull(degreeId);
     }
 
     @Transactional
