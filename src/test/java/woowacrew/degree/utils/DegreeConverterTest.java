@@ -25,6 +25,6 @@ class DegreeConverterTest {
         DegreeResponseDto degreeResponseDto = DegreeConverter.degreeToResponseDto(degree);
 
         assertThat(degreeResponseDto.getId()).isEqualTo(1L);
-        assertThat(degreeResponseDto.getNumber()).isEqualTo(Degree.NONE_DEGREE);
+        assertThat(degreeResponseDto.getDegreeNumber()).isEqualTo(Degree.NONE_DEGREE);
     }
 }

@@ -2,14 +2,14 @@ package woowacrew.degree.dto;
 
 public class DegreeResponseDto {
     private Long id;
-    private int number;
+    private int degreeNumber;
 
     private DegreeResponseDto() {
     }
 
-    public DegreeResponseDto(Long id, int number) {
+    public DegreeResponseDto(Long id, int degreeNumber) {
         this.id = id;
-        this.number = number;
+        this.degreeNumber = degreeNumber;
     }
 
     public Long getId() {
@@ -20,11 +20,11 @@ public class DegreeResponseDto {
         this.id = id;
     }
 
-    public int getNumber() {
-        return number;
+    public int getDegreeNumber() {
+        return degreeNumber;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setDegreeNumber(int degreeNumber) {
+        this.degreeNumber = degreeNumber;
     }
 }
