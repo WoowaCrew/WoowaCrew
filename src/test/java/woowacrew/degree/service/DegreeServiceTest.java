@@ -7,6 +7,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.degree.domain.Degree;
 import woowacrew.degree.dto.DegreeWithUserCountResponseDto;
+import woowacrew.user.domain.User;
+import woowacrew.user.dto.UserResponseDto;
 import woowacrew.user.service.UserInternalService;
 
 import java.util.ArrayList;
@@ -42,5 +44,17 @@ class DegreeServiceTest {
 
         assertThat(degreeWithUserCountResponseDtos.size()).isEqualTo(2);
         assertThat(degreeWithUserCountResponseDtos.get(0).getNumberOfUser()).isEqualTo(1);
+    }
+
+    @Test
+    void findUserByDegreeId() {
+        List<User> users = new ArrayList<>();
+        users.add(new User("1", new Degree()));
+
+        when(userInternalService.findByDegreeId(any())).thenReturn(users);
+
+        List<UserResponseDto> actualUsers = degreeService.findUserByDegreeId(1L);
+
+        assertThat(actualUsers.size()).isEqualTo(1);
     }
 }
