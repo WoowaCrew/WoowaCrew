@@ -36,7 +36,7 @@ public class UserInternalService {
     }
 
     public List<User> findByRoleNotIn(UserRole role) {
-        return userRepository.findByRoleNotIn(role);
+        return userRepository.findByRoleNotInAndNicknameNotNull(role);
     }
 
     public List<User> findByRole(UserRole role) {

@@ -18,7 +18,7 @@ class UserRepositoryTest {
 
     @Test
     void 인가된_유저_목록_조회() {
-        List<User> users = userRepository.findByRoleNotIn(UserRole.ROLE_PRECOURSE);
+        List<User> users = userRepository.findByRoleNotInAndNicknameNotNull(UserRole.ROLE_PRECOURSE);
 
         for (User user : users) {
             assertTrue(user.isApproved());
