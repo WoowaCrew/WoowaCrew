@@ -5,13 +5,14 @@ import org.springframework.transaction.annotation.Transactional;
 import woowacrew.degree.domain.Degree;
 import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.user.domain.exception.DegreeBoundException;
+import woowacrew.user.service.UserInternalService;
 
 import java.util.List;
 
 @Service
 @Transactional
 public class DegreeInternalService {
-    private DegreeRepository degreeRepository;
+    private final DegreeRepository degreeRepository;
 
     public DegreeInternalService(DegreeRepository degreeRepository) {
         this.degreeRepository = degreeRepository;

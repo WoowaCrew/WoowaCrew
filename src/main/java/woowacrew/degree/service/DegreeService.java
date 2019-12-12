@@ -1,8 +1,9 @@
 package woowacrew.degree.service;
 
 import org.springframework.stereotype.Service;
-import woowacrew.degree.dto.DegreeResponseDto;
+import woowacrew.degree.dto.DegreeWithUserCountResponseDto;
 import woowacrew.degree.utils.DegreeConverter;
+import woowacrew.user.service.UserInternalService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,15 +11,19 @@ import java.util.stream.Collectors;
 @Service
 public class DegreeService {
     private final DegreeInternalService degreeInternalService;
+    private final UserInternalService userInternalService;
 
-    public DegreeService(DegreeInternalService degreeInternalService) {
+    public DegreeService(DegreeInternalService degreeInternalService, UserInternalService userInternalService) {
         this.degreeInternalService = degreeInternalService;
+        this.userInternalService = userInternalService;
     }
 
-
-    public List<DegreeResponseDto> findAll() {
+    public List<DegreeWithUserCountResponseDto> findAllWithUserCount() {
         return degreeInternalService.findAll().stream()
-                .map(DegreeConverter::degreeToReponseDto)
+                .map(degree -> {
+                    int numberOfUser = userInternalService.countByDegreeId(degree.getId());
+                    return DegreeConverter.degreeToWithUserCountReponseDto(degree, numberOfUser);
+                })
                 .collect(Collectors.toList());
     }
 }
