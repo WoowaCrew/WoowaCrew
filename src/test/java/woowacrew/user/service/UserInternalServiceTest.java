@@ -45,4 +45,16 @@ class UserInternalServiceTest {
 
         assertThat(actualUsers).isEqualTo(users);
     }
+
+    @Test
+    void countByDegreeId() {
+        Long degreeId = 1L;
+        int numberOfUser = 6;
+
+        when(userRepository.countByDegreeId(degreeId)).thenReturn(numberOfUser);
+
+        int actualNumberOfCount = userInternalService.countByDegreeId(degreeId);
+
+        assertThat(actualNumberOfCount).isEqualTo(numberOfUser);
+    }
 }

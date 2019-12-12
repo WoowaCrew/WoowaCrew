@@ -51,6 +51,10 @@ public class UserInternalService {
         return userRepository.findByDegreeId(degreeId);
     }
 
+    public int countByDegreeId(Long degreeId) {
+        return userRepository.countByDegreeId(degreeId);
+    }
+
     @Transactional
     public void approveUserFor(Long userId, UserContext userContext, UserApproveDto userApproveDto) {
         User user = findById(userId);

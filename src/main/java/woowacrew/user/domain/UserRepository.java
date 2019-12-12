@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRoleAndNicknameNotNull(UserRole role);
 
     List<User> findByDegreeId(Long degreeId);
+
+    int countByDegreeId(Long degreeId);
 }

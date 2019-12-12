@@ -48,4 +48,12 @@ class UserRepositoryTest {
 
         assertThat(users.size()).isNotZero();
     }
+
+    @Test
+    void 기수에_맞는_유저의_수를_출력한다() {
+        Long degreeId = 1L;
+        int numberOfUser = userRepository.countByDegreeId(degreeId);
+
+        assertThat(numberOfUser).isNotZero();
+    }
 }
