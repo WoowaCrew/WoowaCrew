@@ -2,7 +2,8 @@ package woowacrew.user.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woowacrew.user.domain.Degree;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.service.DegreeInternalService;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 import woowacrew.user.domain.UserRole;
@@ -44,6 +45,14 @@ public class UserInternalService {
 
     public List<User> findByRoleAndNicknameNotNull(UserRole role) {
         return userRepository.findByRoleAndNicknameNotNull(role);
+    }
+
+    public List<User> findByDegreeId(Long degreeId) {
+        return userRepository.findByDegreeId(degreeId);
+    }
+
+    public int countByDegreeId(Long degreeId) {
+        return userRepository.countByDegreeId(degreeId);
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package woowacrew.user.domain;
 
+import woowacrew.degree.domain.Degree;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import woowacrew.user.domain.exception.ForbiddenUserException;
@@ -55,7 +56,7 @@ class UserTest {
         user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree);
 
         assertThat(user.getRole()).isEqualTo(UserRole.ROLE_CREW);
-        assertThat(user.getDegree().getNumber()).isEqualTo(updateDegree.getNumber());
+        assertThat(user.getDegree().getDegreeNumber()).isEqualTo(updateDegree.getDegreeNumber());
     }
 
     @Test

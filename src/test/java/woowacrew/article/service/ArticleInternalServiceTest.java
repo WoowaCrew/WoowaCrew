@@ -17,7 +17,7 @@ import woowacrew.article.dto.ArticleUpdateDto;
 import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.article.exception.NotFoundArticleException;
 import woowacrew.common.service.FieldSetter;
-import woowacrew.user.domain.Degree;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.UserInternalService;

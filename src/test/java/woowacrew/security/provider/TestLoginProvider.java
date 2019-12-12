@@ -1,5 +1,7 @@
 package woowacrew.security.provider;
 
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.domain.DegreeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -27,7 +29,7 @@ public class TestLoginProvider extends SocialLoginAuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        Degree degree = degreeRepository.findByNumber(Degree.NONE_DEGREE)
+        Degree degree = degreeRepository.findByDegreeNumber(Degree.NONE_DEGREE)
                 .orElseThrow(IllegalArgumentException::new);
         String oauthId = (String) authentication.getCredentials();
         String role = (String) authentication.getPrincipal();

@@ -1,11 +1,8 @@
-package woowacrew.user.domain;
+package woowacrew.degree.domain;
 
 import woowacrew.user.domain.exception.DegreeBoundException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -17,22 +14,23 @@ public class Degree {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int number = NONE_DEGREE;
+    @Column(unique = true)
+    private int degreeNumber = NONE_DEGREE;
 
     public void update(int updateDegree) {
         if (updateDegree < NONE_DEGREE || updateDegree > MAX_BOUND) {
             throw new DegreeBoundException();
         }
 
-        this.number = updateDegree;
+        this.degreeNumber = updateDegree;
     }
 
     public Long getId() {
         return id;
     }
 
-    public int getNumber() {
-        return number;
+    public int getDegreeNumber() {
+        return degreeNumber;
     }
 
     @Override
@@ -52,7 +50,7 @@ public class Degree {
     public String toString() {
         return "Degree{" +
                 "id=" + id +
-                ", number=" + number +
+                ", degreeNumber=" + degreeNumber +
                 '}';
     }
 }

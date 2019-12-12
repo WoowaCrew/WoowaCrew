@@ -31,6 +31,7 @@ const ArticleTemplates = (() => {
       return `<div class="page-number selected-page" onclick="ArticleListApp.showArticles(${numberOfPage})">${numberOfPage}</div>`
     }
 
+
     pageBarTemplate(numberOfPage) {
       return `<div class="page-number" onclick="ArticleListApp.showArticles(${numberOfPage})">${numberOfPage}</div>`
     }

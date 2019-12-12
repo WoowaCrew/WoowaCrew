@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.user.domain.Degree;
-import woowacrew.user.domain.DegreeRepository;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 import woowacrew.user.dto.UserContext;
@@ -45,7 +45,7 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
     }
 
     private User registerUser(UserOauthDto userOauthDto) {
-        Degree degree = degreeRepository.findByNumber(0)
+        Degree degree = degreeRepository.findByDegreeNumber(0)
                 .orElseThrow(IllegalArgumentException::new);
         return userRepository.save(new User(userOauthDto.getOauthId(), degree));
     }

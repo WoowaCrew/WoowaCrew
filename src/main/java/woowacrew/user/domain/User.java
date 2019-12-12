@@ -1,5 +1,6 @@
 package woowacrew.user.domain;
 
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.exception.ForbiddenUserException;
 import woowacrew.user.domain.exception.NotExistNicknameException;
 
