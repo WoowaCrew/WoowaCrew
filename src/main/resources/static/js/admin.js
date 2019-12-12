@@ -57,6 +57,43 @@ const AdminApp = (() => {
           infoContent.innerHTML = ''
           infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.userInfoTitle())
           users.forEach(user => {
+            let template = AdminTemplates.approvedUserListTemplate(user)
+            let element = this.selectRole(template, user.userRole)
+            infoContent.insertAdjacentElement("beforeend", element)
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    async showDegrees() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+
+      fetch(BASE_URL + "/api/degrees", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(degrees => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.degreeInfoTitle())
+          degrees.forEach(degree => {
+            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.degreeListTemplate(degree))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    async showDetailUsersOfDegree(degreeId) {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+      fetch(BASE_URL + "/api/degrees" + degreeId, {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(users => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.userInfoTitle())
+          users.forEach(user => {
             let template = AdminTemplates.approvedUserListTemplate(user);
             let element = this.selectRole(template, user.userRole)
             infoContent.insertAdjacentElement("beforeend", element)
@@ -78,24 +115,6 @@ const AdminApp = (() => {
       return element
     }
 
-    async showDegrees() {
-      const infoTitle = document.getElementById('info-title')
-      const infoContent = document.getElementById('info-content')
-
-      fetch(BASE_URL + "/api/degrees", {
-        method: 'GET'
-      }).then(response => response.json())
-        .then(degrees => {
-          infoTitle.innerHTML = ''
-          infoContent.innerHTML = ''
-          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.degreeInfoTitle())
-          degrees.forEach(degree => {
-            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.degreeListTemplate(degree))
-          })
-        })
-        .catch(error => alert('오류가 발생했습니다.'));
-    }
-
     activeButton(leftBar) {
       const activeButton = document.getElementsByClassName("left-bar-active")[0]
       if (activeButton != null) {
@@ -113,7 +132,7 @@ const AdminApp = (() => {
 
     showSignRequestList() {
       this.adminService.showSignRequestList()
-      const leftBar = document.getElementById('approve-wait-list-button');
+      const leftBar = document.getElementById('approve-wait-list-button')
       this.adminService.activeButton(leftBar)
     }
 
@@ -123,14 +142,18 @@ const AdminApp = (() => {
 
     showApprovedUser() {
       this.adminService.showApprovedUser()
-      const leftBar = document.getElementById('approve-complete-list-button');
+      const leftBar = document.getElementById('approve-complete-list-button')
       this.adminService.activeButton(leftBar)
     }
 
     showDegrees() {
       this.adminService.showDegrees()
-      const leftBar = document.getElementById('degree-manage-button');
+      const leftBar = document.getElementById('degree-manage-button')
       this.adminService.activeButton(leftBar)
+    }
+
+    showDetailUsersOfDegree(degreeId) {
+      this.adminService.showDetailUsersOfDegree(degreeId)
     }
   }
 
