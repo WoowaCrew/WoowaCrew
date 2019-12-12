@@ -86,7 +86,7 @@ const AdminApp = (() => {
     async showDetailUsersOfDegree(degreeId) {
       const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
-      fetch(BASE_URL + "/api/degrees" + degreeId, {
+      fetch(BASE_URL + "/api/degrees" + degreeId + "/users", {
         method: 'GET'
       }).then(response => response.json())
         .then(users => {
