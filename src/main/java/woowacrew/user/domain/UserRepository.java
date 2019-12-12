@@ -8,13 +8,13 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByOauthId(String oauthId);
 
-    List<User> findByRoleNotIn(UserRole role);
+    List<User> findByRoleNotInAndNicknameNotNull(UserRole role);
 
     List<User> findByRole(UserRole role);
 
     List<User> findByRoleAndNicknameNotNull(UserRole role);
 
-    List<User> findByDegreeId(Long degreeId);
+    List<User> findByDegreeIdAndNicknameNotNull(Long degreeId);
 
-    int countByDegreeId(Long degreeId);
+    int countByDegreeIdAndNicknameNotNull(Long degreeId);
 }

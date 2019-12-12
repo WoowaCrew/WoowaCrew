@@ -39,7 +39,7 @@ class UserInternalServiceTest {
     void findByDegreeId() {
         List<User> users = Arrays.asList(new User("1", new Degree()));
         Long degreeId = 1L;
-        when(userRepository.findByDegreeId(degreeId)).thenReturn(users);
+        when(userRepository.findByDegreeIdAndNicknameNotNull(degreeId)).thenReturn(users);
 
         List<User> actualUsers = userInternalService.findByDegreeId(degreeId);
 
@@ -51,7 +51,7 @@ class UserInternalServiceTest {
         Long degreeId = 1L;
         int numberOfUser = 6;
 
-        when(userRepository.countByDegreeId(degreeId)).thenReturn(numberOfUser);
+        when(userRepository.countByDegreeIdAndNicknameNotNull(degreeId)).thenReturn(numberOfUser);
 
         int actualNumberOfCount = userInternalService.countByDegreeId(degreeId);
 

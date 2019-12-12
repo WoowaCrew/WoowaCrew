@@ -1,5 +1,6 @@
 package woowacrew.user.dto;
 
+import woowacrew.degree.dto.DegreeResponseDto;
 import woowacrew.user.domain.UserRole;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ public class UserResponseDto {
     private String nickname;
     private LocalDate birthday;
     private UserRole userRole;
+    private DegreeResponseDto degreeResponseDto;
 
     private UserResponseDto() {
     }
@@ -59,6 +61,14 @@ public class UserResponseDto {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public DegreeResponseDto getDegreeResponseDto() {
+        return degreeResponseDto;
+    }
+
+    public void setDegreeResponseDto(DegreeResponseDto degreeResponseDto) {
+        this.degreeResponseDto = degreeResponseDto;
     }
 
     @Override

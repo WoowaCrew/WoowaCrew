@@ -28,7 +28,12 @@ const AdminTemplates = (() => {
                 <div class="info-cell">${user.oauthId}</div>
                 <input class="user-id" type="hidden" value=${user.id}>
                 <div class="info-cell margin-left-10">${user.nickname}</div>
-                <div class="info-cell margin-left-10">1기</div>
+                <div class="degree-select-box">
+                    <select class="degree">
+                        <option value="0">크루 아님</option>
+                        <option value="1">1기</option>
+                    </select>
+                </div>                
                 <div class="role-select-box">
                     <select class="role">
                         <option value="ROLE_PRECOURSE">프리코스</option>
@@ -37,22 +42,8 @@ const AdminTemplates = (() => {
                         <option value="ROLE_ADMIN">관리자</option>
                     </select>
                 </div>
+                <button class="approve-button" onclick="AdminApp.updateUserAuthority(${user.id})">수정</button>
             </div>`
-    }
-
-    convertRole(userRole) {
-      if(userRole === 'ROLE_PRECOURSE') {
-        return '프리코스'
-      }
-      if(userRole === 'ROLE_CREW') {
-        return '크루'
-      }
-      if(userRole === 'ROLE_COACH') {
-        return '코치'
-      }
-      if(userRole === 'ROLE_ADMIN') {
-        return '관리자'
-      }
     }
 
     userInfoTitle() {
@@ -76,10 +67,33 @@ const AdminTemplates = (() => {
     }
 
     convertDegree(degreeNumber) {
-      if(degreeNumber === 0) {
-        return '크루아님'
+      if (degreeNumber === 0) {
+        return '크루 아님'
       }
       return degreeNumber + '기'
+    }
+
+    selectRole(template, userRole) {
+      let element = document.createElement('div')
+      element.innerHTML = template;
+      const roleSelectedBox = element.querySelector('.role')
+      const options = roleSelectedBox.options
+      for (const option of options) {
+        if (option.value === userRole) {
+          option.selected = true
+        }
+      }
+      return element
+    }
+
+    selectDegree(element, degreeNumber) {
+      const degreeSelectedBox = element.querySelector('.degree')
+      const options = degreeSelectedBox.options
+      for (const option of options) {
+        if (parseInt(option.value) === degreeNumber) {
+          option.selected = true
+        }
+      }
     }
   }
 
