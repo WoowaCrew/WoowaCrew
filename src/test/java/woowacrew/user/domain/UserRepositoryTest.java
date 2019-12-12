@@ -40,4 +40,12 @@ class UserRepositoryTest {
 
         assertThat(users.size()).isNotZero();
     }
+
+    @Test
+    void 기수에_맞는_유저를_출력한다() {
+        Long degreeId = 1L;
+        List<User> users = userRepository.findByDegreeId(degreeId);
+
+        assertThat(users.size()).isNotZero();
+    }
 }
