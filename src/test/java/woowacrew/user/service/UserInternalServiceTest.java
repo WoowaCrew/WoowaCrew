@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import woowacrew.user.domain.Degree;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 

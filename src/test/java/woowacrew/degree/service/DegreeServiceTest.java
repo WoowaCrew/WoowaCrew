@@ -1,12 +1,12 @@
-package woowacrew.user.service;
+package woowacrew.degree.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import woowacrew.user.domain.Degree;
-import woowacrew.user.domain.DegreeRepository;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.dto.DegreeResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DegreeInternalServiceTest {
+class DegreeServiceTest {
     @Mock
-    private DegreeRepository degreeRepository;
+    private DegreeInternalService degreeInternalService;
 
     @InjectMocks
-    private DegreeInternalService degreeInternalService;
+    private DegreeService degreeService;
 
     @Test
     void findAll() {
@@ -30,8 +30,10 @@ class DegreeInternalServiceTest {
         degree.update(1);
         degrees.add(degree);
 
-        when(degreeRepository.findAll()).thenReturn(degrees);
+        when(degreeInternalService.findAll()).thenReturn(degrees);
 
-        assertThat(degreeInternalService.findAll().size()).isEqualTo(2);
+        List<DegreeResponseDto> degreeResponseDtos = degreeService.findAll();
+
+        assertThat(degreeResponseDtos.size()).isEqualTo(2);
     }
 }

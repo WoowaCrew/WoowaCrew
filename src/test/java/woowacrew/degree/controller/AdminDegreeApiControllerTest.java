@@ -1,4 +1,4 @@
-package woowacrew.user.controller;
+package woowacrew.degree.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;

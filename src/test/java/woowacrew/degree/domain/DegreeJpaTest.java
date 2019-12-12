@@ -1,4 +1,4 @@
-package woowacrew.user.domain;
+package woowacrew.degree.domain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

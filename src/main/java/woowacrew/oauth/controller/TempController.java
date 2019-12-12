@@ -1,5 +1,7 @@
 package woowacrew.oauth.controller;
 
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.domain.DegreeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package woowacrew.user.domain;
+package woowacrew.degree.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,7 @@
 package woowacrew.common.service;
 
 import org.junit.jupiter.api.Test;
-import woowacrew.user.domain.Degree;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.User;
 
 import java.lang.reflect.Field;

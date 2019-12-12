@@ -1,4 +1,4 @@
-package woowacrew.user.dto;
+package woowacrew.degree.dto;
 
 public class DegreeResponseDto {
     private Long id;

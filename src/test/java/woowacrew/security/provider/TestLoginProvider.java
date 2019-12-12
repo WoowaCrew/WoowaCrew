@@ -1,5 +1,7 @@
 package woowacrew.security.provider;
 
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.domain.DegreeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

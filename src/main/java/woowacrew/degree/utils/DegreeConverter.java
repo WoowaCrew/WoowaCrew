@@ -1,8 +1,8 @@
-package woowacrew.user.utils;
+package woowacrew.degree.utils;
 
 import org.modelmapper.ModelMapper;
-import woowacrew.user.domain.Degree;
-import woowacrew.user.dto.DegreeResponseDto;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.dto.DegreeResponseDto;
 
 public class DegreeConverter {
     public static DegreeResponseDto degreeToReponseDto(Degree degree) {

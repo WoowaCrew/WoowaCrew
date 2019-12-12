@@ -1,8 +1,9 @@
 package woowacrew.user.service;
 
+import woowacrew.degree.service.DegreeInternalService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woowacrew.user.domain.Degree;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 import woowacrew.user.domain.UserRole;

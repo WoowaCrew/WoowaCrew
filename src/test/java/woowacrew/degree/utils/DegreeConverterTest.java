@@ -1,8 +1,8 @@
-package woowacrew.user.utils;
+package woowacrew.degree.utils;
 
 import org.junit.jupiter.api.Test;
-import woowacrew.user.domain.Degree;
-import woowacrew.user.dto.DegreeResponseDto;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.dto.DegreeResponseDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

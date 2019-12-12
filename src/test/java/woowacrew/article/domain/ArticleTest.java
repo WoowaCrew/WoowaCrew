@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import woowacrew.article.exception.MisMatchUserException;
 import woowacrew.common.service.FieldSetter;
-import woowacrew.user.domain.Degree;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.User;
 
 import static org.assertj.core.api.Assertions.assertThat;

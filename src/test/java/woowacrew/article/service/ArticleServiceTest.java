@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import woowacrew.article.domain.Article;
 import woowacrew.article.dto.ArticleResponseDto;
 import woowacrew.article.dto.ArticleResponseDtos;
-import woowacrew.user.domain.Degree;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.User;
 
 import java.util.ArrayList;

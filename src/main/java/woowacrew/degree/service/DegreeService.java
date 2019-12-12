@@ -1,8 +1,8 @@
-package woowacrew.user.service;
+package woowacrew.degree.service;
 
 import org.springframework.stereotype.Service;
-import woowacrew.user.dto.DegreeResponseDto;
-import woowacrew.user.utils.DegreeConverter;
+import woowacrew.degree.dto.DegreeResponseDto;
+import woowacrew.degree.utils.DegreeConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;

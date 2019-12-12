@@ -1,4 +1,4 @@
-package woowacrew.user.domain;
+package woowacrew.degree.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

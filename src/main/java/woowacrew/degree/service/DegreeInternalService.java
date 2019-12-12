@@ -1,9 +1,9 @@
-package woowacrew.user.service;
+package woowacrew.degree.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woowacrew.user.domain.Degree;
-import woowacrew.user.domain.DegreeRepository;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.user.domain.exception.DegreeBoundException;
 
 import java.util.List;

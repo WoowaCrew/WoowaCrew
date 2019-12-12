@@ -1,12 +1,12 @@
-package woowacrew.user.controller;
+package woowacrew.degree.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import woowacrew.user.dto.DegreeResponseDto;
-import woowacrew.user.service.DegreeService;
+import woowacrew.degree.dto.DegreeResponseDto;
+import woowacrew.degree.service.DegreeService;
 
 import java.util.List;
 

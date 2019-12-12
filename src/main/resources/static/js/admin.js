@@ -24,7 +24,7 @@ const AdminApp = (() => {
 
     async approveUser(userId) {
       const userInfo = document.getElementById("user-" + userId)
-      const degreeDiv = userInfo.querySelector(".degree")
+      const degreeDiv = userInfo.querySelector(".woowacrew.degree")
       const roleDiv = userInfo.querySelector(".role")
 
       const degree = degreeDiv.options[degreeDiv.selectedIndex].value
@@ -129,7 +129,7 @@ const AdminApp = (() => {
 
     showDegrees() {
       this.adminService.showDegrees()
-      const leftBar = document.getElementById('degree-manage-button');
+      const leftBar = document.getElementById('woowacrew.degree-manage-button');
       this.adminService.activeButton(leftBar)
     }
   }
