@@ -33,6 +33,7 @@ const AdminApp = (() => {
         }
       }).then(response => {
         alert("정상적으로 승인 되었습니다.")
+        const userInfo = document.getElementById("user-" + userId)
         userInfo.remove()
       }).catch(error => alert("에러가 발생했습니다."))
     }
