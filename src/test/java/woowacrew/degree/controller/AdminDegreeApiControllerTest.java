@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.degree.dto.DegreeWithUserCountResponseDto;
+import woowacrew.user.dto.UserResponseDto;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ class AdminDegreeApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 기수별_유저목록_리턴_테스트() {
+    void 기수별_유저_수_리턴_테스트() {
         String cookie = loginWithAdmin();
         List<DegreeWithUserCountResponseDto> response = webTestClient.get()
                 .uri("/api/degrees")
@@ -45,5 +46,21 @@ class AdminDegreeApiControllerTest extends CommonTestController {
 
         DegreeWithUserCountResponseDto course1 = response.get(1);
         assertThat(course1.getNumberOfUser()).isNotZero();
+    }
+
+    @Test
+    void 기수별_유저_목록_리턴_테스트() {
+        String cookie = loginWithAdmin();
+        List<UserResponseDto> response = webTestClient.get()
+                .uri("/api/degrees/1/users")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBodyList(UserResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(response.size()).isNotZero();
     }
 }
