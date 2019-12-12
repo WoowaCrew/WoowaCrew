@@ -63,14 +63,15 @@ const AdminTemplates = (() => {
     }
 
     degreeInfoTitle() {
-      return `<div class="info-title-id cell">아이디</div>
-                <div class="info-title-degree cell">기수</div> `
+      return `<div class="info-title-id cell">기수</div>
+                <div class="info-title-degree cell">인원</div> `
     }
 
     degreeListTemplate(degree) {
       return `<div class="info-content" id="degree-${degree.id}">
-                <div class="info-cell">${degree.id}</div>
-                <div class="info-cell margin-left-10">${this.convertDegree(degree.number)}</div>
+                <div class="info-cell">${this.convertDegree(degree.number)}</div>
+                <div class="info-cell margin-left-10">${degree.numberOfUser}</div>
+                <div class="info-cell margin-left-10 hover-pointer" onclick="AdminApp.showDetailUsersOfDegree(${degree.id})">상세 보기</div>
             </div>`
     }
 
@@ -78,7 +79,7 @@ const AdminTemplates = (() => {
       if(degreeNumber === 0) {
         return '크루아님'
       }
-      return  degreeNumber + ''
+      return degreeNumber + '기'
     }
   }
 

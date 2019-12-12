@@ -129,7 +129,7 @@ const AdminApp = (() => {
 
     showDegrees() {
       this.adminService.showDegrees()
-      const leftBar = document.getElementById('woowacrew.degree-manage-button');
+      const leftBar = document.getElementById('degree-manage-button');
       this.adminService.activeButton(leftBar)
     }
   }

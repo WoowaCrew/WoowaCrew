@@ -93,3 +93,7 @@
     padding-bottom: 15px;
     float: left;
 }
+
+.hover-pointer:hover {
+    cursor: pointer;
+}
