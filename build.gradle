@@ -4,9 +4,6 @@ plugins {
     id 'java'
 }
 
-
-version 'unspecified'
-
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/snapshot' }
@@ -15,6 +12,40 @@ repositories {
 group = 'woowacrew'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+ext {
+    acceptanceDir = 'src/acceptance-test'
+}
+
+configurations {
+    developmentOnly
+
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+
+    acceptanceTestImplementation.extendsFrom(implementation, testImplementation, runtimeOnly)
+}
+
+sourceSets {
+    acceptanceTest {
+        compileClasspath += main.output + test.output + configurations.testRuntime
+        runtimeClasspath += output + compileClasspath
+        java.srcDir file("${acceptanceDir}/java")
+    }
+}
+
+task acceptanceTest(type: Test) {
+    description = 'run acceptance test'
+    testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
+
+    dependsOn test
+}
+
+check {
+    dependsOn acceptanceTest
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -34,7 +65,7 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    
+
     testImplementation 'org.mockito:mockito-junit-jupiter'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
