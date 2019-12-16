@@ -2,20 +2,20 @@ package woowacrew.article.free.dto;
 
 import woowacrew.user.dto.UserResponseDto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ArticleResponseDto {
     private Long id;
     private String title;
     private String content;
     private UserResponseDto userResponseDto;
-    private LocalDate createdDate;
-    private LocalDate lastModifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 
     private ArticleResponseDto() {
     }
 
-    public ArticleResponseDto(Long id, String title, String content, UserResponseDto userResponseDto, LocalDate createdDate, LocalDate lastModifiedDate) {
+    public ArticleResponseDto(Long id, String title, String content, UserResponseDto userResponseDto, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -40,11 +40,11 @@ public class ArticleResponseDto {
         return userResponseDto;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public LocalDate getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 }
