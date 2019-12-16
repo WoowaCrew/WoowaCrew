@@ -2,16 +2,18 @@ package woowacrew.search.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.domain.ArticleRepository;
 import woowacrew.article.free.exception.InvalidPageRequstException;
-import woowacrew.article.free.service.ArticleInternalService;
 
 @Service
 @Transactional(readOnly = true)
 public class ArticleSearchInternalService {
+
+    private static final int DEFAULT_ARTICLE_PAGE_SIZE = 20;
 
     private ArticleRepository articleRepository;
 
@@ -19,11 +21,11 @@ public class ArticleSearchInternalService {
         this.articleRepository = articleRepository;
     }
 
-    public Page<Article> findAllByTitle(String content, Pageable pageable) {
-        if (pageable.getPageSize() != ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE) {
+    public Page<Article> findAll(Specification<Article> specification, Pageable pageable) {
+        if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
             throw new InvalidPageRequstException();
         }
 
-        return articleRepository.findAllByArticleFormTitleContaining(content, pageable);
+        return articleRepository.findAll(specification, pageable);
     }
 }

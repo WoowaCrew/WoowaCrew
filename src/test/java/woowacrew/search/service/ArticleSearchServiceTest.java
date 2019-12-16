@@ -18,7 +18,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,9 +45,9 @@ class ArticleSearchServiceTest {
 
         Page<Article> articlePages = new PageImpl<>(articles);
 
-        when(mockArticleSearchInternalService.findAllByTitle(anyString(), any())).thenReturn(articlePages);
+        when(mockArticleSearchInternalService.findAll(any(), any())).thenReturn(articlePages);
 
-        ArticleResponseDtos actual = articleSearchService.findAllByTitle("find", mockPageable);
+        ArticleResponseDtos actual = articleSearchService.findAll("title", "delete", mockPageable);
 
         assertThat(actual.getArticles().size()).isEqualTo(3);
         assertThat(actual.getPageNumber()).isEqualTo(1);

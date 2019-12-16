@@ -7,12 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.service.ArticleInternalService;
 import woowacrew.search.service.ArticleSearchService;
 
 @Controller
-@RequestMapping("/api/search/articles")
+@RequestMapping("/api/articles/search")
 public class ArticleSearchApiController {
 
     private static final String CREATED_DATE = "createdDate";
@@ -23,11 +24,12 @@ public class ArticleSearchApiController {
         this.articleSearchService = articleSearchService;
     }
 
-    @PostMapping("/title")
+    @PostMapping
     public ResponseEntity<ArticleResponseDtos> list(
+            @RequestParam String type,
             String content,
             @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = CREATED_DATE, direction = Sort.Direction.DESC) Pageable pageable) {
 
-        return ResponseEntity.ok(articleSearchService.findAllByTitle(content, pageable));
+        return ResponseEntity.ok(articleSearchService.findAll(type, content, pageable));
     }
 }

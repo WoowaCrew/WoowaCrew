@@ -24,7 +24,9 @@ public class ArticleSearchApiControllerTest extends CommonTestController {
         String cookie = loginWithAdmin();
 
         ArticleResponseDtos articleResponseDtos = webTestClient.post()
-                .uri("/api/search/articles/title")
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/search")
+                        .queryParam("type", "title")
+                        .build())
                 .body(BodyInserters.fromFormData("content", "delete"))
                 .header("Cookie", cookie)
                 .exchange()
