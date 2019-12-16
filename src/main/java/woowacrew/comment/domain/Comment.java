@@ -29,29 +29,24 @@ public class Comment extends TimeEntity {
     private Comment() {}
 
     public Comment(User author, String content, AbstractArticle article) {
-        ValidationCheck(author, content, article);
+        validationCheck(author, content, article);
         this.author = author;
         this.content = content;
         this.article = article;
     }
 
-    private void ValidationCheck(User author, String content, AbstractArticle article) {
+    private void validationCheck(User author, String content, AbstractArticle article) {
         if (Objects.isNull(author) || Objects.isNull(article) || EMPTY.equals(content)) {
             throw new NotValidCommentException();
         }
     }
 
     public void update(User user, String updateContent) {
-        if (isSameAuthor(user)) {
+        if (author.isSameUser(user)) {
             this.content = updateContent;
             return;
         }
         throw new MisMatchUserException();
-    }
-
-    private boolean isSameAuthor(User user) {
-        //todo User에게 물어보면 어떨까?  isSameUser() 라던
-        return author.equals(user);
     }
 
     public User getAuthor() {
