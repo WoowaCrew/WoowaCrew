@@ -1,0 +1,19 @@
+= WoowaCrew REST API Docs
+:toc: left
+:toclevels: 4
+
+[[Introduction]]
+== 소개
+이 문서는 WoowaCrew API 명세를 작성한 문서입니다.
+
+== Article
+
+=== Article 단일 조회
+curl 요청
+include::{snippets}/articles/show/curl-request.adoc[]
+요청 예시
+include::{snippets}/articles/show/http-request.adoc[]
+응답 예시
+include::{snippets}/articles/show/http-response.adoc[]
+응답 필드
+include::{snippets}/articles/show/response-fields.adoc[]
