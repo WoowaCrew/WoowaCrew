@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.dto.FeedArticleResponseDto;
 import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.dto.FeedSourceDto;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.util.List;
@@ -20,8 +20,8 @@ public class FeedService {
         this.feedInternalService = feedInternalService;
     }
 
-    public FeedRegisterDto registerFeedSource(FeedRegisterDto feedRegisterDto) {
-        return FeedConverter.feedSourceToRegisterDto(feedInternalService.registerFeedSource(feedRegisterDto));
+    public FeedSourceDto registerFeedSource(FeedSourceDto feedSourceDto) {
+        return FeedConverter.toFeedSourceDto(feedInternalService.registerFeedSource(feedSourceDto));
     }
 
     public FeedArticleResponseDtos findAllFeedArticles(Pageable pageable) {

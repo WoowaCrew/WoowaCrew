@@ -12,7 +12,7 @@ import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.dto.FeedArticleResponseDto;
 import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.dto.FeedSourceDto;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.time.LocalDateTime;
@@ -35,12 +35,12 @@ class FeedServiceTest {
     void FeedSource가_정상적으로_저장됐다면_RegisterDto를_리턴한다() {
         String url = "url";
         String description = "description";
-        FeedRegisterDto feedRegisterDto = new FeedRegisterDto(url, description);
-        FeedSource feedSource = FeedConverter.registerDtoToFeedSource(feedRegisterDto);
+        FeedSourceDto feedSourceDto = new FeedSourceDto(url, description);
+        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceDto);
 
-        when(feedInternalService.registerFeedSource(feedRegisterDto)).thenReturn(feedSource);
+        when(feedInternalService.registerFeedSource(feedSourceDto)).thenReturn(feedSource);
 
-        FeedRegisterDto actualRegisterDto = feedService.registerFeedSource(feedRegisterDto);
+        FeedSourceDto actualRegisterDto = feedService.registerFeedSource(feedSourceDto);
 
         assertThat(actualRegisterDto.getSourceUrl()).isEqualTo(url);
         assertThat(actualRegisterDto.getDescription()).isEqualTo(description);

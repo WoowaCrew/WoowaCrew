@@ -1,13 +1,13 @@
 package woowacrew.feed.dto;
 
-public class FeedRegisterDto {
+public class FeedSourceDto {
     private String sourceUrl;
     private String description;
 
-    public FeedRegisterDto() {
+    public FeedSourceDto() {
     }
 
-    public FeedRegisterDto(String sourceUrl, String description) {
+    public FeedSourceDto(String sourceUrl, String description) {
         this.sourceUrl = sourceUrl;
         this.description = description;
     }

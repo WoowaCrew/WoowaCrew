@@ -9,7 +9,7 @@ import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedArticleRepository;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.domain.FeedSourceRepository;
-import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.dto.FeedSourceDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 import woowacrew.feed.utils.FeedConverter;
 import woowacrew.feed.utils.RssReader;
@@ -31,12 +31,12 @@ public class FeedInternalService {
         this.feedSourceRepository = feedSourceRepository;
     }
 
-    public FeedSource registerFeedSource(FeedRegisterDto feedRegisterDto) {
-        if (isExistUrl(feedRegisterDto.getSourceUrl())) {
+    public FeedSource registerFeedSource(FeedSourceDto feedSourceDto) {
+        if (isExistUrl(feedSourceDto.getSourceUrl())) {
             throw new AlreadyExistSourceUrlException();
         }
-        RssReader rssReader = new RssReader(feedRegisterDto.getSourceUrl());
-        FeedSource feedSource = feedSourceRepository.save(FeedConverter.registerDtoToFeedSource(feedRegisterDto));
+        RssReader rssReader = new RssReader(feedSourceDto.getSourceUrl());
+        FeedSource feedSource = feedSourceRepository.save(FeedConverter.toFeedSource(feedSourceDto));
 
         List<FeedArticle> feedArticles = rssReader.getFeedArticle(feedSource);
 

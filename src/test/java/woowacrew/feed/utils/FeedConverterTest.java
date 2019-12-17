@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.dto.FeedArticleResponseDto;
-import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.dto.FeedSourceDto;
 
 import java.time.LocalDateTime;
 
@@ -16,8 +16,8 @@ class FeedConverterTest {
     void registerDtoToFeedSource() {
         String url = "url";
         String description = "description";
-        FeedRegisterDto feedRegisterDto = new FeedRegisterDto(url, description);
-        FeedSource feedSource = FeedConverter.registerDtoToFeedSource(feedRegisterDto);
+        FeedSourceDto feedSourceDto = new FeedSourceDto(url, description);
+        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceDto);
 
         assertThat(feedSource.getSourceUrl()).isEqualTo(url);
         assertThat(feedSource.getDescription()).isEqualTo(description);
@@ -28,11 +28,11 @@ class FeedConverterTest {
         String url = "url";
         String description = "description";
         FeedSource feedSource = new FeedSource(url, description);
-        FeedRegisterDto feedRegisterDto = FeedConverter.feedSourceToRegisterDto(feedSource);
+        FeedSourceDto feedSourceDto = FeedConverter.toFeedSourceDto(feedSource);
 
 
-        assertThat(feedRegisterDto.getSourceUrl()).isEqualTo(url);
-        assertThat(feedRegisterDto.getDescription()).isEqualTo(description);
+        assertThat(feedSourceDto.getSourceUrl()).isEqualTo(url);
+        assertThat(feedSourceDto.getDescription()).isEqualTo(description);
     }
 
     @Test

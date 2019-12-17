@@ -5,10 +5,10 @@ import org.modelmapper.config.Configuration;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.dto.FeedArticleResponseDto;
-import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.dto.FeedSourceDto;
 
 public class FeedConverter {
-    public static FeedSource registerDtoToFeedSource(FeedRegisterDto registerDto) {
+    public static FeedSource toFeedSource(FeedSourceDto registerDto) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
@@ -16,8 +16,8 @@ public class FeedConverter {
         return modelMapper.map(registerDto, FeedSource.class);
     }
 
-    public static FeedRegisterDto feedSourceToRegisterDto(FeedSource feedSource) {
-        return new ModelMapper().map(feedSource, FeedRegisterDto.class);
+    public static FeedSourceDto toFeedSourceDto(FeedSource feedSource) {
+        return new ModelMapper().map(feedSource, FeedSourceDto.class);
     }
 
     public static FeedArticleResponseDto toFeedArticleResponseDto(FeedArticle feedArticle) {
