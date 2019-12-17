@@ -170,11 +170,15 @@ const AdminApp = (() => {
       fetch(BASE_URL + "/api/feeds", {
         method: 'POST',
         body: formData
-      }).then(response => response.json())
-        .then(feedResponse => {
-          alert('업로드 성공')
-        })
-        .catch(error => alert('오류가 발생했습니다.'));
+      }).then(response => {
+        if(response.ok) {
+          return alert('RSS 등록 성공')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
     }
   }
 
