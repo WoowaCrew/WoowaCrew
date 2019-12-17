@@ -20,7 +20,7 @@ public class FeedConverter {
         return new ModelMapper().map(feedSource, FeedSourceDto.class);
     }
 
-    public static FeedArticleResponseDto toFeedArticleResponseDto(FeedArticle feedArticle) {
+        public static FeedArticleResponseDto toFeedArticleResponseDto(FeedArticle feedArticle) {
         FeedArticleResponseDto feedArticleResponseDto = new ModelMapper().map(feedArticle, FeedArticleResponseDto.class);
         feedArticleResponseDto.setFeedSourceDto(toFeedSourceDto(feedArticle.getFeedSource()));
         return feedArticleResponseDto;

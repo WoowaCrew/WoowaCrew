@@ -17,11 +17,14 @@ public class FeedApiControllerTest extends CommonTestController {
 
     @Test
     void FeedSource_등록시_관리자가_아니라면_accessdeny로_리다이렉션() {
+        String url = "https://oeeen.github.io/feed.xml";
+        String description = "테스트";
         String cookie = loginWithCrew();
         webTestClient.post()
                 .uri("/api/feeds")
                 .header("Cookie", cookie)
-                .exchange()
+                .body(BodyInserters.fromFormData("sourceUrl", url)
+                        .with("description", description)).exchange()
                 .expectStatus()
                 .is3xxRedirection()
                 .expectHeader()
@@ -30,7 +33,7 @@ public class FeedApiControllerTest extends CommonTestController {
 
     @Test
     void feedSourceRegisterTest() {
-        String url = "https://vsh123.github.io/feed.xml";
+        String url = "https://oeeen.github.io/feed.xml";
         String description = "테스트";
         String cookie = loginWithAdmin();
         FeedSourceDto result = webTestClient.post()
@@ -48,7 +51,7 @@ public class FeedApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 둘중_하나의_값이라도_비어있다면_400에러를_리턴한() {
+    void 둘중_하나의_값이라도_비어있다면_400에러를_리턴한다() {
         String cookie = loginWithAdmin();
         webTestClient.post()
                 .uri("/api/feeds")
@@ -70,7 +73,7 @@ public class FeedApiControllerTest extends CommonTestController {
                 .getResponseBody();
 
         assertThat(result.getPageNumber()).isEqualTo(1);
-        assertThat(result.getArticles().get(0).getPublishedDate().toString().contains("2019-10-06")).isTrue();
+        assertThat(result.getArticles().size()).isNotZero();
     }
 
     @Test
