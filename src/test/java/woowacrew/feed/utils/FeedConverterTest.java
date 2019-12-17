@@ -44,5 +44,6 @@ class FeedConverterTest {
 
         assertThat(feedArticleResponseDto.getTitle()).isEqualTo(title);
         assertThat(feedArticleResponseDto.getLink()).isEqualTo(link);
+        assertThat(feedArticleResponseDto.getFeedSourceDto()).isNotNull();
     }
 }

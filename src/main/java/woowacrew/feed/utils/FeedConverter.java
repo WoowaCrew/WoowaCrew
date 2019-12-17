@@ -21,6 +21,8 @@ public class FeedConverter {
     }
 
     public static FeedArticleResponseDto toFeedArticleResponseDto(FeedArticle feedArticle) {
-        return new ModelMapper().map(feedArticle, FeedArticleResponseDto.class);
+        FeedArticleResponseDto feedArticleResponseDto = new ModelMapper().map(feedArticle, FeedArticleResponseDto.class);
+        feedArticleResponseDto.setFeedSourceDto(toFeedSourceDto(feedArticle.getFeedSource()));
+        return feedArticleResponseDto;
     }
 }
