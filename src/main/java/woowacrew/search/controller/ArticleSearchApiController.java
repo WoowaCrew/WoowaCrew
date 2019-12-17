@@ -16,7 +16,7 @@ import woowacrew.search.service.ArticleSearchService;
 @RequestMapping("/api/articles/search")
 public class ArticleSearchApiController {
 
-    private static final String CREATED_DATE = "createdDate";
+    private static final String ID = "id";
 
     private final ArticleSearchService articleSearchService;
 
@@ -27,9 +27,8 @@ public class ArticleSearchApiController {
     @PostMapping
     public ResponseEntity<ArticleResponseDtos> list(
             @RequestParam String type,
-            String content,
-            @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = CREATED_DATE, direction = Sort.Direction.DESC) Pageable pageable) {
-
+            @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = ID, direction = Sort.Direction.DESC) Pageable pageable,
+            String content) {
         return ResponseEntity.ok(articleSearchService.findAll(type, content, pageable));
     }
 }

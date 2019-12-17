@@ -41,4 +41,18 @@ public class ArticleSearchApiControllerTest extends CommonTestController {
         assertTrue(articles.size() != 0);
         articles.forEach(article -> assertTrue(article.getTitle().contains("delete")));
     }
+
+    @Test
+    void 올바르지_않은_타입으로_검색하면_예외발생() {
+        String cookie = loginWithAdmin();
+
+        webTestClient.post()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/search")
+                        .queryParam("type", "title2")
+                        .build())
+                .body(BodyInserters.fromFormData("content", "delete"))
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().is5xxServerError();
+    }
 }
