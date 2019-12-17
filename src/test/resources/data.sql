@@ -22,3 +22,10 @@ INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (5, '13','woow
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (6, '14','woowacrew','ROLE_COACH', 1);
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (7, '15','woowacrew','ROLE_CREW', 2);
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (8, '15','woowacrew','ROLE_PRECOURSE', 1);
+
+INSERT INTO feed_article(title,link,published_date) values('title1','link','2019-10-01T00:00:00');
+INSERT INTO feed_article(title,link,published_date) values('title2','link','2019-10-02T00:00:00');
+INSERT INTO feed_article(title,link,published_date) values('title3','link','2019-10-03T00:00:00');
+INSERT INTO feed_article(title,link,published_date) values('title4','link','2019-10-04T00:00:00');
+INSERT INTO feed_article(title,link,published_date) values('title5','link','2019-10-05T00:00:00');
+INSERT INTO feed_article(title,link,published_date) values('title6','link','2019-10-06T00:00:00');
