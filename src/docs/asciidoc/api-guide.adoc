@@ -23,7 +23,7 @@ include::{snippets}/article/list/response-fields.adoc[]
 include::{snippets}/article/show/curl-request.adoc[]
 - 요청 예시
 include::{snippets}/article/show/http-request.adoc[]
-- 요청 필드
+- 요청 Path Parameters
 
 include::{snippets}/article/show/path-parameters.adoc[]
 - 응답 예시
@@ -46,7 +46,7 @@ include::{snippets}/article/create/response-fields.adoc[]
 include::{snippets}/article/update/curl-request.adoc[]
 - 요청 예시
 include::{snippets}/article/update/http-request.adoc[]
-- 요청 필드
+- 요청 Path Parameters
 
 include::{snippets}/article/update/path-parameters.adoc[]
 - 응답 예시
@@ -59,7 +59,7 @@ include::{snippets}/article/update/response-fields.adoc[]
 include::{snippets}/article/delete/curl-request.adoc[]
 - 요청 예시
 include::{snippets}/article/delete/http-request.adoc[]
-- 요청 필드
+- 요청 Path Parameters
 
 include::{snippets}/article/delete/path-parameters.adoc[]
 - 응답 예시
@@ -81,10 +81,44 @@ include::{snippets}/degree/show/response-fields.adoc[]
 include::{snippets}/degree/showDetail/curl-request.adoc[]
 - 요청 예시
 include::{snippets}/degree/showDetail/http-request.adoc[]
-- 요청 필드
+- 요청 Path Parameters
 
 include::{snippets}/degree/showDetail/path-parameters.adoc[]
 - 응답 예시
 include::{snippets}/degree/showDetail/http-response.adoc[]
 - 응답 필드
 include::{snippets}/degree/showDetail/response-fields.adoc[]
+
+== ADMIN
+-- Admin 권한 필요
+
+=== 승인된 유저 목록 조회
+- curl 요청
+include::{snippets}/user/approve/list/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/user/approve/list/http-request.adoc[]
+- 응답 예시
+include::{snippets}/user/approve/list/http-response.adoc[]
+- 응답 필드
+include::{snippets}/user/approve/list/response-fields.adoc[]
+
+=== 승인되지 않은 유저 목록 조회
+- curl 요청
+include::{snippets}/user/disapprove/list/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/user/disapprove/list/http-request.adoc[]
+- 응답 예시
+include::{snippets}/user/disapprove/list/http-response.adoc[]
+- 응답 필드
+include::{snippets}/user/disapprove/list/response-fields.adoc[]
+
+=== 유저 승인
+- curl 요청
+include::{snippets}/user/approve/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/user/approve/http-request.adoc[]
+- 요청 Path Parameters
+
+include::{snippets}/user/approve/path-parameters.adoc[]
+- 응답 예시
+include::{snippets}/user/approve/http-response.adoc[]
