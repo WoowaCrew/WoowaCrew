@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,7 +34,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static woowacrew.document.ApiDocumentUtils.getDocumentRequest;
 import static woowacrew.document.ApiDocumentUtils.getDocumentResponse;
@@ -84,16 +88,20 @@ public class ArticleApiControllerTest {
     }
 
     @Test
-    void find() throws Exception {
+    void show() throws Exception {
         ArticleResponseDto articleResponseDto = generateArticleResponseDto(1L, "title", "content");
 
         given(articleService.findById(1L)).willReturn(articleResponseDto);
 
-        mockMvc.perform(get("/api/articles/1"))
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/api/articles/{articleId}", 1L))
                 .andExpect(status().isOk())
                 .andDo(document("article/show",
                         getDocumentRequest(),
                         getDocumentResponse(),
+                        pathParameters(
+                                parameterWithName("articleId").description("조회할 게시글 id")
+                        ),
                         articleResponseDtoSnippets));
     }
 
@@ -129,7 +137,7 @@ public class ArticleApiControllerTest {
         given(articleService.update(articleUpdateDto, userContext)).willReturn(articleResponseDto);
 
         mockMvc.perform(
-                put("/api/articles/1")
+                RestDocumentationRequestBuilders.put("/api/articles/{articleId}", 1)
                         .param("articleId", "1")
                         .param("title", newTitle)
                         .param("content", newContent))
@@ -137,17 +145,23 @@ public class ArticleApiControllerTest {
                 .andDo(document("article/update",
                         getDocumentRequest(),
                         getDocumentResponse(),
+                        pathParameters(
+                                parameterWithName("articleId").description("수정할 게시글 id")
+                        ),
                         articleResponseDtoSnippets));
     }
 
     @Test
     void deleteArticle() throws Exception {
         mockMvc.perform(
-                delete("/api/articles/1"))
+                RestDocumentationRequestBuilders.delete("/api/articles/{articleId}", 1L))
                 .andExpect(status().isOk())
                 .andDo(document("article/delete",
                         getDocumentRequest(),
-                        getDocumentResponse()));
+                        getDocumentResponse(),
+                        pathParameters(
+                                parameterWithName("articleId").description("삭제할 게시글 id")
+                        )));
 
         verify(articleService).delete(1L, userContext);
     }
