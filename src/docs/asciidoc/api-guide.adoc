@@ -64,3 +64,27 @@ include::{snippets}/article/delete/http-request.adoc[]
 include::{snippets}/article/delete/path-parameters.adoc[]
 - 응답 예시
 include::{snippets}/article/delete/http-response.adoc[]
+
+== Degree
+=== 기수별 유저수 조회
+- curl 요청
+include::{snippets}/degree/show/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/degree/show/http-request.adoc[]
+- 응답 예시
+include::{snippets}/degree/show/http-response.adoc[]
+- 응답 필드
+include::{snippets}/degree/show/response-fields.adoc[]
+
+=== 특정 기수의 유저들 조회
+- curl 요청
+include::{snippets}/degree/showDetail/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/degree/showDetail/http-request.adoc[]
+- 요청 필드
+
+include::{snippets}/degree/showDetail/path-parameters.adoc[]
+- 응답 예시
+include::{snippets}/degree/showDetail/http-response.adoc[]
+- 응답 필드
+include::{snippets}/degree/showDetail/response-fields.adoc[]

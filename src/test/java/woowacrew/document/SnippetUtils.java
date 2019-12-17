@@ -38,4 +38,14 @@ public class SnippetUtils {
             fieldWithPath("articles.[].userResponseDto.degreeResponseDto.id").type(JsonFieldType.NUMBER).description("작성자 기수 id"),
             fieldWithPath("articles.[].userResponseDto.degreeResponseDto.degreeNumber").type(JsonFieldType.NUMBER).description("작성자 기수")
     );
+
+    public static ResponseFieldsSnippet userResponseDtoListSnippets = responseFields(
+            fieldWithPath("[].id").type(JsonFieldType.NUMBER).description("유저 id"),
+            fieldWithPath("[].oauthId").type(JsonFieldType.STRING).description("유저 github ouath id"),
+            fieldWithPath("[].nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+            fieldWithPath("[].birthday").type(JsonFieldType.STRING).description("유저 생일"),
+            fieldWithPath("[].userRole").type(JsonFieldType.STRING).description("유저 Role"),
+            fieldWithPath("[].degreeResponseDto.id").type(JsonFieldType.NUMBER).description("유저 기수 id"),
+            fieldWithPath("[].degreeResponseDto.degreeNumber").type(JsonFieldType.NUMBER).description("유저 기수")
+    );
 }
