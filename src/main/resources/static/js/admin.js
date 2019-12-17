@@ -146,14 +146,24 @@ const AdminApp = (() => {
     }
 
     showAddFeedForm() {
+      const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
-
-      infoContent.insertAdjacentHTML("beforeend",AdminTemplates.addFeedForm())
+      infoTitle.innerHTML=''
+      infoContent.innerHTML=''
+      infoContent.insertAdjacentHTML("beforeend", AdminTemplates.addFeedForm())
     }
 
     async addFeedSource() {
       const sourceUrl = document.getElementById('source-url').value
       const description = document.getElementById('description').value
+      if(sourceUrl === '') {
+        alert("주소를 입력해주세요.")
+        exit()
+      }
+      if(description === '') {
+        alert("설명을 입력해 주세요.")
+        exit()
+      }
       const formData = new FormData()
       formData.append('sourceUrl', sourceUrl)
       formData.append('description', description)

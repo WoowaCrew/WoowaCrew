@@ -10,9 +10,9 @@ const FeedTemplates = (() => {
 
       return `
       <div class="article-info" onclick="location.href = '${feed.link}'">
-        
         <div class="article-info-title">${feed.title}</div>
         <div class="article-info-created-date">${convertTime(feed.publishedDate)}</div>
+        <div class="article-info">${feed.feedSourceDto.description}</div>
         <div class="article-info-userInfo"></div>
       </div>
       `
