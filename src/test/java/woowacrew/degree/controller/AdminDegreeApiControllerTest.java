@@ -12,13 +12,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import woowacrew.degree.dto.DegreeResponseDto;
 import woowacrew.degree.dto.DegreeWithUserCountResponseDto;
 import woowacrew.degree.service.DegreeService;
-import woowacrew.security.token.SocialPostAuthorizationToken;
+import woowacrew.security.SecurityContextSupport;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
@@ -59,8 +57,7 @@ class AdminDegreeApiControllerTest {
     @BeforeEach
     void setUp() {
         userContext = new UserContext(1L, "12345", "admin", UserRole.ROLE_ADMIN);
-        Authentication authentication = new SocialPostAuthorizationToken(userContext);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextSupport.updateContext(userContext);
     }
 
     @Test

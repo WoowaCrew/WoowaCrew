@@ -11,8 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import woowacrew.article.free.dto.ArticleRequestDto;
 import woowacrew.article.free.dto.ArticleResponseDto;
@@ -20,7 +18,7 @@ import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.service.ArticleService;
 import woowacrew.degree.dto.DegreeResponseDto;
-import woowacrew.security.token.SocialPostAuthorizationToken;
+import woowacrew.security.SecurityContextSupport;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
@@ -64,8 +62,7 @@ public class ArticleApiControllerTest {
     @BeforeEach
     void setUp() {
         userContext = new UserContext(1L, "12345", "woowa", UserRole.ROLE_CREW);
-        Authentication authentication = new SocialPostAuthorizationToken(userContext);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextSupport.updateContext(userContext);
     }
 
     @Test
