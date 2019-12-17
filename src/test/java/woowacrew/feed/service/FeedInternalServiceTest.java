@@ -16,6 +16,7 @@ import woowacrew.feed.domain.FeedArticleRepository;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.domain.FeedSourceRepository;
 import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -44,11 +45,22 @@ class FeedInternalServiceTest {
         FeedRegisterDto feedRegisterDto = new FeedRegisterDto(sourceUrl, "테스트용 xml");
         FeedSource feedSource = new FeedSource(feedRegisterDto.getSourceUrl(), feedRegisterDto.getDescription());
 
+        when(feedSourceRepository.existsBySourceUrl(any())).thenReturn(false);
         when(feedArticleRepository.saveAll(anyList())).thenReturn(new ArrayList<>());
         when(feedSourceRepository.save(any(FeedSource.class))).thenReturn(feedSource);
 
         FeedSource savedFeedSource = feedInternalService.registerFeedSource(feedRegisterDto);
         assertThat(savedFeedSource.getSourceUrl()).isEqualTo(feedSource.getSourceUrl());
+    }
+
+    @Test
+    void 이미_존재하는_url은_저장하지_않는() throws IOException {
+        String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
+        FeedRegisterDto feedRegisterDto = new FeedRegisterDto(sourceUrl, "테스트용 xml");
+
+        when(feedSourceRepository.existsBySourceUrl(any())).thenReturn(true);
+
+        assertThrows(AlreadyExistSourceUrlException.class, () -> feedInternalService.registerFeedSource(feedRegisterDto));
     }
 
     @Test

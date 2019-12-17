@@ -10,6 +10,7 @@ import woowacrew.feed.domain.FeedArticleRepository;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.domain.FeedSourceRepository;
 import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 import woowacrew.feed.utils.FeedConverter;
 import woowacrew.feed.utils.RssReader;
 
@@ -29,6 +30,9 @@ public class FeedInternalService {
     }
 
     public FeedSource registerFeedSource(FeedRegisterDto feedRegisterDto) {
+        if (isExistUrl(feedRegisterDto.getSourceUrl())) {
+            throw new AlreadyExistSourceUrlException();
+        }
         RssReader rssReader = new RssReader(feedRegisterDto.getSourceUrl());
         List<FeedArticle> feedArticles = rssReader.getFeedArticle();
 
@@ -44,5 +48,9 @@ public class FeedInternalService {
             throw new InvalidPageRequstException();
         }
         return feedArticleRepository.findAll(pageable);
+    }
+
+    private boolean isExistUrl(String sourceUrl) {
+        return feedSourceRepository.existsBySourceUrl(sourceUrl);
     }
 }
