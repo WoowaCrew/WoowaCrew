@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/config :: configFragment"/>
+
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
+    <link href="/css/article-list.css" rel="stylesheet">
+    <title>WoowaCrew</title>
+</head>
+
+<body>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+<div id="article-list">
+</div>
+<div id="article-list-title">피드게시판</div>
+<div class="article-list-footer">
+    <div id="page-bar">
+    </div>
+    <div id="edit-bar">
+        <div class="search-type-select-box">
+            <select class="search-type">
+                <option value="title" selected="selected">제목</option>
+                <option value="titleWithContent">제목 + 내용</option>
+                <option value="author">작성자</option>
+            </select>
+        </div>
+        <input type="text" class="search-form">
+        <button type="button" class="search-button">검색</button>
+        <i class="fa fa-lg fa-pencil" id="article-create-icon" onclick="ArticleListApp.showArticleEditPage()"></i>
+    </div>
+</div>
+</body>
+<!--  SCRIPT  -->
+<script src="/js/article-template.js"></script>
+<script src="/js/feed-template.js"></script>
+<script src="/js/article-list.js"></script>
+<script src="/js/feed.js"></script>
+<script>
+    // FeedApp.addFeedSource()
+    FeedApp.showFeeds(1);
+</script>
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+</html>
