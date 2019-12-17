@@ -1,7 +1,10 @@
 package woowacrew.feed.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedArticleRepository;
 import woowacrew.feed.domain.FeedSource;
@@ -11,6 +14,8 @@ import woowacrew.feed.utils.FeedConverter;
 import woowacrew.feed.utils.RssReader;
 
 import java.util.List;
+
+import static woowacrew.article.free.service.ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE;
 
 @Service
 @Transactional
@@ -31,5 +36,13 @@ public class FeedInternalService {
         FeedSource feedSource = FeedConverter.registerDtoToFeedSource(feedRegisterDto);
 
         return feedSourceRepository.save(feedSource);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<FeedArticle> findAllFeedArticles(Pageable pageable) {
+        if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
+            throw new InvalidPageRequstException();
+        }
+        return feedArticleRepository.findAll(pageable);
     }
 }

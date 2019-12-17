@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
+import woowacrew.feed.dto.FeedArticleResponseDtos;
 import woowacrew.feed.dto.FeedRegisterDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,5 +45,20 @@ public class FeedApiControllerTest extends CommonTestController {
 
         assertThat(result.getSourceUrl()).isEqualTo(url);
         assertThat(result.getDescription()).isEqualTo(description);
+    }
+
+    @Test
+    void findAllFeedArticles() {
+        String cookie = loginWithCrew();
+        FeedArticleResponseDtos result = webTestClient.get()
+                .uri("/api/feeds?page=1")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectBody(FeedArticleResponseDtos.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(result.getPageNumber()).isEqualTo(1);
+        assertThat(result.getArticles().get(0).getPublishedDate().toString().contains("2019-10-06")).isTrue();
     }
 }

@@ -5,9 +5,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.dto.FeedArticleResponseDtos;
 import woowacrew.feed.dto.FeedRegisterDto;
 import woowacrew.feed.utils.FeedConverter;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -33,5 +41,17 @@ class FeedServiceTest {
 
         assertThat(actualRegisterDto.getSourceUrl()).isEqualTo(url);
         assertThat(actualRegisterDto.getDescription()).isEqualTo(description);
+    }
+
+    @Test
+    void findAll() {
+        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now());
+        Pageable pageable = PageRequest.of(0, 20);
+        when(feedInternalService.findAllFeedArticles(pageable)).thenReturn(new PageImpl<>(Arrays.asList(feedArticle)));
+
+        FeedArticleResponseDtos feedArticles = feedService.findAllFeedArticles(pageable);
+
+        assertThat(feedArticles.getPageNumber()).isEqualTo(1);
+        assertThat(feedArticles.getTotalPages()).isEqualTo(1);
     }
 }

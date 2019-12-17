@@ -1,8 +1,12 @@
 package woowacrew.feed.utils;
 
 import org.junit.jupiter.api.Test;
+import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.dto.FeedArticleResponseDto;
 import woowacrew.feed.dto.FeedRegisterDto;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,5 +33,16 @@ class FeedConverterTest {
 
         assertThat(feedRegisterDto.getSourceUrl()).isEqualTo(url);
         assertThat(feedRegisterDto.getDescription()).isEqualTo(description);
+    }
+
+    @Test
+    void toFeedArticleResponseDto() {
+        String title = "title";
+        String link = "link";
+        FeedArticle feedArticle = new FeedArticle(title, link, LocalDateTime.now());
+        FeedArticleResponseDto feedArticleResponseDto = FeedConverter.toFeedArticleResponseDto(feedArticle);
+
+        assertThat(feedArticleResponseDto.getTitle()).isEqualTo(title);
+        assertThat(feedArticleResponseDto.getLink()).isEqualTo(link);
     }
 }
