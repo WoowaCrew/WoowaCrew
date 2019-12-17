@@ -1,4 +1,4 @@
-package woowacrew.document;
+package woowacrew.common.document;
 
 import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;

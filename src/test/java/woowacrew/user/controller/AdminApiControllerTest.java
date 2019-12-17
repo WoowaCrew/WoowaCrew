@@ -33,9 +33,9 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static woowacrew.document.ApiDocumentUtils.getDocumentRequest;
-import static woowacrew.document.ApiDocumentUtils.getDocumentResponse;
-import static woowacrew.document.SnippetUtils.userResponseDtoListSnippets;
+import static woowacrew.common.document.ApiDocumentUtils.getDocumentRequest;
+import static woowacrew.common.document.ApiDocumentUtils.getDocumentResponse;
+import static woowacrew.common.document.SnippetUtils.userResponseDtoListSnippets;
 
 @WebMvcTest(controllers = AdminApiController.class,
         excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "woowacrew.security.*")})

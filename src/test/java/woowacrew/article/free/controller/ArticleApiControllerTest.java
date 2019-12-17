@@ -37,10 +37,10 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static woowacrew.document.ApiDocumentUtils.getDocumentRequest;
-import static woowacrew.document.ApiDocumentUtils.getDocumentResponse;
-import static woowacrew.document.SnippetUtils.articleResponseDtoSnippets;
-import static woowacrew.document.SnippetUtils.articleResponseDtosSnippets;
+import static woowacrew.common.document.ApiDocumentUtils.getDocumentRequest;
+import static woowacrew.common.document.ApiDocumentUtils.getDocumentResponse;
+import static woowacrew.common.document.SnippetUtils.articleResponseDtoSnippets;
+import static woowacrew.common.document.SnippetUtils.articleResponseDtosSnippets;
 
 @WebMvcTest(controllers = ArticleApiController.class,
         excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "woowacrew.security.*")})
