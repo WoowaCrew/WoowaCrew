@@ -1,0 +1,140 @@
+= WoowaCrew REST API Docs
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+[[Introduction]]
+== 소개
+이 문서는 WoowaCrew API 명세를 작성한 문서입니다.
+
+[[Environment]]
+== 개발 환경
+[cols="2*^"]
+|===
+| 환경 | 버전
+
+| Java | 1.8 JDK
+| Spring Boot | 2.1.6.RELEASE
+| DB(MySQL) | 8.0.16
+|===
+
+== 주의
+각 API 요청에는 권한이 필요할 수 있습니다.
+PRECOURSE인 경우 대부분 접근이 불가능합니다.
+
+== Article API
+
+=== Article 목록 조회
+- curl 요청
+include::{snippets}/article/list/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/article/list/http-request.adoc[]
+- 응답 예시
+include::{snippets}/article/list/http-response.adoc[]
+- 응답 필드
+include::{snippets}/article/list/response-fields.adoc[]
+
+=== Article 단일 조회
+- curl 요청
+include::{snippets}/article/show/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/article/show/http-request.adoc[]
+- 요청 Path Parameters
+
+include::{snippets}/article/show/path-parameters.adoc[]
+- 응답 예시
+include::{snippets}/article/show/http-response.adoc[]
+- 응답 필드
+include::{snippets}/article/show/response-fields.adoc[]
+
+=== Article 생성
+- curl 요청
+include::{snippets}/article/create/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/article/create/http-request.adoc[]
+- 응답 예시
+include::{snippets}/article/create/http-response.adoc[]
+- 응답 필드
+include::{snippets}/article/create/response-fields.adoc[]
+
+=== Article 수정
+- curl 요청
+include::{snippets}/article/update/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/article/update/http-request.adoc[]
+- 요청 Path Parameters
+
+include::{snippets}/article/update/path-parameters.adoc[]
+- 응답 예시
+include::{snippets}/article/update/http-response.adoc[]
+- 응답 필드
+include::{snippets}/article/update/response-fields.adoc[]
+
+=== Article 삭제
+- curl 요청
+include::{snippets}/article/delete/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/article/delete/http-request.adoc[]
+- 요청 Path Parameters
+
+include::{snippets}/article/delete/path-parameters.adoc[]
+- 응답 예시
+include::{snippets}/article/delete/http-response.adoc[]
+
+== Degree API
+=== 기수별 유저수 조회
+- curl 요청
+include::{snippets}/degree/show/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/degree/show/http-request.adoc[]
+- 응답 예시
+include::{snippets}/degree/show/http-response.adoc[]
+- 응답 필드
+include::{snippets}/degree/show/response-fields.adoc[]
+
+=== 특정 기수의 유저들 조회
+- curl 요청
+include::{snippets}/degree/showDetail/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/degree/showDetail/http-request.adoc[]
+- 요청 Path Parameters
+
+include::{snippets}/degree/showDetail/path-parameters.adoc[]
+- 응답 예시
+include::{snippets}/degree/showDetail/http-response.adoc[]
+- 응답 필드
+include::{snippets}/degree/showDetail/response-fields.adoc[]
+
+== ADMIN API
+-- Admin 권한 필요
+
+=== 승인된 유저 목록 조회
+- curl 요청
+include::{snippets}/user/approve/list/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/user/approve/list/http-request.adoc[]
+- 응답 예시
+include::{snippets}/user/approve/list/http-response.adoc[]
+- 응답 필드
+include::{snippets}/user/approve/list/response-fields.adoc[]
+
+=== 승인되지 않은 유저 목록 조회
+- curl 요청
+include::{snippets}/user/disapprove/list/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/user/disapprove/list/http-request.adoc[]
+- 응답 예시
+include::{snippets}/user/disapprove/list/http-response.adoc[]
+- 응답 필드
+include::{snippets}/user/disapprove/list/response-fields.adoc[]
+
+=== 유저 승인
+- curl 요청
+include::{snippets}/user/approve/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/user/approve/http-request.adoc[]
+- 요청 Path Parameters
+
+include::{snippets}/user/approve/path-parameters.adoc[]
+- 응답 예시
+include::{snippets}/user/approve/http-response.adoc[]

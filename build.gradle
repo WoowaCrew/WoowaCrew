@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.asciidoctor.convert' version '1.5.9.2'
     id 'java'
 }
 
@@ -15,6 +16,7 @@ sourceCompatibility = '1.8'
 
 ext {
     acceptanceDir = 'src/acceptance-test'
+    set('snippetsDir', file("build/generated-snippets"))
 }
 
 configurations {
@@ -63,13 +65,34 @@ dependencies {
     runtimeOnly 'org.springframework:spring-jdbc:+'
     runtimeOnly 'commons-dbcp:commons-dbcp:1.4'
     runtimeOnly 'mysql:mysql-connector-java'
+    
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
-
     testImplementation 'org.mockito:mockito-junit-jupiter'
-
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit'
     }
     testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+}
+
+test {
+    useJUnitPlatform()
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
 }
