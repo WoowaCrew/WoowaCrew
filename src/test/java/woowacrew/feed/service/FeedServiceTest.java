@@ -1,13 +1,13 @@
-package woowacrew.rss.service;
+package woowacrew.feed.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import woowacrew.rss.domain.FeedSource;
-import woowacrew.rss.dto.FeedRegisterDto;
-import woowacrew.rss.utils.FeedConverter;
+import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.utils.FeedConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;

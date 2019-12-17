@@ -1,4 +1,4 @@
-package woowacrew.rss.domain;
+package woowacrew.feed.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

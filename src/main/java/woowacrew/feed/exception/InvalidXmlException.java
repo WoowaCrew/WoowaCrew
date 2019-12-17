@@ -1,4 +1,4 @@
-package woowacrew.rss.exception;
+package woowacrew.feed.exception;
 
 public class InvalidXmlException extends RuntimeException {
     public InvalidXmlException() {

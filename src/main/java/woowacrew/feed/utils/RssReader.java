@@ -1,11 +1,11 @@
-package woowacrew.rss.utils;
+package woowacrew.feed.utils;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
-import woowacrew.rss.domain.FeedArticle;
-import woowacrew.rss.exception.InvalidXmlException;
+import woowacrew.feed.domain.FeedArticle;
+import woowacrew.feed.exception.InvalidXmlException;
 
 import java.net.URL;
 import java.time.LocalDateTime;

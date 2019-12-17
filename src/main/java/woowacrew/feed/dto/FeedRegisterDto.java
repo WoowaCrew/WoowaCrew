@@ -1,4 +1,4 @@
-package woowacrew.rss.dto;
+package woowacrew.feed.dto;
 
 public class FeedRegisterDto {
     private String sourceUrl;

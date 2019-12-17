@@ -1,8 +1,8 @@
-package woowacrew.rss.utils;
+package woowacrew.feed.utils;
 
 import org.junit.jupiter.api.Test;
-import woowacrew.rss.domain.FeedSource;
-import woowacrew.rss.dto.FeedRegisterDto;
+import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.dto.FeedRegisterDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

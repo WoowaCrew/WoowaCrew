@@ -1,9 +1,9 @@
-package woowacrew.rss.utils;
+package woowacrew.feed.utils;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
-import woowacrew.rss.domain.FeedArticle;
-import woowacrew.rss.exception.InvalidXmlException;
+import woowacrew.feed.domain.FeedArticle;
+import woowacrew.feed.exception.InvalidXmlException;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,9 +1,9 @@
-package woowacrew.rss.utils;
+package woowacrew.feed.utils;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
-import woowacrew.rss.domain.FeedSource;
-import woowacrew.rss.dto.FeedRegisterDto;
+import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.dto.FeedRegisterDto;
 
 public class FeedConverter {
     public static FeedSource registerDtoToFeedSource(FeedRegisterDto registerDto) {

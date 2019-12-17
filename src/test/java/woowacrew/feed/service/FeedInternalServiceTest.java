@@ -1,4 +1,4 @@
-package woowacrew.rss.service;
+package woowacrew.feed.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,10 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.ClassPathResource;
-import woowacrew.rss.domain.FeedArticleRepository;
-import woowacrew.rss.domain.FeedSource;
-import woowacrew.rss.domain.FeedSourceRepository;
-import woowacrew.rss.dto.FeedRegisterDto;
+import woowacrew.feed.domain.FeedArticleRepository;
+import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.domain.FeedSourceRepository;
+import woowacrew.feed.dto.FeedRegisterDto;
 
 import java.io.IOException;
 import java.util.ArrayList;

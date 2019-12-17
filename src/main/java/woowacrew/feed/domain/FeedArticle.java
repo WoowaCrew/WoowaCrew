@@ -1,4 +1,4 @@
-package woowacrew.rss.domain;
+package woowacrew.feed.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

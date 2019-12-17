@@ -1,14 +1,14 @@
-package woowacrew.rss.service;
+package woowacrew.feed.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woowacrew.rss.domain.FeedArticle;
-import woowacrew.rss.domain.FeedArticleRepository;
-import woowacrew.rss.domain.FeedSource;
-import woowacrew.rss.domain.FeedSourceRepository;
-import woowacrew.rss.dto.FeedRegisterDto;
-import woowacrew.rss.utils.FeedConverter;
-import woowacrew.rss.utils.RssReader;
+import woowacrew.feed.domain.FeedArticle;
+import woowacrew.feed.domain.FeedArticleRepository;
+import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.domain.FeedSourceRepository;
+import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.utils.FeedConverter;
+import woowacrew.feed.utils.RssReader;
 
 import java.util.List;
 

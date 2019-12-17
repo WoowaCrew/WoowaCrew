@@ -1,8 +1,8 @@
-package woowacrew.rss.service;
+package woowacrew.feed.service;
 
 import org.springframework.stereotype.Service;
-import woowacrew.rss.dto.FeedRegisterDto;
-import woowacrew.rss.utils.FeedConverter;
+import woowacrew.feed.dto.FeedRegisterDto;
+import woowacrew.feed.utils.FeedConverter;
 
 @Service
 public class FeedService {
