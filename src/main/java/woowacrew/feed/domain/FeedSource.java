@@ -1,9 +1,6 @@
 package woowacrew.feed.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -11,7 +8,9 @@ public class FeedSource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String sourceUrl;
+    @Column(nullable = false)
     private String description;
 
     private FeedSource() {

@@ -1,7 +1,14 @@
 package woowacrew.feed.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 public class FeedSourceDto {
+    @NotEmpty
+    @NotBlank
     private String sourceUrl;
+    @NotEmpty
+    @NotBlank
     private String description;
 
     public FeedSourceDto() {

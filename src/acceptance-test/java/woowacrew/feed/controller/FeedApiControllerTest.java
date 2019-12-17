@@ -48,6 +48,17 @@ public class FeedApiControllerTest extends CommonTestController {
     }
 
     @Test
+    void 둘중_하나의_값이라도_비어있다면_400에러를_리턴한() {
+        String cookie = loginWithAdmin();
+        webTestClient.post()
+                .uri("/api/feeds")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .isBadRequest();
+    }
+
+    @Test
     void findAllFeedArticles() {
         String cookie = loginWithCrew();
         FeedArticleResponseDtos result = webTestClient.get()

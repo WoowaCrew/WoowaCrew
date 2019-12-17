@@ -14,6 +14,7 @@ import woowacrew.feed.dto.FeedArticleResponseDtos;
 import woowacrew.feed.dto.FeedSourceDto;
 import woowacrew.feed.service.FeedService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static woowacrew.article.free.service.ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE;
@@ -35,7 +36,7 @@ public class FeedApiController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FeedSourceDto> registerFeedSource(FeedSourceDto feedSourceDto) {
+    public ResponseEntity<FeedSourceDto> registerFeedSource(@Valid FeedSourceDto feedSourceDto) {
         return ResponseEntity.ok(feedService.registerFeedSource(feedSourceDto));
     }
 
