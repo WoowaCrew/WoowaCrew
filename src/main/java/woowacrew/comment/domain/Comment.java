@@ -6,16 +6,16 @@ import woowacrew.comment.domain.exception.NotValidCommentException;
 import woowacrew.common.domain.TimeEntity;
 import woowacrew.user.domain.User;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
 public class Comment extends TimeEntity {
     private static final String EMPTY = "";
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String content;
@@ -26,7 +26,8 @@ public class Comment extends TimeEntity {
     @ManyToOne
     private AbstractArticle article;
 
-    private Comment() {}
+    private Comment() {
+    }
 
     public Comment(User author, String content, AbstractArticle article) {
         validationCheck(author, content, article);
@@ -42,11 +43,19 @@ public class Comment extends TimeEntity {
     }
 
     public void update(User user, String updateContent) {
-        if (author.isSameUser(user)) {
+        if (isAuthor(user)) {
             this.content = updateContent;
             return;
         }
         throw new MisMatchUserException();
+    }
+
+    public boolean isAuthor(User user) {
+        return author.isSameUser(user);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public User getAuthor() {
@@ -61,12 +70,20 @@ public class Comment extends TimeEntity {
         return article;
     }
 
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return id.equals(comment.id);
+        return Objects.equals(id, comment.id);
     }
 
     @Override
