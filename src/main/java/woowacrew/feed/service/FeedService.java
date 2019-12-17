@@ -31,4 +31,10 @@ public class FeedService {
                 .collect(Collectors.toList());
         return new FeedArticleResponseDtos(pageable.getPageNumber(), feedArticles.getTotalPages(), feedArticleDtos);
     }
+
+    public List<FeedArticleResponseDto> updateFeed() {
+        return feedInternalService.updateFeed().stream()
+                .map(FeedConverter::toFeedArticleResponseDto)
+                .collect(Collectors.toList());
+    }
 }

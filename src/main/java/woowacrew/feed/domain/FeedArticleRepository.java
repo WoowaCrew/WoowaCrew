@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FeedArticleRepository extends JpaRepository<FeedArticle, Long> {
     Page<FeedArticle> findAll(Pageable pageable);
+
+    boolean existsByLink(String link);
 }

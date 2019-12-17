@@ -61,4 +61,15 @@ public class FeedApiControllerTest extends CommonTestController {
         assertThat(result.getPageNumber()).isEqualTo(1);
         assertThat(result.getArticles().get(0).getPublishedDate().toString().contains("2019-10-06")).isTrue();
     }
+
+    @Test
+    void updateFeed() {
+        String cookie = loginWithAdmin();
+        webTestClient.post()
+                .uri("/api/feeds/new")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .isOk();
+    }
 }

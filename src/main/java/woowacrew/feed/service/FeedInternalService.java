@@ -14,8 +14,10 @@ import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 import woowacrew.feed.utils.FeedConverter;
 import woowacrew.feed.utils.RssReader;
 
+import java.util.Collection;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static woowacrew.article.free.service.ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE;
 
 @Service
@@ -52,5 +54,14 @@ public class FeedInternalService {
 
     private boolean isExistUrl(String sourceUrl) {
         return feedSourceRepository.existsBySourceUrl(sourceUrl);
+    }
+
+    public List<FeedArticle> updateFeed() {
+        return feedSourceRepository.findAll().stream()
+                .map(source -> new RssReader(source.getSourceUrl()).getFeedArticle())
+                .flatMap(Collection::stream)
+                .filter(feed -> !feedArticleRepository.existsByLink(feed.getLink()))
+                .map(feedArticleRepository::save)
+                .collect(toList());
     }
 }

@@ -10,12 +10,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.dto.FeedArticleResponseDto;
 import woowacrew.feed.dto.FeedArticleResponseDtos;
 import woowacrew.feed.dto.FeedRegisterDto;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -53,5 +56,17 @@ class FeedServiceTest {
 
         assertThat(feedArticles.getPageNumber()).isEqualTo(1);
         assertThat(feedArticles.getTotalPages()).isEqualTo(1);
+    }
+
+    @Test
+    void updateFeed() {
+        String title = "title";
+        FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now());
+        when(feedInternalService.updateFeed()).thenReturn(Collections.singletonList(feedArticle));
+
+        List<FeedArticleResponseDto> feedArticleResponseDtos = feedService.updateFeed();
+
+        assertThat(feedArticleResponseDtos.size()).isEqualTo(1);
+        assertThat(feedArticleResponseDtos.get(0).getTitle()).isEqualTo(title);
     }
 }

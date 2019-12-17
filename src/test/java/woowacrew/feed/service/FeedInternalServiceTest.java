@@ -78,4 +78,17 @@ class FeedInternalServiceTest {
         Page<FeedArticle> feedArticles = feedInternalService.findAllFeedArticles(pageable);
         assertThat(feedArticles.getTotalElements()).isEqualTo(1);
     }
+
+    @Test
+    void 업데이트_테스트() throws IOException {
+        String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
+        FeedSource feedSource = new FeedSource(sourceUrl, "테스트용 url");
+        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now());
+        when(feedSourceRepository.findAll()).thenReturn(Arrays.asList(feedSource));
+        when(feedArticleRepository.existsByLink(any())).thenReturn(false);
+        when(feedArticleRepository.save(any(FeedArticle.class))).thenReturn(feedArticle);
+
+        List<FeedArticle> feedArticles = feedInternalService.updateFeed();
+        assertThat(feedArticles.size()).isEqualTo(3);
+    }
 }

@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import woowacrew.feed.dto.FeedArticleResponseDto;
 import woowacrew.feed.dto.FeedArticleResponseDtos;
 import woowacrew.feed.dto.FeedRegisterDto;
 import woowacrew.feed.service.FeedService;
+
+import java.util.List;
 
 import static woowacrew.article.free.service.ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE;
 
@@ -34,5 +37,11 @@ public class FeedApiController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FeedRegisterDto> registerFeedSource(FeedRegisterDto feedRegisterDto) {
         return ResponseEntity.ok(feedService.registerFeedSource(feedRegisterDto));
+    }
+
+    @PostMapping("/new")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<FeedArticleResponseDto>> updateFeed() {
+        return ResponseEntity.ok(feedService.updateFeed());
     }
 }
