@@ -18,4 +18,16 @@ class FeedConverterTest {
         assertThat(feedSource.getSourceUrl()).isEqualTo(url);
         assertThat(feedSource.getDescription()).isEqualTo(description);
     }
+
+    @Test
+    void feedSourceToRegisterDto() {
+        String url = "url";
+        String description = "description";
+        FeedSource feedSource = new FeedSource(url, description);
+        FeedRegisterDto feedRegisterDto = FeedConverter.feedSourceToRegisterDto(feedSource);
+
+
+        assertThat(feedRegisterDto.getSourceUrl()).isEqualTo(url);
+        assertThat(feedRegisterDto.getDescription()).isEqualTo(description);
+    }
 }

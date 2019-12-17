@@ -13,4 +13,8 @@ public class FeedConverter {
                 .setFieldMatchingEnabled(true);
         return modelMapper.map(registerDto, FeedSource.class);
     }
+
+    public static FeedRegisterDto feedSourceToRegisterDto(FeedSource feedSource) {
+        return new ModelMapper().map(feedSource, FeedRegisterDto.class);
+    }
 }
