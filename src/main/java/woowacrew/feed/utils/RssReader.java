@@ -5,6 +5,7 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import woowacrew.feed.domain.FeedArticle;
+import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.exception.InvalidXmlException;
 
 import java.net.URL;
@@ -30,15 +31,15 @@ public class RssReader {
         }
     }
 
-    public List<FeedArticle> getFeedArticle() {
+    public List<FeedArticle> getFeedArticle(FeedSource feedSource) {
         return feed.getEntries().stream()
-                .map(this::createFeedArticle)
+                .map(entry -> createFeedArticle(entry, feedSource))
                 .collect(Collectors.toList());
     }
 
-    private FeedArticle createFeedArticle(SyndEntry entry) {
+    private FeedArticle createFeedArticle(SyndEntry entry, FeedSource feedSource) {
         LocalDateTime publishedDate = LocalDateTime.ofInstant(entry.getPublishedDate().toInstant(), ZoneId.systemDefault());
-        return new FeedArticle(entry.getTitle(), entry.getLink(), publishedDate);
+        return new FeedArticle(entry.getTitle(), entry.getLink(), publishedDate, feedSource);
     }
 
 }

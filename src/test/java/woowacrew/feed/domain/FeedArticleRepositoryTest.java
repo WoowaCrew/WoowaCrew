@@ -15,6 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 class FeedArticleRepositoryTest {
     @Autowired
+    private FeedSourceRepository feedSourceRepository;
+
+    @Autowired
     private FeedArticleRepository feedArticleRepository;
 
     @Test
@@ -30,7 +33,8 @@ class FeedArticleRepositoryTest {
     @Test
     void existsByLink() {
         String link = "link";
-        FeedArticle feedArticle = new FeedArticle("title", link, LocalDateTime.now());
+        FeedSource savedFeedSource = feedSourceRepository.save(new FeedSource("source", "description"));
+        FeedArticle feedArticle = new FeedArticle("title", link, LocalDateTime.now(), savedFeedSource);
         feedArticleRepository.save(feedArticle);
         assertThat(feedArticleRepository.existsByLink(link)).isTrue();
     }

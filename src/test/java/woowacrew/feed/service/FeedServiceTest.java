@@ -48,7 +48,7 @@ class FeedServiceTest {
 
     @Test
     void findAll() {
-        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now());
+        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), new FeedSource("source","description"));
         Pageable pageable = PageRequest.of(0, 20);
         when(feedInternalService.findAllFeedArticles(pageable)).thenReturn(new PageImpl<>(Arrays.asList(feedArticle)));
 
@@ -61,7 +61,7 @@ class FeedServiceTest {
     @Test
     void updateFeed() {
         String title = "title";
-        FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now());
+        FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now(), new FeedSource("source","description"));
         when(feedInternalService.updateFeed()).thenReturn(Collections.singletonList(feedArticle));
 
         List<FeedArticleResponseDto> feedArticleResponseDtos = feedService.updateFeed();

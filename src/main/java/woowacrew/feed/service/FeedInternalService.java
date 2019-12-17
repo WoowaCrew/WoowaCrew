@@ -36,12 +36,13 @@ public class FeedInternalService {
             throw new AlreadyExistSourceUrlException();
         }
         RssReader rssReader = new RssReader(feedRegisterDto.getSourceUrl());
-        List<FeedArticle> feedArticles = rssReader.getFeedArticle();
+        FeedSource feedSource = feedSourceRepository.save(FeedConverter.registerDtoToFeedSource(feedRegisterDto));
+
+        List<FeedArticle> feedArticles = rssReader.getFeedArticle(feedSource);
 
         feedArticleRepository.saveAll(feedArticles);
-        FeedSource feedSource = FeedConverter.registerDtoToFeedSource(feedRegisterDto);
 
-        return feedSourceRepository.save(feedSource);
+        return feedSource;
     }
 
     @Transactional(readOnly = true)
@@ -58,7 +59,7 @@ public class FeedInternalService {
 
     public List<FeedArticle> updateFeed() {
         return feedSourceRepository.findAll().stream()
-                .map(source -> new RssReader(source.getSourceUrl()).getFeedArticle())
+                .map(source -> new RssReader(source.getSourceUrl()).getFeedArticle(source))
                 .flatMap(Collection::stream)
                 .filter(feed -> !feedArticleRepository.existsByLink(feed.getLink()))
                 .map(feedArticleRepository::save)

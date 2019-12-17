@@ -3,6 +3,7 @@ package woowacrew.feed.utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import woowacrew.feed.domain.FeedArticle;
+import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.exception.InvalidXmlException;
 
 import java.io.IOException;
@@ -29,9 +30,11 @@ class RssReaderTest {
     @Test
     void feedArticles를_잘_생성하는지_테스트() throws IOException {
         ClassPathResource classPathResource = new ClassPathResource("feed.xml");
+        String sourceUrl = classPathResource.getURL().toString();
+        FeedSource feedSource = new FeedSource(sourceUrl, "description");
         RssReader rssReader = new RssReader(classPathResource.getURL().toString());
 
-        List<FeedArticle> feedArticles = rssReader.getFeedArticle();
+        List<FeedArticle> feedArticles = rssReader.getFeedArticle(feedSource);
         assertThat(feedArticles.size()).isEqualTo(3);
     }
 }

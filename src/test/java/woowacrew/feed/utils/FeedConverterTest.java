@@ -39,7 +39,7 @@ class FeedConverterTest {
     void toFeedArticleResponseDto() {
         String title = "title";
         String link = "link";
-        FeedArticle feedArticle = new FeedArticle(title, link, LocalDateTime.now());
+        FeedArticle feedArticle = new FeedArticle(title, link, LocalDateTime.now(), new FeedSource("source","description"));
         FeedArticleResponseDto feedArticleResponseDto = FeedConverter.toFeedArticleResponseDto(feedArticle);
 
         assertThat(feedArticleResponseDto.getTitle()).isEqualTo(title);

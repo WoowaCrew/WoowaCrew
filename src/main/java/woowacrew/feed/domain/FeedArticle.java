@@ -1,9 +1,6 @@
 package woowacrew.feed.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,14 +12,17 @@ public class FeedArticle {
     private String title;
     private String link;
     private LocalDateTime publishedDate;
+    @ManyToOne
+    private FeedSource feedSource;
 
     private FeedArticle() {
     }
 
-    public FeedArticle(String title, String link, LocalDateTime publishedDate) {
+    public FeedArticle(String title, String link, LocalDateTime publishedDate, FeedSource feedSource) {
         this.title = title;
         this.link = link;
         this.publishedDate = publishedDate;
+        this.feedSource = feedSource;
     }
 
     public Long getId() {
@@ -39,6 +39,10 @@ public class FeedArticle {
 
     public LocalDateTime getPublishedDate() {
         return publishedDate;
+    }
+
+    public FeedSource getFeedSource() {
+        return feedSource;
     }
 
     @Override

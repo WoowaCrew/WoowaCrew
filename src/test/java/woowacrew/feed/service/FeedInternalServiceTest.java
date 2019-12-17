@@ -39,11 +39,13 @@ class FeedInternalServiceTest {
     @InjectMocks
     private FeedInternalService feedInternalService;
 
+    private static final FeedSource feedSource = new FeedSource("source", "description");
+    private static final FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), feedSource);
+
     @Test
     void 정상xml을_입력했을_때_제대로_저장하는지_테스트() throws IOException {
         String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
         FeedRegisterDto feedRegisterDto = new FeedRegisterDto(sourceUrl, "테스트용 xml");
-        FeedSource feedSource = new FeedSource(feedRegisterDto.getSourceUrl(), feedRegisterDto.getDescription());
 
         when(feedSourceRepository.existsBySourceUrl(any())).thenReturn(false);
         when(feedArticleRepository.saveAll(anyList())).thenReturn(new ArrayList<>());
@@ -72,7 +74,7 @@ class FeedInternalServiceTest {
     @Test
     void Page리스트_리턴_테스트() {
         Pageable pageable = PageRequest.of(0, 20);
-        List<FeedArticle> articles = Arrays.asList(new FeedArticle("title", "link", LocalDateTime.now()));
+        List<FeedArticle> articles = Arrays.asList(new FeedArticle("title", "link", LocalDateTime.now(), feedSource));
         when(feedArticleRepository.findAll(pageable)).thenReturn(new PageImpl<>(articles));
 
         Page<FeedArticle> feedArticles = feedInternalService.findAllFeedArticles(pageable);
@@ -83,7 +85,6 @@ class FeedInternalServiceTest {
     void 업데이트_테스트() throws IOException {
         String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
         FeedSource feedSource = new FeedSource(sourceUrl, "테스트용 url");
-        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now());
         when(feedSourceRepository.findAll()).thenReturn(Arrays.asList(feedSource));
         when(feedArticleRepository.existsByLink(any())).thenReturn(false);
         when(feedArticleRepository.save(any(FeedArticle.class))).thenReturn(feedArticle);
