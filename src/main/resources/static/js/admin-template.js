@@ -66,6 +66,12 @@ const AdminTemplates = (() => {
             </div>`
     }
 
+    addFeedForm() {
+      return `
+      
+      `
+    }
+
     convertDegree(degreeNumber) {
       if (degreeNumber === 0) {
         return '크루 아님'

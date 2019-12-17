@@ -21,20 +21,6 @@ const FeedApp = (() => {
         .catch(error => alert('오류가 발생했습니다.'));
     }
 
-    async addFeedSource() {
-      const formData = new FormData(  )
-      formData.append('sourceUrl', 'https://jojoldu.tistory.com/rss')
-      formData.append('description', '안녕하세요')
-      fetch(BASE_URL + "/api/feeds", {
-        method: 'POST',
-        body: formData
-      }).then(response => response.json())
-        .then(feedResponse => {
-         alert('업로드 성공')
-        })
-        .catch(error => alert('오류가 발생했습니다.'));
-    }
-
     renderPageBar(pageNumber, totalPages) {
       const pageBar = document.getElementById('page-bar')
 
@@ -66,10 +52,6 @@ const FeedApp = (() => {
 
     showFeeds(numberOfPage) {
       this.feedService.showFeeds(numberOfPage)
-    }
-
-    addFeedSource() {
-      this.feedService.addFeedSource()
     }
   }
 

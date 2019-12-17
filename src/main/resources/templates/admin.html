@@ -13,12 +13,21 @@
         <div id="approve-wait-list-button" class="left-bar-title" onclick="AdminApp.showSignRequestList()">승인 대기 회원</div>
         <div id="approve-complete-list-button" class="left-bar-title" onclick="AdminApp.showApprovedUser()">승인 완료 회원</div>
         <div id="degree-manage-button" class="left-bar-title" onclick="AdminApp.showDegrees()">기수 관리</div>
+        <div id="rss-add-button" class="left-bar-title" onclick="AdminApp.showAddFeedForm()">RSS 등록</div>
     </div>
     <div class="main-content">
         <div id="content">
             <div id="info-title">
             </div>
-            <div id="info-content"></div>
+            <div id="info-content">
+                <div class="">sourceUrl</div>
+                <input type="text" id="source-url">
+
+                <div class="">간단 설명</div>
+                <input type="text" id="description">
+
+                <button type="button" onclick='AdminApp.addFeedSource()'>등록</button>
+            </div>
         </div>
     </div>
 </div>
