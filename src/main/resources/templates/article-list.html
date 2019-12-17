@@ -19,6 +19,7 @@
     <i class="fa fa-lg fa-pencil" id="article-create-icon" onclick="ArticleListApp.showArticleEditPage()"></i>
 </div>
 <div id="article-list">
+    <input type="hidden" id="article-search-value" value="">
 </div>
 <div class="article-list-footer">
     <div id="page-bar">
@@ -31,23 +32,25 @@
                 <option value="author">작성자</option>
             </select>
         </div>
-        <input type="text" class="search-form">
-        <button type="button" class="search-button">
+        <input type="text" class="search-form" onkeyup="ArticleSearchListApp.searchByEnterKey(event, 1)">
+        <button type="button" class="search-button" onclick="ArticleSearchListApp.searchByNumberOfPage(1)">
             <i class="fa fa-search"></i>
         </button>
     </div>
 </div>
 </body>
 <!--  SCRIPT  -->
-<script src="/js/article-template.js"></script>
 <script src="/js/article-list.js"></script>
+<script src="/js/article-search-list.js"></script>
+<script src="/js/article-template.js"></script>
+<script src="/js/article-search-template.js"></script>
 <script>
     ArticleListApp.showArticles(1)
 </script>
 <script>
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-  }
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
 
   function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
