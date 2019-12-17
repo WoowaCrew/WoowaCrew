@@ -23,7 +23,7 @@ public class FeedInternalService {
         this.feedSourceRepository = feedSourceRepository;
     }
 
-    public FeedSource save(FeedRegisterDto feedRegisterDto) {
+    public FeedSource registerFeedSource(FeedRegisterDto feedRegisterDto) {
         RssReader rssReader = new RssReader(feedRegisterDto.getSourceUrl());
         List<FeedArticle> feedArticles = rssReader.getFeedArticle();
 

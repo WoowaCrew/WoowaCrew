@@ -37,7 +37,7 @@ class FeedInternalServiceTest {
         when(feedArticleRepository.saveAll(anyList())).thenReturn(new ArrayList<>());
         when(feedSourceRepository.save(any(FeedSource.class))).thenReturn(feedSource);
 
-        FeedSource savedFeedSource = feedInternalService.save(feedRegisterDto);
+        FeedSource savedFeedSource = feedInternalService.registerFeedSource(feedRegisterDto);
         assertThat(savedFeedSource.getSourceUrl()).isEqualTo(feedSource.getSourceUrl());
     }
 }
