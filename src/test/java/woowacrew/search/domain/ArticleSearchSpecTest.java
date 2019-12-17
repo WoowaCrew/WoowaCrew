@@ -10,10 +10,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ArticleSearchSpecTest {
     @Test
-    void 정상적으로_ArticleSearchSpec을_생성한다() {
-        Specification<Article> specification = ArticleSearchSpec.getSpecification("title", "test");
+    void 정상적으로_제목으로_찾는_Specification을_생성한다() {
+        Specification<Article> specificationByTitle = ArticleSearchSpec.getSpecification("title", "test");
 
-        assertNotNull(specification);
+        assertNotNull(specificationByTitle);
+    }
+
+    @Test
+    void 정상적으로_작성자로_찾는_Specification을_생성한다() {
+        Specification<Article> specificationByAuthor = ArticleSearchSpec.getSpecification("author", "test");
+
+        assertNotNull(specificationByAuthor);
     }
 
     @Test

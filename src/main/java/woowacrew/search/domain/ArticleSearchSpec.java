@@ -4,13 +4,14 @@ import org.springframework.data.jpa.domain.Specification;
 import woowacrew.article.free.domain.Article;
 import woowacrew.search.exception.NotMatchArticleSearchKeyException;
 
-import javax.persistence.criteria.Path;
 import java.util.Optional;
 
 public class ArticleSearchSpec {
 
     private static final String ARTICLE_FORM = "articleForm";
     private static final String TITLE = "title";
+    private static final String AUTHOR = "user";
+    private static final String NICKNAME = "nickname";
 
     public enum ArticleSearchKey {
         TITLE("title"),
@@ -37,27 +38,24 @@ public class ArticleSearchSpec {
         ArticleSearchKey articleSearchKey = ArticleSearchKey.find(type)
                 .orElseThrow(NotMatchArticleSearchKeyException::new);
 
-        return getSpecification(articleSearchKey, content);
-    }
-
-    private static Specification<Article> getSpecification(ArticleSearchKey articleSearchKey, String content) {
-        if (articleSearchKey.equals(ArticleSearchKey.TITLE)) {
-            return createSpecification(createPattern(content), ARTICLE_FORM, TITLE);
-        }
-        throw new NotMatchArticleSearchKeyException();
+        return getSpecification(articleSearchKey, createPattern(content));
     }
 
     private static String createPattern(String content) {
         return "%" + content + "%";
     }
 
-    private static Specification<Article> createSpecification(String pattern, String... fieldPaths) {
-        return (Specification<Article>) (root, query, builder) -> {
-            Path<String> field = null;
-            for (String fieldPath : fieldPaths) {
-                field = field.get(fieldPath);
-            }
-            return builder.like(field, pattern);
-        };
+    private static Specification<Article> getSpecification(ArticleSearchKey articleSearchKey, String pattern) {
+        if (articleSearchKey.equals(ArticleSearchKey.TITLE)) {
+            return createSpecification(pattern, ARTICLE_FORM, TITLE);
+        }
+        if (articleSearchKey.equals(ArticleSearchKey.AUTHOR)) {
+            return createSpecification(pattern, AUTHOR, NICKNAME);
+        }
+        throw new NotMatchArticleSearchKeyException();
+    }
+
+    private static Specification<Article> createSpecification(String pattern, String firstFieldPath, String secondFieldPath) {
+        return (Specification<Article>) (root, query, builder) -> builder.like(root.get(firstFieldPath).get(secondFieldPath), pattern);
     }
 }
