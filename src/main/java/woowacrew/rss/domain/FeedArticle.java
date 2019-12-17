@@ -1,6 +1,9 @@
 package woowacrew.rss.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,8 +15,6 @@ public class FeedArticle {
     private String title;
     private String link;
     private LocalDateTime publishedDate;
-    @ManyToOne
-    private FeedSource feedSource;
 
     private FeedArticle() {
     }
@@ -45,15 +46,12 @@ public class FeedArticle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FeedArticle that = (FeedArticle) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(link, that.link) &&
-                Objects.equals(publishedDate, that.publishedDate);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, link, publishedDate);
+        return Objects.hash(id);
     }
 
     @Override
