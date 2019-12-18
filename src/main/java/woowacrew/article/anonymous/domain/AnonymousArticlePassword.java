@@ -11,6 +11,9 @@ public class AnonymousArticlePassword {
 
     private String password;
 
+    private AnonymousArticlePassword() {
+    }
+
     public AnonymousArticlePassword(String password) {
         validate(password);
         this.password = password;

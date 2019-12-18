@@ -1,12 +1,12 @@
 package woowacrew.article.anonymous.dto;
 
-public class AnonymousArticleRequestDto {
+public class AnonymousArticleUpdateDto {
 
     private String title;
     private String content;
     private String password;
 
-    public AnonymousArticleRequestDto(String title, String content, String password) {
+    public AnonymousArticleUpdateDto(String title, String content, String password) {
         this.title = title;
         this.content = content;
         this.password = password;

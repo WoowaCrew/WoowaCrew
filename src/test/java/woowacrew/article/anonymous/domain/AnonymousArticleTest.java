@@ -34,7 +34,7 @@ class AnonymousArticleTest {
         AnonymousArticle anonymousArticle =
                 new AnonymousArticle("title", "content", "password");
 
-        anonymousArticle.update("password", "new title", "new content");
+        anonymousArticle.update("new title", "new content", "password");
 
         assertThat(anonymousArticle.getTitle()).isEqualTo("new title");
         assertThat(anonymousArticle.getContent()).isEqualTo("new content");
@@ -47,7 +47,7 @@ class AnonymousArticleTest {
                 new AnonymousArticle("title", "content", "password");
 
         assertThrows(MismatchPasswordException.class,
-                () -> anonymousArticle.update("invalid password", "new title", "new content"));
+                () -> anonymousArticle.update("new title", "new content", "invalid password"));
 
         assertThat(anonymousArticle.getTitle()).isEqualTo("title");
         assertThat(anonymousArticle.getContent()).isEqualTo("content");

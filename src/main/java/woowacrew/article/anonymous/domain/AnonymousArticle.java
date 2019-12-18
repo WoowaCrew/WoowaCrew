@@ -22,6 +22,9 @@ public class AnonymousArticle extends TimeEntity {
 
     private boolean isApproved;
 
+    private AnonymousArticle() {
+    }
+
     public AnonymousArticle(String title, String content, String password) {
         this.articleForm = new ArticleForm(title, content);
         this.password = new AnonymousArticlePassword(password);
@@ -32,11 +35,15 @@ public class AnonymousArticle extends TimeEntity {
         this.isApproved = true;
     }
 
-    public void update(String password, String title, String content) {
+    public void update(String title, String content, String password) {
+        checkPassword(password);
+        this.articleForm.updateArticle(title, content);
+    }
+
+    public void checkPassword(String password) {
         if (!this.password.match(password)) {
             throw new MismatchPasswordException();
         }
-        this.articleForm.updateArticle(title, content);
     }
 
     public String getTitle() {
