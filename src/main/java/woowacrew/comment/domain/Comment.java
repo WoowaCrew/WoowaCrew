@@ -1,6 +1,7 @@
 package woowacrew.comment.domain;
 
 import woowacrew.article.AbstractArticle;
+import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.comment.domain.exception.NotValidCommentException;
 import woowacrew.common.domain.TimeEntity;
@@ -24,19 +25,19 @@ public class Comment extends TimeEntity {
     private User author;
 
     @ManyToOne
-    private AbstractArticle article;
+    private Article article;
 
     private Comment() {
     }
 
-    public Comment(User author, String content, AbstractArticle article) {
+    public Comment(User author, String content, Article article) {
         validationCheck(author, content, article);
         this.author = author;
         this.content = content;
         this.article = article;
     }
 
-    private void validationCheck(User author, String content, AbstractArticle article) {
+    private void validationCheck(User author, String content, Article article) {
         if (Objects.isNull(author) || Objects.isNull(article) || EMPTY.equals(content)) {
             throw new NotValidCommentException();
         }

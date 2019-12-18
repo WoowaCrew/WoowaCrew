@@ -2,7 +2,6 @@ package woowacrew.comment.domain;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import woowacrew.article.AbstractArticle;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.comment.domain.exception.NotValidCommentException;
@@ -19,11 +18,11 @@ class CommentTest {
     User mockUser;
 
     @Mock
-    AbstractArticle mockArticle;
+    Article mockArticle;
 
     User author = new User("zino", new Degree());
 
-    AbstractArticle article = new Article("title", "content", author);
+    Article article = new Article("title", "content", author);
 
     @Test
     void 생성_정상_테스트() {
@@ -59,6 +58,4 @@ class CommentTest {
 
         assertThrows(MisMatchUserException.class, () -> comment.update(mockUser, "update comment"));
     }
-
-
 }
