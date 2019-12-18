@@ -68,6 +68,31 @@ public class ArticleSearchApiControllerTest extends CommonTestController {
     }
 
     @Test
+    void 정상적으로_게시글_제목과_내용으로_검색한다() {
+        String cookie = loginWithAdmin();
+        String inputData = "delete";
+
+        ArticleResponseDtos articleResponseDtos = webTestClient.post()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/search")
+                        .queryParam("type", "titleWithContent")
+                        .build())
+                .body(BodyInserters.fromFormData("content", inputData))
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ArticleResponseDtos.class)
+                .returnResult()
+                .getResponseBody();
+
+        assert articleResponseDtos != null;
+        List<ArticleResponseDto> articles = articleResponseDtos.getArticles();
+
+        assertTrue(articles.size() != 0);
+        articles.forEach(article -> assertTrue(article.getTitle().contains(inputData) ||
+                article.getContent().contains(inputData)));
+    }
+
+    @Test
     void 올바르지_않은_타입으로_검색하면_예외발생() {
         String cookie = loginWithAdmin();
 

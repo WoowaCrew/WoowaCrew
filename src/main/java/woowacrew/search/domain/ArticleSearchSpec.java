@@ -4,12 +4,14 @@ import org.springframework.data.jpa.domain.Specification;
 import woowacrew.article.free.domain.Article;
 import woowacrew.search.exception.NotMatchArticleSearchKeyException;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Optional;
 
 public class ArticleSearchSpec {
 
     private static final String ARTICLE_FORM = "articleForm";
     private static final String TITLE = "title";
+    private static final String CONTENT = "content";
     private static final String AUTHOR = "user";
     private static final String NICKNAME = "nickname";
 
@@ -52,10 +54,21 @@ public class ArticleSearchSpec {
         if (articleSearchKey.equals(ArticleSearchKey.AUTHOR)) {
             return createSpecification(pattern, AUTHOR, NICKNAME);
         }
+        if (articleSearchKey.equals(ArticleSearchKey.TITLE_WITH_CONTENT)) {
+            return createSpecification(pattern);
+        }
         throw new NotMatchArticleSearchKeyException();
     }
 
     private static Specification<Article> createSpecification(String pattern, String firstFieldPath, String secondFieldPath) {
         return (Specification<Article>) (root, query, builder) -> builder.like(root.get(firstFieldPath).get(secondFieldPath), pattern);
+    }
+
+    private static Specification<Article> createSpecification(String pattern) {
+        return (Specification<Article>) (root, query, builder) -> {
+            Predicate containTitle = builder.like(root.get(ARTICLE_FORM).get(TITLE), pattern);
+            Predicate containAuthor = builder.like(root.get(ARTICLE_FORM).get(CONTENT), pattern);
+            return builder.or(containTitle, containAuthor);
+        };
     }
 }

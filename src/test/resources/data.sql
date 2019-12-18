@@ -1,7 +1,9 @@
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (1, '1234','woowacrew','ROLE_ADMIN',1);
 
 INSERT INTO article (id, title, content, author) VALUES (1, 'article A', 'content', 1);
-INSERT INTO article (id, title, content, author) VALUES (2, 'delete article', 'delete content', 1);
+INSERT INTO article (id, title, content, author) VALUES (2, 'delete article', 'content', 1);
+INSERT INTO article (id, title, content, author) VALUES (3, 'article', 'delete content', 1);
+INSERT INTO article (id, title, content, author) VALUES (4, 'article', 'testdelete content', 1);
 
 INSERT INTO keyword(content, views) VALUES ('test A', 1L);
 INSERT INTO keyword(content, views) VALUES ('test B', 1L);
