@@ -1,5 +1,6 @@
 package woowacrew.feed.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,10 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.article.free.exception.InvalidPageRequstException;
-import woowacrew.feed.domain.FeedArticle;
-import woowacrew.feed.domain.FeedArticleRepository;
-import woowacrew.feed.domain.FeedSource;
-import woowacrew.feed.domain.FeedSourceRepository;
+import woowacrew.feed.domain.*;
 import woowacrew.feed.dto.FeedSourceDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 
@@ -22,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,8 +38,15 @@ class FeedInternalServiceTest {
     @InjectMocks
     private FeedInternalService feedInternalService;
 
-    private static final FeedSource feedSource = new FeedSource("source", "description");
-    private static final FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), feedSource);
+    private FeedSource feedSource;
+    private FeedArticles feedArticles;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
+        feedSource = new FeedSource(sourceUrl, "description");
+        feedArticles = feedSource.createFeedArticles();
+    }
 
     @Test
     void 정상xml을_입력했을_때_제대로_저장하는지_테스트() throws IOException {
@@ -56,7 +62,7 @@ class FeedInternalServiceTest {
     }
 
     @Test
-    void 이미_존재하는_url은_저장하지_않는() throws IOException {
+    void 이미_존재하는_url은_저장하지_않는다() throws IOException {
         String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
         FeedSourceDto feedSourceDto = new FeedSourceDto(sourceUrl, "테스트용 xml");
 
@@ -82,12 +88,10 @@ class FeedInternalServiceTest {
     }
 
     @Test
-    void 업데이트_테스트() throws IOException {
-        String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
-        FeedSource feedSource = new FeedSource(sourceUrl, "테스트용 url");
-        when(feedSourceRepository.findAll()).thenReturn(Arrays.asList(feedSource));
-        when(feedArticleRepository.existsByLink(any())).thenReturn(false);
-        when(feedArticleRepository.save(any(FeedArticle.class))).thenReturn(feedArticle);
+    void 업데이트_테스트() {
+        when(feedSourceRepository.findAll()).thenReturn(Collections.singletonList(feedSource));
+        when(feedArticleRepository.findByFeedSource(any(FeedSource.class))).thenReturn(new ArrayList<>());
+        when(feedArticleRepository.saveAll(anyList())).thenReturn(feedArticles.getFeedArticles());
 
         List<FeedArticle> feedArticles = feedInternalService.updateFeed();
         assertThat(feedArticles.size()).isEqualTo(3);

@@ -5,19 +5,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.exception.InvalidPageRequstException;
-import woowacrew.feed.domain.FeedArticle;
-import woowacrew.feed.domain.FeedArticleRepository;
-import woowacrew.feed.domain.FeedSource;
-import woowacrew.feed.domain.FeedSourceRepository;
+import woowacrew.feed.domain.*;
 import woowacrew.feed.dto.FeedSourceDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 import woowacrew.feed.utils.FeedConverter;
-import woowacrew.feed.utils.RssReader;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
 import static woowacrew.article.free.service.ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE;
 
 @Service
@@ -31,16 +27,16 @@ public class FeedInternalService {
         this.feedSourceRepository = feedSourceRepository;
     }
 
+
     public FeedSource registerFeedSource(FeedSourceDto feedSourceDto) {
         if (isExistUrl(feedSourceDto.getSourceUrl())) {
             throw new AlreadyExistSourceUrlException();
         }
-        RssReader rssReader = new RssReader(feedSourceDto.getSourceUrl());
+
         FeedSource feedSource = feedSourceRepository.save(FeedConverter.toFeedSource(feedSourceDto));
+        FeedArticles feedArticles = feedSource.createFeedArticles();
 
-        List<FeedArticle> feedArticles = rssReader.getFeedArticle(feedSource);
-
-        feedArticleRepository.saveAll(feedArticles);
+        feedArticleRepository.saveAll(feedArticles.getFeedArticles());
 
         return feedSource;
     }
@@ -59,10 +55,14 @@ public class FeedInternalService {
 
     public List<FeedArticle> updateFeed() {
         return feedSourceRepository.findAll().stream()
-                .map(source -> new RssReader(source.getSourceUrl()).getFeedArticle(source))
+                .map(this::saveNewFeedArticles)
                 .flatMap(Collection::stream)
-                .filter(feed -> !feedArticleRepository.existsByLink(feed.getLink()))
-                .map(feedArticleRepository::save)
-                .collect(toList());
+                .collect(Collectors.toList());
+    }
+
+    private List<FeedArticle> saveNewFeedArticles(FeedSource feedSource) {
+        FeedArticles feedArticles = feedSource.createFeedArticles();
+        FeedArticles savedFeedArticles = new FeedArticles(feedArticleRepository.findByFeedSource(feedSource));
+        return feedArticleRepository.saveAll(feedArticles.getNotDuplicatedFeedArticles(savedFeedArticles));
     }
 }
