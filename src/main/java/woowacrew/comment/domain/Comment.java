@@ -21,9 +21,11 @@ public class Comment extends TimeEntity {
 
     private String content;
 
+    @JoinColumn(name = "author")
     @ManyToOne
     private User author;
 
+    @JoinColumn(name = "article")
     @ManyToOne
     private Article article;
 
