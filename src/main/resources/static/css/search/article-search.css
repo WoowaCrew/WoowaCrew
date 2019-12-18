@@ -1,3 +1,12 @@
+#edit-bar {
+    display: flex;
+    justify-content: center;
+}
+
+#edit-bar .search-type-select-box {
+    margin-right: 5px;
+}
+
 #edit-bar .search-form {
     color: white;
     background-color: black;
