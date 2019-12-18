@@ -2,20 +2,21 @@ package woowacrew.article.free.dto;
 
 import woowacrew.user.dto.UserResponseDto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ArticleResponseDto {
     private Long id;
     private String title;
     private String content;
     private UserResponseDto userResponseDto;
-    private LocalDate createdDate;
-    private LocalDate lastModifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 
     private ArticleResponseDto() {
     }
 
-    public ArticleResponseDto(Long id, String title, String content, UserResponseDto userResponseDto, LocalDate createdDate, LocalDate lastModifiedDate) {
+    public ArticleResponseDto(Long id, String title, String content, UserResponseDto userResponseDto, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -40,11 +41,29 @@ public class ArticleResponseDto {
         return userResponseDto;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public LocalDate getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArticleResponseDto that = (ArticleResponseDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(userResponseDto, that.userResponseDto) &&
+                Objects.equals(createdDate, that.createdDate) &&
+                Objects.equals(lastModifiedDate, that.lastModifiedDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, content, userResponseDto, createdDate, lastModifiedDate);
     }
 }

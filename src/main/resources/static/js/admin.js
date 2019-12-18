@@ -144,6 +144,42 @@ const AdminApp = (() => {
       }
       leftBar.classList.add("left-bar-active")
     }
+
+    showAddFeedForm() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+      infoTitle.innerHTML=''
+      infoContent.innerHTML=''
+      infoContent.insertAdjacentHTML("beforeend", AdminTemplates.addFeedForm())
+    }
+
+    async addFeedSource() {
+      const sourceUrl = document.getElementById('source-url').value
+      const description = document.getElementById('description').value
+      if(sourceUrl === '') {
+        alert("주소를 입력해주세요.")
+        exit()
+      }
+      if(description === '') {
+        alert("설명을 입력해 주세요.")
+        exit()
+      }
+      const formData = new FormData()
+      formData.append('sourceUrl', sourceUrl)
+      formData.append('description', description)
+      fetch(BASE_URL + "/api/feeds", {
+        method: 'POST',
+        body: formData
+      }).then(response => {
+        if(response.ok) {
+          return alert('RSS 등록 성공')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
+    }
   }
 
 
@@ -180,6 +216,16 @@ const AdminApp = (() => {
 
     showDetailUsersOfDegree(degreeId) {
       this.adminService.showDetailUsersOfDegree(degreeId)
+    }
+
+    showAddFeedForm() {
+      this.adminService.showAddFeedForm()
+      const leftBar = document.getElementById('rss-add-button')
+      this.adminService.activeButton(leftBar)
+    }
+
+    addFeedSource() {
+      this.adminService.addFeedSource()
     }
   }
 

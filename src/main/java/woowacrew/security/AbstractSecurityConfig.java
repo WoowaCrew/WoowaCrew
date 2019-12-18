@@ -26,7 +26,7 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
                 .cors().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/login/**", "/search", "/search/**").permitAll()
+                .antMatchers("/", "/login", "/login/**", "/search", "/search/**", "/docs/**").permitAll()
                 //TODO: 임시권한입니다. 추후 삭제 필요
                 .antMatchers("/role/**").permitAll()
                 .antMatchers("/accessdeny", "/users/form", "/users/update").authenticated()

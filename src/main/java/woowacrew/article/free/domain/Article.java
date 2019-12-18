@@ -5,7 +5,7 @@ import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.user.domain.User;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Article extends AbstractArticle {
@@ -57,11 +57,11 @@ public class Article extends AbstractArticle {
         return user;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public LocalDate getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
