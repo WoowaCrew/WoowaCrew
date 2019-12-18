@@ -29,7 +29,7 @@ public class FeedApiController {
     }
 
     @GetMapping
-    public ResponseEntity<FeedArticleResponseDtos> findAllFeedArticles
+    public ResponseEntity<FeedArticleResponseDtos> list
             (@PageableDefault(size = DEFAULT_ARTICLE_PAGE_SIZE, sort = "publishedDate", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(feedService.findAllFeedArticles(pageable));
     }
