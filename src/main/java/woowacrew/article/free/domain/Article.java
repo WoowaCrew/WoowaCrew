@@ -1,14 +1,14 @@
 package woowacrew.article.free.domain;
 
-import woowacrew.article.AbstractArticle;
 import woowacrew.article.free.exception.MisMatchUserException;
+import woowacrew.common.domain.TimeEntity;
 import woowacrew.user.domain.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Article extends AbstractArticle {
+public class Article extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
