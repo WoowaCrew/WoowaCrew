@@ -5,20 +5,22 @@ import woowacrew.article.free.domain.Article;
 import woowacrew.search.exception.NotMatchArticleSearchKeyException;
 
 import javax.persistence.criteria.Predicate;
-import java.util.Optional;
+import java.util.Arrays;
 
 public class ArticleSearchSpec {
 
-    private static final String ARTICLE_FORM = "articleForm";
+    private static final String ARTICLE_FORM_TO = "articleForm";
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
-    private static final String AUTHOR = "user";
+
+    private static final String AUTHOR_TO = "user";
     private static final String NICKNAME = "nickname";
 
     public enum ArticleSearchKey {
         TITLE("title"),
         TITLE_WITH_CONTENT("titleWithContent"),
-        AUTHOR("author");
+        AUTHOR("author"),
+        INVALID_TYPE("");
 
         private String value;
 
@@ -26,48 +28,46 @@ public class ArticleSearchSpec {
             this.value = value;
         }
 
-        private static Optional<ArticleSearchKey> find(String value) {
-            for (ArticleSearchKey articleSearchKey : values()) {
-                if (articleSearchKey.value.equals(value)) {
-                    return Optional.of(articleSearchKey);
-                }
-            }
-            return Optional.empty();
+        private static ArticleSearchKey find(String value) {
+            return Arrays.stream(values())
+                    .filter(articleSearchKey -> articleSearchKey.value.equals(value))
+                    .findAny()
+                    .orElse(INVALID_TYPE);
         }
     }
 
-    public static Specification<Article> getSpecification(String type, String content) {
-        ArticleSearchKey articleSearchKey = ArticleSearchKey.find(type)
-                .orElseThrow(NotMatchArticleSearchKeyException::new);
+    public static Specification<Article> getSpec(String type, String content) {
+        ArticleSearchKey articleSearchKey = ArticleSearchKey.find(type);
+        String pattern = createPattern(content);
 
-        return getSpecification(articleSearchKey, createPattern(content));
+        return createSpecBy(articleSearchKey, pattern);
     }
 
     private static String createPattern(String content) {
         return "%" + content + "%";
     }
 
-    private static Specification<Article> getSpecification(ArticleSearchKey articleSearchKey, String pattern) {
+    private static Specification<Article> createSpecBy(ArticleSearchKey articleSearchKey, String pattern) {
         if (articleSearchKey.equals(ArticleSearchKey.TITLE)) {
-            return createSpecification(pattern, ARTICLE_FORM, TITLE);
+            return createSpecBy(pattern, ARTICLE_FORM_TO, TITLE);
         }
         if (articleSearchKey.equals(ArticleSearchKey.AUTHOR)) {
-            return createSpecification(pattern, AUTHOR, NICKNAME);
+            return createSpecBy(pattern, AUTHOR_TO, NICKNAME);
         }
         if (articleSearchKey.equals(ArticleSearchKey.TITLE_WITH_CONTENT)) {
-            return createSpecification(pattern);
+            return createSpecByTitleOrContent(pattern);
         }
         throw new NotMatchArticleSearchKeyException();
     }
 
-    private static Specification<Article> createSpecification(String pattern, String firstFieldPath, String secondFieldPath) {
+    private static Specification<Article> createSpecBy(String pattern, String firstFieldPath, String secondFieldPath) {
         return (Specification<Article>) (root, query, builder) -> builder.like(root.get(firstFieldPath).get(secondFieldPath), pattern);
     }
 
-    private static Specification<Article> createSpecification(String pattern) {
+    private static Specification<Article> createSpecByTitleOrContent(String pattern) {
         return (Specification<Article>) (root, query, builder) -> {
-            Predicate containTitle = builder.like(root.get(ARTICLE_FORM).get(TITLE), pattern);
-            Predicate containAuthor = builder.like(root.get(ARTICLE_FORM).get(CONTENT), pattern);
+            Predicate containTitle = builder.like(root.get(ARTICLE_FORM_TO).get(TITLE), pattern);
+            Predicate containAuthor = builder.like(root.get(ARTICLE_FORM_TO).get(CONTENT), pattern);
             return builder.or(containTitle, containAuthor);
         };
     }
