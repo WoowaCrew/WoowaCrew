@@ -4,6 +4,9 @@ public class CommentUpdateDto {
     private Long commentId;
     private String updateContent;
 
+    private CommentUpdateDto() {
+    }
+
     public CommentUpdateDto(Long commentId, String updateContent) {
         this.commentId = commentId;
         this.updateContent = updateContent;

@@ -8,6 +8,9 @@ public class CommentResponseDto {
     private String content;
     private LocalDateTime createDateTime;
 
+    public CommentResponseDto() {
+    }
+
     public CommentResponseDto(Long id, String userNickName, String content, LocalDateTime createDateTime) {
         this.id = id;
         this.userNickName = userNickName;

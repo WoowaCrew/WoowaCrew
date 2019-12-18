@@ -4,6 +4,9 @@ public class CommentRequestDto {
     private Long articleId;
     private String content;
 
+    private CommentRequestDto() {
+    }
+
     public CommentRequestDto(Long articleId, String content) {
         this.articleId = articleId;
         this.content = content;
