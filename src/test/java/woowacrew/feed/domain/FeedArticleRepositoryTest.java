@@ -31,6 +31,19 @@ class FeedArticleRepositoryTest {
     }
 
     @Test
+    void FeedSource로_검색() {
+        FeedSource feedSource = new FeedSource("https://vsh123.github.io/feed.xml", "Description");
+        FeedSource savedFeedArticle = feedSourceRepository.save(feedSource);
+        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), savedFeedArticle);
+        feedArticleRepository.save(feedArticle);
+
+        List<FeedArticle> result = feedArticleRepository.findByFeedSource(feedSource);
+
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getTitle()).isEqualTo("title");
+    }
+
+    @Test
     void existsByLink() {
         String link = "link";
         FeedSource savedFeedSource = feedSourceRepository.save(new FeedSource("source", "description"));
