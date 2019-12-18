@@ -34,6 +34,9 @@
     width: 70%;
     height: 30px;
     color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .article-info-created-date {
