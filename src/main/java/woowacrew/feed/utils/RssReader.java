@@ -1,45 +1,26 @@
 package woowacrew.feed.utils;
 
-import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
-import woowacrew.feed.domain.FeedArticle;
-import woowacrew.feed.domain.FeedSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import woowacrew.feed.exception.InvalidXmlException;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.List;
-import java.util.stream.Collectors;
 
+@Component
 public class RssReader {
-    private SyndFeed feed;
+    private static final Logger log = LoggerFactory.getLogger(RssReader.class);
 
-    public RssReader(String sourceUrl) {
-        this.feed = getFeed(sourceUrl);
-    }
-
-    private SyndFeed getFeed(String url) {
+    public SyndFeed readFeed(String sourceUrl) {
         try {
-            URL feedUrl = new URL(url);
-            SyndFeedInput input = new SyndFeedInput();
-            return input.build(new XmlReader(feedUrl));
+            URL url = new URL(sourceUrl);
+            return new SyndFeedInput().build(new XmlReader(url));
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new InvalidXmlException();
         }
     }
-
-    public List<FeedArticle> getFeedArticle(FeedSource feedSource) {
-        return feed.getEntries().stream()
-                .map(entry -> createFeedArticle(entry, feedSource))
-                .collect(Collectors.toList());
-    }
-
-    private FeedArticle createFeedArticle(SyndEntry entry, FeedSource feedSource) {
-        LocalDateTime publishedDate = LocalDateTime.ofInstant(entry.getPublishedDate().toInstant(), ZoneId.systemDefault());
-        return new FeedArticle(entry.getTitle(), entry.getLink(), publishedDate, feedSource);
-    }
-
 }
