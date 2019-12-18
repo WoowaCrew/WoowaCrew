@@ -35,7 +35,7 @@ class ArticleRepositoryTest {
     }
 
     @Test
-    void 정상적으로_specification과_pageable로_게시물들을_찾는() {
+    void 정상적으로_specification과_pageable로_게시물들을_찾는다() {
         Specification<Article> articleSpecification = (Specification<Article>) (root, query, builder) -> {
             String pattern = "%delete%";
             return builder.like(root.get("articleForm").get("title"), pattern);

@@ -34,6 +34,10 @@ public class ArticleSearchSpec {
                     .findAny()
                     .orElse(INVALID_TYPE);
         }
+
+        public boolean match(ArticleSearchKey articleSearchKey) {
+            return this.equals(articleSearchKey);
+        }
     }
 
     public static Specification<Article> getSpec(String type, String content) {
@@ -48,13 +52,13 @@ public class ArticleSearchSpec {
     }
 
     private static Specification<Article> createSpecBy(ArticleSearchKey articleSearchKey, String pattern) {
-        if (articleSearchKey.equals(ArticleSearchKey.TITLE)) {
+        if (articleSearchKey.match(ArticleSearchKey.TITLE)) {
             return createSpecBy(pattern, ARTICLE_FORM_TO, TITLE);
         }
-        if (articleSearchKey.equals(ArticleSearchKey.AUTHOR)) {
+        if (articleSearchKey.match(ArticleSearchKey.AUTHOR)) {
             return createSpecBy(pattern, AUTHOR_TO, NICKNAME);
         }
-        if (articleSearchKey.equals(ArticleSearchKey.TITLE_WITH_CONTENT)) {
+        if (articleSearchKey.match(ArticleSearchKey.TITLE_WITH_CONTENT)) {
             return createSpecByTitleOrContent(pattern);
         }
         throw new NotMatchArticleSearchKeyException();
