@@ -41,14 +41,5 @@ class FeedArticleRepositoryTest {
 
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0).getTitle()).isEqualTo("title");
-    }
-
-    @Test
-    void existsByLink() {
-        String link = "link";
-        FeedSource savedFeedSource = feedSourceRepository.save(new FeedSource("source", "description"));
-        FeedArticle feedArticle = new FeedArticle("title", link, LocalDateTime.now(), savedFeedSource);
-        feedArticleRepository.save(feedArticle);
-        assertThat(feedArticleRepository.existsByLink(link)).isTrue();
-    }
+    }l
 }

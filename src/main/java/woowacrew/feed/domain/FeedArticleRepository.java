@@ -11,6 +11,4 @@ public interface FeedArticleRepository extends JpaRepository<FeedArticle, Long> 
     Page<FeedArticle> findAll(Pageable pageable);
 
     List<FeedArticle> findByFeedSource(FeedSource feedSource);
-
-    boolean existsByLink(String link);
 }
