@@ -10,6 +10,10 @@ public class FeedArticles {
         this.feedArticles = feedArticles;
     }
 
+    public List<FeedArticle> getFeedArticles() {
+        return feedArticles;
+    }
+
     public List<FeedArticle> getNotDuplicatedFeedArticles(FeedArticles savedArticles) {
         return feedArticles.stream()
                 .filter(savedArticles::isNotExistLink)
