@@ -41,5 +41,5 @@ class FeedArticleRepositoryTest {
 
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0).getTitle()).isEqualTo("title");
-    }l
+    }
 }
