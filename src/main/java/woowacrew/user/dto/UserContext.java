@@ -2,6 +2,8 @@ package woowacrew.user.dto;
 
 import woowacrew.user.domain.UserRole;
 
+import java.util.Objects;
+
 public class UserContext {
     private Long id;
 
@@ -55,5 +57,21 @@ public class UserContext {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserContext that = (UserContext) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(oauthId, that.oauthId) &&
+                Objects.equals(nickname, that.nickname) &&
+                role == that.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, oauthId, nickname, role);
     }
 }
