@@ -1,5 +1,6 @@
 package woowacrew.feed.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,7 @@ public class FeedArticles {
     }
 
     public List<FeedArticle> getFeedArticles() {
-        return feedArticles;
+        return Collections.unmodifiableList(feedArticles);
     }
 
     public List<FeedArticle> getNotDuplicatedFeedArticles(FeedArticles savedArticles) {
