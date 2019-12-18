@@ -23,7 +23,7 @@ public class CommonTestController {
 
     protected String loginWithCrew(String oauthId) {
 
-        return loginWith("crew_" + oauthId, UserRole.ROLE_CREW.toString());
+        return loginWith(oauthId, UserRole.ROLE_CREW.toString());
     }
 
     protected String loginWithCoach() {
