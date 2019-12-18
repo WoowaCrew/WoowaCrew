@@ -1,7 +1,15 @@
 package woowacrew.feed.domain;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import woowacrew.feed.utils.RssReader;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 public class FeedSource {
@@ -19,6 +27,19 @@ public class FeedSource {
     public FeedSource(String sourceUrl, String description) {
         this.sourceUrl = sourceUrl;
         this.description = description;
+    }
+
+    public FeedArticles createFeedArticles() {
+        SyndFeed feed = RssReader.readFeed(sourceUrl);
+        List<FeedArticle> feedArticles = feed.getEntries().stream()
+                .map(this::createFeedArticle)
+                .collect(Collectors.toList());
+        return new FeedArticles(feedArticles);
+    }
+
+    private FeedArticle createFeedArticle(SyndEntry entry) {
+        LocalDateTime publishedDate = LocalDateTime.ofInstant(entry.getPublishedDate().toInstant(), ZoneId.systemDefault());
+        return new FeedArticle(entry.getTitle(), entry.getLink(), publishedDate, this);
     }
 
     public Long getId() {
