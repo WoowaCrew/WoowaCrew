@@ -35,7 +35,7 @@ class ArticleTest {
         Article article = new Article("test", "testContent", user);
         FieldSetter.set(user2, "id", 2L);
 
-       assertThrows(MisMatchUserException.class, () -> article.update(user2, "updateTitle", "updateContent"));
+        assertThrows(MisMatchUserException.class, () -> article.update(user2, "updateTitle", "updateContent"));
     }
 
     @Test

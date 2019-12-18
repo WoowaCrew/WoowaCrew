@@ -1,6 +1,7 @@
 package woowacrew.article;
 
 import woowacrew.article.free.domain.ArticleForm;
+import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.user.domain.User;
 
 import javax.persistence.Embeddable;
@@ -23,6 +24,18 @@ public class BasicArticleForm {
     public BasicArticleForm(String title, String content, User author) {
         this.articleForm = new ArticleForm(title, content);
         this.author = author;
+    }
+
+    public void update(User author, String title, String content) {
+        checkAuthor(author);
+
+        articleForm.update(title, content);
+    }
+
+    public void checkAuthor(User requestAuthor) {
+        if (!this.author.equals(requestAuthor)) {
+            throw new MisMatchUserException();
+        }
     }
 
     public String getTitle() {
