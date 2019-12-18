@@ -45,12 +45,9 @@ const ArticleSearchListApp = (() => {
 
         searchByTypeAndNumberOfPageAndContent(type, numberOfPage, content) {
             const articleList = document.getElementById('article-list')
-            const formData = new FormData();
-            formData.append("content", content)
 
-            fetch(BASE_URL + "/api/articles/search?type=" + type + "&page=" + numberOfPage, {
-                method: 'POST',
-                body: formData
+            fetch(BASE_URL + "/api/articles/search?page=" + numberOfPage + "&type=" + type + "&content=" + content,{
+                method: 'GET'
             }).then(response => response.json())
                 .then(articleResponse => {
                     this.renderPageBar(articleResponse.pageNumber, articleResponse.totalPages)

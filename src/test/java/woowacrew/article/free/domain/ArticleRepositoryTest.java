@@ -7,11 +7,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
+@EnableJpaAuditing
 class ArticleRepositoryTest {
 
     @Autowired
@@ -27,7 +29,7 @@ class ArticleRepositoryTest {
     }
 
     @Test
-    void 정상적으로_해당_pageable로_게시글들을_찾는() {
+    void 정상적으로_해당_pageable로_게시글들을_찾는다() {
         Sort sort = new Sort(Sort.Direction.DESC, "createdDate");
         Pageable pageable = PageRequest.of(0, 3, sort);
 
@@ -37,7 +39,7 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_specification과_pageable로_게시물들을_찾는다() {
         Specification<Article> articleSpecification = (Specification<Article>) (root, query, builder) -> {
-            String pattern = "%delete%";
+            String pattern = "%test%";
             return builder.like(root.get("articleForm").get("title"), pattern);
         };
 

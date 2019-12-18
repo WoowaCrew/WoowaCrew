@@ -4,15 +4,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.service.ArticleInternalService;
 import woowacrew.search.service.ArticleSearchService;
 
-@Controller
+@RestController
 @RequestMapping("/api/articles/search")
 public class ArticleSearchApiController {
 
@@ -24,11 +24,11 @@ public class ArticleSearchApiController {
         this.articleSearchService = articleSearchService;
     }
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<ArticleResponseDtos> list(
-            @RequestParam String type,
             @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = ID, direction = Sort.Direction.DESC) Pageable pageable,
-            String content) {
+            @RequestParam String type,
+            @RequestParam String content) {
         return ResponseEntity.ok(articleSearchService.findAll(type, content, pageable));
     }
 }
