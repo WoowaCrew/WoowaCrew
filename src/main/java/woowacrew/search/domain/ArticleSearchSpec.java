@@ -40,6 +40,9 @@ public class ArticleSearchSpec {
         }
     }
 
+    private ArticleSearchSpec() {
+    }
+
     public static Specification<Article> getSpec(String type, String content) {
         ArticleSearchKey articleSearchKey = ArticleSearchKey.find(type);
         String pattern = createPattern(content);
