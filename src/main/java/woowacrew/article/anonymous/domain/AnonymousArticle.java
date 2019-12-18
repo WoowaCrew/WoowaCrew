@@ -5,6 +5,7 @@ import woowacrew.article.free.domain.ArticleForm;
 import woowacrew.common.domain.TimeEntity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class AnonymousArticle extends TimeEntity {
@@ -48,5 +49,31 @@ public class AnonymousArticle extends TimeEntity {
 
     public boolean isApproved() {
         return isApproved;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AnonymousArticle that = (AnonymousArticle) o;
+        return isApproved == that.isApproved &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(articleForm, that.articleForm) &&
+                Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, articleForm, password, isApproved);
+    }
+
+    @Override
+    public String toString() {
+        return "AnonymousArticle{" +
+                "id=" + id +
+                ", articleForm=" + articleForm +
+                ", password=" + password +
+                ", isApproved=" + isApproved +
+                '}';
     }
 }
