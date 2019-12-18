@@ -9,7 +9,9 @@ public class FeedArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String title;
+    @Column(unique = true, nullable = false)
     private String link;
     private LocalDateTime publishedDate;
     @ManyToOne
@@ -23,6 +25,10 @@ public class FeedArticle {
         this.link = link;
         this.publishedDate = publishedDate;
         this.feedSource = feedSource;
+    }
+
+    public boolean isSameLink(FeedArticle feedArticle) {
+        return this.link.equals(feedArticle.link);
     }
 
     public Long getId() {
