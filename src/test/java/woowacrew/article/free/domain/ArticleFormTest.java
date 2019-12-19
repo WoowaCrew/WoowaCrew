@@ -9,7 +9,7 @@ class ArticleFormTest {
     @Test
     void 업데이트_테스트() {
         ArticleForm articleForm = new ArticleForm("test", "testContent");
-        articleForm.updateArticle("test2", "testContent2");
+        articleForm.update("test2", "testContent2");
 
         assertThat(articleForm.getTitle()).isEqualTo("test2");
         assertThat(articleForm.getContent()).isEqualTo("testContent2");

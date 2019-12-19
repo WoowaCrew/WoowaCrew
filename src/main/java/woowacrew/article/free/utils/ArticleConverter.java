@@ -1,6 +1,7 @@
 package woowacrew.article.free.utils;
 
 import org.springframework.data.domain.Page;
+import woowacrew.article.crew.domain.CrewArticle;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.dto.ArticleRequestDto;
 import woowacrew.article.free.dto.ArticleResponseDto;
@@ -13,7 +14,12 @@ import java.util.stream.Collectors;
 public class ArticleConverter {
     public static ArticleResponseDto articleToArticleResponseDto(Article article) {
         return new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent(),
-                UserConverter.userToUserResponseDto(article.getUser()), article.getCreatedDate(), article.getLastModifiedDate());
+                UserConverter.userToUserResponseDto(article.getAuthor()), article.getCreatedDate(), article.getLastModifiedDate());
+    }
+
+    public static ArticleResponseDto crewArticleToArticleResponseDto(CrewArticle article) {
+        return new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent(),
+                UserConverter.userToUserResponseDto(article.getAuthor()), article.getCreatedDate(), article.getLastModifiedDate());
     }
 
     public static List<ArticleResponseDto> articlePagesToArticleResponseDtos(Page<Article> articlePages) {
