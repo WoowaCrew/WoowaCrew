@@ -14,7 +14,7 @@ const CommentTemplates = (() => {
           <div class="comment-content">
               ${comment.content}
           </div>
-          <div>
+          <div class="comment-info">
               <span class="comment-author">${comment.userNickName}</span>
               <span class="comment-create-date-time">${convertTime(comment.createDateTime)}</span>
           </div>
