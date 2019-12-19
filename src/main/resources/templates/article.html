@@ -18,6 +18,7 @@
 <div class="article-info">
     <div id="article-header">
         <div class="article-title">
+            <input hidden id="article-id"/>
             <div class="title" id="article-title"></div>
             <div class="userInfo" id="article-userInfo"></div>
         </div>
@@ -30,17 +31,21 @@
     <div id="comment-area">
         <div id="comment-editor-group">
             <div class="comment-editor">
-                <textarea></textarea>
+                <textarea id="comment-content"></textarea>
             </div>
             <div class="comment-editor-button-group">
-                <span class="comment-button">등록</span>
+                <span class="comment-button" onclick="CommentListApp.createComment()">등록</span>
             </div>
         </div>
+        <div id="comment-list">
 
+        </div>
     </div>
 </div>
 </body>
 <!--  SCRIPT  -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
+<script src="/js/comment-template.js"></script>
+<script src="/js/comment.js"></script>
 <script src="/js/article.js"></script>
 </html>
