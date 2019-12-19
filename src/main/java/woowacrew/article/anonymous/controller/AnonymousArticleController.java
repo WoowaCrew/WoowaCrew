@@ -1,11 +1,16 @@
 package woowacrew.article.anonymous.controller;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
+import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
 import woowacrew.article.anonymous.service.AnonymousArticleInternalService;
 import woowacrew.article.anonymous.service.AnonymousArticleService;
 
@@ -16,12 +21,19 @@ import java.net.URI;
 public class AnonymousArticleController {
 
     private final AnonymousArticleService anonymousArticleService;
-    private final AnonymousArticleInternalService anonymousArticleInternalService;
 
-    public AnonymousArticleController(AnonymousArticleService anonymousArticleService,
-                                      AnonymousArticleInternalService anonymousArticleInternalService) {
+    public AnonymousArticleController(AnonymousArticleService anonymousArticleService) {
         this.anonymousArticleService = anonymousArticleService;
-        this.anonymousArticleInternalService = anonymousArticleInternalService;
+    }
+
+    @GetMapping("/approved")
+    public ResponseEntity<AnonymousArticleResponseDtos> approvedList(
+            @PageableDefault(
+                    size = AnonymousArticleInternalService.DEFAULT_ANONYMOUS_ARTICLE_PAGE_SIZE,
+                    sort = "id",
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable) {
+        return ResponseEntity.ok(anonymousArticleService.findApprovedAnonymousArticles(pageable));
     }
 
     @PostMapping

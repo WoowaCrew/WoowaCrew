@@ -2,16 +2,20 @@ package woowacrew.article.anonymous.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 class AnonymousArticleRepositoryTest {
+    private static final Logger log = LoggerFactory.getLogger(AnonymousArticleRepositoryTest.class);
 
     @Autowired
     private AnonymousArticleRepository anonymousArticleRepository;
@@ -19,20 +23,19 @@ class AnonymousArticleRepositoryTest {
     @Test
     @DisplayName("승인된 익명 게시글 목록 조회")
     void approvedAnonymousArticleList() {
-        List<AnonymousArticle> articles = anonymousArticleRepository.findByIsApproved(true);
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<AnonymousArticle> articles = anonymousArticleRepository.findByIsApproved(true, pageable);
 
-        for (AnonymousArticle anonymousArticle : articles) {
-            assertTrue(anonymousArticle.isApproved());
-        }
+
+        articles.forEach(anonymousArticle -> assertTrue(anonymousArticle.isApproved()));
     }
 
     @Test
     @DisplayName("승인되지 않은 익명 게시글 목록 조회")
     void unapprovedAnonymousArticleList() {
-        List<AnonymousArticle> articles = anonymousArticleRepository.findByIsApproved(false);
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<AnonymousArticle> articles = anonymousArticleRepository.findByIsApproved(false, pageable);
 
-        for (AnonymousArticle anonymousArticle : articles) {
-            assertFalse(anonymousArticle.isApproved());
-        }
+        articles.forEach(anonymousArticle -> assertFalse(anonymousArticle.isApproved()));
     }
 }

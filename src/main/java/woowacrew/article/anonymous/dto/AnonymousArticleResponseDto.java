@@ -7,6 +7,9 @@ public class AnonymousArticleResponseDto {
     private String content;
     private boolean isApproved;
 
+    private AnonymousArticleResponseDto() {
+    }
+
     public AnonymousArticleResponseDto(Long anonymousArticleId, String title, String content, boolean isApproved) {
         this.anonymousArticleId = anonymousArticleId;
         this.title = title;
@@ -26,7 +29,17 @@ public class AnonymousArticleResponseDto {
         return content;
     }
 
-    public boolean isApproved() {
+    public boolean getIsApproved() {
         return isApproved;
+    }
+
+    @Override
+    public String toString() {
+        return "AnonymousArticleResponseDto{" +
+                "anonymousArticleId=" + anonymousArticleId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", isApproved=" + isApproved +
+                '}';
     }
 }
