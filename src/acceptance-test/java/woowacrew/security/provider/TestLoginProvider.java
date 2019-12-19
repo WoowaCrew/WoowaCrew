@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import woowacrew.common.service.FieldSetter;
 import woowacrew.degree.domain.Degree;
 import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.oauth.OauthService;
@@ -41,6 +42,7 @@ public class TestLoginProvider extends SocialLoginAuthenticationProvider {
                 .orElseThrow(() -> new IllegalArgumentException("권한 못찾음"));
         User user = userRepository.findByOauthId(oauthId)
                 .orElseGet(() -> userRepository.save(new User(oauthId, userRole, degree)));
+        FieldSetter.set(user, "role", userRole);
 
         UserContext userContext = new ModelMapper().map(user, UserContext.class);
         return new SocialPostAuthorizationToken(userContext, userContext, Arrays.asList(new SimpleGrantedAuthority(userRole.toString())));

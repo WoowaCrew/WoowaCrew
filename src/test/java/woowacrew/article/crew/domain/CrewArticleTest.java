@@ -1,4 +1,4 @@
-package woowacrew.article.free.domain;
+package woowacrew.article.crew.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import woowacrew.user.domain.User;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ArticleTest {
+class crewArticleTest {
     private User user;
     private User user2;
 
@@ -23,7 +23,7 @@ class ArticleTest {
 
     @Test
     void 업데이트_작성자일_경우_테스트() {
-        Article article = new Article("test", "testContent", user);
+        CrewArticle article = new CrewArticle("test", "testContent", user);
         article.update(user, "updateTitle", "updateContent");
 
         assertThat(article.getTitle()).isEqualTo("updateTitle");
@@ -32,7 +32,7 @@ class ArticleTest {
 
     @Test
     void 업데이트_작성자가_아닐_경우_테스트() {
-        Article article = new Article("test", "testContent", user);
+        CrewArticle article = new CrewArticle("test", "testContent", user);
         FieldSetter.set(user2, "id", 2L);
 
         assertThrows(MisMatchUserException.class, () -> article.update(user2, "updateTitle", "updateContent"));
@@ -40,9 +40,16 @@ class ArticleTest {
 
     @Test
     void 작성자가_아닐_경우_테스트() {
-        Article article = new Article("test", "testContent", user);
+        CrewArticle article = new CrewArticle("test", "testContent", user);
         FieldSetter.set(user2, "id", 2L);
 
         assertThrows(MisMatchUserException.class, () -> article.checkAuthor(user2));
+    }
+
+    @Test
+    void 게시글의_작성자와_요청자의_기수가_같은지_확인한다() {
+        CrewArticle article = new CrewArticle("test", "testContent", user);
+
+        assertThat(article.isAccessible(user)).isTrue();
     }
 }

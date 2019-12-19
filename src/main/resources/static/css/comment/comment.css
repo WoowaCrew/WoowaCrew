@@ -1,0 +1,41 @@
+#comment-editor-group {
+    width: 100%;
+    margin-top: 40px;
+}
+
+#comment-editor-group textarea {
+    width: 100%;
+    height: 70px;
+    background-color: black;
+    color: white;
+    font-size: 1.5rem;
+    resize: none;
+    padding: 0;
+    border-radius: 5px;
+    border: 2px solid white;
+    outline: none;
+}
+
+.comment-editor-button-group {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.comment-button {
+    font-size: 1.3rem;
+    float: right;
+}
+
+.comment-button:hover {
+    cursor: pointer;
+    color: white;
+    transition: 0.5s;
+}
+
+.comment-content {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 10px
+}

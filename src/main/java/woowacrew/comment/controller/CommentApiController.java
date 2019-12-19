@@ -20,8 +20,8 @@ public class CommentApiController {
     }
 
     @PostMapping
-    public ResponseEntity<CommentResponseDto> create(CommentRequestDto commentRequestDto, UserContext userContext) {
-        return ResponseEntity.ok(commentService.save(commentRequestDto, userContext));
+    public ResponseEntity<CommentResponseDto> create(@PathVariable Long articleId, CommentRequestDto commentRequestDto, UserContext userContext) {
+        return ResponseEntity.ok(commentService.save(articleId, commentRequestDto, userContext));
     }
 
     @GetMapping

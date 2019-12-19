@@ -31,7 +31,7 @@ class CommentServiceTest {
     @Mock
     private CommentInternalService commentInternalService;
 
-    private CommentRequestDto commentRequestDto = new CommentRequestDto(1L, "textContent");
+    private CommentRequestDto commentRequestDto = new CommentRequestDto("textContent");
     private User author = new User("zino", new Degree());
     private Article article = new Article("title", "content", author);
     private UserContext userContext = new UserContext(1L, "test", "test", UserRole.ROLE_CREW);
@@ -41,8 +41,8 @@ class CommentServiceTest {
 
     @Test
     void Comment_생성_테스트() {
-        given(commentInternalService.save(commentRequestDto, userContext)).willReturn(comment);
-        CommentResponseDto commentResponseDto = commentService.save(commentRequestDto, userContext);
+        given(commentInternalService.save(1L, commentRequestDto, userContext)).willReturn(comment);
+        CommentResponseDto commentResponseDto = commentService.save(1L,commentRequestDto, userContext);
 
         assertThat(commentResponseDto.getUserNickName()).isEqualTo(author.getNickname());
         assertThat(commentResponseDto.getContent()).isEqualTo(commentRequestDto.getContent());

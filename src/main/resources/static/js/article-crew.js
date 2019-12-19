@@ -3,15 +3,13 @@ function article() {
   const articleId = articleUrl[articleUrl.length - 1]
   const origin = window.location.origin
 
-  fetch(origin + "/api/articles/" + articleId, {
+  fetch(origin + "/api/articles/crew/" + articleId, {
     method: 'GET'
   }).then(response => response.json())
       .then(article => {
-        const articleIdArea = document.getElementById("article-id")
         const articleTitle = document.getElementById('article-title')
         const articleUserInfo = document.getElementById('article-userInfo')
 
-        articleIdArea.innerText = articleId;
         articleTitle.innerHTML += article.title
         articleUserInfo.innerHTML += article.userResponseDto.nickname
 
@@ -21,7 +19,6 @@ function article() {
           height: '100%',
           initialValue: article.content
         })
-        CommentListApp.showComments()
       })
       .catch(error => {
         console.log(error)
@@ -29,14 +26,14 @@ function article() {
       });
 
   const editButton = document.getElementById('article-edit-button')
-  editButton.addEventListener('click', () => window.location.href = origin + "/articles/" + articleId + "/edit")
+  editButton.addEventListener('click', () => window.location.href = origin + "/articles/crew/" + articleId + "/edit")
 
   const deleteButton = document.getElementById('article-delete-button')
   deleteButton.addEventListener('click', () => {
-    fetch(origin + "/api/articles/" + articleId, {
+    fetch(origin + "/api/articles/crew/" + articleId, {
       method: 'DELETE'
     })
-      .then(() => window.location.href = origin + '/articles')
+      .then(() => window.location.href = origin + '/articles/crew')
   })
 }
 
