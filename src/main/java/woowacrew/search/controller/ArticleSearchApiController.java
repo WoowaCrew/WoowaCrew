@@ -29,6 +29,6 @@ public class ArticleSearchApiController {
             @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = ID, direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam String type,
             @RequestParam String content) {
-        return ResponseEntity.ok(articleSearchService.findAll(type, content, pageable));
+        return ResponseEntity.ok(articleSearchService.search(type, content, pageable));
     }
 }

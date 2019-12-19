@@ -47,7 +47,7 @@ class ArticleSearchServiceTest {
 
         when(mockArticleSearchInternalService.findAll(any(), any())).thenReturn(articlePages);
 
-        ArticleResponseDtos actual = articleSearchService.findAll("title", "delete", mockPageable);
+        ArticleResponseDtos actual = articleSearchService.search("title", "delete", mockPageable);
 
         assertThat(actual.getArticles().size()).isEqualTo(3);
         assertThat(actual.getPageNumber()).isEqualTo(1);

@@ -21,7 +21,7 @@ public class ArticleSearchService {
         this.articleSearchInternalService = articleSearchInternalService;
     }
 
-    public ArticleResponseDtos findAll(String searchType, String content, Pageable pageable) {
+    public ArticleResponseDtos search(String searchType, String content, Pageable pageable) {
         Specification<Article> specification = ArticleSearchSpec.getSpec(searchType, content);
         Page<Article> articlePages = articleSearchInternalService.findAll(specification, pageable);
         List<ArticleResponseDto> articleResponseDtos = ArticleConverter.articlePagesToArticleResponseDtos(articlePages);
