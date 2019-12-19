@@ -1,5 +1,6 @@
 .feed-info {
     font-size: 25px;
+    padding: 10px 0;
 }
 
 .feed-info-title {
@@ -24,6 +25,6 @@
     margin-bottom: 5px;
 }
 
-.feed-info {
-    padding: 10px 0;
+.feed-info:hover {
+    cursor: pointer;
 }
