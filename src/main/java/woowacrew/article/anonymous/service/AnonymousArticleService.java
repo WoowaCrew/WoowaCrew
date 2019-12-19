@@ -44,4 +44,8 @@ public class AnonymousArticleService {
                 .stream().map(AnonymousArticleConverter::toDto)
                 .collect(Collectors.toList());
     }
+
+    public AnonymousArticleResponseDto approve(Long anonymousArticleId) {
+        return AnonymousArticleConverter.toDto(anonymousArticleInternalService.approve(anonymousArticleId));
+    }
 }

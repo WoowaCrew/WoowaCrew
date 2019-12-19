@@ -72,4 +72,22 @@ public class AnonymousArticleControllerTest extends CommonTestController {
         anonymousArticles.forEach(anonymousArticleResponseDto ->
                 assertFalse(anonymousArticleResponseDto.getIsApproved()));
     }
+
+    @Test
+    void 게시글_승인_테스트() {
+        Long unapprovedArticleId = 4L;
+        String cookie = loginWithAdmin();
+
+        AnonymousArticleResponseDto anonymousArticle =
+                webTestClient.put()
+                        .uri("/api/articles/anonymous/{anonymousArticleId}/approve", unapprovedArticleId)
+                        .header("Cookie", cookie)
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBody(AnonymousArticleResponseDto.class)
+                        .returnResult()
+                        .getResponseBody();
+
+        assertTrue(anonymousArticle.getIsApproved());
+    }
 }

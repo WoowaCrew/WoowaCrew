@@ -4,10 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
@@ -49,5 +46,10 @@ public class AnonymousArticleController {
         return ResponseEntity
                 .created(URI.create("/api/articles/anonymous/" + anonymousArticleResponseDto.getAnonymousArticleId()))
                 .body(anonymousArticleResponseDto);
+    }
+
+    @PutMapping("/{anonymousArticleId}/approve")
+    public ResponseEntity<AnonymousArticleResponseDto> approve(@PathVariable Long anonymousArticleId) {
+        return ResponseEntity.ok(anonymousArticleService.approve(anonymousArticleId));
     }
 }
