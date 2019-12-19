@@ -41,3 +41,7 @@ INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title
 INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title4','link4','2019-10-04T00:00:00',1);
 INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title5','link5','2019-10-05T00:00:00',1);
 INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title6','link6','2019-10-06T00:00:00',1);
+
+
+INSERT INTO crew_article(title,content,author) values('1기 게시글','1기 게시글',1);
+INSERT INTO crew_article(title,content,author) values('2기 게시글','2기 게시글',7);

@@ -1,8 +1,9 @@
 package woowacrew.user.domain;
 
-import woowacrew.degree.domain.Degree;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import woowacrew.common.service.FieldSetter;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.exception.ForbiddenUserException;
 import woowacrew.user.domain.exception.NotExistNicknameException;
 
@@ -69,5 +70,17 @@ class UserTest {
         updateDegree.update(1);
         assertThatThrownBy(() -> user.updateByAdmin(admin, UserRole.ROLE_CREW, updateDegree))
                 .isInstanceOf(ForbiddenUserException.class);
+    }
+
+    @Test
+    @DisplayName("동기인지 확인한다")
+    void isSameDegree() {
+        Degree degree = new Degree();
+        FieldSetter.set(degree, "id", 1L);
+
+        User user1 = new User("oauthId", degree);
+        User user2 = new User("oauthId2", degree);
+
+        assertThat(user1.isSameDegree(user2)).isTrue();
     }
 }

@@ -13,8 +13,9 @@ public class ArticleSearchSpec {
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
 
-    private static final String AUTHOR_TO = "user";
+    private static final String AUTHOR_TO = "author";
     private static final String NICKNAME = "nickname";
+    private static final String BASIC_ARTICLE_FORM = "basicArticleForm";
 
     public enum ArticleSearchKey {
         TITLE("title"),
@@ -68,13 +69,13 @@ public class ArticleSearchSpec {
     }
 
     private static Specification<Article> createSpecBy(String pattern, String firstFieldPath, String secondFieldPath) {
-        return (Specification<Article>) (root, query, builder) -> builder.like(root.get(firstFieldPath).get(secondFieldPath), pattern);
+        return (Specification<Article>) (root, query, builder) -> builder.like(root.get(BASIC_ARTICLE_FORM).get(firstFieldPath).get(secondFieldPath), pattern);
     }
 
     private static Specification<Article> createSpecByTitleOrContent(String pattern) {
         return (Specification<Article>) (root, query, builder) -> {
-            Predicate containTitle = builder.like(root.get(ARTICLE_FORM_TO).get(TITLE), pattern);
-            Predicate containAuthor = builder.like(root.get(ARTICLE_FORM_TO).get(CONTENT), pattern);
+            Predicate containTitle = builder.like(root.get(BASIC_ARTICLE_FORM).get(ARTICLE_FORM_TO).get(TITLE), pattern);
+            Predicate containAuthor = builder.like(root.get(BASIC_ARTICLE_FORM).get(ARTICLE_FORM_TO).get(CONTENT), pattern);
             return builder.or(containTitle, containAuthor);
         };
     }

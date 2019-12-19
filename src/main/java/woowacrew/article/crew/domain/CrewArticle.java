@@ -1,4 +1,4 @@
-package woowacrew.article.free.domain;
+package woowacrew.article.crew.domain;
 
 import woowacrew.article.BasicArticleForm;
 import woowacrew.common.domain.TimeEntity;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class Article extends TimeEntity {
+public class CrewArticle extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,10 +17,10 @@ public class Article extends TimeEntity {
     @Embedded
     private BasicArticleForm basicArticleForm;
 
-    private Article() {
+    private CrewArticle() {
     }
 
-    public Article(String title, String content, User author) {
+    public CrewArticle(String title, String content, User author) {
         this.basicArticleForm = new BasicArticleForm(title, content, author);
     }
 
@@ -30,6 +30,11 @@ public class Article extends TimeEntity {
 
     public void checkAuthor(User requestAuthor) {
         basicArticleForm.checkAuthor(requestAuthor);
+    }
+
+    public boolean isAccessible(User requestAuthor) {
+        User author = basicArticleForm.getAuthor();
+        return author.isSameDegree(requestAuthor);
     }
 
     public Long getId() {
@@ -60,8 +65,8 @@ public class Article extends TimeEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
-        return Objects.equals(id, article.id);
+        CrewArticle that = (CrewArticle) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
@@ -71,7 +76,7 @@ public class Article extends TimeEntity {
 
     @Override
     public String toString() {
-        return "Article{" +
+        return "CrewArticle{" +
                 "id=" + id +
                 ", basicArticleForm=" + basicArticleForm +
                 ", createdDate=" + createdDate +
