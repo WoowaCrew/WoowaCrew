@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/config :: configFragment"/>
+
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
+    <link href="/css/editor.css" rel="stylesheet">
+    <link href="/css/article/article-editor-preview.css" rel="stylesheet">
+    <title>WoowaCrew</title>
+</head>
+
+<body>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+<div class="">
+    <form id="article-edit" action="" method="post">
+        <input id="title" name="title" type="text" placeholder="제목을 입력해 주세요.">
+        <div id="editSection"></div>
+        <input id="article-contents" name="content" type="hidden">
+        <div class="edit-button-group">
+            <span id="edit-cancel-button" onclick="location.href='/articles'">취소</span>
+            <span id="article-update-button">저장</span>
+        </div>
+    </form>
+</div>
+</body>
+
+<!--  SCRIPT  -->
+<script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
+<script src="/js/article-crew-edit.js"></script>
+</html>

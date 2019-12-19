@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/config :: configFragment"/>
+
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
+    <link href="/css/article-list.css" rel="stylesheet">
+    <link href="/css/search/article-search.css" rel="stylesheet">
+    <title>WoowaCrew</title>
+</head>
+
+<body>
+<th:block th:replace="fragments/header/header :: headerFragment"/>
+<div id="article-page-title">
+    <div class="article-page-title">크루게시판</div>
+    <i class="fa fa-lg fa-pencil" id="article-create-icon" onclick="ArticleListApp.showArticleEditPage()"></i>
+</div>
+<div id="article-list">
+    <input type="hidden" id="article-search-value" value="">
+</div>
+<div class="article-list-footer">
+    <div id="page-bar">
+    </div>
+    <div id="edit-bar">
+        <div class="search-type-select-box">
+            <select class="search-type">
+                <option value="title" selected="selected">제목</option>
+                <option value="titleWithContent">제목 + 내용</option>
+                <option value="author">작성자</option>
+            </select>
+        </div>
+        <input type="text" class="search-form" onkeyup="ArticleSearchListApp.searchByEnterKey(event, 1)">
+        <button type="button" class="search-button" onclick="ArticleSearchListApp.searchByNumberOfPage(1)">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</div>
+</body>
+<!--  SCRIPT  -->
+<script src="/js/article-crew-list.js"></script>
+<!--<script src="/js/article-search-list.js"></script>-->
+<script src="/js/article-crew-template.js"></script>
+<!--<script src="/js/article-search-template.js"></script>-->
+<script>
+  CrewArticleListApp.showArticles(1)
+</script>
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+</html>
