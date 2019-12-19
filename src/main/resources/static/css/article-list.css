@@ -1,6 +1,6 @@
 #article-list {
     max-width: 700px;
-    margin-top: 100px;
+    margin-top: 40px;
     color: #A0A0A0;
     margin-left: auto;
     margin-right: auto;
@@ -98,10 +98,6 @@ div.page-number:hover, div.prev-bar:hover, div.next-bar:hover {
     color: white;
 }
 
-.search-form {
-    display: inline-block;
-}
-
 .search-button {
     display: inline-block;
 }
@@ -116,4 +112,21 @@ div.page-number:hover, div.prev-bar:hover, div.next-bar:hover {
 
 .article-info:hover {
     cursor: pointer;
+}
+
+#article-page-title {
+    margin-top: 5%;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+}
+
+#article-page-title .article-page-title {
+    display: inline-block;
+    font-size: 30px;
+}
+
+#article-page-title .fa-pencil {
+    margin-left: 12px;
 }
