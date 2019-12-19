@@ -1,8 +1,6 @@
 package woowacrew.article.anonymous.controller;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -18,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AnonymousArticleControllerTest extends CommonTestController {
-    private static final Logger log = LoggerFactory.getLogger(AnonymousArticleControllerTest.class);
 
     @Autowired
     private WebTestClient webTestClient;
@@ -64,7 +61,7 @@ public class AnonymousArticleControllerTest extends CommonTestController {
 
         List<AnonymousArticleResponseDto> anonymousArticles =
                 webTestClient.get()
-                        .uri("/api/articles/anonymous/unapproved?page=0")
+                        .uri("/api/articles/anonymous/unapproved")
                         .header("Cookie", cookie)
                         .exchange()
                         .expectStatus().isOk()
