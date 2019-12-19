@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.article.crew.domain.CrewArticle;
 import woowacrew.article.crew.domain.CrewArticleRepository;
+import woowacrew.article.crew.exception.CrewArticleAccessDenyException;
 import woowacrew.article.free.dto.ArticleRequestDto;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.exception.InvalidPageRequstException;
@@ -63,24 +64,48 @@ class CrewArticleInternalServiceTest {
     void 게시글_조회_테스트() {
         String title = "title";
         String content = "content";
-        User user = new User("asd", new Degree());
+        String oauthId = "oauthId";
+        UserContext userContext = new UserContext(oauthId);
+        User user = new User(oauthId, new Degree());
         CrewArticle article = new CrewArticle(title, content, user);
+        when(userInternalService.findById(any())).thenReturn(user);
         when(crewArticleRepository.findById(1L)).thenReturn(Optional.of(article));
 
-        CrewArticle expectedArticle = crewArticleInternalService.findById(1L);
+        CrewArticle expectedArticle = crewArticleInternalService.findById(1L, userContext);
         assertThat(expectedArticle.getTitle()).isEqualTo(title);
         assertThat(expectedArticle.getContent()).isEqualTo("content");
     }
 
     @Test
     void 없는_게시글_조회_테스트() {
-        String title = "title";
-        String content = "content";
-        User user = new User("asd", new Degree());
-        CrewArticle article = new CrewArticle(title, content, user);
+        String oauthId = "oauthId";
+        UserContext userContext = new UserContext(oauthId);
+        User user = new User(oauthId, new Degree());
+        when(userInternalService.findById(any())).thenReturn(user);
         when(crewArticleRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundArticleException.class, () -> crewArticleInternalService.findById(1L));
+        assertThrows(NotFoundArticleException.class, () -> crewArticleInternalService.findById(1L, userContext));
+    }
+
+    @Test
+    void 기수가_일치하지않는_게시글_접근시_에러가_발생한다() {
+        String title = "title";
+        String content = "content";
+        String oauthId = "oauthId";
+        UserContext userContext = new UserContext(oauthId);
+        Degree degree = new Degree();
+        FieldSetter.set(degree, "id", 1L);
+        Degree degree1 = new Degree();
+        FieldSetter.set(degree1, "id", 0L);
+        User user = new User(oauthId, degree);
+        User requestUser = new User("oauthId2", degree1);
+        CrewArticle article = new CrewArticle(title, content, user);
+        when(userInternalService.findById(any())).thenReturn(requestUser);
+        when(crewArticleRepository.findById(1L)).thenReturn(Optional.of(article));
+
+        assertThrows(CrewArticleAccessDenyException.class, () -> crewArticleInternalService.findById(1L, userContext));
+
+
     }
 
     @Test

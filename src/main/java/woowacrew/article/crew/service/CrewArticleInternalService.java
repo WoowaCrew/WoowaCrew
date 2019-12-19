@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.crew.domain.CrewArticle;
 import woowacrew.article.crew.domain.CrewArticleRepository;
+import woowacrew.article.crew.exception.CrewArticleAccessDenyException;
 import woowacrew.article.free.dto.ArticleRequestDto;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.exception.InvalidPageRequstException;
@@ -36,9 +37,14 @@ public class CrewArticleInternalService {
     }
 
     @Transactional(readOnly = true)
-    public CrewArticle findById(long articleId) {
-        return crewArticleRepository.findById(articleId)
+    public CrewArticle findById(long articleId, UserContext userContext) {
+        User author = userInternalService.findById(userContext.getId());
+        CrewArticle crewArticle = crewArticleRepository.findById(articleId)
                 .orElseThrow(NotFoundArticleException::new);
+        if (crewArticle.isAccessible(author)) {
+            return crewArticle;
+        }
+        throw new CrewArticleAccessDenyException();
     }
 
     @Transactional(readOnly = true)
@@ -53,7 +59,7 @@ public class CrewArticleInternalService {
 
     public CrewArticle update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
         User user = userInternalService.findById(userContext.getId());
-        CrewArticle article = findById(articleUpdateDto.getArticleId());
+        CrewArticle article = findById(articleUpdateDto.getArticleId(), userContext);
 
         article.update(user, articleUpdateDto.getTitle(), articleUpdateDto.getContent());
 
@@ -62,7 +68,7 @@ public class CrewArticleInternalService {
 
     public void delete(Long articleId, UserContext userContext) {
         User user = userInternalService.findById(userContext.getId());
-        CrewArticle article = findById(articleId);
+        CrewArticle article = findById(articleId, userContext);
 
         article.checkAuthor(user);
 
@@ -71,7 +77,7 @@ public class CrewArticleInternalService {
 
     @Transactional(readOnly = true)
     public void checkAuthor(Long articleId, UserContext userContext) {
-        CrewArticle article = findById(articleId);
+        CrewArticle article = findById(articleId, userContext);
         User user = userInternalService.findById(userContext.getId());
 
         article.checkAuthor(user);

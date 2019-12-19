@@ -27,8 +27,8 @@ public class CrewArticleService {
         return ArticleConverter.crewArticleToArticleResponseDto(article);
     }
 
-    public ArticleResponseDto findById(Long articleId) {
-        return ArticleConverter.crewArticleToArticleResponseDto(crewArticleInternalService.findById(articleId));
+    public ArticleResponseDto findById(Long articleId, UserContext userContext) {
+        return ArticleConverter.crewArticleToArticleResponseDto(crewArticleInternalService.findById(articleId, userContext));
     }
 
     public ArticleResponseDtos findAllByCrew(UserContext userContext, Pageable pageable) {

@@ -45,4 +45,11 @@ class crewArticleTest {
 
         assertThrows(MisMatchUserException.class, () -> article.checkAuthor(user2));
     }
+
+    @Test
+    void 게시글의_작성자와_요청자의_기수가_같은지_확인한다() {
+        CrewArticle article = new CrewArticle("test", "testContent", user);
+
+        assertThat(article.isAccessible(user)).isTrue();
+    }
 }

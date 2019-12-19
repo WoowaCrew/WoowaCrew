@@ -32,6 +32,11 @@ public class CrewArticle extends TimeEntity {
         basicArticleForm.checkAuthor(requestAuthor);
     }
 
+    public boolean isAccessible(User requestAuthor) {
+        User author = basicArticleForm.getAuthor();
+        return author.isSameDegree(requestAuthor);
+    }
+
     public Long getId() {
         return id;
     }

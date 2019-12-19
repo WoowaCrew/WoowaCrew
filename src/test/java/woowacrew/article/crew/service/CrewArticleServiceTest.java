@@ -48,11 +48,12 @@ class CrewArticleServiceTest {
 
     @Test
     void 원하는_게시글을_ArticleResponse로_변환해준다() {
+        UserContext userContext = new UserContext("oauthId");
         CrewArticle article = new CrewArticle("title", "content", new User("userId", new Degree()));
         Long articleId = 1L;
-        when(crewArticleInternalService.findById(articleId)).thenReturn(article);
+        when(crewArticleInternalService.findById(articleId, userContext)).thenReturn(article);
 
-        ArticleResponseDto articleResponseDto = crewArticleService.findById(articleId);
+        ArticleResponseDto articleResponseDto = crewArticleService.findById(articleId, userContext);
 
         assertThat(articleResponseDto.getTitle()).isEqualTo("title");
         assertThat(articleResponseDto.getContent()).isEqualTo("content");
