@@ -10,6 +10,9 @@ INSERT INTO article (id, title, content, author) VALUES (7, 'article', 'testspec
 INSERT INTO article (id, title, content, author) VALUES (8, 'article', 'spec', 1);
 INSERT INTO article (id, title, content, author) VALUES (9, 'spec', 'test spec', 1);
 
+INSERT INTO comment (id, content, author, article) VALUES (1, 'comment content1', 1, 1);
+INSERT INTO comment (id, content, author, article) VALUES (2, 'comment content2', 1, 1);
+
 INSERT INTO keyword(content, views) VALUES ('test A', 1L);
 INSERT INTO keyword(content, views) VALUES ('test B', 1L);
 INSERT INTO keyword(content, views) VALUES ('test C', 1L);

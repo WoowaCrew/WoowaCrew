@@ -36,7 +36,7 @@ public class Article extends AbstractArticle {
     }
 
     public void checkAuthor(User user) {
-        if (!this.user.equals(user)) {
+        if (!this.user.isSameUser(user)) {
             throw new MisMatchUserException();
         }
     }
