@@ -27,7 +27,7 @@ public class AnonymousArticleInternalService {
 
     public AnonymousArticle save(AnonymousArticleRequestDto anonymousArticleRequestDto) {
         AnonymousArticle anonymousArticle =
-                AnonymousArticleConverter.anonymousArticleRequestDtoToArticle(anonymousArticleRequestDto);
+                AnonymousArticleConverter.toEntity(anonymousArticleRequestDto);
         return anonymousArticleRepository.save(anonymousArticle);
     }
 

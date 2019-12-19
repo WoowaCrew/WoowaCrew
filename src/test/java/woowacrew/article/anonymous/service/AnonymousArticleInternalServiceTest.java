@@ -46,7 +46,7 @@ class AnonymousArticleInternalServiceTest {
         AnonymousArticleRequestDto anonymousArticleRequestDto
                 = new AnonymousArticleRequestDto(title, content, password);
         AnonymousArticle anonymousArticle =
-                AnonymousArticleConverter.anonymousArticleRequestDtoToArticle(anonymousArticleRequestDto);
+                AnonymousArticleConverter.toEntity(anonymousArticleRequestDto);
 
         when(anonymousArticleRepository.save(any(AnonymousArticle.class))).thenReturn(anonymousArticle);
 

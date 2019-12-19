@@ -46,6 +46,10 @@ public class AnonymousArticle extends TimeEntity {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getTitle() {
         return articleForm.getTitle();
     }
