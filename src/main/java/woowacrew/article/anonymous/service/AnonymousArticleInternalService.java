@@ -12,6 +12,8 @@ import woowacrew.article.anonymous.exception.NotFoundAnonymousArticleException;
 import woowacrew.article.anonymous.utils.AnonymousArticleConverter;
 import woowacrew.article.free.exception.InvalidPageRequstException;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class AnonymousArticleInternalService {
@@ -47,6 +49,11 @@ public class AnonymousArticleInternalService {
     public Page<AnonymousArticle> findByIsApproved(Pageable pageable, boolean isApproved) {
         checkPageSize(pageable);
         return anonymousArticleRepository.findByIsApproved(isApproved, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AnonymousArticle> findByIsApproved(boolean isApproved) {
+        return anonymousArticleRepository.findByIsApproved(isApproved);
     }
 
     private void checkPageSize(Pageable pageable) {

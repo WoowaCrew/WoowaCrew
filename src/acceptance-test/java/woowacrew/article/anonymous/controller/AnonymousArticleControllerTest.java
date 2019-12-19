@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
 import woowacrew.common.controller.CommonTestController;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -52,5 +56,23 @@ public class AnonymousArticleControllerTest extends CommonTestController {
 
         anonymousArticlesResponseDtos.getArticles()
                 .forEach(anonymousArticleResponseDto -> assertTrue(anonymousArticleResponseDto.getIsApproved()));
+    }
+
+    @Test
+    void 승인되지_않은_익명_게시글_조회_테스트() {
+        String cookie = loginWithCrew();
+
+        List<AnonymousArticleResponseDto> anonymousArticles =
+                webTestClient.get()
+                        .uri("/api/articles/anonymous/unapproved?page=0")
+                        .header("Cookie", cookie)
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBodyList(AnonymousArticleResponseDto.class)
+                        .returnResult()
+                        .getResponseBody();
+
+        anonymousArticles.forEach(anonymousArticleResponseDto ->
+                assertFalse(anonymousArticleResponseDto.getIsApproved()));
     }
 }

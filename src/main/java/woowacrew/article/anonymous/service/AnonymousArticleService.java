@@ -38,4 +38,10 @@ public class AnonymousArticleService {
                 approvedAnonymousArticlePages.getTotalPages(),
                 anonymousArticleResponseDtos);
     }
+
+    public List<AnonymousArticleResponseDto> findUnapprovedAnonymousArticles() {
+        return anonymousArticleInternalService.findByIsApproved(false)
+                .stream().map(AnonymousArticleConverter::toDto)
+                .collect(Collectors.toList());
+    }
 }

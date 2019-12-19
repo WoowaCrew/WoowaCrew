@@ -15,6 +15,7 @@ import woowacrew.article.anonymous.service.AnonymousArticleInternalService;
 import woowacrew.article.anonymous.service.AnonymousArticleService;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/articles/anonymous")
@@ -34,6 +35,11 @@ public class AnonymousArticleController {
                     direction = Sort.Direction.DESC
             ) Pageable pageable) {
         return ResponseEntity.ok(anonymousArticleService.findApprovedAnonymousArticles(pageable));
+    }
+
+    @GetMapping("/unapproved")
+    public ResponseEntity<List<AnonymousArticleResponseDto>> unapprovedList() {
+        return ResponseEntity.ok(anonymousArticleService.findUnapprovedAnonymousArticles());
     }
 
     @PostMapping
