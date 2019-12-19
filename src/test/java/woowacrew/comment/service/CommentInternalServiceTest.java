@@ -51,9 +51,9 @@ class CommentInternalServiceTest {
         given(articleInternalService.findById(1L)).willReturn((Article) article);
         given(userInternalService.findById(1L)).willReturn(author);
         given(commentRepository.save(comment)).willReturn(comment);
-        CommentRequestDto commentRequestDto = new CommentRequestDto(1L, "testContent");
+        CommentRequestDto commentRequestDto = new CommentRequestDto("testContent");
 
-        assertThat(commentInternalService.save(commentRequestDto, userContext).getContent()).isEqualTo("testContent");
+        assertThat(commentInternalService.save(1L, commentRequestDto, userContext).getContent()).isEqualTo("testContent");
     }
 
     @Test

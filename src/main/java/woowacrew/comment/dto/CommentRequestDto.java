@@ -1,19 +1,13 @@
 package woowacrew.comment.dto;
 
 public class CommentRequestDto {
-    private Long articleId;
     private String content;
 
     private CommentRequestDto() {
     }
 
-    public CommentRequestDto(Long articleId, String content) {
-        this.articleId = articleId;
+    public CommentRequestDto(String content) {
         this.content = content;
-    }
-
-    public Long getArticleId() {
-        return articleId;
     }
 
     public String getContent() {

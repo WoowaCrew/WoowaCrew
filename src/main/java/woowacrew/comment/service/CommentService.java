@@ -20,8 +20,8 @@ public class CommentService {
         this.commentInternalService = commentInternalService;
     }
 
-    public CommentResponseDto save(CommentRequestDto commentRequestDto, UserContext userContext) {
-        Comment comment = commentInternalService.save(commentRequestDto, userContext);
+    public CommentResponseDto save(Long articleId, CommentRequestDto commentRequestDto, UserContext userContext) {
+        Comment comment = commentInternalService.save(articleId, commentRequestDto, userContext);
         return CommentConverter.toDto(comment);
     }
 

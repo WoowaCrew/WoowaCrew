@@ -18,16 +18,13 @@ public class CommentApiControllerTest extends CommonTestController {
     @Autowired
     private WebTestClient webTestClient;
 
-//    "/api/articles/{articleId}/comments"
-
     @Test
     void 댓글_생성_테스트() {
         String cookie = loginWithCrew();
         CommentResponseDto commentResponseDto = webTestClient.post()
                 .uri("/api/articles/1/comments")
                 .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("articleId", "1")
-                        .with("content", "testContent"))
+                .body(BodyInserters.fromFormData("content", "testContent"))
                 .exchange()
                 .expectStatus()
                 .isOk()
