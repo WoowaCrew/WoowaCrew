@@ -18,11 +18,13 @@ public class CommentApiControllerTest extends CommonTestController {
     @Autowired
     private WebTestClient webTestClient;
 
+//    "/api/articles/{articleId}/comments"
+
     @Test
     void 댓글_생성_테스트() {
         String cookie = loginWithCrew();
         CommentResponseDto commentResponseDto = webTestClient.post()
-                .uri("/api/comments")
+                .uri("/api/articles/1/comments")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("articleId", "1")
                         .with("content", "testContent"))
@@ -41,7 +43,7 @@ public class CommentApiControllerTest extends CommonTestController {
         String cookie = loginWithCrew();
 
         List<CommentResponseDto> dtos = webTestClient.get()
-                .uri("/api/comments/?articleId=1")
+                .uri("/api/articles/1/comments")
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk()
@@ -59,7 +61,7 @@ public class CommentApiControllerTest extends CommonTestController {
         String updateContent = "update Content";
 
         CommentResponseDto commentResponseDto = webTestClient.put()
-                .uri("/api/comments")
+                .uri("/api/articles/1/comments")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("commentId", commentId)
                         .with("updateContent", updateContent))
@@ -80,7 +82,7 @@ public class CommentApiControllerTest extends CommonTestController {
         Long commentId = 2L;
 
         webTestClient.delete()
-                .uri("/api/comments/" + commentId)
+                .uri("/api/articles/1/comments/" + commentId)
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk();

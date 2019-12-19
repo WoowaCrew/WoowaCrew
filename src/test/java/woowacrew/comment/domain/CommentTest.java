@@ -15,14 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CommentTest {
 
     @Mock
-    User mockUser;
+    private User mockUser;
 
     @Mock
-    Article mockArticle;
+    private Article mockArticle;
 
-    User author = new User("zino", new Degree());
-
-    Article article = new Article("title", "content", author);
+    private User author = new User("zino", new Degree());
+    private Article article = new Article("title", "content", author);
 
     @Test
     void 생성_정상_테스트() {

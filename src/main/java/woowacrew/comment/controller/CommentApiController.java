@@ -10,7 +10,7 @@ import woowacrew.user.dto.UserContext;
 
 import java.util.List;
 
-@RequestMapping("api/comments")
+@RequestMapping("/api/articles/{articleId}/comments")
 @RestController
 public class CommentApiController {
     private CommentService commentService;
@@ -25,7 +25,7 @@ public class CommentApiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CommentResponseDto>> showAllByArticles(Long articleId) {
+    public ResponseEntity<List<CommentResponseDto>> showAllByArticles(@PathVariable Long articleId) {
         return ResponseEntity.ok(commentService.findAll(articleId));
     }
 

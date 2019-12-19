@@ -1,6 +1,5 @@
 package woowacrew.comment.domain;
 
-import woowacrew.article.AbstractArticle;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.comment.domain.exception.NotValidCommentException;
@@ -69,7 +68,7 @@ public class Comment extends TimeEntity {
         return content;
     }
 
-    public AbstractArticle getArticle() {
+    public Article getArticle() {
         return article;
     }
 

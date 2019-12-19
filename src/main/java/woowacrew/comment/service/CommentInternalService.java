@@ -1,6 +1,7 @@
 package woowacrew.comment.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.article.free.service.ArticleInternalService;
@@ -34,6 +35,7 @@ public class CommentInternalService {
         return commentRepository.save(new Comment(user, commentRequestDto.getContent(), article));
     }
 
+    @Transactional(readOnly = true)
     public List<Comment> findAll(Long articleId) {
         Article article = articleInternalService.findById(articleId);
         return commentRepository.findAllByArticle(article);
@@ -47,7 +49,8 @@ public class CommentInternalService {
         return comment;
     }
 
-    private Comment findById(Long commentId) {
+    @Transactional(readOnly = true)
+    protected Comment findById(Long commentId) {
         return commentRepository.findById(commentId)
                 .orElseThrow(NotFoundCommentException::new);
     }
