@@ -30,7 +30,7 @@ function article() {
 
   const deleteButton = document.getElementById('article-delete-button')
   deleteButton.addEventListener('click', () => {
-    fetch(origin + "/api/articles/crew" + articleId, {
+    fetch(origin + "/api/articles/crew/" + articleId, {
       method: 'DELETE'
     })
       .then(() => window.location.href = origin + '/articles/crew')

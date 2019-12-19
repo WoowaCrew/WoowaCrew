@@ -137,7 +137,7 @@
     text-align: center;
 }
 
-button {
+.feed-submit-button {
     font-family: 'Wallpoet', cursive;
     width: 100%;
     background: black;

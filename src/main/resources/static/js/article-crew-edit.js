@@ -3,7 +3,7 @@ function articleEdit() {
   const articleUrl = window.location.href.split("/")
   const articleId = articleUrl[articleUrl.length - 2]
 
-  fetch(origin + "/api/articles/crew" + articleId, {
+  fetch(origin + "/api/articles/crew/" + articleId, {
     method: 'GET'
   }).then(response => response.json())
     .then(article => {
@@ -53,7 +53,7 @@ function articleEdit() {
       method: 'PUT',
       body: formData
     }).then(function (response) {
-      window.location.href = origin + "/articles"
+      window.location.href = origin + "/articles/crew/" + articleId
     }).catch(error => alert('오류가 발생했습니다.'));
   })
 }
