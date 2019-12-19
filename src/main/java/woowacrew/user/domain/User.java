@@ -53,6 +53,10 @@ public class User {
         }
     }
 
+    public boolean isSameUser(User user) {
+        return this.equals(user);
+    }
+
     public void updateByAdmin(User user, UserRole role, Degree degree) {
         if (!user.role.matchAdmin()) {
             throw new ForbiddenUserException();
