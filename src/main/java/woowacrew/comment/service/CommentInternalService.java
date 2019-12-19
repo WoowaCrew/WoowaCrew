@@ -28,8 +28,8 @@ public class CommentInternalService {
         this.userInternalService = userInternalService;
     }
 
-    public Comment save(CommentRequestDto commentRequestDto, UserContext userContext) {
-        Article article = articleInternalService.findById(commentRequestDto.getArticleId());
+    public Comment save(Long articleId, CommentRequestDto commentRequestDto, UserContext userContext) {
+        Article article = articleInternalService.findById(articleId);
         User user = userInternalService.findById(userContext.getId());
 
         return commentRepository.save(new Comment(user, commentRequestDto.getContent(), article));

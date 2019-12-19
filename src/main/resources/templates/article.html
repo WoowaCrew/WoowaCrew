@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"/>
     <link href="/css/article.css" rel="stylesheet">
+    <link href="/css/comment/comment.css" rel="stylesheet">
     <link href="/css/article/article-contents.css" rel="stylesheet">
     <title>WoowaCrew</title>
 </head>
@@ -17,6 +18,7 @@
 <div class="article-info">
     <div id="article-header">
         <div class="article-title">
+            <input hidden id="article-id"/>
             <div class="title" id="article-title"></div>
             <div class="userInfo" id="article-userInfo"></div>
         </div>
@@ -26,9 +28,24 @@
         </div>
     </div>
     <div id="viewerSection" class="content"></div>
+    <div id="comment-area">
+        <div id="comment-editor-group">
+            <div class="comment-editor">
+                <textarea id="comment-content"></textarea>
+            </div>
+            <div class="comment-editor-button-group">
+                <span class="comment-button" onclick="CommentListApp.createComment()">등록</span>
+            </div>
+        </div>
+        <div id="comment-list">
+
+        </div>
+    </div>
 </div>
 </body>
 <!--  SCRIPT  -->
 <script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
+<script src="/js/comment-template.js"></script>
+<script src="/js/comment.js"></script>
 <script src="/js/article.js"></script>
 </html>
