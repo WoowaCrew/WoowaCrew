@@ -62,11 +62,10 @@ dependencies {
     implementation 'com.rometools:rome:1.12.0'
 
     runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
-    runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.springframework:spring-jdbc:+'
     runtimeOnly 'commons-dbcp:commons-dbcp:1.4'
     runtimeOnly 'mysql:mysql-connector-java'
-    
+
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'org.mockito:mockito-junit-jupiter'
@@ -75,6 +74,7 @@ dependencies {
     }
     testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.h2database:h2'
 
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 
