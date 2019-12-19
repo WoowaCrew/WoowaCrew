@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import woowacrew.article.free.domain.Article;
@@ -26,9 +27,6 @@ class ArticleSearchInternalServiceTest {
     private ArticleRepository mockArticleRepository;
 
     @Mock
-    private Pageable mockPageable;
-
-    @Mock
     private Page<Article> mockArticlePages;
 
     @InjectMocks
@@ -36,16 +34,15 @@ class ArticleSearchInternalServiceTest {
 
     @Test
     void 페이지_개수가_20개가_아니면_에러가_발생한다() {
-        when(mockPageable.getPageSize()).thenReturn(19);
-
-        assertThrows(InvalidPageRequstException.class, () -> articleSearchInternalService.findAll(mockArticleSpecification, mockPageable));
+        Pageable differentPageable = PageRequest.of(0, 19);
+        assertThrows(InvalidPageRequstException.class, () -> articleSearchInternalService.findAll(mockArticleSpecification, differentPageable));
     }
 
     @Test
     void 정상적으로_제목이_포함된_게시글을_찾는다() {
-        when(mockPageable.getPageSize()).thenReturn(20);
-        when(mockArticleRepository.findAll(mockArticleSpecification, mockPageable)).thenReturn(mockArticlePages);
+        Pageable pageable = PageRequest.of(0, 20);
+        when(mockArticleRepository.findAll(mockArticleSpecification, pageable)).thenReturn(mockArticlePages);
 
-        assertDoesNotThrow(() -> articleSearchInternalService.findAll(mockArticleSpecification, mockPageable));
+        assertDoesNotThrow(() -> articleSearchInternalService.findAll(mockArticleSpecification, pageable));
     }
 }
