@@ -35,15 +35,16 @@
     border-left: 2px solid white;
 }
 
+.comment-button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: steelblue;
+    transition: 0.3s;
+}
+
 .comment-button .comment-button-icon {
     font-size: 1.3rem;
     line-height: 73px;
-}
-
-.comment-button .comment-button-icon:hover {
-    cursor: pointer;
-    color: white;
-    transition: 0.5s;
 }
 
 #comment-list .comment {
