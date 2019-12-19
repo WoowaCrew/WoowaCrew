@@ -5,11 +5,15 @@ const CommentListApp = (() => {
 
   class CommentService {
     createComment() {
-      const commentContent = document.getElementById('comment-content').value
+      const commentContentDiv = document.getElementById('comment-content')
+      if (commentContentDiv.value === "") {
+        alert("메세지를 입력해주세요.")
+        return;
+      }
       const articleId = document.getElementById('article-id').textContent
       const commentList = document.getElementById('comment-list')
       const formData = new FormData()
-      formData.append('content', commentContent)
+      formData.append('content', commentContentDiv.value)
 
       fetch(BASE_URL + "/api/articles/" + articleId + "/comments", {
         method: 'POST',
@@ -17,6 +21,7 @@ const CommentListApp = (() => {
 
       }).then(response => response.json())
         .then(comment => {
+            commentContentDiv.value = ''
             commentList.insertAdjacentHTML("beforeend", CommentTemplates.commentListTemplate(comment))
         })
         .catch(error => alert('오류가 발생했습니다.'));

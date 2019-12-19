@@ -50,12 +50,12 @@
 #comment-list .comment {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
-    margin-bottom: 23px
+    margin-bottom: 23px;
+    font-size: 1rem;
 }
 
 #comment-list .comment-content {
     color: white;
-    font-size: 19px;
     padding: 10px;
     overflow: scroll;
     word-break: break-word;
@@ -63,7 +63,6 @@
 }
 
 #comment-list .comment-info {
-    font-size: 15px;
     margin-bottom: 5px;
     padding: 10px;
 }
