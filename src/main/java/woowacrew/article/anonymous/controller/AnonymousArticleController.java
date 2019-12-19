@@ -12,4 +12,9 @@ public class AnonymousArticleController {
     public String list() {
         return "anonymous-article-list";
     }
+
+    @GetMapping("/new")
+    public String anonymousArticleForm() {
+        return "anonymous-article-create";
+    }
 }

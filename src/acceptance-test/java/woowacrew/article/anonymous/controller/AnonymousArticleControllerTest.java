@@ -22,4 +22,15 @@ public class AnonymousArticleControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void 익명_게시글_작성_페이지로_이동() {
+        String cookie = loginWithCrew();
+
+        webTestClient.get()
+                .uri("/articles/anonymous/new")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

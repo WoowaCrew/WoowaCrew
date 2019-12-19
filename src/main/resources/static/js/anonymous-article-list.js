@@ -17,17 +17,15 @@ const AnonymousArticleListApp = (() => {
             articleList.insertAdjacentHTML("beforeend", AnonymousArticleTemplates.articleListTemplate(article))
           })
         })
-        .catch(error =>{
-        console.log(error)
-        alert('오류가 발생했습니다.')});
+        .catch(error => alert('오류가 발생했습니다.'));
     }
 
     static showDetailAnonymousArticle(articleId) {
       window.location.href = BASE_URL + '/articles/anonymous/' + articleId
     }
 
-    static showAnonymousArticleEditPage() {
-      window.location.href = BASE_URL + '/article/anonymous/new'
+    static showAnonymousArticleCreatePage() {
+      window.location.href = BASE_URL + '/articles/anonymous/new'
     }
 
     renderPageBar(pageNumber, totalPages) {
@@ -67,8 +65,8 @@ const AnonymousArticleListApp = (() => {
       AnonymousArticleService.showDetailAnonymousArticle(articleId)
     }
 
-    showAnonymousArticleEditPage() {
-      AnonymousArticleService.showAnonymousArticleEditPage()
+    showAnonymousArticleCreatePage() {
+      AnonymousArticleService.showAnonymousArticleCreatePage()
     }
   }
 
