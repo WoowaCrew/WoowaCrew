@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class AnonymousArticleControllerTest extends CommonTestController {
+public class AnonymousArticleApiControllerTest extends CommonTestController {
 
     @Autowired
     private WebTestClient webTestClient;
