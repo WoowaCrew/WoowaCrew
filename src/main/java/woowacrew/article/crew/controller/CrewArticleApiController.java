@@ -18,7 +18,7 @@ import java.net.URI;
 @RequestMapping("/api/articles/crew")
 @RestController
 public class CrewArticleApiController {
-    public static final String CREW_ARTICLE_URL = "/articles/crew/";
+    private static final String CREW_ARTICLE_URL = "/articles/crew/";
 
     private final CrewArticleService crewArticleService;
 
