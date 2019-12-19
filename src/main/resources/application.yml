@@ -4,3 +4,18 @@ spring:
       enabled: true
   freemarker:
     cache: false
+---
+spring:
+  profiles: production
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://13.124.74.141:3306/example?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: woowacrew
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform:  org.hibernate.dialect.MySQL8Dialect
+    
