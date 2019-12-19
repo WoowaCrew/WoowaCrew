@@ -23,8 +23,8 @@ INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (6, '14','woow
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (7, '15','woowacrew','ROLE_CREW', 2);
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (8, '15','woowacrew','ROLE_PRECOURSE', 1);
 
-INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (1, 'title1', 'content1', 'password', true);
-INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (2, 'title2', 'content2', 'password', true);
-INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (3, 'title3', 'content3', 'password', true);
-INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (4, 'title4', 'content4', 'password', false);
-INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (5, 'title5', 'content5', 'password', false);
+INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (1, 'title', 'content', 'password', true);
+INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (2, 'title', 'content', 'password', true);
+INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (3, 'title', 'content', 'password', true);
+INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (4, 'title', 'content', 'password', false);
+INSERT INTO anonymous_Article (id, title, content, password, is_approved) VALUES (5, 'title', 'content', 'password', false);

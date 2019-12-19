@@ -39,6 +39,11 @@ public class AnonymousArticleApiController {
         return ResponseEntity.ok(anonymousArticleService.findUnapprovedAnonymousArticles());
     }
 
+    @GetMapping("/{anonymousArticleId}")
+    public ResponseEntity<AnonymousArticleResponseDto> show(@PathVariable Long anonymousArticleId) {
+        return ResponseEntity.ok(anonymousArticleService.findById(anonymousArticleId));
+    }
+
     @PostMapping
     public ResponseEntity<AnonymousArticleResponseDto> create(AnonymousArticleRequestDto anonymousArticleRequestDto) {
         AnonymousArticleResponseDto anonymousArticleResponseDto =

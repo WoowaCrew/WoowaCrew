@@ -11,6 +11,7 @@ import woowacrew.common.controller.CommonTestController;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -35,6 +36,24 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                         .with("password", password))
                 .exchange()
                 .expectStatus().isCreated();
+    }
+
+    @Test
+    void 익명_게시글_조회_테스트() {
+        String cookie = loginWithCrew();
+
+        AnonymousArticleResponseDto anonymousArticle =
+                webTestClient.get()
+                        .uri("/api/articles/anonymous/{anonymousArticleId}", 1L)
+                        .header("Cookie", cookie)
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBody(AnonymousArticleResponseDto.class)
+                        .returnResult()
+                        .getResponseBody();
+
+        assertThat(anonymousArticle.getTitle()).isEqualTo("title");
+        assertThat(anonymousArticle.getContent()).isEqualTo("content");
     }
 
     @Test

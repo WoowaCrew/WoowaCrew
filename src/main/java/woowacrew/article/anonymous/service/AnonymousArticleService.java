@@ -25,6 +25,11 @@ public class AnonymousArticleService {
         return AnonymousArticleConverter.toDto(anonymousArticle);
     }
 
+    public AnonymousArticleResponseDto findById(Long anonymousArticleId) {
+        AnonymousArticle anonymousArticle = anonymousArticleInternalService.findById(anonymousArticleId);
+        return AnonymousArticleConverter.toDto(anonymousArticle);
+    }
+
     public AnonymousArticleResponseDtos findApprovedAnonymousArticles(Pageable pageable) {
         Page<AnonymousArticle> approvedAnonymousArticlePages =
                 anonymousArticleInternalService.findByIsApproved(pageable, true);
