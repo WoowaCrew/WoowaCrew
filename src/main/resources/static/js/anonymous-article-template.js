@@ -9,7 +9,7 @@ const AnonymousArticleTemplates = (() => {
       }
 
       return `
-      <div class="article-info" onclick="AnonymousArticleListApp.showDetailArticle(${article.anonymousArticleId})">
+      <div class="article-info" onclick="AnonymousArticleListApp.showDetailAnonymousArticle(${article.anonymousArticleId})">
         <div class="article-info-article-id">
             <div class="article-info-article-id-content">
                 ${article.anonymousArticleId}

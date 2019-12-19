@@ -2,6 +2,7 @@ package woowacrew.article.anonymous.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -16,5 +17,10 @@ public class AnonymousArticleController {
     @GetMapping("/new")
     public String anonymousArticleForm() {
         return "anonymous-article-create";
+    }
+
+    @GetMapping("/{articleId}")
+    public String showAnonymousArticle(@PathVariable Long articleId) {
+        return "anonymous-article";
     }
 }
