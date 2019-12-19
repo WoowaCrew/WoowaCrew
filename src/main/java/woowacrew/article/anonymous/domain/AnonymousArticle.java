@@ -5,6 +5,7 @@ import woowacrew.article.free.domain.ArticleForm;
 import woowacrew.common.domain.TimeEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -60,6 +61,14 @@ public class AnonymousArticle extends TimeEntity {
 
     public boolean isApproved() {
         return isApproved;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
     @Override

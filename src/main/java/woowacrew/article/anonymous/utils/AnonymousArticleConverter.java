@@ -17,6 +17,8 @@ public class AnonymousArticleConverter {
                 anonymousArticle.getId(),
                 anonymousArticle.getTitle(),
                 anonymousArticle.getContent(),
-                anonymousArticle.isApproved());
+                anonymousArticle.isApproved(),
+                anonymousArticle.getCreatedDate(),
+                anonymousArticle.getLastModifiedDate());
     }
 }
