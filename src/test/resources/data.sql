@@ -25,3 +25,12 @@ INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (5, '13','woow
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (6, '14','woowacrew','ROLE_COACH', 1);
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (7, '15','woowacrew','ROLE_CREW', 2);
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (8, '15','woowacrew','ROLE_PRECOURSE', 1);
+
+INSERT INTO feed_source(source_url,description) values ('https://vsh123.github.io/feed.xml', 'SHAKEVAN');
+
+INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title1','link1','2019-10-01T00:00:00',1);
+INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title2','link2','2019-10-02T00:00:00',1);
+INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title3','link3','2019-10-03T00:00:00',1);
+INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title4','link4','2019-10-04T00:00:00',1);
+INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title5','link5','2019-10-05T00:00:00',1);
+INSERT INTO feed_article(title,link,published_date,feed_source_id) values('title6','link6','2019-10-06T00:00:00',1);

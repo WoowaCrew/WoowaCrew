@@ -1,0 +1,29 @@
+.feed-info {
+    font-size: 25px;
+}
+
+.feed-info-title {
+    display: inline-block;
+    width: 70%;
+    height: 30px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.feed-info-published-date {
+    display: inline-block;
+    width: 25%;
+    height: 20px;
+    font-size: 15px;
+}
+
+.feed-description {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.feed-info {
+    padding: 10px 0;
+}
