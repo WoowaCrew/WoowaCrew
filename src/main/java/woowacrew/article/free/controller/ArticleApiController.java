@@ -37,6 +37,14 @@ public class ArticleApiController {
         return ResponseEntity.ok(articleService.findById(articleId));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<ArticleResponseDtos> search(
+            @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam String type,
+            @RequestParam String content) {
+        return ResponseEntity.ok(articleService.findSearchedArticles(type, content, pageable));
+    }
+
     @PostMapping()
     public ResponseEntity<ArticleResponseDto> createArticle(UserContext userContext, ArticleRequestDto articleRequestDto) {
         ArticleResponseDto articleResponseDto = articleService.save(articleRequestDto, userContext);
