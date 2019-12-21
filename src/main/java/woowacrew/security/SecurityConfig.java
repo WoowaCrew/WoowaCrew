@@ -9,7 +9,7 @@ import woowacrew.security.provider.AuthorityUpdateProvider;
 import woowacrew.security.provider.SocialLoginAuthenticationProvider;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends AbstractSecurityConfig {
     private final SocialLoginAuthenticationProvider socialLoginAuthenticationProvider;
