@@ -8,7 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import woowacrew.search.domain.ArticleSearchSpec;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @EnableJpaAuditing
 class ArticleRepositoryTest {
+    private static final SearchType[] ALLOWED_SEARCH_TYPES = {SearchType.TITLE, SearchType.TITLE_WITH_CONTENT, SearchType.AUTHOR};
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -42,8 +44,7 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_제목으로_게시물들을_찾는다() {
         String inputData = "test";
-        ArticleSearchSpec articleSearchSpec = new ArticleSearchSpec("title", inputData);
-        Specification<Article> specification = articleSearchSpec.getSpecification();
+        Specification<Article> specification = SearchSpec.createSpecification("title", inputData, ALLOWED_SEARCH_TYPES);
 
         Pageable pageable = PageRequest.of(0, 20);
 
@@ -55,8 +56,7 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_제목과_내용으로_게시물들을_찾는다() {
         String inputData = "test";
-        ArticleSearchSpec articleSearchSpec = new ArticleSearchSpec("titleWithContent", inputData);
-        Specification<Article> specification = articleSearchSpec.getSpecification();
+        Specification<Article> specification = SearchSpec.createSpecification("titleWithContent", inputData, ALLOWED_SEARCH_TYPES);
 
         Pageable pageable = PageRequest.of(0, 20);
 
@@ -69,8 +69,7 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_작성자로_게시물들을_찾는다() {
         String inputData = "woowacrew";
-        ArticleSearchSpec articleSearchSpec = new ArticleSearchSpec("author", inputData);
-        Specification<Article> specification = articleSearchSpec.getSpecification();
+        Specification<Article> specification = SearchSpec.createSpecification("author", inputData, ALLOWED_SEARCH_TYPES);
 
         Pageable pageable = PageRequest.of(0, 20);
 

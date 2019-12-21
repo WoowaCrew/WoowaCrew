@@ -2,23 +2,14 @@ package woowacrew.search.domain;
 
 import org.springframework.data.jpa.domain.Specification;
 import woowacrew.search.exception.InvalidFieldPathException;
-import woowacrew.search.exception.NotExistSearchTypeException;
 
 import javax.persistence.criteria.Path;
-import java.util.List;
-import java.util.Optional;
 
 public class SearchSpecFactory {
     private static final String PREFIX_REGEX = "%";
     private static final String SUBFIX_REGEX = "%";
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 2;
-
-    public static SearchType createSearchType(List<SearchType> searchTypes, String type) {
-        return Optional.ofNullable(SearchType.find(type))
-                .filter(searchTypes::contains)
-                .orElseThrow(NotExistSearchTypeException::new);
-    }
 
     public static <T> Specification<T> createSpecification(SearchType type, String content) {
         String[][] fieldPaths = type.getFieldPaths();
