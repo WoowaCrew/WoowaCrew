@@ -5,16 +5,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import woowacrew.security.filter.SocialLoginFilter;
+import woowacrew.security.provider.AuthorityUpdateProvider;
 import woowacrew.security.provider.SocialLoginAuthenticationProvider;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends AbstractSecurityConfig {
     private final SocialLoginAuthenticationProvider socialLoginAuthenticationProvider;
+    private final AuthorityUpdateProvider authorityUpdateProvider;
 
-    public SecurityConfig(SocialLoginAuthenticationProvider socialLoginAuthenticationProvider) {
+    public SecurityConfig(SocialLoginAuthenticationProvider socialLoginAuthenticationProvider, AuthorityUpdateProvider authorityUpdateProvider) {
         this.socialLoginAuthenticationProvider = socialLoginAuthenticationProvider;
+        this.authorityUpdateProvider = authorityUpdateProvider;
     }
 
     @Override
@@ -28,6 +31,7 @@ public class SecurityConfig extends AbstractSecurityConfig {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .authenticationProvider(socialLoginAuthenticationProvider);
+                .authenticationProvider(socialLoginAuthenticationProvider)
+                .authenticationProvider(authorityUpdateProvider);
     }
 }
