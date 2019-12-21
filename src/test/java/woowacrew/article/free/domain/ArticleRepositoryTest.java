@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.ArticleSearchSpec;
 
 import java.util.List;
 
@@ -42,8 +42,8 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_제목으로_게시물들을_찾는다() {
         String inputData = "test";
-        SearchSpec<Article> searchSpec = new SearchSpec<>("title", inputData);
-        Specification<Article> specification = searchSpec.getSpecification();
+        ArticleSearchSpec articleSearchSpec = new ArticleSearchSpec("title", inputData);
+        Specification<Article> specification = articleSearchSpec.getSpecification();
 
         Pageable pageable = PageRequest.of(0, 20);
 
@@ -55,8 +55,8 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_제목과_내용으로_게시물들을_찾는다() {
         String inputData = "test";
-        SearchSpec<Article> searchSpec = new SearchSpec<>("titleWithContent", inputData);
-        Specification<Article> specification = searchSpec.getSpecification();
+        ArticleSearchSpec articleSearchSpec = new ArticleSearchSpec("titleWithContent", inputData);
+        Specification<Article> specification = articleSearchSpec.getSpecification();
 
         Pageable pageable = PageRequest.of(0, 20);
 
@@ -69,8 +69,8 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_작성자로_게시물들을_찾는다() {
         String inputData = "woowacrew";
-        SearchSpec<Article> searchSpec = new SearchSpec<>("author", inputData);
-        Specification<Article> specification = searchSpec.getSpecification();
+        ArticleSearchSpec articleSearchSpec = new ArticleSearchSpec("author", inputData);
+        Specification<Article> specification = articleSearchSpec.getSpecification();
 
         Pageable pageable = PageRequest.of(0, 20);
 

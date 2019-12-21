@@ -10,7 +10,7 @@ import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.utils.ArticleConverter;
-import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.ArticleSearchSpec;
 import woowacrew.user.dto.UserContext;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class ArticleService {
     }
 
     public ArticleResponseDtos findSearchedArticles(String type, String content, Pageable pageable) {
-        SearchSpec<Article> articleSearchSpec = new SearchSpec<>(type, content);
+        ArticleSearchSpec articleSearchSpec = new ArticleSearchSpec(type, content);
         Specification<Article> specification = articleSearchSpec.getSpecification();
         Page<Article> articlePages = articleInternalService.findAll(specification, pageable);
         List<ArticleResponseDto> articleResponseDtos = ArticleConverter.articlePagesToArticleResponseDtos(articlePages);
