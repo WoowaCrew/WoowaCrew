@@ -5,9 +5,9 @@ import woowacrew.search.exception.NotExistSearchTypeException;
 import java.util.Arrays;
 
 public enum SearchType {
-    TITLE("title", FieldPath.BASIC_ARTICLE_FORM_OF_ARTICLE_FORM_OF_TITLE),
-    AUTHOR("author", FieldPath.BASIC_ARTICLE_FORM_OF_AUTHOR_OF_NICKNAME),
-    TITLE_WITH_CONTENT("titleWithContent", FieldPath.BASIC_ARTICLE_FORM_OF_ARTICLE_FORM_OF_TITLE, FieldPath.BASIC_ARTICLE_FORM_OF_ARTICLE_FORM_OF_CONTENT);
+    TITLE("title", FieldPath.BASIC_ARTICLE_FORM_TO_ARTICLE_FORM_TO_TITLE),
+    AUTHOR("author", FieldPath.BASIC_ARTICLE_FORM_TO_AUTHOR_TO_NICKNAME),
+    TITLE_WITH_CONTENT("titleWithContent", FieldPath.BASIC_ARTICLE_FORM_TO_ARTICLE_FORM_TO_TITLE, FieldPath.BASIC_ARTICLE_FORM_TO_ARTICLE_FORM_TO_CONTENT);
 
     private String type;
     private String[][] fieldPaths;
