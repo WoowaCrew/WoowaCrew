@@ -1,9 +1,9 @@
 package woowacrew.search.domain;
 
 public enum FieldPath {
-    BASIC_ARTICLE_FORM_TO_ARTICLE_FORM_TO_TITLE("basicArticleForm", "articleForm", "title"),
-    BASIC_ARTICLE_FORM_TO_ARTICLE_FORM_TO_CONTENT("basicArticleForm", "articleForm", "content"),
-    BASIC_ARTICLE_FORM_TO_AUTHOR_TO_NICKNAME("basicArticleForm", "author", "nickname");
+    TITLE_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "articleForm", "title"),
+    CONTENT_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "articleForm", "content"),
+    NICKNAME_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "author", "nickname");
 
     private String[] fieldPath;
 
