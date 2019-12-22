@@ -3,7 +3,7 @@
     padding: 0 10% 10%;
 }
 
-#title {
+#title, #password {
     width: 100%;
     height: 30px;
     font-size: 30px;
