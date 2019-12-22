@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class SearchTypeFactory {
-    public static SearchType createSearchType(List<SearchType> searchTypes, String type) {
+    public static SearchType createSearchType(List<SearchType> allowedSearchTypes, String type) {
         return Optional.ofNullable(SearchType.find(type))
-                .filter(searchTypes::contains)
+                .filter(allowedSearchTypes::contains)
                 .orElseThrow(NotExistSearchTypeException::new);
     }
 }
