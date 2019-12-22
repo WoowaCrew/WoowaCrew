@@ -93,6 +93,60 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
+    void 올바른_비밀번호로_익명_게시글_삭제_테스트() {
+        String cookie = loginWithCrew();
+        String title = "title";
+        String content = "content";
+        String password = "password";
+
+        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
+                .uri("/api/articles/anonymous")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", title)
+                        .with("content", content)
+                        .with("password", password))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(AnonymousArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        webTestClient.put()
+                .uri("/api/articles/anonymous/{anonymousArticleId}", anonymousArticle.getAnonymousArticleId())
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("password", password))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void 올바르지_않은_비밀번호로_익명_게시글_삭제_테스트() {
+        String cookie = loginWithCrew();
+        String title = "title";
+        String content = "content";
+        String password = "password";
+
+        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
+                .uri("/api/articles/anonymous")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", title)
+                        .with("content", content)
+                        .with("password", password))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(AnonymousArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        webTestClient.put()
+                .uri("/api/articles/anonymous/{anonymousArticleId}", anonymousArticle.getAnonymousArticleId())
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("password", "invalid password"))
+                .exchange()
+                .expectStatus().is5xxServerError();
+    }
+
+    @Test
     void 게시글_승인_테스트() {
         Long unapprovedArticleId = 4L;
         String cookie = loginWithAdmin();

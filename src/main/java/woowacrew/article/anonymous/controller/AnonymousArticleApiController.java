@@ -57,4 +57,10 @@ public class AnonymousArticleApiController {
     public ResponseEntity<AnonymousArticleResponseDto> approve(@PathVariable Long anonymousArticleId) {
         return ResponseEntity.ok(anonymousArticleService.approve(anonymousArticleId));
     }
+
+    @PutMapping("/{anonymousArticleId}")
+    public ResponseEntity<AnonymousArticleResponseDto> delete(@PathVariable Long anonymousArticleId, String password) {
+        anonymousArticleService.delete(anonymousArticleId, password);
+        return ResponseEntity.ok().build();
+    }
 }

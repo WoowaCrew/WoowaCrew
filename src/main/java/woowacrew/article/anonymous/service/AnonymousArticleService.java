@@ -53,4 +53,8 @@ public class AnonymousArticleService {
     public AnonymousArticleResponseDto approve(Long anonymousArticleId) {
         return AnonymousArticleConverter.toDto(anonymousArticleInternalService.approve(anonymousArticleId));
     }
+
+    public void delete(Long anonymousArticleId, String password) {
+        anonymousArticleInternalService.delete(anonymousArticleId, password);
+    }
 }
