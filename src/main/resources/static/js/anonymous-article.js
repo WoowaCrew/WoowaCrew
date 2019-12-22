@@ -28,10 +28,22 @@ function anonymousArticle() {
 
   const deleteButton = document.getElementById('article-delete-button')
   deleteButton.addEventListener('click', () => {
+    let password = "";
+    while (password.length < 8) {
+      password = prompt("비밀번호를 입력해 주세요?(8자리 이상)");
+    }
+
+    const formData = new FormData()
+    formData.append('password', password)
+
     fetch(origin + "/api/articles/anonymous/" + articleId, {
-      method: 'DELETE'
+      method: 'PUT',
+      body: formData
     })
-      .then(() => window.location.href = origin + '/articles/anonymous')
+    .then(() => window.location.href = origin + '/articles/anonymous')
+    .catch(error => {
+        alert("잘못된 비밀번호입니다.");
+    })
   })
 }
 
