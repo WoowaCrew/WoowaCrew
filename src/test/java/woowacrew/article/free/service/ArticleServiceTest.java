@@ -13,6 +13,8 @@ import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.degree.domain.Degree;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
 import woowacrew.user.domain.User;
 
 import java.util.ArrayList;
@@ -75,10 +77,11 @@ class ArticleServiceTest {
         articles.add(new Article(title, content, user));
 
         Page<Article> articlePages = new PageImpl<>(articles);
+        SearchSpec<Article> searchSpec = new SearchSpec<>("title", "delete", SearchType.values());
 
         when(articleInternalService.findAll(any(), any())).thenReturn(articlePages);
 
-        ArticleResponseDtos actual = articleService.findSearchedArticles("title", "delete", PageRequest.of(0, 20));
+        ArticleResponseDtos actual = articleService.findSearchedArticles(searchSpec, PageRequest.of(0, 20));
 
         assertThat(actual.getArticles().size()).isEqualTo(3);
         assertThat(actual.getPageNumber()).isEqualTo(1);

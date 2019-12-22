@@ -11,7 +11,6 @@ import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.utils.ArticleConverter;
 import woowacrew.search.domain.SearchSpec;
-import woowacrew.search.domain.SearchType;
 import woowacrew.user.dto.UserContext;
 
 import java.util.List;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
-    private static final SearchType[] ALLOWED_SEARCH_TYPES = {SearchType.TITLE, SearchType.TITLE_WITH_CONTENT, SearchType.AUTHOR};
 
     private ArticleInternalService articleInternalService;
 
@@ -52,8 +50,8 @@ public class ArticleService {
         articleInternalService.delete(articleId, userContext);
     }
 
-    public ArticleResponseDtos findSearchedArticles(String type, String content, Pageable pageable) {
-        Specification<Article> specification = SearchSpec.createSpecification(type, content, ALLOWED_SEARCH_TYPES);
+    public ArticleResponseDtos findSearchedArticles(SearchSpec<Article> searchSpec, Pageable pageable) {
+        Specification<Article> specification = searchSpec.getSpecification();
         Page<Article> articlePages = articleInternalService.findAll(specification, pageable);
         List<ArticleResponseDto> articleResponseDtos = ArticleConverter.articlePagesToArticleResponseDtos(articlePages);
 

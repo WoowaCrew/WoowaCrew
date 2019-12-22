@@ -5,13 +5,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.dto.ArticleRequestDto;
 import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.service.ArticleInternalService;
 import woowacrew.article.free.service.ArticleService;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
 import woowacrew.user.dto.UserContext;
+import woowacrew.utils.annotation.AllowedSearchType;
 
 import java.net.URI;
 
@@ -39,10 +43,9 @@ public class ArticleApiController {
 
     @GetMapping("/search")
     public ResponseEntity<ArticleResponseDtos> search(
-            @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam String type,
-            @RequestParam String content) {
-        return ResponseEntity.ok(articleService.findSearchedArticles(type, content, pageable));
+            @AllowedSearchType(type = {SearchType.TITLE, SearchType.TITLE_WITH_CONTENT, SearchType.AUTHOR}) SearchSpec<Article> searchSpec,
+            @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(articleService.findSearchedArticles(searchSpec, pageable));
     }
 
     @PostMapping()
