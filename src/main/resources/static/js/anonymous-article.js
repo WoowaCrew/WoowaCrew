@@ -19,8 +19,8 @@ function anonymousArticle() {
         })
       })
       .catch(error => {
-        console.log(error)
         alert('오류가 발생했습니다.')
+        window.location.href = origin + "/articles/anonymous"
       });
 
   const editButton = document.getElementById('article-edit-button')
