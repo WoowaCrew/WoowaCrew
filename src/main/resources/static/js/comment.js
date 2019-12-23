@@ -27,6 +27,53 @@ const CommentListApp = (() => {
         .catch(error => alert('오류가 발생했습니다.'));
     }
 
+    deleteComment(event) {
+      const commentDiv = event.target.closest(".comment")
+      const articleId = document.getElementById('article-id').textContent
+      const commentId = commentDiv.getElementsByClassName("comment-id")[0].value
+
+      fetch(BASE_URL + "/api/articles/" + articleId + "/comments/" + commentId, {
+        method: 'DELETE',
+      }).then(response => {
+        if(response.ok){
+          commentDiv.remove()
+          alert("삭제 성공!")
+        }
+        throw new Error(response)
+      })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    updateComment(event) {
+      const commentDiv = event.target.closest(".comment")
+      const commentContentDiv = commentDiv.getElementsByClassName("comment-content")[0]
+      const commentEditFormDiv = commentDiv.getElementsByClassName("comment-edit-form")[0]
+      const articleId = document.getElementById('article-id').textContent
+      const commentId = commentDiv.getElementsByClassName("comment-id")[0].value
+      const commentUpdateContent = commentEditFormDiv.getElementsByTagName("textarea")[0].value
+
+      if (commentUpdateContent === "") {
+        alert("메시지를 입력해주세요.")
+        return;
+      }
+
+      const formData = new FormData()
+      formData.append('updateContent', commentUpdateContent)
+
+      fetch(BASE_URL + "/api/articles/" + articleId + "/comments/" + commentId, {
+        method: 'PUT',
+        body: formData
+      }).then(response => {
+        if (response.ok) {
+          response.json()
+        }
+        throw new Error(response)
+      }).then(comment => {
+          commentContentDiv.textContent = comment.content
+          this.cancelUpdateCommentForm(event);
+        }).catch(error => alert('오류가 발생했습니다.'));
+    }
+
     showUpdateCommentForm(event) {
       const commentDiv = event.target.closest(".comment")
       const commentContentDiv = commentDiv.getElementsByClassName("comment-content")[0]
@@ -94,11 +141,19 @@ const CommentListApp = (() => {
     }
 
     showUpdateCommentForm(event) {
-      this.commentService.showUpdateCommentForm(event);
+      this.commentService.showUpdateCommentForm(event)
     }
 
     cancelUpdateCommentForm(event) {
-      this.commentService.cancelUpdateCommentForm(event);
+      this.commentService.cancelUpdateCommentForm(event)
+    }
+
+    updateComment(event) {
+      this.commentService.updateComment(event)
+    }
+
+    deleteComment(event) {
+      this.commentService.deleteComment(event);
     }
   }
 
