@@ -62,21 +62,6 @@ public class FeedApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void findAllFeedArticles() {
-        String cookie = loginWithCrew();
-        FeedArticleResponseDtos result = webTestClient.get()
-                .uri("/api/feeds?page=1")
-                .header("Cookie", cookie)
-                .exchange()
-                .expectBody(FeedArticleResponseDtos.class)
-                .returnResult()
-                .getResponseBody();
-
-        assertThat(result.getPageNumber()).isEqualTo(1);
-        assertThat(result.getArticles().size()).isNotZero();
-    }
-
-    @Test
     void updateFeedArticles() {
         String cookie = loginWithAdmin();
         webTestClient.post()
