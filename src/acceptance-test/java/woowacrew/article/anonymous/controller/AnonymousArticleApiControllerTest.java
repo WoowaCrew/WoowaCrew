@@ -93,6 +93,76 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
+    void 올바른_비밀번호로_익명_게시글_수정_테스트() {
+        String cookie = loginWithCrew();
+        String title = "title";
+        String content = "content";
+        String password = "password";
+
+        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
+                .uri("/api/articles/anonymous")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", title)
+                        .with("content", content)
+                        .with("password", password))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(AnonymousArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        String updateTitle = "UpdatedTitle";
+        String updateContent = "UpdatedContent";
+
+        AnonymousArticleResponseDto updatedAnonymousArticle = webTestClient.put()
+                .uri("/api/articles/anonymous/{anonymousArticleId}", anonymousArticle.getAnonymousArticleId())
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("password", password)
+                        .with("title", updateTitle)
+                        .with("content", updateContent))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(AnonymousArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(updatedAnonymousArticle.getTitle()).isEqualTo(updateTitle);
+        assertThat(updatedAnonymousArticle.getContent()).isEqualTo(updateContent);
+    }
+
+    @Test
+    void 올바르지_않은_비밀번호로_익명_게시글_수정_테스트() {
+        String cookie = loginWithCrew();
+        String title = "title";
+        String content = "content";
+        String password = "password";
+
+        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
+                .uri("/api/articles/anonymous")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", title)
+                        .with("content", content)
+                        .with("password", password))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(AnonymousArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        String updateTitle = "UpdatedTitle";
+        String updateContent = "UpdatedContent";
+
+        webTestClient.put()
+                .uri("/api/articles/anonymous/{anonymousArticleId}", anonymousArticle.getAnonymousArticleId())
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("password", "invalid password")
+                        .with("title", updateTitle)
+                        .with("content", updateContent))
+                .exchange()
+                .expectStatus().is5xxServerError();
+    }
+
+    @Test
     void 올바른_비밀번호로_익명_게시글_삭제_테스트() {
         String cookie = loginWithCrew();
         String title = "title";

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
+import woowacrew.article.anonymous.dto.AnonymousArticleUpdateDto;
 import woowacrew.article.anonymous.service.AnonymousArticleInternalService;
 import woowacrew.article.anonymous.service.AnonymousArticleService;
 
@@ -51,6 +52,12 @@ public class AnonymousArticleApiController {
         return ResponseEntity
                 .created(URI.create("/api/articles/anonymous/" + anonymousArticleResponseDto.getAnonymousArticleId()))
                 .body(anonymousArticleResponseDto);
+    }
+
+    @PutMapping("/{anonymousArticleId}")
+    public ResponseEntity<AnonymousArticleResponseDto> update(@PathVariable Long anonymousArticleId,
+                                                              AnonymousArticleUpdateDto anonymousArticleUpdateDto) {
+        return ResponseEntity.ok(anonymousArticleService.update(anonymousArticleId, anonymousArticleUpdateDto));
     }
 
     @PutMapping("/{anonymousArticleId}/approve")

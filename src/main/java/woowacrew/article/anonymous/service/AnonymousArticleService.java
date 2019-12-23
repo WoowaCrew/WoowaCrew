@@ -7,6 +7,7 @@ import woowacrew.article.anonymous.domain.AnonymousArticle;
 import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
+import woowacrew.article.anonymous.dto.AnonymousArticleUpdateDto;
 import woowacrew.article.anonymous.utils.AnonymousArticleConverter;
 
 import java.util.List;
@@ -48,6 +49,13 @@ public class AnonymousArticleService {
         return anonymousArticleInternalService.findByIsApproved(false)
                 .stream().map(AnonymousArticleConverter::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public AnonymousArticleResponseDto update(Long anonymousArticleId,
+                                              AnonymousArticleUpdateDto anonymousArticleUpdateDto) {
+        AnonymousArticle anonymousArticle =
+                anonymousArticleInternalService.update(anonymousArticleId, anonymousArticleUpdateDto);
+        return AnonymousArticleConverter.toDto(anonymousArticle);
     }
 
     public AnonymousArticleResponseDto approve(Long anonymousArticleId) {
