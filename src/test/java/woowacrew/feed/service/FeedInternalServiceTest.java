@@ -14,14 +14,13 @@ import org.springframework.data.domain.Pageable;
 import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.feed.domain.*;
 import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceUpdateRequestDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
+import woowacrew.feed.exception.NotFoundFeedSourceException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -88,12 +87,37 @@ class FeedInternalServiceTest {
     }
 
     @Test
-    void 업데이트_테스트() {
+    void 피드게시글_업데이트_테스트() {
         when(feedSourceRepository.findAll()).thenReturn(Collections.singletonList(feedSource));
         when(feedArticleRepository.findByFeedSource(any(FeedSource.class))).thenReturn(new ArrayList<>());
         when(feedArticleRepository.saveAll(anyList())).thenReturn(feedArticles.getFeedArticles());
 
-        List<FeedArticle> feedArticles = feedInternalService.updateFeed();
+        List<FeedArticle> feedArticles = feedInternalService.updateFeedArticles();
         assertThat(feedArticles.size()).isEqualTo(3);
+    }
+
+    @Test
+    void 정상_FeedSource_description_업데이트_테스트() {
+        String updatedDescription = "updatedDescription";
+        FeedSourceUpdateRequestDto requestDto = new FeedSourceUpdateRequestDto(updatedDescription);
+        Long feedSourceId = 1L;
+
+        when(feedSourceRepository.findById(feedSourceId)).thenReturn(Optional.ofNullable(feedSource));
+
+        FeedSource updatedFeedSource = feedInternalService.updateFeedSourceDescription(feedSourceId, requestDto);
+
+        assertThat(updatedFeedSource.getDescription()).isEqualTo(updatedDescription);
+    }
+
+    @Test
+    void 존재하지_않는_FeedSource_description_업데이트_시_에러를_발생하는지_테스트() {
+        String updatedDescription = "updatedDescription";
+        FeedSourceUpdateRequestDto requestDto = new FeedSourceUpdateRequestDto(updatedDescription);
+        Long feedSourceId = 1L;
+
+        when(feedSourceRepository.findById(feedSourceId)).thenReturn(Optional.ofNullable(null));
+
+        assertThrows(NotFoundFeedSourceException.class,
+                () -> feedInternalService.updateFeedSourceDescription(feedSourceId, requestDto));
     }
 }

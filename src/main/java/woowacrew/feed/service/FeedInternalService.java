@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.feed.domain.*;
 import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceUpdateRequestDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
+import woowacrew.feed.exception.NotFoundFeedSourceException;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.util.Collection;
@@ -41,6 +43,10 @@ public class FeedInternalService {
         return feedSource;
     }
 
+    private boolean isExistUrl(String sourceUrl) {
+        return feedSourceRepository.existsBySourceUrl(sourceUrl);
+    }
+
     @Transactional(readOnly = true)
     public Page<FeedArticle> findAllFeedArticles(Pageable pageable) {
         if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
@@ -49,11 +55,7 @@ public class FeedInternalService {
         return feedArticleRepository.findAll(pageable);
     }
 
-    private boolean isExistUrl(String sourceUrl) {
-        return feedSourceRepository.existsBySourceUrl(sourceUrl);
-    }
-
-    public List<FeedArticle> updateFeed() {
+    public List<FeedArticle> updateFeedArticles() {
         return feedSourceRepository.findAll().stream()
                 .map(this::saveNewFeedArticles)
                 .flatMap(Collection::stream)
@@ -64,5 +66,14 @@ public class FeedInternalService {
         FeedArticles feedArticles = feedSource.createFeedArticles();
         FeedArticles savedFeedArticles = new FeedArticles(feedArticleRepository.findByFeedSource(feedSource));
         return feedArticleRepository.saveAll(feedArticles.getNotDuplicatedFeedArticles(savedFeedArticles));
+    }
+
+    public FeedSource updateFeedSourceDescription(Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
+        FeedSource feedSource = feedSourceRepository.findById(feedSourceId)
+                .orElseThrow(NotFoundFeedSourceException::new);
+
+        feedSource.updateDescription(updateRequestDto.getDescription());
+
+        return feedSource;
     }
 }

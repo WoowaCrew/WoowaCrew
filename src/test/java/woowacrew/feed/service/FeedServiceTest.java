@@ -62,7 +62,7 @@ class FeedServiceTest {
     void updateFeed() {
         String title = "title";
         FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now(), new FeedSource("source","description"));
-        when(feedInternalService.updateFeed()).thenReturn(Collections.singletonList(feedArticle));
+        when(feedInternalService.updateFeedArticles()).thenReturn(Collections.singletonList(feedArticle));
 
         List<FeedArticleResponseDto> feedArticleResponseDtos = feedService.updateFeed();
 

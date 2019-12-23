@@ -33,7 +33,7 @@ public class FeedService {
     }
 
     public List<FeedArticleResponseDto> updateFeed() {
-        return feedInternalService.updateFeed().stream()
+        return feedInternalService.updateFeedArticles().stream()
                 .map(FeedConverter::toFeedArticleResponseDto)
                 .collect(Collectors.toList());
     }
