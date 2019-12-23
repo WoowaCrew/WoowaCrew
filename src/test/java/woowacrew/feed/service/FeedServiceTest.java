@@ -10,10 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
-import woowacrew.feed.dto.FeedArticleResponseDto;
-import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedSourceRequestDto;
-import woowacrew.feed.dto.FeedSourceResponseDto;
+import woowacrew.feed.dto.*;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.time.LocalDateTime;
@@ -60,7 +57,7 @@ class FeedServiceTest {
     }
 
     @Test
-    void updateFeed() {
+    void updateFeedArticles() {
         String title = "title";
         FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now(), new FeedSource("source", "description"));
         when(feedInternalService.updateFeedArticles()).thenReturn(Collections.singletonList(feedArticle));
@@ -69,5 +66,20 @@ class FeedServiceTest {
 
         assertThat(feedArticleResponseDtos.size()).isEqualTo(1);
         assertThat(feedArticleResponseDtos.get(0).getTitle()).isEqualTo(title);
+    }
+
+    @Test
+    void FeedSource_description_업데이트_시_ResponsedDto가_정상적으로_리턴되는지_테스트() {
+        Long feedSourceId = 1L;
+        FeedSourceUpdateRequestDto updateRequestDto = new FeedSourceUpdateRequestDto("updatedDescription");
+        String source = "source";
+        String updatedDescription = "updatedDescription";
+        FeedSource updatedFeedSource = new FeedSource(source, updatedDescription);
+
+        when(feedInternalService.updateFeedSourceDescription(feedSourceId, updateRequestDto)).thenReturn(updatedFeedSource);
+
+        FeedSourceResponseDto responseDto = feedService.updateFeedSourceDesciption(feedSourceId, updateRequestDto);
+        assertThat(responseDto.getSourceUrl()).isEqualTo(source);
+        assertThat(responseDto.getDescription()).isEqualTo(updatedDescription);
     }
 }
