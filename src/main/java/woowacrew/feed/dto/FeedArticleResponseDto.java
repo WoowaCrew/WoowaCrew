@@ -6,12 +6,12 @@ public class FeedArticleResponseDto {
     private String title;
     private String link;
     private LocalDateTime publishedDate;
-    private FeedSourceDto feedSourceDto;
+    private FeedSourceResponseDto feedSourceDto;
 
     private FeedArticleResponseDto() {
     }
 
-    public FeedArticleResponseDto(String title, String link, LocalDateTime publishedDate, FeedSourceDto feedSourceDto) {
+    public FeedArticleResponseDto(String title, String link, LocalDateTime publishedDate, FeedSourceResponseDto feedSourceDto) {
         this.title = title;
         this.link = link;
         this.publishedDate = publishedDate;
@@ -42,11 +42,11 @@ public class FeedArticleResponseDto {
         this.publishedDate = publishedDate;
     }
 
-    public FeedSourceDto getFeedSourceDto() {
+    public FeedSourceResponseDto getFeedSourceDto() {
         return feedSourceDto;
     }
 
-    public void setFeedSourceDto(FeedSourceDto feedSourceDto) {
+    public void setFeedSourceDto(FeedSourceResponseDto feedSourceDto) {
         this.feedSourceDto = feedSourceDto;
     }
 }

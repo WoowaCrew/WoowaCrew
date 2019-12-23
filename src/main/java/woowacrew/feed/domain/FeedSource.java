@@ -2,6 +2,7 @@ package woowacrew.feed.domain;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
+import woowacrew.feed.exception.FeedSourceUpdateException;
 import woowacrew.feed.utils.RssReader;
 
 import javax.persistence.*;
@@ -29,12 +30,20 @@ public class FeedSource {
         this.description = description;
     }
 
+
     public FeedArticles createFeedArticles() {
         SyndFeed feed = RssReader.readFeed(sourceUrl);
         List<FeedArticle> feedArticles = feed.getEntries().stream()
                 .map(this::createFeedArticle)
                 .collect(Collectors.toList());
         return new FeedArticles(feedArticles);
+    }
+
+    public void updateDescription(String updatedDescription) {
+        if (Objects.isNull(updatedDescription)) {
+            throw new FeedSourceUpdateException();
+        }
+        this.description = updatedDescription;
     }
 
     private FeedArticle createFeedArticle(SyndEntry entry) {

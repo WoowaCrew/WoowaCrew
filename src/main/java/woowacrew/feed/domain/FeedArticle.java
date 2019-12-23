@@ -1,5 +1,8 @@
 package woowacrew.feed.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -15,6 +18,7 @@ public class FeedArticle {
     private String link;
     private LocalDateTime publishedDate;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private FeedSource feedSource;
 
     private FeedArticle() {

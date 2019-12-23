@@ -10,9 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
-import woowacrew.feed.dto.FeedArticleResponseDto;
-import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.*;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.time.LocalDateTime;
@@ -21,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -35,12 +33,12 @@ class FeedServiceTest {
     void FeedSource가_정상적으로_저장됐다면_RegisterDto를_리턴한다() {
         String url = "url";
         String description = "description";
-        FeedSourceDto feedSourceDto = new FeedSourceDto(url, description);
-        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceDto);
+        FeedSourceRequestDto feedSourceRequestDto = new FeedSourceRequestDto(url, description);
+        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceRequestDto);
 
-        when(feedInternalService.registerFeedSource(feedSourceDto)).thenReturn(feedSource);
+        when(feedInternalService.registerFeedSource(feedSourceRequestDto)).thenReturn(feedSource);
 
-        FeedSourceDto actualRegisterDto = feedService.registerFeedSource(feedSourceDto);
+        FeedSourceResponseDto actualRegisterDto = feedService.registerFeedSource(feedSourceRequestDto);
 
         assertThat(actualRegisterDto.getSourceUrl()).isEqualTo(url);
         assertThat(actualRegisterDto.getDescription()).isEqualTo(description);
@@ -48,7 +46,7 @@ class FeedServiceTest {
 
     @Test
     void findAll() {
-        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), new FeedSource("source","description"));
+        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), new FeedSource("source", "description"));
         Pageable pageable = PageRequest.of(0, 20);
         when(feedInternalService.findAllFeedArticles(pageable)).thenReturn(new PageImpl<>(Arrays.asList(feedArticle)));
 
@@ -59,14 +57,50 @@ class FeedServiceTest {
     }
 
     @Test
-    void updateFeed() {
+    void updateFeedArticles() {
         String title = "title";
-        FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now(), new FeedSource("source","description"));
-        when(feedInternalService.updateFeed()).thenReturn(Collections.singletonList(feedArticle));
+        FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now(), new FeedSource("source", "description"));
+        when(feedInternalService.updateFeedArticles()).thenReturn(Collections.singletonList(feedArticle));
 
         List<FeedArticleResponseDto> feedArticleResponseDtos = feedService.updateFeed();
 
         assertThat(feedArticleResponseDtos.size()).isEqualTo(1);
         assertThat(feedArticleResponseDtos.get(0).getTitle()).isEqualTo(title);
+    }
+
+    @Test
+    void FeedSource_description_업데이트_시_ResponsedDto가_정상적으로_리턴되는지_테스트() {
+        Long feedSourceId = 1L;
+        FeedSourceUpdateRequestDto updateRequestDto = new FeedSourceUpdateRequestDto("updatedDescription");
+        String source = "source";
+        String updatedDescription = "updatedDescription";
+        FeedSource updatedFeedSource = new FeedSource(source, updatedDescription);
+
+        when(feedInternalService.updateFeedSourceDescription(feedSourceId, updateRequestDto)).thenReturn(updatedFeedSource);
+
+        FeedSourceResponseDto responseDto = feedService.updateFeedSourceDescription(feedSourceId, updateRequestDto);
+        assertThat(responseDto.getSourceUrl()).isEqualTo(source);
+        assertThat(responseDto.getDescription()).isEqualTo(updatedDescription);
+    }
+
+    @Test
+    void FeedSources들을_ResponseDto로_잘_변환하는지_테스트() {
+        String sourceUrl = "source";
+        FeedSource feedSource = new FeedSource(sourceUrl, "description");
+        List<FeedSource> feedSources = Collections.singletonList(feedSource);
+
+        when(feedInternalService.findAllFeedSources()).thenReturn(feedSources);
+
+        List<FeedSourceResponseDto> responseDtos = feedService.findAllFeedSources();
+
+        assertThat(responseDtos.size()).isEqualTo(1);
+        assertThat(responseDtos.get(0).getSourceUrl()).isEqualTo(sourceUrl);
+    }
+
+    @Test
+    void delete_feedSource_테스트() {
+        feedService.deleteFeedSource(1L);
+
+        verify(feedInternalService, times(1)).deleteFeedSource(1L);
     }
 }

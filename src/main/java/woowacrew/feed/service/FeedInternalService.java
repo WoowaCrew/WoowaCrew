@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.feed.domain.*;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceRequestDto;
+import woowacrew.feed.dto.FeedSourceUpdateRequestDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
+import woowacrew.feed.exception.NotFoundFeedSourceException;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.util.Collection;
@@ -28,17 +30,26 @@ public class FeedInternalService {
     }
 
 
-    public FeedSource registerFeedSource(FeedSourceDto feedSourceDto) {
-        if (isExistUrl(feedSourceDto.getSourceUrl())) {
+    public FeedSource registerFeedSource(FeedSourceRequestDto feedSourceRequestDto) {
+        if (isExistUrl(feedSourceRequestDto.getSourceUrl())) {
             throw new AlreadyExistSourceUrlException();
         }
 
-        FeedSource feedSource = feedSourceRepository.save(FeedConverter.toFeedSource(feedSourceDto));
+        FeedSource feedSource = feedSourceRepository.save(FeedConverter.toFeedSource(feedSourceRequestDto));
         FeedArticles feedArticles = feedSource.createFeedArticles();
 
         feedArticleRepository.saveAll(feedArticles.getFeedArticles());
 
         return feedSource;
+    }
+
+    private boolean isExistUrl(String sourceUrl) {
+        return feedSourceRepository.existsBySourceUrl(sourceUrl);
+    }
+
+    @Transactional(readOnly = true)
+    public List<FeedSource> findAllFeedSources() {
+        return feedSourceRepository.findAll();
     }
 
     @Transactional(readOnly = true)
@@ -49,20 +60,29 @@ public class FeedInternalService {
         return feedArticleRepository.findAll(pageable);
     }
 
-    private boolean isExistUrl(String sourceUrl) {
-        return feedSourceRepository.existsBySourceUrl(sourceUrl);
-    }
-
-    public List<FeedArticle> updateFeed() {
+    public List<FeedArticle> updateFeedArticles() {
         return feedSourceRepository.findAll().stream()
                 .map(this::saveNewFeedArticles)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
+    public void deleteFeedSource(Long feedSourceId) {
+        feedSourceRepository.deleteById(feedSourceId);
+    }
+
     private List<FeedArticle> saveNewFeedArticles(FeedSource feedSource) {
         FeedArticles feedArticles = feedSource.createFeedArticles();
         FeedArticles savedFeedArticles = new FeedArticles(feedArticleRepository.findByFeedSource(feedSource));
         return feedArticleRepository.saveAll(feedArticles.getNotDuplicatedFeedArticles(savedFeedArticles));
+    }
+
+    public FeedSource updateFeedSourceDescription(Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
+        FeedSource feedSource = feedSourceRepository.findById(feedSourceId)
+                .orElseThrow(NotFoundFeedSourceException::new);
+
+        feedSource.updateDescription(updateRequestDto.getDescription());
+
+        return feedSource;
     }
 }
