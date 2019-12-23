@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import woowacrew.security.filter.SocialLoginFilter;
 import woowacrew.security.filter.SocialLoginTestFilter;
+import woowacrew.security.provider.AuthorityUpdateProvider;
 import woowacrew.security.provider.TestLoginProvider;
 
 @Configuration
@@ -13,9 +14,11 @@ import woowacrew.security.provider.TestLoginProvider;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends AbstractSecurityConfig {
     private final TestLoginProvider testLoginProvider;
+    private final AuthorityUpdateProvider authorityUpdateProvider;
 
-    public SecurityConfig(TestLoginProvider testLoginProvider) {
+    public SecurityConfig(TestLoginProvider testLoginProvider, AuthorityUpdateProvider authorityUpdateProvider) {
         this.testLoginProvider = testLoginProvider;
+        this.authorityUpdateProvider = authorityUpdateProvider;
     }
 
     @Override
@@ -29,6 +32,7 @@ public class SecurityConfig extends AbstractSecurityConfig {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .authenticationProvider(testLoginProvider);
+                .authenticationProvider(testLoginProvider)
+                .authenticationProvider(authorityUpdateProvider);
     }
 }

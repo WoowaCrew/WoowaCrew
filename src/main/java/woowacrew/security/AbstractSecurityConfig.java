@@ -4,13 +4,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import woowacrew.security.filter.AuthorityUpdateFilter;
 import woowacrew.security.filter.SocialLoginFilter;
 import woowacrew.security.handler.AccessDenyHandler;
+import woowacrew.security.requestmatcher.AuthorityUpdateRequestMatcher;
 import woowacrew.user.domain.UserRole;
 
 public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected abstract SocialLoginFilter socialLoginFilter() throws Exception;
+
+    private AuthorityUpdateFilter authorityUpdateFilter() throws Exception {
+        AuthorityUpdateRequestMatcher requestMatcher = new AuthorityUpdateRequestMatcher();
+        AuthorityUpdateFilter filter = new AuthorityUpdateFilter(requestMatcher);
+        filter.setAuthenticationManager(super.authenticationManagerBean());
+
+        return filter;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -40,6 +50,7 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
                 .logout()
                 .logoutSuccessUrl("/");
         http
-                .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(authorityUpdateFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
