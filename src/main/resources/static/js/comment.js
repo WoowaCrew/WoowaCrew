@@ -65,7 +65,7 @@ const CommentListApp = (() => {
         body: formData
       }).then(response => {
         if (response.ok) {
-          response.json()
+          return response.json()
         }
         throw new Error(response)
       }).then(comment => {
