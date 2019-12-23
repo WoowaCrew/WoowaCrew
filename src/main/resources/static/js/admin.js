@@ -128,6 +128,10 @@ const AdminApp = (() => {
       }).catch(error => alert("에러가 발생했습니다."))
     }
 
+    async confirmAnonymousArticle(anonymousArticleId) {
+      window.location.href = origin + "/articles/anonymous/" + anonymousArticleId
+    }
+
     renderUserList(users) {
       const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
@@ -216,8 +220,12 @@ const AdminApp = (() => {
       this.adminService.activeButton(leftBar)
     }
 
-    approveAnonymousArticle(anonymousArticle) {
-      this.adminService.approveAnonymousArticle(anonymousArticle)
+    approveAnonymousArticle(anonymousArticleId) {
+      this.adminService.approveAnonymousArticle(anonymousArticleId)
+    }
+
+    confirmAnonymousArticle(anonymousArticleId) {
+      this.adminService.confirmAnonymousArticle(anonymousArticleId)
     }
   }
 
