@@ -150,3 +150,12 @@
     transition: 800ms ease all;
     outline: none;
 }
+
+.feed-description-summary {
+    color: white;
+    background-color: black;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+    font-size: 15px;
+}

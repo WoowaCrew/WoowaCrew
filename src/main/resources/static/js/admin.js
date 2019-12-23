@@ -148,19 +148,79 @@ const AdminApp = (() => {
     showAddFeedForm() {
       const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
-      infoTitle.innerHTML=''
-      infoContent.innerHTML=''
+      infoTitle.innerHTML = ''
+      infoContent.innerHTML = ''
       infoContent.insertAdjacentHTML("beforeend", AdminTemplates.addFeedForm())
+    }
+
+    showFeedList() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+      fetch(BASE_URL + "/api/feeds", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(feedSources => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.feedSourceInfoTitle())
+          feedSources.forEach(feedSource => {
+            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.feedSourceListTemplate(feedSource))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    async editFeedSource(feedSourceId) {
+      const description = document.querySelector('#feed-source-' + feedSourceId + ' input').value;
+
+      if (description === '') {
+        alert("설명을 입력해 주세요.")
+        exit()
+      }
+
+      const formData = new FormData()
+      formData.append('description', description)
+
+      fetch(BASE_URL + '/api/feeds/' + feedSourceId, {
+        method: 'PUT',
+        body: formData
+      }).then(response => {
+        if (response.ok) {
+          return alert('수정 완료')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
+
+    }
+    async deleteFeedSource(feedSourceId) {
+      const feedSource = document.querySelector('#feed-source-' + feedSourceId);
+
+      fetch(BASE_URL + '/api/feeds/' + feedSourceId, {
+        method: 'DELETE'
+      }).then(response => {
+        if (response.ok) {
+          feedSource.innerHTML = ''
+          return alert('삭제 완료')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
+
     }
 
     async addFeedSource() {
       const sourceUrl = document.getElementById('source-url').value
       const description = document.getElementById('description').value
-      if(sourceUrl === '') {
+      if (sourceUrl === '') {
         alert("주소를 입력해주세요.")
         exit()
       }
-      if(description === '') {
+      if (description === '') {
         alert("설명을 입력해 주세요.")
         exit()
       }
@@ -171,7 +231,7 @@ const AdminApp = (() => {
         method: 'POST',
         body: formData
       }).then(response => {
-        if(response.ok) {
+        if (response.ok) {
           return alert('RSS 등록 성공')
         }
         throw new Error(response.status);
@@ -226,6 +286,20 @@ const AdminApp = (() => {
 
     addFeedSource() {
       this.adminService.addFeedSource()
+    }
+
+    showFeedList() {
+      this.adminService.showFeedList()
+      const leftBar = document.getElementById('rss-manage-button')
+      this.adminService.activeButton(leftBar)
+    }
+
+    editFeedSource(feedSourceId) {
+      this.adminService.editFeedSource(feedSourceId)
+    }
+
+    deleteFeedSource(feedSourceId) {
+      this.adminService.deleteFeedSource(feedSourceId)
     }
   }
 
