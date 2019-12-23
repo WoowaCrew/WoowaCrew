@@ -1,22 +1,25 @@
 package woowacrew.feed.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-
-public class FeedSourceDto {
-    @NotEmpty
-    @NotBlank
+public class FeedSourceResponseDto {
+    private Long id;
     private String sourceUrl;
-    @NotEmpty
-    @NotBlank
     private String description;
 
-    public FeedSourceDto() {
+    public FeedSourceResponseDto() {
     }
 
-    public FeedSourceDto(String sourceUrl, String description) {
+    public FeedSourceResponseDto(Long id, String sourceUrl, String description) {
+        this.id = id;
         this.sourceUrl = sourceUrl;
         this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSourceUrl() {
