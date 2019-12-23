@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
@@ -77,11 +78,12 @@ class ArticleServiceTest {
         articles.add(new Article(title, content, user));
 
         Page<Article> articlePages = new PageImpl<>(articles);
-        SearchSpec<Article> searchSpec = new SearchSpec<>("title", "delete", SearchType.values());
+        SearchSpec<Article> searchSpec = new SearchSpec<>(SearchType.values());
+        Specification<Article> specification = searchSpec.getSpecification("title", "delete");
 
         when(articleInternalService.findAll(any(), any())).thenReturn(articlePages);
 
-        ArticleResponseDtos actual = articleService.findSearchedArticles(searchSpec, PageRequest.of(0, 20));
+        ArticleResponseDtos actual = articleService.findSearchedArticles(specification, PageRequest.of(0, 20));
 
         assertThat(actual.getArticles().size()).isEqualTo(3);
         assertThat(actual.getPageNumber()).isEqualTo(1);

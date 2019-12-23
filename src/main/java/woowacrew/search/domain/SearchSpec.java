@@ -8,17 +8,15 @@ import java.util.List;
 
 public class SearchSpec<T> {
 
-    private Specification<T> specification;
+    private List<SearchType> allowedSearchTypes;
 
-    public SearchSpec(String type, String content, SearchType... allowedSearchTypes) {
+    public SearchSpec(SearchType... allowedSearchTypes) {
         List<SearchType> convertSearchTypes = Arrays.asList(allowedSearchTypes);
-        convertSearchTypes = Collections.unmodifiableList(convertSearchTypes);
-
-        SearchType searchType = SearchTypeFactory.createSearchType(convertSearchTypes, type);
-        this.specification = SearchSpecFactory.createSpecification(searchType, content);
+        this.allowedSearchTypes = Collections.unmodifiableList(convertSearchTypes);
     }
 
-    public Specification<T> getSpecification() {
-        return specification;
+    public Specification<T> getSpecification(String type, String content) {
+        SearchType searchType = SearchTypeFactory.createSearchType(this.allowedSearchTypes, type);
+        return SearchSpecFactory.createSpecification(searchType, content);
     }
 }

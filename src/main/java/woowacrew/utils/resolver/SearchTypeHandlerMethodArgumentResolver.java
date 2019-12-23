@@ -1,6 +1,7 @@
 package woowacrew.utils.resolver;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -18,16 +19,17 @@ public class SearchTypeHandlerMethodArgumentResolver implements HandlerMethodArg
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(SearchSpec.class) &&
+        return parameter.getParameterType().isAssignableFrom(Specification.class) &&
                 parameter.hasParameterAnnotation(AllowedSearchType.class);
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Specification<?> resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String searchType = webRequest.getParameter(TYPE);
         String searchContent = webRequest.getParameter(CONTENT);
         SearchType[] searchTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AllowedSearchType.class)).type();
 
-        return new SearchSpec<>(searchType, searchContent, searchTypes);
+        SearchSpec<?> searchSpec = new SearchSpec<>(searchTypes);
+        return searchSpec.getSpecification(searchType, searchContent);
     }
 }
