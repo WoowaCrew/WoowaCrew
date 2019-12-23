@@ -65,4 +65,43 @@
 #comment-list .comment-info {
     margin-bottom: 5px;
     padding: 10px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.comment-common-button-group, .comment-edit-button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.comment-delete-button, .comment-cancel-button {
+    margin-right: 10px;
+}
+
+div.comment-cancel-button:hover, div.comment-delete-button:hover, div.comment-edit-button:hover, div.comment-update-button:hover {
+    cursor: pointer;
+    color: white;
+}
+
+.comment-edit-button-group, .comment-edit-form {
+    display: none;
+}
+
+.comment-edit-form {
+    padding: 10px;
+}
+
+.comment-edit-form textarea {
+    resize: none;
+    width: 100%;
+    overflow: scroll;
+    height: 50px;
+    background: black;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 2px solid white;
+    outline: none;
 }

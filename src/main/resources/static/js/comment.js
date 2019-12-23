@@ -27,6 +27,38 @@ const CommentListApp = (() => {
         .catch(error => alert('오류가 발생했습니다.'));
     }
 
+    showUpdateCommentForm(event) {
+      const commentDiv = event.target.closest(".comment")
+      const commentContentDiv = commentDiv.getElementsByClassName("comment-content")[0]
+      const commentUpdateFormDiv = commentDiv.getElementsByClassName("comment-edit-form")[0]
+      const commentButtons = commentDiv.getElementsByClassName("comment-common-button-group")[0]
+      const commentEditButtons = commentDiv.getElementsByClassName("comment-edit-button-group")[0]
+
+      const commentUpdateForm = commentUpdateFormDiv.getElementsByTagName("textarea")[0];
+      commentUpdateForm.value = commentContentDiv.textContent
+
+      commentContentDiv.style.display = "none"
+      commentButtons.style.display = "none"
+
+      commentUpdateFormDiv.style.display = "flex"
+      commentEditButtons.style.display = "flex"
+    }
+
+    cancelUpdateCommentForm(event) {
+      const commentDiv = event.target.closest(".comment")
+      const commentContentDiv = commentDiv.getElementsByClassName("comment-content")[0]
+      const commentUpdateFormDiv = commentDiv.getElementsByClassName("comment-edit-form")[0]
+      const commentButtons = commentDiv.getElementsByClassName("comment-common-button-group")[0]
+      const commentEditButtons = commentDiv.getElementsByClassName("comment-edit-button-group")[0]
+
+      commentUpdateFormDiv.style.display = "none"
+      commentEditButtons.style.display = "none"
+
+      commentContentDiv.style.display = "flex"
+      commentButtons.style.display = "flex"
+    }
+
+
     async showComments() {
       const commentList = document.getElementById('comment-list')
       const articleId = document.getElementById('article-id').textContent
@@ -34,10 +66,6 @@ const CommentListApp = (() => {
       fetch(BASE_URL + "/api/articles/" + articleId + "/comments", {
         method: 'GET'
       }).then(response => response.json())
-        .then(comments => {
-          console.log(comments)
-          return comments
-        })
         .then(comments => {
           commentList.innerHTML = ''
           comments.forEach(comment => {
@@ -63,6 +91,14 @@ const CommentListApp = (() => {
 
     createComment() {
       this.commentService.createComment()
+    }
+
+    showUpdateCommentForm(event) {
+      this.commentService.showUpdateCommentForm(event);
+    }
+
+    cancelUpdateCommentForm(event) {
+      this.commentService.cancelUpdateCommentForm(event);
     }
   }
 
