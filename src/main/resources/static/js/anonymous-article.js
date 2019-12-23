@@ -40,7 +40,12 @@ function anonymousArticle() {
       method: 'PUT',
       body: formData
     })
-    .then(() => window.location.href = origin + '/articles/anonymous')
+    .then(response => {
+        if(!response.ok) {
+            throw Error(response);
+        }
+        window.location.href = origin + '/articles/anonymous'
+    })
     .catch(error => {
         alert("잘못된 비밀번호입니다.");
     })
