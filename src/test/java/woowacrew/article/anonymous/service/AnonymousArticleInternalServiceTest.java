@@ -42,9 +42,9 @@ class AnonymousArticleInternalServiceTest {
     void save() {
         String title = "title";
         String content = "content";
-        String password = "password";
+        String signingKey = "password";
         AnonymousArticleRequestDto anonymousArticleRequestDto
-                = new AnonymousArticleRequestDto(title, content, password);
+                = new AnonymousArticleRequestDto(title, content, signingKey);
         AnonymousArticle anonymousArticle =
                 AnonymousArticleConverter.toEntity(anonymousArticleRequestDto);
 
@@ -167,7 +167,7 @@ class AnonymousArticleInternalServiceTest {
 
         when(anonymousArticleRepository.findById(1L)).thenReturn(Optional.of(anonymousArticle));
 
-        assertDoesNotThrow(() -> anonymousArticleInternalService.check(1L, "password"));
+        assertDoesNotThrow(() -> anonymousArticleInternalService.checkSigningKey(1L, "password"));
     }
 
     @Test
@@ -179,14 +179,14 @@ class AnonymousArticleInternalServiceTest {
         when(anonymousArticleRepository.findById(1L)).thenReturn(Optional.of(anonymousArticle));
 
         assertThrows(MismatchPasswordException.class,
-                () -> anonymousArticleInternalService.check(1L, "invalid password"));
+                () -> anonymousArticleInternalService.checkSigningKey(1L, "invalid password"));
     }
 
     private List<AnonymousArticle> createAnonymousArticles(int numberOfArticle) {
-        String password = "password";
+        String signingKey = "password";
         List<AnonymousArticle> articles = new ArrayList<>();
         for (int i = 0; i < numberOfArticle; i++) {
-            articles.add(new AnonymousArticle(String.valueOf(i), String.valueOf(i), password));
+            articles.add(new AnonymousArticle(String.valueOf(i), String.valueOf(i), signingKey));
         }
         return articles;
     }

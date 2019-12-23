@@ -62,11 +62,11 @@ public class AnonymousArticleService {
         return AnonymousArticleConverter.toDto(anonymousArticleInternalService.approve(anonymousArticleId));
     }
 
-    public void delete(Long anonymousArticleId, String password) {
-        anonymousArticleInternalService.delete(anonymousArticleId, password);
+    public void delete(Long anonymousArticleId, String signingKey) {
+        anonymousArticleInternalService.delete(anonymousArticleId, signingKey);
     }
 
-    public void check(Long anonymousArticleId, String password) {
-        anonymousArticleInternalService.check(anonymousArticleId, password);
+    public void checkSigningKey(Long anonymousArticleId, String signingKey) {
+        anonymousArticleInternalService.checkSigningKey(anonymousArticleId, signingKey);
     }
 }

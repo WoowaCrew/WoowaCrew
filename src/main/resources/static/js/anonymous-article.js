@@ -25,13 +25,13 @@ function anonymousArticle() {
 
   const editButton = document.getElementById('article-edit-button')
   editButton.addEventListener('click', () => {
-    let password = "";
-    while (password.length < 8) {
-      password = prompt("비밀번호를 입력해 주세요?(8자리 이상)");
+    let signingKey = "";
+    while (signingKey.length < 8) {
+      signingKey = prompt("비밀번호를 입력해 주세요?(8자리 이상)");
     }
 
     const formData = new FormData()
-    formData.append('password', password)
+    formData.append('signingKey', signingKey)
 
     fetch(origin + "/api/articles/anonymous/" + articleId + "/check", {
       method: 'POST',
@@ -46,13 +46,13 @@ function anonymousArticle() {
 
   const deleteButton = document.getElementById('article-delete-button')
   deleteButton.addEventListener('click', () => {
-    let password = "";
-    while (password.length < 8) {
-      password = prompt("비밀번호를 입력해 주세요?(8자리 이상)");
+    let signingKey = "";
+    while (signingKey.length < 8) {
+      signingKey = prompt("비밀번호를 입력해 주세요?(8자리 이상)");
     }
 
     const formData = new FormData()
-    formData.append('password', password)
+    formData.append('signingKey', signingKey)
 
     fetch(origin + "/api/articles/anonymous/" + articleId + "/delete", {
       method: 'PUT',

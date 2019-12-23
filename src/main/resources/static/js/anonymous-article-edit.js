@@ -43,16 +43,16 @@ function anonymousArticleEdit() {
       return
     }
 
-    let password = "";
-    while (password.length < 8) {
-      password = prompt("비밀번호를 입력해 주세요?(8자리 이상)");
+    let signingKey = "";
+    while (signingKey.length < 8) {
+      signingKey = prompt("비밀번호를 입력해 주세요?(8자리 이상)");
     }
 
     const formData = new FormData()
     formData.append('articleId', articleId)
     formData.append('title', title)
     formData.append('content', content)
-    formData.append('password', password)
+    formData.append('signingKey', signingKey)
 
     fetch(origin + "/api/articles/anonymous/" + articleId, {
       method: 'PUT',

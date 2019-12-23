@@ -63,8 +63,8 @@ public class AnonymousArticleApiController {
     }
 
     @PostMapping("/{anonymousArticleId}/check")
-    public ResponseEntity checkPassword(@PathVariable Long anonymousArticleId, String password) {
-        anonymousArticleService.check(anonymousArticleId, password);
+    public ResponseEntity checkPassword(@PathVariable Long anonymousArticleId, String signingKey) {
+        anonymousArticleService.checkSigningKey(anonymousArticleId, signingKey);
         return ResponseEntity.ok().build();
     }
 
@@ -80,8 +80,8 @@ public class AnonymousArticleApiController {
     }
 
     @PutMapping("/{anonymousArticleId}/delete")
-    public ResponseEntity<AnonymousArticleResponseDto> delete(@PathVariable Long anonymousArticleId, String password) {
-        anonymousArticleService.delete(anonymousArticleId, password);
+    public ResponseEntity<AnonymousArticleResponseDto> delete(@PathVariable Long anonymousArticleId, String signingKey) {
+        anonymousArticleService.delete(anonymousArticleId, signingKey);
         return ResponseEntity.ok().build();
     }
 }

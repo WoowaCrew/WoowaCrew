@@ -4,12 +4,12 @@ public class AnonymousArticleRequestDto {
 
     private String title;
     private String content;
-    private String password;
+    private String signingKey;
 
-    public AnonymousArticleRequestDto(String title, String content, String password) {
+    public AnonymousArticleRequestDto(String title, String content, String signingKey) {
         this.title = title;
         this.content = content;
-        this.password = password;
+        this.signingKey = signingKey;
     }
 
     public String getTitle() {
@@ -20,7 +20,7 @@ public class AnonymousArticleRequestDto {
         return content;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSigningKey() {
+        return signingKey;
     }
 }

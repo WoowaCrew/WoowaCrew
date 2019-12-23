@@ -19,16 +19,16 @@ public class AnonymousArticle extends TimeEntity {
     private ArticleForm articleForm;
 
     @Embedded
-    private AnonymousArticlePassword password;
+    private AnonymousArticleSigningKey signingKey;
 
     private boolean isApproved;
 
     private AnonymousArticle() {
     }
 
-    public AnonymousArticle(String title, String content, String password) {
+    public AnonymousArticle(String title, String content, String signingKey) {
         this.articleForm = new ArticleForm(title, content);
-        this.password = new AnonymousArticlePassword(password);
+        this.signingKey = new AnonymousArticleSigningKey(signingKey);
         this.isApproved = false;
     }
 
@@ -36,13 +36,13 @@ public class AnonymousArticle extends TimeEntity {
         this.isApproved = true;
     }
 
-    public void update(String title, String content, String password) {
-        checkPassword(password);
+    public void update(String title, String content, String signingKey) {
+        checkSigningKey(signingKey);
         this.articleForm.update(title, content);
     }
 
-    public void checkPassword(String password) {
-        if (!this.password.match(password)) {
+    public void checkSigningKey(String signingKey) {
+        if (!this.signingKey.match(signingKey)) {
             throw new MismatchPasswordException();
         }
     }
@@ -89,7 +89,7 @@ public class AnonymousArticle extends TimeEntity {
         return "AnonymousArticle{" +
                 "id=" + id +
                 ", articleForm=" + articleForm +
-                ", password=" + password +
+                ", signingKey=" + signingKey +
                 ", isApproved=" + isApproved +
                 '}';
     }

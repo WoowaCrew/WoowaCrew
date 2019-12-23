@@ -9,7 +9,7 @@ public class AnonymousArticleConverter {
         return new AnonymousArticle(
                 anonymousArticleRequestDto.getTitle(),
                 anonymousArticleRequestDto.getContent(),
-                anonymousArticleRequestDto.getPassword());
+                anonymousArticleRequestDto.getSigningKey());
     }
 
     public static AnonymousArticleResponseDto toDto(AnonymousArticle anonymousArticle) {

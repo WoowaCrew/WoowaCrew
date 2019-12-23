@@ -16,7 +16,7 @@ function anonymousArticleCreate() {
   document.getElementById('article-save-button').addEventListener('click', function (e) {
     const title = document.getElementById('title').value;
     const content = document.getElementById('article-contents').value;
-    const password = document.getElementById('password').value.trim();
+    const signingKey = document.getElementById('signingKey').value.trim();
 
     if (title.trim() === "") {
       alert("제목을 입력해주세요")
@@ -27,7 +27,7 @@ function anonymousArticleCreate() {
       return
     }
 
-    if (password === "" || password.length < 8) {
+    if (signingKey === "" || signingKey.length < 8) {
       alert("8자리 이상의 비밀번호를 입력해주세요.")
       return
     }
@@ -35,7 +35,7 @@ function anonymousArticleCreate() {
     const formData = new FormData()
     formData.append('title', title)
     formData.append('content', content)
-    formData.append('password', password)
+    formData.append('signingKey', signingKey)
 
     fetch(origin + "/api/articles/anonymous", {
       method: 'POST',

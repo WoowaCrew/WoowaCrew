@@ -67,7 +67,7 @@ public class AnonymousArticleInternalService {
         anonymousArticle.update(
                 anonymousArticleUpdateDto.getTitle(),
                 anonymousArticleUpdateDto.getContent(),
-                anonymousArticleUpdateDto.getPassword());
+                anonymousArticleUpdateDto.getSigningKey());
         return anonymousArticle;
     }
 
@@ -77,16 +77,16 @@ public class AnonymousArticleInternalService {
         return anonymousArticle;
     }
 
-    public void delete(Long anonymousArticleId, String password) {
+    public void delete(Long anonymousArticleId, String signingKey) {
         AnonymousArticle anonymousArticle = findById(anonymousArticleId);
 
-        anonymousArticle.checkPassword(password);
+        anonymousArticle.checkSigningKey(signingKey);
 
         anonymousArticleRepository.delete(anonymousArticle);
     }
 
-    public void check(Long anonymousArticleId, String password) {
+    public void checkSigningKey(Long anonymousArticleId, String signingKey) {
         AnonymousArticle anonymousArticle = findById(anonymousArticleId);
-        anonymousArticle.checkPassword(password);
+        anonymousArticle.checkSigningKey(signingKey);
     }
 }
