@@ -39,6 +39,18 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
+    void 승인된_익명_게시글_조회_테스트() {
+        String cookie = loginWithCrew();
+        Long approvedId = 1L;
+
+        webTestClient.get()
+                .uri("/api/articles/anonymous/{anonymousArticleId}", approvedId)
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
     void 승인되지_않은_익명_게시글_크루_조회_테스트() {
         String cookie = loginWithCrew();
         Long unapprovedId = 4L;
