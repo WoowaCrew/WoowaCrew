@@ -36,7 +36,7 @@ function anonymousArticle() {
     const formData = new FormData()
     formData.append('password', password)
 
-    fetch(origin + "/api/articles/anonymous/" + articleId, {
+    fetch(origin + "/api/articles/anonymous/" + articleId + "/delete", {
       method: 'PUT',
       body: formData
     })

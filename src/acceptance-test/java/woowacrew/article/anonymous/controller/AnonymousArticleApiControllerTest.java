@@ -112,7 +112,7 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .getResponseBody();
 
         webTestClient.put()
-                .uri("/api/articles/anonymous/{anonymousArticleId}", anonymousArticle.getAnonymousArticleId())
+                .uri("/api/articles/anonymous/{anonymousArticleId}/delete", anonymousArticle.getAnonymousArticleId())
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("password", password))
                 .exchange()
@@ -139,7 +139,7 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .getResponseBody();
 
         webTestClient.put()
-                .uri("/api/articles/anonymous/{anonymousArticleId}", anonymousArticle.getAnonymousArticleId())
+                .uri("/api/articles/anonymous/{anonymousArticleId}/delete", anonymousArticle.getAnonymousArticleId())
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("password", "invalid password"))
                 .exchange()
