@@ -84,4 +84,9 @@ public class AnonymousArticleInternalService {
 
         anonymousArticleRepository.delete(anonymousArticle);
     }
+
+    public void check(Long anonymousArticleId, String password) {
+        AnonymousArticle anonymousArticle = findById(anonymousArticleId);
+        anonymousArticle.checkPassword(password);
+    }
 }

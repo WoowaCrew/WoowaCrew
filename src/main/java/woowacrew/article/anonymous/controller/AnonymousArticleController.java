@@ -2,12 +2,17 @@ package woowacrew.article.anonymous.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import woowacrew.article.anonymous.service.AnonymousArticleInternalService;
 
 @Controller
 @RequestMapping("/articles/anonymous")
 public class AnonymousArticleController {
+    private final AnonymousArticleInternalService anonymousArticleInternalService;
+
+    public AnonymousArticleController(AnonymousArticleInternalService anonymousArticleInternalService) {
+        this.anonymousArticleInternalService = anonymousArticleInternalService;
+    }
 
     @GetMapping
     public String list() {
@@ -20,12 +25,12 @@ public class AnonymousArticleController {
     }
 
     @GetMapping("/{articleId}")
-    public String showAnonymousArticle(@PathVariable Long articleId) {
+    public String showAnonymousArticle() {
         return "anonymous-article";
     }
 
     @GetMapping("/{articleId}/edit")
-    public String editAnonymousArticle(@PathVariable Long articleId) {
+    public String editAnonymousArticle() {
         return "anonymous-article-edit";
     }
 }

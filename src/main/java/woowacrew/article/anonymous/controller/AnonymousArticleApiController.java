@@ -54,6 +54,12 @@ public class AnonymousArticleApiController {
                 .body(anonymousArticleResponseDto);
     }
 
+    @PostMapping("/{anonymousArticleId}/check")
+    public ResponseEntity checkPassword(@PathVariable Long anonymousArticleId, String password) {
+        anonymousArticleService.check(anonymousArticleId, password);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/{anonymousArticleId}")
     public ResponseEntity<AnonymousArticleResponseDto> update(@PathVariable Long anonymousArticleId,
                                                               AnonymousArticleUpdateDto anonymousArticleUpdateDto) {

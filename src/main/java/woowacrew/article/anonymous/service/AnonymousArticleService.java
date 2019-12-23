@@ -65,4 +65,8 @@ public class AnonymousArticleService {
     public void delete(Long anonymousArticleId, String password) {
         anonymousArticleInternalService.delete(anonymousArticleId, password);
     }
+
+    public void check(Long anonymousArticleId, String password) {
+        anonymousArticleInternalService.check(anonymousArticleId, password);
+    }
 }
