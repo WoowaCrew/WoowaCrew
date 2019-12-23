@@ -87,7 +87,7 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
 
         AnonymousArticleResponseDtos anonymousArticlesResponseDtos =
                 webTestClient.get()
-                        .uri("/api/articles/anonymous/approved?page=0")
+                        .uri("/api/articles/anonymous/approved?page=1")
                         .header("Cookie", cookie)
                         .exchange()
                         .expectStatus().isOk()
