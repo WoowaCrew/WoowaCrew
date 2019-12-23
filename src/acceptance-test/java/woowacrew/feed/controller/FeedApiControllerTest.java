@@ -3,11 +3,13 @@ package woowacrew.feed.controller;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.feed.dto.FeedSourceResponseDto;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -103,5 +105,29 @@ public class FeedApiControllerTest extends CommonTestController {
                 .getResponseBody();
 
         assertThat(result.getDescription()).isEqualTo(updatedDescription);
+    }
+
+    @Test
+    void delete_Test() throws IOException {
+        String cookie = loginWithAdmin();
+        String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
+        String description = "description";
+
+        FeedSourceResponseDto result = webTestClient.post()
+                .uri("/api/feeds")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("sourceUrl", sourceUrl)
+                        .with("description", description))
+                .exchange()
+                .expectBody(FeedSourceResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        webTestClient.delete()
+                .uri("/api/feeds/" + result.getId())
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .isOk();
     }
 }

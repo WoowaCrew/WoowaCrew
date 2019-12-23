@@ -41,4 +41,10 @@ public class FeedApiController {
     public ResponseEntity<FeedSourceResponseDto> updateFeedSourceDescription(@PathVariable Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
         return ResponseEntity.ok(feedService.updateFeedSourceDescription(feedSourceId, updateRequestDto));
     }
+
+    @DeleteMapping("/{feedSourceId}")
+    public ResponseEntity<Void> deleteFeedSource(@PathVariable Long feedSourceId) {
+        feedService.deleteFeedSource(feedSourceId);
+        return ResponseEntity.ok().build();
+    }
 }

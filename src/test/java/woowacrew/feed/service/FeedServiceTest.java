@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -95,5 +95,12 @@ class FeedServiceTest {
 
         assertThat(responseDtos.size()).isEqualTo(1);
         assertThat(responseDtos.get(0).getSourceUrl()).isEqualTo(sourceUrl);
+    }
+
+    @Test
+    void delete_feedSource_테스트() {
+        feedService.deleteFeedSource(1L);
+
+        verify(feedInternalService, times(1)).deleteFeedSource(1L);
     }
 }

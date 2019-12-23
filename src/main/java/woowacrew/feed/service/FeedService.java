@@ -47,4 +47,8 @@ public class FeedService {
         FeedSource updatedFeedSource = feedInternalService.updateFeedSourceDescription(feedSourceId, updateRequestDto);
         return FeedConverter.toFeedSourceResponseDto(updatedFeedSource);
     }
+
+    public void deleteFeedSource(Long feedSourceId) {
+        feedInternalService.deleteFeedSource(feedSourceId);
+    }
 }
