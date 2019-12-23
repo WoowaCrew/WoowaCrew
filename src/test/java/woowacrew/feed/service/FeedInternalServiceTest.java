@@ -13,7 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.feed.domain.*;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceRequestDto;
 import woowacrew.feed.dto.FeedSourceUpdateRequestDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 import woowacrew.feed.exception.NotFoundFeedSourceException;
@@ -50,24 +50,24 @@ class FeedInternalServiceTest {
     @Test
     void 정상xml을_입력했을_때_제대로_저장하는지_테스트() throws IOException {
         String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
-        FeedSourceDto feedSourceDto = new FeedSourceDto(sourceUrl, "테스트용 xml");
+        FeedSourceRequestDto feedSourceRequestDto = new FeedSourceRequestDto(sourceUrl, "테스트용 xml");
 
         when(feedSourceRepository.existsBySourceUrl(any())).thenReturn(false);
         when(feedArticleRepository.saveAll(anyList())).thenReturn(new ArrayList<>());
         when(feedSourceRepository.save(any(FeedSource.class))).thenReturn(feedSource);
 
-        FeedSource savedFeedSource = feedInternalService.registerFeedSource(feedSourceDto);
+        FeedSource savedFeedSource = feedInternalService.registerFeedSource(feedSourceRequestDto);
         assertThat(savedFeedSource.getSourceUrl()).isEqualTo(feedSource.getSourceUrl());
     }
 
     @Test
     void 이미_존재하는_url은_저장하지_않는다() throws IOException {
         String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
-        FeedSourceDto feedSourceDto = new FeedSourceDto(sourceUrl, "테스트용 xml");
+        FeedSourceRequestDto feedSourceRequestDto = new FeedSourceRequestDto(sourceUrl, "테스트용 xml");
 
         when(feedSourceRepository.existsBySourceUrl(any())).thenReturn(true);
 
-        assertThrows(AlreadyExistSourceUrlException.class, () -> feedInternalService.registerFeedSource(feedSourceDto));
+        assertThrows(AlreadyExistSourceUrlException.class, () -> feedInternalService.registerFeedSource(feedSourceRequestDto));
     }
 
     @Test

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.feed.domain.*;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceRequestDto;
 import woowacrew.feed.dto.FeedSourceUpdateRequestDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 import woowacrew.feed.exception.NotFoundFeedSourceException;
@@ -30,12 +30,12 @@ public class FeedInternalService {
     }
 
 
-    public FeedSource registerFeedSource(FeedSourceDto feedSourceDto) {
-        if (isExistUrl(feedSourceDto.getSourceUrl())) {
+    public FeedSource registerFeedSource(FeedSourceRequestDto feedSourceRequestDto) {
+        if (isExistUrl(feedSourceRequestDto.getSourceUrl())) {
             throw new AlreadyExistSourceUrlException();
         }
 
-        FeedSource feedSource = feedSourceRepository.save(FeedConverter.toFeedSource(feedSourceDto));
+        FeedSource feedSource = feedSourceRepository.save(FeedConverter.toFeedSource(feedSourceRequestDto));
         FeedArticles feedArticles = feedSource.createFeedArticles();
 
         feedArticleRepository.saveAll(feedArticles.getFeedArticles());

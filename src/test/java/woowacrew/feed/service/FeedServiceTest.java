@@ -12,7 +12,8 @@ import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.dto.FeedArticleResponseDto;
 import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceRequestDto;
+import woowacrew.feed.dto.FeedSourceResponseDto;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.time.LocalDateTime;
@@ -35,12 +36,12 @@ class FeedServiceTest {
     void FeedSource가_정상적으로_저장됐다면_RegisterDto를_리턴한다() {
         String url = "url";
         String description = "description";
-        FeedSourceDto feedSourceDto = new FeedSourceDto(url, description);
-        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceDto);
+        FeedSourceRequestDto feedSourceRequestDto = new FeedSourceRequestDto(url, description);
+        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceRequestDto);
 
-        when(feedInternalService.registerFeedSource(feedSourceDto)).thenReturn(feedSource);
+        when(feedInternalService.registerFeedSource(feedSourceRequestDto)).thenReturn(feedSource);
 
-        FeedSourceDto actualRegisterDto = feedService.registerFeedSource(feedSourceDto);
+        FeedSourceResponseDto actualRegisterDto = feedService.registerFeedSource(feedSourceRequestDto);
 
         assertThat(actualRegisterDto.getSourceUrl()).isEqualTo(url);
         assertThat(actualRegisterDto.getDescription()).isEqualTo(description);
@@ -48,7 +49,7 @@ class FeedServiceTest {
 
     @Test
     void findAll() {
-        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), new FeedSource("source","description"));
+        FeedArticle feedArticle = new FeedArticle("title", "link", LocalDateTime.now(), new FeedSource("source", "description"));
         Pageable pageable = PageRequest.of(0, 20);
         when(feedInternalService.findAllFeedArticles(pageable)).thenReturn(new PageImpl<>(Arrays.asList(feedArticle)));
 
@@ -61,7 +62,7 @@ class FeedServiceTest {
     @Test
     void updateFeed() {
         String title = "title";
-        FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now(), new FeedSource("source","description"));
+        FeedArticle feedArticle = new FeedArticle(title, "link", LocalDateTime.now(), new FeedSource("source", "description"));
         when(feedInternalService.updateFeedArticles()).thenReturn(Collections.singletonList(feedArticle));
 
         List<FeedArticleResponseDto> feedArticleResponseDtos = feedService.updateFeed();

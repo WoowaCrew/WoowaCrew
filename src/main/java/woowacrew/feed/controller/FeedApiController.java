@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import woowacrew.feed.dto.FeedArticleResponseDto;
 import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceRequestDto;
+import woowacrew.feed.dto.FeedSourceResponseDto;
 import woowacrew.feed.service.FeedService;
 
 import javax.validation.Valid;
@@ -36,8 +37,8 @@ public class FeedApiController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FeedSourceDto> registerFeedSource(@Valid FeedSourceDto feedSourceDto) {
-        return ResponseEntity.ok(feedService.registerFeedSource(feedSourceDto));
+    public ResponseEntity<FeedSourceResponseDto> registerFeedSource(@Valid FeedSourceRequestDto feedSourceRequestDto) {
+        return ResponseEntity.ok(feedService.registerFeedSource(feedSourceRequestDto));
     }
 
     @PostMapping("/new")

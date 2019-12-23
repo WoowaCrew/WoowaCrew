@@ -7,7 +7,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceResponseDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,13 +36,13 @@ public class FeedApiControllerTest extends CommonTestController {
         String url = "https://oeeen.github.io/feed.xml";
         String description = "테스트";
         String cookie = loginWithAdmin();
-        FeedSourceDto result = webTestClient.post()
+        FeedSourceResponseDto result = webTestClient.post()
                 .uri("/api/feeds")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("sourceUrl", url)
                         .with("description", description))
                 .exchange()
-                .expectBody(FeedSourceDto.class)
+                .expectBody(FeedSourceResponseDto.class)
                 .returnResult()
                 .getResponseBody();
 
