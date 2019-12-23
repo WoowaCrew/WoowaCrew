@@ -159,3 +159,8 @@
     border-bottom: 1px solid white;
     font-size: 15px;
 }
+
+
+.hover-red:hover {
+    color: red;
+}

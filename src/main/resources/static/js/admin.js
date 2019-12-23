@@ -195,6 +195,7 @@ const AdminApp = (() => {
         });
 
     }
+
     async deleteFeedSource(feedSourceId) {
       const feedSource = document.querySelector('#feed-source-' + feedSourceId);
 
@@ -233,6 +234,20 @@ const AdminApp = (() => {
       }).then(response => {
         if (response.ok) {
           return alert('RSS 등록 성공')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
+    }
+
+    updateFeedArticles() {
+      fetch(BASE_URL + "/api/feeds/new", {
+        method: 'POST'
+      }).then(response => {
+        if (response.ok) {
+          return alert('피드 게시글 업데이트 성공')
         }
         throw new Error(response.status);
       })
@@ -300,6 +315,10 @@ const AdminApp = (() => {
 
     deleteFeedSource(feedSourceId) {
       this.adminService.deleteFeedSource(feedSourceId)
+    }
+
+    updateFeedArticles() {
+      this.adminService.updateFeedArticles()
     }
   }
 

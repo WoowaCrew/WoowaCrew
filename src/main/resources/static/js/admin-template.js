@@ -85,7 +85,9 @@ const AdminTemplates = (() => {
 
     feedSourceInfoTitle() {
       return `<div class="info-title-source-url cell">sourceUrl</div>
-                <div class="info-title-description cell">설명</div> `;
+                <div class="info-title-description cell">설명</div>
+                <div class="cell info-cell margin-left-10 hover-pointer hover-red" onclick="AdminApp.updateFeedArticles()">피드 업데이트</div>
+                 `;
     }
 
     feedSourceListTemplate(feedSource) {
