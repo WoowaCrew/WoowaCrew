@@ -3,16 +3,10 @@ package woowacrew.article.anonymous.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import woowacrew.article.anonymous.service.AnonymousArticleInternalService;
 
 @Controller
 @RequestMapping("/articles/anonymous")
 public class AnonymousArticleController {
-    private final AnonymousArticleInternalService anonymousArticleInternalService;
-
-    public AnonymousArticleController(AnonymousArticleInternalService anonymousArticleInternalService) {
-        this.anonymousArticleInternalService = anonymousArticleInternalService;
-    }
 
     @GetMapping
     public String list() {
