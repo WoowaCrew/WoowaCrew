@@ -159,6 +159,29 @@ class AnonymousArticleInternalServiceTest {
                 () -> anonymousArticleInternalService.delete(1L, "invalid password"));
     }
 
+    @Test
+    @DisplayName("익명 게시글 일치하는 비밀번호로 확인")
+    void checkWithMatchPassword() {
+        AnonymousArticle anonymousArticle = new AnonymousArticle("title", "content", "password");
+        FieldSetter.set(anonymousArticle, "id", 1L);
+
+        when(anonymousArticleRepository.findById(1L)).thenReturn(Optional.of(anonymousArticle));
+
+        assertDoesNotThrow(() -> anonymousArticleInternalService.check(1L, "password"));
+    }
+
+    @Test
+    @DisplayName("익명 게시글 불일치하는 비밀번호로 확인")
+    void checkWithMismatchPassword() {
+        AnonymousArticle anonymousArticle = new AnonymousArticle("title", "content", "password");
+        FieldSetter.set(anonymousArticle, "id", 1L);
+
+        when(anonymousArticleRepository.findById(1L)).thenReturn(Optional.of(anonymousArticle));
+
+        assertThrows(MismatchPasswordException.class,
+                () -> anonymousArticleInternalService.check(1L, "invalid password"));
+    }
+
     private List<AnonymousArticle> createAnonymousArticles(int numberOfArticle) {
         String password = "password";
         List<AnonymousArticle> articles = new ArrayList<>();
