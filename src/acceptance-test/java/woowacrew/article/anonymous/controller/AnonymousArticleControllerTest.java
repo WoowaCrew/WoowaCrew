@@ -33,4 +33,15 @@ public class AnonymousArticleControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void 익명_게시글_수정_페이지로_이동() {
+        String cookie = loginWithCrew();
+
+        webTestClient.get()
+                .uri("/articles/anonymous/1/edit")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

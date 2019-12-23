@@ -23,4 +23,9 @@ public class AnonymousArticleController {
     public String showAnonymousArticle(@PathVariable Long articleId) {
         return "anonymous-article";
     }
+
+    @GetMapping("/{articleId}/edit")
+    public String editAnonymousArticle(@PathVariable Long articleId) {
+        return "anonymous-article-edit";
+    }
 }
