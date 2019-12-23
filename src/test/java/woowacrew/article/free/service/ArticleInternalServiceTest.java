@@ -9,11 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.domain.ArticleRepository;
-import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.article.free.dto.ArticleRequestDto;
 import woowacrew.article.free.dto.ArticleUpdateDto;
+import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.article.free.exception.NotFoundArticleException;
 import woowacrew.common.service.FieldSetter;
@@ -28,11 +29,16 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ArticleInternalServiceTest {
+    @Mock
+    private Specification<Article> mockArticleSpecification;
+    @Mock
+    private Page<Article> mockArticlePages;
     @Mock
     private ArticleRepository articleRepository;
     @Mock
@@ -149,5 +155,19 @@ class ArticleInternalServiceTest {
             articles.add(new Article(String.valueOf(i), String.valueOf(i), user));
         }
         return articles;
+    }
+
+    @Test
+    void 페이지_개수가_20개가_아니면_에러가_발생한다() {
+        Pageable differentPageable = PageRequest.of(0, 19);
+        assertThrows(InvalidPageRequstException.class, () -> articleInternalService.findAll(mockArticleSpecification, differentPageable));
+    }
+
+    @Test
+    void 정상적으로_제목이_포함된_게시글을_찾는다() {
+        Pageable pageable = PageRequest.of(0, 20);
+        when(articleRepository.findAll(mockArticleSpecification, pageable)).thenReturn(mockArticlePages);
+
+        assertDoesNotThrow(() -> articleInternalService.findAll(mockArticleSpecification, pageable));
     }
 }

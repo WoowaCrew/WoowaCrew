@@ -3,6 +3,7 @@ package woowacrew.article.free.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.domain.Article;
@@ -49,6 +50,15 @@ public class ArticleInternalService {
         }
 
         return articleRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Article> findAll(Specification<Article> specification, Pageable pageable) {
+        if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
+            throw new InvalidPageRequstException();
+        }
+
+        return articleRepository.findAll(specification, pageable);
     }
 
     public Article update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
