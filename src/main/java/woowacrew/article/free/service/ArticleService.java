@@ -2,6 +2,7 @@ package woowacrew.article.free.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.dto.ArticleRequestDto;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
+
     private ArticleInternalService articleInternalService;
 
     public ArticleService(ArticleInternalService articleInternalService) {
@@ -45,5 +47,12 @@ public class ArticleService {
 
     public void delete(Long articleId, UserContext userContext) {
         articleInternalService.delete(articleId, userContext);
+    }
+
+    public ArticleResponseDtos findSearchedArticles(Specification<Article> specification, Pageable pageable) {
+        Page<Article> articlePages = articleInternalService.findAll(specification, pageable);
+        List<ArticleResponseDto> articleResponseDtos = ArticleConverter.articlePagesToArticleResponseDtos(articlePages);
+
+        return new ArticleResponseDtos(pageable.getPageNumber(), articlePages.getTotalPages(), articleResponseDtos);
     }
 }
