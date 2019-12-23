@@ -8,6 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @EnableJpaAuditing
 class ArticleRepositoryTest {
+    private static final SearchType[] ALLOWED_SEARCH_TYPES = {SearchType.TITLE, SearchType.TITLE_WITH_CONTENT, SearchType.AUTHOR};
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -37,15 +42,42 @@ class ArticleRepositoryTest {
     }
 
     @Test
-    void 정상적으로_specification과_pageable로_게시물들을_찾는다() {
-        Specification<Article> articleSpecification = (Specification<Article>) (root, query, builder) -> {
-            String pattern = "%test%";
-            return builder.like(root.get("basicArticleForm").get("articleForm").get("title"), pattern);
-        };
+    void 정상적으로_제목으로_게시물들을_찾는다() {
+        String inputData = "test";
+        SearchSpec<Article> searchSpec = new SearchSpec<>(ALLOWED_SEARCH_TYPES);
+        Specification<Article> specification = searchSpec.getSpecification("title", inputData);
 
-        Sort sort = new Sort(Sort.Direction.DESC, "createdDate");
-        Pageable pageable = PageRequest.of(0, 3, sort);
+        Pageable pageable = PageRequest.of(0, 20);
 
-        assertTrue(articleRepository.findAll(articleSpecification, pageable).getContent().size() != 0);
+        List<Article> articles = articleRepository.findAll(specification, pageable).getContent();
+        assertTrue(articles.size() != 0);
+        articles.forEach(article -> assertTrue(article.getTitle().contains(inputData)));
+    }
+
+    @Test
+    void 정상적으로_제목과_내용으로_게시물들을_찾는다() {
+        String inputData = "test";
+        SearchSpec<Article> searchSpec = new SearchSpec<>(ALLOWED_SEARCH_TYPES);
+        Specification<Article> specification = searchSpec.getSpecification("titleWithContent", inputData);
+
+        Pageable pageable = PageRequest.of(0, 20);
+
+        List<Article> articles = articleRepository.findAll(specification, pageable).getContent();
+        assertTrue(articles.size() != 0);
+        articles.forEach(article ->
+                assertTrue(article.getTitle().contains(inputData) || article.getContent().contains(inputData)));
+    }
+
+    @Test
+    void 정상적으로_작성자로_게시물들을_찾는다() {
+        String inputData = "woowacrew";
+        SearchSpec<Article> searchSpec = new SearchSpec<>(ALLOWED_SEARCH_TYPES);
+        Specification<Article> specification = searchSpec.getSpecification("author", inputData);
+
+        Pageable pageable = PageRequest.of(0, 20);
+
+        List<Article> articles = articleRepository.findAll(specification, pageable).getContent();
+        assertTrue(articles.size() != 0);
+        articles.forEach(article -> assertTrue(article.getAuthor().getNickname().contains(inputData)));
     }
 }
