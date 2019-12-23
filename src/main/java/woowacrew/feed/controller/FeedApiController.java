@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/feeds")
+@PreAuthorize("hasRole('ADMIN')")
 public class FeedApiController {
     private final FeedService feedService;
 
@@ -22,19 +23,16 @@ public class FeedApiController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FeedSourceResponseDto> registerFeedSource(@Valid FeedSourceRequestDto feedSourceRequestDto) {
         return ResponseEntity.ok(feedService.registerFeedSource(feedSourceRequestDto));
     }
 
     @PostMapping("/new")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<FeedArticleResponseDto>> updateFeed() {
         return ResponseEntity.ok(feedService.updateFeed());
     }
 
     @PutMapping("/{feedSourceId}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FeedSourceResponseDto> updateFeedSourceDescription(@PathVariable Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
         return ResponseEntity.ok(feedService.updateFeedSourceDesciption(feedSourceId, updateRequestDto));
     }
