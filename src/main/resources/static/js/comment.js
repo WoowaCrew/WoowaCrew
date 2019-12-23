@@ -38,6 +38,7 @@ const CommentListApp = (() => {
         if(response.ok){
           commentDiv.remove()
           alert("삭제 성공!")
+          return;
         }
         throw new Error(response)
       })
