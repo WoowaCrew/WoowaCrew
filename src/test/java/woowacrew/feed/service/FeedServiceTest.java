@@ -78,7 +78,7 @@ class FeedServiceTest {
 
         when(feedInternalService.updateFeedSourceDescription(feedSourceId, updateRequestDto)).thenReturn(updatedFeedSource);
 
-        FeedSourceResponseDto responseDto = feedService.updateFeedSourceDesciption(feedSourceId, updateRequestDto);
+        FeedSourceResponseDto responseDto = feedService.updateFeedSourceDescription(feedSourceId, updateRequestDto);
         assertThat(responseDto.getSourceUrl()).isEqualTo(source);
         assertThat(responseDto.getDescription()).isEqualTo(updatedDescription);
     }

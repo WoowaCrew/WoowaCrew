@@ -43,7 +43,7 @@ public class FeedService {
                 .collect(Collectors.toList());
     }
 
-    public FeedSourceResponseDto updateFeedSourceDesciption(Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
+    public FeedSourceResponseDto updateFeedSourceDescription(Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
         FeedSource updatedFeedSource = feedInternalService.updateFeedSourceDescription(feedSourceId, updateRequestDto);
         return FeedConverter.toFeedSourceResponseDto(updatedFeedSource);
     }

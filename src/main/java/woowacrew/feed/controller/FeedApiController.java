@@ -39,6 +39,6 @@ public class FeedApiController {
 
     @PutMapping("/{feedSourceId}")
     public ResponseEntity<FeedSourceResponseDto> updateFeedSourceDescription(@PathVariable Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
-        return ResponseEntity.ok(feedService.updateFeedSourceDesciption(feedSourceId, updateRequestDto));
+        return ResponseEntity.ok(feedService.updateFeedSourceDescription(feedSourceId, updateRequestDto));
     }
 }
