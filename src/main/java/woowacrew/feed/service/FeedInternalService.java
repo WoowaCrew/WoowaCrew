@@ -67,6 +67,10 @@ public class FeedInternalService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteFeedSource(Long feedSourceId) {
+        feedSourceRepository.deleteById(feedSourceId);
+    }
+
     private List<FeedArticle> saveNewFeedArticles(FeedSource feedSource) {
         FeedArticles feedArticles = feedSource.createFeedArticles();
         FeedArticles savedFeedArticles = new FeedArticles(feedArticleRepository.findByFeedSource(feedSource));

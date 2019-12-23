@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FeedInternalServiceTest {
@@ -130,5 +130,12 @@ class FeedInternalServiceTest {
         List<FeedSource> actualFeedSources = feedInternalService.findAllFeedSources();
 
         assertThat(actualFeedSources.size()).isEqualTo(1);
+    }
+
+    @Test
+    void delete_FeedSource_ById() {
+        Long feedSourceId = 1L;
+        feedInternalService.deleteFeedSource(feedSourceId);
+        verify(feedSourceRepository, times(1)).deleteById(feedSourceId);
     }
 }
