@@ -82,4 +82,18 @@ class FeedServiceTest {
         assertThat(responseDto.getSourceUrl()).isEqualTo(source);
         assertThat(responseDto.getDescription()).isEqualTo(updatedDescription);
     }
+
+    @Test
+    void FeedSources들을_ResponseDto로_잘_변환하는지_테스트() {
+        String sourceUrl = "source";
+        FeedSource feedSource = new FeedSource(sourceUrl, "description");
+        List<FeedSource> feedSources = Collections.singletonList(feedSource);
+
+        when(feedInternalService.findAllFeedSources()).thenReturn(feedSources);
+
+        List<FeedSourceResponseDto> responseDtos = feedService.findAllFeedSources();
+
+        assertThat(responseDtos.size()).isEqualTo(1);
+        assertThat(responseDtos.get(0).getSourceUrl()).isEqualTo(sourceUrl);
+    }
 }

@@ -23,6 +23,12 @@ public class FeedService {
         return FeedConverter.toFeedSourceResponseDto(feedInternalService.registerFeedSource(feedSourceRequestDto));
     }
 
+    public List<FeedSourceResponseDto> findAllFeedSources() {
+        return feedInternalService.findAllFeedSources().stream()
+                .map(FeedConverter::toFeedSourceResponseDto)
+                .collect(Collectors.toList());
+    }
+
     public FeedArticleResponseDtos findAllFeedArticles(Pageable pageable) {
         Page<FeedArticle> feedArticles = feedInternalService.findAllFeedArticles(pageable);
         List<FeedArticleResponseDto> feedArticleDtos = feedArticles.getContent().stream()

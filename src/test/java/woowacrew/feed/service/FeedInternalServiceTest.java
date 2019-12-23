@@ -120,4 +120,15 @@ class FeedInternalServiceTest {
         assertThrows(NotFoundFeedSourceException.class,
                 () -> feedInternalService.updateFeedSourceDescription(feedSourceId, requestDto));
     }
+
+    @Test
+    void FeedSource_list를_불러오는지_테스트() {
+        List<FeedSource> feedSources = Collections.singletonList(feedSource);
+
+        when(feedSourceRepository.findAll()).thenReturn(feedSources);
+
+        List<FeedSource> actualFeedSources = feedInternalService.findAllFeedSources();
+
+        assertThat(actualFeedSources.size()).isEqualTo(1);
+    }
 }

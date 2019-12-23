@@ -48,6 +48,11 @@ public class FeedInternalService {
     }
 
     @Transactional(readOnly = true)
+    public List<FeedSource> findAllFeedSources() {
+        return feedSourceRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Page<FeedArticle> findAllFeedArticles(Pageable pageable) {
         if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
             throw new InvalidPageRequstException();

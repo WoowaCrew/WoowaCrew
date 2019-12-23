@@ -22,6 +22,11 @@ public class FeedApiController {
         this.feedService = feedService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<FeedSourceResponseDto>> list() {
+        return ResponseEntity.ok(feedService.findAllFeedSources());
+    }
+
     @PostMapping
     public ResponseEntity<FeedSourceResponseDto> registerFeedSource(@Valid FeedSourceRequestDto feedSourceRequestDto) {
         return ResponseEntity.ok(feedService.registerFeedSource(feedSourceRequestDto));

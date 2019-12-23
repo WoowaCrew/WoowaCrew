@@ -6,14 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
-import woowacrew.feed.dto.FeedArticleResponseDtos;
 import woowacrew.feed.dto.FeedSourceResponseDto;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FeedApiControllerTest extends CommonTestController {
     @Autowired
     private WebTestClient webTestClient;
+
+    @Test
+    void FeedSoruce_목록을_잘불러오는지_테스트() {
+        String cookie = loginWithAdmin();
+        List<FeedSourceResponseDto> responseDtos = webTestClient.get()
+                .uri("/api/feeds")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectBodyList(FeedSourceResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(responseDtos.size()).isNotZero();
+    }
 
     @Test
     void FeedSource_등록시_관리자가_아니라면_accessdeny로_리다이렉션() {
