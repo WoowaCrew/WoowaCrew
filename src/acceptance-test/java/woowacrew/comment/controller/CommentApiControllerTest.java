@@ -58,7 +58,7 @@ public class CommentApiControllerTest extends CommonTestController {
         String updateContent = "update Content";
 
         CommentResponseDto commentResponseDto = webTestClient.put()
-                .uri("/api/articles/1/comments")
+                .uri("/api/articles/1/comments/" + commentId)
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("commentId", commentId)
                         .with("updateContent", updateContent))
