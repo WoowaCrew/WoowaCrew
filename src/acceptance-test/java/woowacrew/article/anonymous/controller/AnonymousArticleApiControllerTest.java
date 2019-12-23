@@ -39,12 +39,25 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 익명_게시글_조회_테스트() {
+    void 승인되지_않은_익명_게시글_크루_조회_테스트() {
         String cookie = loginWithCrew();
+        Long unapprovedId = 4L;
+
+        webTestClient.get()
+                .uri("/api/articles/anonymous/{anonymousArticleId}", unapprovedId)
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void 승인되지_않은_익명_게시글_관리자_조회_테스트() {
+        String cookie = loginWithAdmin();
+        Long unapprovedId = 4L;
 
         AnonymousArticleResponseDto anonymousArticle =
                 webTestClient.get()
-                        .uri("/api/articles/anonymous/{anonymousArticleId}", 1L)
+                        .uri("/api/articles/anonymous/{anonymousArticleId}", unapprovedId)
                         .header("Cookie", cookie)
                         .exchange()
                         .expectStatus().isOk()
@@ -57,7 +70,7 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 승인된_익명_게시글_조회_테스트() {
+    void 승인된_익명_게시글_목록_조회_테스트() {
         String cookie = loginWithCrew();
 
         AnonymousArticleResponseDtos anonymousArticlesResponseDtos =
@@ -75,8 +88,19 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 승인되지_않은_익명_게시글_조회_테스트() {
+    void 승인되지_않은_익명_게시글을_크루가_조회시_리다이렉트() {
         String cookie = loginWithCrew();
+
+        webTestClient.get()
+                .uri("/api/articles/anonymous/unapproved")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().is3xxRedirection();
+    }
+
+    @Test
+    void 승인되지_않은_익명_게시글_목록_조회_테스트() {
+        String cookie = loginWithAdmin();
 
         List<AnonymousArticleResponseDto> anonymousArticles =
                 webTestClient.get()
