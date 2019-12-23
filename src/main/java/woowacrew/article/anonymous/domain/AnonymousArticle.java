@@ -76,15 +76,12 @@ public class AnonymousArticle extends TimeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AnonymousArticle that = (AnonymousArticle) o;
-        return isApproved == that.isApproved &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(articleForm, that.articleForm) &&
-                Objects.equals(password, that.password);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, articleForm, password, isApproved);
+        return Objects.hash(id);
     }
 
     @Override
