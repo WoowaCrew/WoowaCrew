@@ -203,7 +203,7 @@ const AdminApp = (() => {
         method: 'DELETE'
       }).then(response => {
         if (response.ok) {
-          feedSource.innerHTML = ''
+          feedSource.remove()
           return alert('삭제 완료')
         }
         throw new Error(response.status);
