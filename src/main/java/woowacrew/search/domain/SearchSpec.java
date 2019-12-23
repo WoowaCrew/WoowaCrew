@@ -10,8 +10,8 @@ public class SearchSpec<T> {
 
     private Specification<T> specification;
 
-    public SearchSpec(String type, String content, SearchType... searchTypes) {
-        List<SearchType> convertSearchTypes = Arrays.asList(searchTypes);
+    public SearchSpec(String type, String content, SearchType... allowedSearchTypes) {
+        List<SearchType> convertSearchTypes = Arrays.asList(allowedSearchTypes);
         convertSearchTypes = Collections.unmodifiableList(convertSearchTypes);
 
         SearchType searchType = SearchTypeFactory.createSearchType(convertSearchTypes, type);
