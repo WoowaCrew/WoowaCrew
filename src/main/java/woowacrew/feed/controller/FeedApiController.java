@@ -5,14 +5,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import woowacrew.feed.dto.FeedArticleResponseDto;
-import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedSourceRequestDto;
-import woowacrew.feed.dto.FeedSourceResponseDto;
+import org.springframework.web.bind.annotation.*;
+import woowacrew.feed.dto.*;
 import woowacrew.feed.service.FeedService;
 
 import javax.validation.Valid;
@@ -45,5 +39,11 @@ public class FeedApiController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<FeedArticleResponseDto>> updateFeed() {
         return ResponseEntity.ok(feedService.updateFeed());
+    }
+
+    @PutMapping("/{feedSourceId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<FeedSourceResponseDto> updateFeedSourceDescription(@PathVariable Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
+        return ResponseEntity.ok(feedService.updateFeedSourceDesciption(feedSourceId, updateRequestDto));
     }
 }

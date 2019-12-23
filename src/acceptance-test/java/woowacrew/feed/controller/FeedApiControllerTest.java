@@ -77,7 +77,7 @@ public class FeedApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void updateFeed() {
+    void updateFeedArticles() {
         String cookie = loginWithAdmin();
         webTestClient.post()
                 .uri("/api/feeds/new")
@@ -85,5 +85,23 @@ public class FeedApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus()
                 .isOk();
+    }
+
+    @Test
+    void FeedSource_description_업데이트_테스트() {
+        String cookie = loginWithAdmin();
+        String updatedDescription = "updatedDescription";
+        FeedSourceResponseDto result = webTestClient.put()
+                .uri("/api/feeds/1")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("description", updatedDescription))
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(FeedSourceResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(result.getDescription()).isEqualTo(updatedDescription);
     }
 }
