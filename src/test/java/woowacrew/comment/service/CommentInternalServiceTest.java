@@ -72,9 +72,9 @@ class CommentInternalServiceTest {
         given(commentRepository.findById(1L)).willReturn(Optional.of(comment));
         given(userInternalService.findById(1L)).willReturn(author);
         FieldSetter.set(comment, "id", 1L);
-        CommentUpdateDto commentUpdateDto = new CommentUpdateDto(1L, "update content");
+        CommentUpdateDto commentUpdateDto = new CommentUpdateDto("update content");
 
-        Comment updatedComment = commentInternalService.update(commentUpdateDto, userContext);
+        Comment updatedComment = commentInternalService.update(1L, commentUpdateDto, userContext);
 
         assertThat(comment).isEqualTo(updatedComment);
         assertThat(updatedComment.getId()).isEqualTo(1L);

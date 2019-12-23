@@ -60,12 +60,11 @@ class CommentServiceTest {
     @Test
     void Comment_업데이트_테스트() {
         FieldSetter.set(comment, "id", 1L);
-        CommentUpdateDto commentUpdateDto = new CommentUpdateDto(comment.getId(), "updatedContent");
+        CommentUpdateDto commentUpdateDto = new CommentUpdateDto("updatedContent");
         Comment updatedComment = new Comment(author, commentUpdateDto.getUpdateContent(), article);
-        FieldSetter.set(updatedComment, "id", 1L);
-        given(commentInternalService.update(commentUpdateDto, userContext)).willReturn(updatedComment);
+        given(commentInternalService.update(comment.getId(), commentUpdateDto, userContext)).willReturn(updatedComment);
 
-        CommentResponseDto commentResponseDto = commentService.update(commentUpdateDto, userContext);
+        CommentResponseDto commentResponseDto = commentService.update(comment.getId(), commentUpdateDto, userContext);
 
         assertThat(commentResponseDto.getContent()).isEqualTo(commentUpdateDto.getUpdateContent());
     }

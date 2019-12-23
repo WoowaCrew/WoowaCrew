@@ -29,9 +29,9 @@ public class CommentApiController {
         return ResponseEntity.ok(commentService.findAll(articleId));
     }
 
-    @PutMapping
-    public ResponseEntity<CommentResponseDto> update(CommentUpdateDto commentUpdateDto, UserContext userContext) {
-        return ResponseEntity.ok(commentService.update(commentUpdateDto, userContext));
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentResponseDto> update(@PathVariable Long commentId, CommentUpdateDto commentUpdateDto, UserContext userContext) {
+        return ResponseEntity.ok(commentService.update(commentId, commentUpdateDto, userContext));
     }
 
     @DeleteMapping("/{commentId}")

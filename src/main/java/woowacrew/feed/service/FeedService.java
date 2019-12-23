@@ -4,9 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import woowacrew.feed.domain.FeedArticle;
-import woowacrew.feed.dto.FeedArticleResponseDto;
-import woowacrew.feed.dto.FeedArticleResponseDtos;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.domain.FeedSource;
+import woowacrew.feed.dto.*;
 import woowacrew.feed.utils.FeedConverter;
 
 import java.util.List;
@@ -20,8 +19,14 @@ public class FeedService {
         this.feedInternalService = feedInternalService;
     }
 
-    public FeedSourceDto registerFeedSource(FeedSourceDto feedSourceDto) {
-        return FeedConverter.toFeedSourceDto(feedInternalService.registerFeedSource(feedSourceDto));
+    public FeedSourceResponseDto registerFeedSource(FeedSourceRequestDto feedSourceRequestDto) {
+        return FeedConverter.toFeedSourceResponseDto(feedInternalService.registerFeedSource(feedSourceRequestDto));
+    }
+
+    public List<FeedSourceResponseDto> findAllFeedSources() {
+        return feedInternalService.findAllFeedSources().stream()
+                .map(FeedConverter::toFeedSourceResponseDto)
+                .collect(Collectors.toList());
     }
 
     public FeedArticleResponseDtos findAllFeedArticles(Pageable pageable) {
@@ -33,8 +38,17 @@ public class FeedService {
     }
 
     public List<FeedArticleResponseDto> updateFeed() {
-        return feedInternalService.updateFeed().stream()
+        return feedInternalService.updateFeedArticles().stream()
                 .map(FeedConverter::toFeedArticleResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    public FeedSourceResponseDto updateFeedSourceDescription(Long feedSourceId, FeedSourceUpdateRequestDto updateRequestDto) {
+        FeedSource updatedFeedSource = feedInternalService.updateFeedSourceDescription(feedSourceId, updateRequestDto);
+        return FeedConverter.toFeedSourceResponseDto(updatedFeedSource);
+    }
+
+    public void deleteFeedSource(Long feedSourceId) {
+        feedInternalService.deleteFeedSource(feedSourceId);
     }
 }

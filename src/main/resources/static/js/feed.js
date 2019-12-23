@@ -7,7 +7,7 @@ const FeedApp = (() => {
     async showFeeds(numberOfPage) {
       const articleList = document.getElementById('article-list')
 
-      fetch(BASE_URL + "/api/feeds?page=" + numberOfPage, {
+      fetch(BASE_URL + "/api/feed-articles?page=" + numberOfPage, {
         method: 'GET'
       }).then(response => response.json())
         .then(feedResponse => {

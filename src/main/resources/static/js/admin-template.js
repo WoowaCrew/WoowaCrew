@@ -82,6 +82,23 @@ const AdminTemplates = (() => {
       `
     }
 
+
+    feedSourceInfoTitle() {
+      return `<div class="info-title-source-url cell">sourceUrl</div>
+                <div class="info-title-description cell">설명</div>
+                <div class="cell info-cell margin-left-10 hover-pointer hover-red" onclick="AdminApp.updateFeedArticles()">피드 업데이트</div>
+                 `;
+    }
+
+    feedSourceListTemplate(feedSource) {
+      return `<div class="info-content" id="feed-source-${feedSource.id}">
+                <div class="info-cell">${feedSource.sourceUrl}</div>
+                <input type="text" class="info-cell margin-left-10 feed-description-summary" value="${feedSource.description}">
+                <div class="info-cell margin-left-10 hover-pointer" onclick="AdminApp.editFeedSource(${feedSource.id})">수정</div>
+                <div class="info-cell margin-left-10 hover-pointer" onclick="AdminApp.deleteFeedSource(${feedSource.id})">삭제</div>
+            </div>`
+    }
+
     convertDegree(degreeNumber) {
       if (degreeNumber === 0) {
         return '크루 아님'
