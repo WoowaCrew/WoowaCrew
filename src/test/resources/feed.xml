@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Van</title>
+        <description>ShakeVan's Blog</description>
+        <link>https://vsh123.github.io/</link>
+        <atom:link href="https://vsh123.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Mon, 16 Dec 2019 06:56:33 +0000</pubDate>
+        <lastBuildDate>Mon, 16 Dec 2019 06:56:33 +0000</lastBuildDate>
+        <generator>Jekyll v3.8.5</generator>
+
+        <item>
+            <title>13주 회고</title>
+            <description>&lt;blockquote&gt;
+                &lt;p&gt;기간 : 2019년 11월 18일(월) ~ 2019년 12월 01일(일)&lt;/p&gt;
+                &lt;/blockquote&gt;
+
+                &lt;h2 id=&quot;2주전-주-목표&quot;&gt;2주전 주 목표&lt;/h2&gt;
+                &lt;ul class=&quot;task-list&quot;&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;1일 1커밋&lt;/li&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; /&gt;HeadFirst DesignPattern 한 챕터 정리&lt;/li&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; /&gt;1일 HIIT 최소 한번이상 실시&lt;/li&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;면접 준비 잘하기&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;나에게-칭찬해주고-싶은-점&quot;&gt;나에게 칭찬해주고 싶은 점&lt;/h2&gt;
+                &lt;ul&gt;
+                &lt;li&gt;합격했다.^^ 뿌듯&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;성장을-위한-조언&quot;&gt;성장을 위한 조언&lt;/h2&gt;
+                &lt;ul&gt;
+                &lt;li&gt;합격으로 인해 나태해 지지 말고 계속해서 공부하는 사람이 되자&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;다음-주-목표&quot;&gt;다음 주 목표&lt;/h2&gt;
+                &lt;ul&gt;
+                &lt;li&gt;1일 1커밋&lt;/li&gt;
+                &lt;li&gt;Spring security flow 정리&lt;/li&gt;
+                &lt;li&gt;프로젝트 맡은 바 최선을 다하기&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;총평&quot;&gt;총평&lt;/h2&gt;
+            </description>
+            <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+            <link>https://vsh123.github.io/%ED%9A%8C%EA%B3%A0/remind-13/</link>
+            <guid isPermaLink="true">https://vsh123.github.io/%ED%9A%8C%EA%B3%A0/remind-13/</guid>
+
+            <category>회고</category>
+
+
+            <category>회고</category>
+
+        </item>
+
+    <item>
+            <title>Spring security</title>
+            <description>&lt;h1 id=&quot;spring-security-시작하기&quot;&gt;Spring Security 시작하기&lt;/h1&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;&lt;a href=&quot;https://spring.io/guides/gs/securing-web/#scratch&quot;&gt;https://spring.io/guides/gs/securing-web/#scratch&lt;/a&gt;를
+                번역한 내용입니다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h1 id=&quot;불안전한-웹-어플리케이션-생성&quot;&gt;불안전한 웹 어플리케이션 생성&lt;/h1&gt;
+
+                &lt;blockquote&gt;
+                &lt;p&gt;스프링 시큐리티를 적용하기 전에 간단한 웹 어플리케이션을 생성해본다.&lt;/p&gt;
+                &lt;/blockquote&gt;
+
+                &lt;h3 id=&quot;의존성-설정&quot;&gt;의존성 설정&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;build.gradle&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;plugins {
+                id 'org.springframework.boot' version '2.1.6.RELEASE'
+                id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+                id 'java'
+                }
+
+                group 'van'
+                version '1.0-SNAPSHOT'
+
+                sourceCompatibility = 1.8
+
+                repositories {
+                mavenCentral()
+                }
+
+                dependencies {
+                implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+                implementation 'org.springframework.boot:spring-boot-starter-web'
+                testImplementation 'junit:junit'
+                testImplementation 'org.springframework.boot:spring-boot-starter-test'
+                testImplementation 'org.springframework.security:spring-security-test'
+
+                }
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;h3 id=&quot;기본-index-페이지&quot;&gt;기본 index 페이지&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/main/resources/templates/index.html&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+                &amp;lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:th=&quot;https://www.thymeleaf.org&quot;
+                xmlns:sec=&quot;https://www.thymeleaf.org/thymeleaf-extras-springsecurity3&quot;&amp;gt;
+                &amp;lt;head&amp;gt;
+                &amp;lt;title&amp;gt;Spring Security Example&amp;lt;/title&amp;gt;
+                &amp;lt;/head&amp;gt;
+                &amp;lt;body&amp;gt;
+                &amp;lt;h1&amp;gt;Welcome!&amp;lt;/h1&amp;gt;
+
+                &amp;lt;p&amp;gt;Click &amp;lt;a th:href=&quot;@{/hello}&quot;&amp;gt;here&amp;lt;/a&amp;gt; to see a
+                greeting.&amp;lt;/p&amp;gt;
+                &amp;lt;/body&amp;gt;
+                &amp;lt;/html&amp;gt;
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;위의 페이지에서 Click을 누르면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/hello&lt;/code&gt;
+                로 요청을 보내기 때문에 hello.html도 생성을 해준다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h3 id=&quot;hellohtml&quot;&gt;hello.html&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/main/resources/templates/hello.html&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+                &amp;lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:th=&quot;https://www.thymeleaf.org&quot;
+                xmlns:sec=&quot;https://www.thymeleaf.org/thymeleaf-extras-springsecurity3&quot;&amp;gt;
+                &amp;lt;head&amp;gt;
+                &amp;lt;title&amp;gt;Hello World!&amp;lt;/title&amp;gt;
+                &amp;lt;/head&amp;gt;
+                &amp;lt;body&amp;gt;
+                &amp;lt;h1&amp;gt;Hello world!&amp;lt;/h1&amp;gt;
+                &amp;lt;/body&amp;gt;
+                &amp;lt;/html&amp;gt;
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;다음으로 기본적인 로그인 페이지를 생성해 준다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h3 id=&quot;loginhtml&quot;&gt;login.html&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/main/resources/templates/login.html&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+                &amp;lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:th=&quot;https://www.thymeleaf.org&quot;
+                xmlns:sec=&quot;https://www.thymeleaf.org/thymeleaf-extras-springsecurity3&quot;&amp;gt;
+                &amp;lt;head&amp;gt;
+                &amp;lt;title&amp;gt;Spring Security Example &amp;lt;/title&amp;gt;
+                &amp;lt;/head&amp;gt;
+                &amp;lt;body&amp;gt;
+                &amp;lt;div th:if=&quot;${param.error}&quot;&amp;gt;
+                Invalid username and password.
+                &amp;lt;/div&amp;gt;
+                &amp;lt;div th:if=&quot;${param.logout}&quot;&amp;gt;
+                You have been logged out.
+                &amp;lt;/div&amp;gt;
+                &amp;lt;form th:action=&quot;@{/login}&quot; method=&quot;post&quot;&amp;gt;
+                &amp;lt;div&amp;gt;&amp;lt;label&amp;gt; User Name : &amp;lt;input type=&quot;text&quot; name=&quot;username&quot;/&amp;gt;
+                &amp;lt;/label&amp;gt;&amp;lt;/div&amp;gt;
+                &amp;lt;div&amp;gt;&amp;lt;label&amp;gt; Password: &amp;lt;input type=&quot;password&quot; name=&quot;password&quot;/&amp;gt;
+                &amp;lt;/label&amp;gt;&amp;lt;/div&amp;gt;
+                &amp;lt;div&amp;gt;&amp;lt;input type=&quot;submit&quot; value=&quot;Sign In&quot;/&amp;gt;&amp;lt;/div&amp;gt;
+                &amp;lt;/form&amp;gt;
+                &amp;lt;/body&amp;gt;
+                &amp;lt;/html&amp;gt;
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WebMvcConfigurer&lt;/code&gt;
+                를 상속받아 View페이지를 보여주는 ViewController를 다음과 같이 만든다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h3 id=&quot;mvcconfigjava&quot;&gt;MvcConfig.java&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/main/java/hello/MvcConfig.java&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;package hello;
+
+                import org.springframework.context.annotation.Configuration;
+                import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+                import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+                @Configuration
+                public class MvcConfig implements WebMvcConfigurer {
+
+                @Override
+                public void addViewControllers(ViewControllerRegistry registry) {
+                registry.addViewController(&quot;/home&quot;).setViewName(&quot;index&quot;);
+                registry.addViewController(&quot;/&quot;).setViewName(&quot;index&quot;);
+                registry.addViewController(&quot;/hello&quot;).setViewName(&quot;hello&quot;);
+                registry.addViewController(&quot;/login&quot;).setViewName(&quot;login&quot;);
+                }
+                }
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;registry.addViewController(경로).setViewName(파일
+                이름)&lt;/code&gt; 은 다음과 같은 역할을 한다.
+                &lt;ul&gt;
+                &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addViewController()&lt;/code&gt;
+                에 등록된 경로로 요청이 올 시, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setViewName()&lt;/code&gt;
+                에 있는 파일을 리턴한다.&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;/li&gt;
+                &lt;li&gt;마지막으로 Spring Boot를 실행시킬 main클래스를 생성한다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h3 id=&quot;springsecurityapplicationjava&quot;&gt;SpringSecurityApplication.java&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/main/java/hello/SpringSecurityApplication.java&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;package hello;
+
+                import org.springframework.boot.SpringApplication;
+                import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+                @SpringBootApplication
+                public class SpringSecurityApplication {
+                public static void main(String[] args) {
+                SpringApplication.run(SpringSecurityApplication.class);
+                }
+                }
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;h2 id=&quot;스프링-시큐리티-적용하기&quot;&gt;스프링 시큐리티 적용하기&lt;/h2&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;이제 위에서 만든 어플리케이션에 스프링 시큐리티를 적용해보자.&lt;/li&gt;
+                &lt;li&gt;상황 : 위에서 만든 페이지 중에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/home&lt;/code&gt;
+                을 요청 시 인증되지 않은 사용자는 접근 불가하게 설정&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h3 id=&quot;의존성-추가&quot;&gt;의존성 추가&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;build.gradle&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;dependencies {
+                ...
+                implementation 'org.springframework.boot:spring-boot-starter-security'
+                ...
+                }
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;h3 id=&quot;securityconfig-설정&quot;&gt;SecurityConfig 설정&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/main/java/hello/WebSecurityConfig.java&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;import org.springframework.context.annotation.Bean;
+                import org.springframework.context.annotation.Configuration;
+                import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+                import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+                import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+                import org.springframework.security.core.userdetails.User;
+                import org.springframework.security.core.userdetails.UserDetails;
+                import org.springframework.security.core.userdetails.UserDetailsService;
+                import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+                @Configuration
+                @EnableWebSecurity
+                public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+                @Override
+                protected void configure(HttpSecurity http) throws Exception {
+                http
+                .authorizeRequests()
+                .antMatchers(&quot;/&quot;, &quot;/home&quot;).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage(&quot;/login&quot;)
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+                }
+
+                @Bean
+                @Override
+                protected UserDetailsService userDetailsService() {
+                UserDetails user =
+                User.withDefaultPasswordEncoder()
+                .username(&quot;user&quot;)
+                .password(&quot;password&quot;)
+                .roles(&quot;USER&quot;)
+                .build();
+
+                return new InMemoryUserDetailsManager(user);
+                }
+                }
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;User.withDefaultPasswordEncoder()는 deprecated되었지만 데모 테스트를 위해 사용하였습니다 :)&lt;/li&gt;
+                &lt;li&gt;위 코드에 설정된 내용은 다음과 같습니다.&lt;/li&gt;
+                &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WebSecurityConfig&lt;/code&gt;
+                클래스에 Spring Security 설정을 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@EnableWebSecurity&lt;/code&gt;
+                어노테이션을 추가해였습니다.&lt;/li&gt;
+                &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WebSecurityConfigurerAdapter&lt;/code&gt;
+                라는 추상클래스를 상속받고, 해당 메소드에서 필요한 부분을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@Override&lt;/code&gt;
+                하여 재정의 합니다.&lt;/li&gt;
+                &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;configure(HttpSecurity
+                http)&lt;/code&gt; 메소드에서는 인증을 할 부분과 하지 않을 부분을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;authorizeRequests()&lt;/code&gt;,
+                로그인 페이지를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;formLogin()&lt;/code&gt; ,
+                로그아웃과 관련된 부분을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;logout()&lt;/code&gt;
+                으로 설정합니다.&lt;/li&gt;
+                &lt;li&gt;사용자가 성공적으로 로그인 한다면 이전에 요청한 페이지로 리다이렉트 됩니다.&lt;/li&gt;
+                &lt;li&gt;
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;userDetailsService()&lt;/code&gt;
+                은 단일 사용자로 인 메모리 사용자 저장소를 설정합니다. 사용자의 정보는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;username&lt;/code&gt;
+                &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;password&lt;/code&gt; &lt;code class=&quot;language-plaintext
+                highlighter-rouge&quot;&gt;roles&lt;/code&gt; 를 통해 이름, 패스워드, 역할이 부여가 됩니다.&lt;/p&gt;
+                &lt;/li&gt;
+                &lt;li&gt;로그아웃 버튼을 위해 hello.html에 다음과 같이 추가해줍니다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h3 id=&quot;hellohtml-1&quot;&gt;hello.html&lt;/h3&gt;
+
+                &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/main/resources/templates/hello.html&lt;/code&gt;&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre
+                class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+                &amp;lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:th=&quot;https://www.thymeleaf.org&quot;
+                xmlns:sec=&quot;https://www.thymeleaf.org/thymeleaf-extras-springsecurity3&quot;&amp;gt;
+                &amp;lt;head&amp;gt;
+                &amp;lt;title&amp;gt;Hello World!&amp;lt;/title&amp;gt;
+                &amp;lt;/head&amp;gt;
+                &amp;lt;body&amp;gt;
+                &amp;lt;h1 th:inline=&quot;text&quot;&amp;gt;Hello [[${#httpServletRequest.remoteUser}]]!&amp;lt;/h1&amp;gt;
+                &amp;lt;form th:action=&quot;@{/logout}&quot; method=&quot;post&quot;&amp;gt;
+                &amp;lt;input type=&quot;submit&quot; value=&quot;Sign Out&quot;/&amp;gt;
+                &amp;lt;/form&amp;gt;
+                &amp;lt;/body&amp;gt;
+                &amp;lt;/html&amp;gt;
+                &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;[[${#httpServletRequest.remoteUser}]]!을 통해 유저 정보를 제공합니다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;실행-결과&quot;&gt;실행 결과&lt;/h2&gt;
+
+                &lt;h3 id=&quot;get-&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GET /&lt;/code&gt;&lt;/h3&gt;
+
+                &lt;p&gt;&lt;img src=&quot;/image/2019-11-27-spring security/1.png&quot; alt=&quot;1.png&quot; /&gt;&lt;/p&gt;
+
+                &lt;h3 id=&quot;get-login&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GET
+                /login&lt;/code&gt;&lt;/h3&gt;
+
+                &lt;p&gt;&lt;img src=&quot;/image/2019-11-27-spring security/2.png&quot; alt=&quot;2.png&quot; /&gt;&lt;/p&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;로그인 성공 시&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;p&gt;&lt;img src=&quot;/image/2019-11-27-spring security/3.png&quot; alt=&quot;3.png&quot; /&gt;&lt;/p&gt;
+
+                &lt;ul&gt;
+                &lt;li&gt;로그인 실패 시&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;p&gt;&lt;img src=&quot;/image/2019-11-27-spring security/4.png&quot; alt=&quot;4.png&quot; /&gt;&lt;/p&gt;
+
+                &lt;h3 id=&quot;get-hello&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GET
+                /hello&lt;/code&gt;&lt;/h3&gt;
+
+                &lt;p&gt;&lt;img src=&quot;/image/2019-11-27-spring security/5.png&quot; alt=&quot;5.png&quot; /&gt;&lt;/p&gt;
+            </description>
+            <pubDate>Wed, 27 Nov 2019 00:00:00 +0000</pubDate>
+            <link>https://vsh123.github.io/spring-security/</link>
+            <guid isPermaLink="true">https://vsh123.github.io/spring-security/</guid>
+
+
+        </item>
+
+        <item>
+            <title>11주 회고</title>
+            <description>&lt;blockquote&gt;
+                &lt;p&gt;기간 : 2019년 11월 11일(월) ~ 2019년 11월 17일(일)&lt;/p&gt;
+                &lt;/blockquote&gt;
+
+                &lt;h2 id=&quot;이번-주-목표&quot;&gt;이번 주 목표&lt;/h2&gt;
+                &lt;ul class=&quot;task-list&quot;&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; /&gt;1일 1커밋&lt;/li&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;HeadFirst DesignPattern 한 챕터 정리&lt;/li&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;1일 HIIT 최소 한번이상 실시&lt;/li&gt;
+                &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot;
+                disabled=&quot;disabled&quot; /&gt;Spring security 관련 블로그 1건 이상&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;나에게-칭찬해주고-싶은-점&quot;&gt;나에게 칭찬해주고 싶은 점&lt;/h2&gt;
+                &lt;ul&gt;
+                &lt;li&gt;level 3의 모든 미션을 잘 마무리했다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;성장을-위한-조언&quot;&gt;성장을 위한 조언&lt;/h2&gt;
+                &lt;ul&gt;
+                &lt;li&gt;꾸준함이 가장 중요하다.&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;다음-주-목표&quot;&gt;다음 주 목표&lt;/h2&gt;
+                &lt;ul&gt;
+                &lt;li&gt;1일 1커밋&lt;/li&gt;
+                &lt;li&gt;HeadFirst DesignPattern 한 챕터 정리&lt;/li&gt;
+                &lt;li&gt;1일 HIIT 최소 한번이상 실시&lt;/li&gt;
+                &lt;li&gt;면접 준비 잘하기&lt;/li&gt;
+                &lt;/ul&gt;
+
+                &lt;h2 id=&quot;총평&quot;&gt;총평&lt;/h2&gt;
+                &lt;p&gt;최근 면접과 관련된 생각을 하다보니 내가 가고 싶은 회사는 어떤 회사인지에 대한 고민이 많다
+                해당 부분 잘 정리해 보자&lt;/p&gt;
+            </description>
+            <pubDate>Sun, 17 Nov 2019 00:00:00 +0000</pubDate>
+            <link>https://vsh123.github.io/%ED%9A%8C%EA%B3%A0/remind-11/</link>
+            <guid isPermaLink="true">https://vsh123.github.io/%ED%9A%8C%EA%B3%A0/remind-11/</guid>
+
+            <category>회고</category>
+
+
+            <category>회고</category>
+
+        </item>
+
+    </channel>
+</rss>

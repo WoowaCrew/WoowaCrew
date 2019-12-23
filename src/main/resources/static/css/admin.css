@@ -5,6 +5,7 @@
     color: grey;
     padding: 0 10%;
 }
+
 #left-bar {
     float: left;
     height: 100%;
@@ -12,29 +13,35 @@
     border: 1px solid;
     border-right: 0;
 }
+
 #left-bar .left-bar-title {
     cursor: pointer;
     padding: 10px 10px;
     text-align: center;
 }
+
 #left-bar .left-bar-title-woowacrew {
     padding: 15px 15px;
     text-align: center;
     color: white;
 }
+
 #left-bar .left-bar-active {
     transition: 400ms;
     color: white;
     background-color: firebrick;
 }
+
 .main-content {
     overflow: scroll;
     height: 100%;
     border: 1px solid;
 }
+
 .title {
     margin-bottom: 10px;
 }
+
 .info-cell {
     float: left;
     width: 100px;
@@ -43,6 +50,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .margin-left-10 {
     margin-left: 10px;
 }
@@ -66,24 +74,29 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .role-select-box .role, .degree-select-box .degree {
     background-color: white;
     height: 19px;
 }
+
 .info-content::after {
     content: '';
     clear: both;
     display: inline-block;
 }
+
 .info-content {
     margin-bottom: 10px;
 }
+
 #info-title {
     background-color: black;
     color: white;
     margin-bottom: 10px;
     overflow: hidden;
 }
+
 .cell {
     width: 100px;
     text-align: center;
@@ -95,4 +108,44 @@
 
 .hover-pointer:hover {
     cursor: pointer;
+}
+
+.feed-source-input {
+    font-size: 15px;
+    margin-left: 10px;
+    width: 50%;
+    color: white;
+    background-color: black;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+    height: 25px;
+}
+
+.feed-form-info {
+    display: inline-block;
+    width: 20%;
+    margin-right: 15px;
+}
+
+.feed-form-row {
+    margin-bottom: 10px;
+}
+
+#rss-input-form {
+    text-align: center;
+}
+
+.feed-submit-button {
+    font-family: 'Wallpoet', cursive;
+    width: 100%;
+    background: black;
+    color: gray;
+    border: none;
+    position: relative;
+    font-size: 1.6em;
+    padding: 1em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
 }

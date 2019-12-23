@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import woowacrew.user.utils.UserRoleConverter;
 import woowacrew.utils.resolver.CustomHandlerMethodArgumentResolver;
+import woowacrew.utils.resolver.SearchTypeHandlerMethodArgumentResolver;
 
 import java.util.List;
 
@@ -16,12 +17,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/error").setViewName("error");
+        registry.addViewController("/feeds").setViewName("feed");
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers
-                .add(new CustomHandlerMethodArgumentResolver());
+        resolvers.add(new CustomHandlerMethodArgumentResolver());
+        resolvers.add(new SearchTypeHandlerMethodArgumentResolver());
     }
 
     @Override

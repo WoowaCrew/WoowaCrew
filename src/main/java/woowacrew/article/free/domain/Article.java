@@ -1,44 +1,35 @@
 package woowacrew.article.free.domain;
 
-import woowacrew.article.AbstractArticle;
-import woowacrew.article.free.exception.MisMatchUserException;
+import woowacrew.article.BasicArticleForm;
+import woowacrew.common.domain.TimeEntity;
 import woowacrew.user.domain.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-public class Article extends AbstractArticle {
-
+public class Article extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Embedded
-    private ArticleForm articleForm;
-
-    @JoinColumn(name = "author")
-    @ManyToOne
-    private User user;
+    private BasicArticleForm basicArticleForm;
 
     private Article() {
     }
 
-    public Article(String title, String content, User user) {
-        this.articleForm = new ArticleForm(title, content);
-        this.user = user;
+    public Article(String title, String content, User author) {
+        this.basicArticleForm = new BasicArticleForm(title, content, author);
     }
 
-    public void update(User user, String title, String content) {
-        checkAuthor(user);
-
-        articleForm.updateArticle(title, content);
+    public void update(User author, String title, String content) {
+        basicArticleForm.update(author, title, content);
     }
 
-    public void checkAuthor(User user) {
-        if (!this.user.equals(user)) {
-            throw new MisMatchUserException();
-        }
+    public void checkAuthor(User requestAuthor) {
+        basicArticleForm.checkAuthor(requestAuthor);
     }
 
     public Long getId() {
@@ -46,15 +37,15 @@ public class Article extends AbstractArticle {
     }
 
     public String getTitle() {
-        return articleForm.getTitle();
+        return basicArticleForm.getTitle();
     }
 
     public String getContent() {
-        return articleForm.getContent();
+        return basicArticleForm.getContent();
     }
 
-    public User getUser() {
-        return user;
+    public User getAuthor() {
+        return basicArticleForm.getAuthor();
     }
 
     public LocalDateTime getCreatedDate() {
@@ -69,17 +60,20 @@ public class Article extends AbstractArticle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Article that = (Article) o;
-        return id.equals(that.id);
+        Article article = (Article) o;
+        return Objects.equals(id, article.id);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Override
     public String toString() {
         return "Article{" +
                 "id=" + id +
-                ", articleForm=" + articleForm +
-                ", user=" + user +
+                ", basicArticleForm=" + basicArticleForm +
                 ", createdDate=" + createdDate +
                 ", lastModifiedDate=" + lastModifiedDate +
                 '}';

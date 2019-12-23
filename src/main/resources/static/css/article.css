@@ -9,7 +9,7 @@
 }
 
 #article-header {
-    border-bottom: 1px dotted;
+    border-bottom: 2px dotted;
     padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
@@ -26,8 +26,9 @@
 }
 
 .content {
-    margin-top: 20px;
+    margin-top: 40px;
     background: black;
+    border-bottom: 2px dotted;
 }
 
 .article-button-group {
@@ -48,4 +49,13 @@
 
 #article-edit-button, #article-delete-button {
     cursor: pointer;
+}
+
+.tui-editor-contents {
+    margin-bottom: 40px;
+}
+
+#viewerSection {
+    padding-left: 15px;
+    padding-right: 15px;
 }

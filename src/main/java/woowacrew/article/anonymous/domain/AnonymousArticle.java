@@ -38,7 +38,7 @@ public class AnonymousArticle extends TimeEntity {
 
     public void update(String title, String content, String password) {
         checkPassword(password);
-        this.articleForm.updateArticle(title, content);
+        this.articleForm.update(title, content);
     }
 
     public void checkPassword(String password) {

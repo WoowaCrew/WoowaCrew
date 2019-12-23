@@ -10,6 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FieldSetter {
 
+    private FieldSetter() {
+    }
+
     @Test
     void set_Test() {
         User user = new User("testId", new Degree());

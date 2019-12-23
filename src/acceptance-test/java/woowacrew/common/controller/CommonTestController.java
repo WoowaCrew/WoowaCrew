@@ -11,7 +11,7 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CommonTestController {
     @Autowired
-    private WebTestClient webTestClient;
+    protected WebTestClient webTestClient;
 
     protected String loginWithPrecourse() {
         return loginWith("precousre", UserRole.ROLE_PRECOURSE.toString());
@@ -23,7 +23,7 @@ public class CommonTestController {
 
     protected String loginWithCrew(String oauthId) {
 
-        return loginWith("crew_" + oauthId, UserRole.ROLE_CREW.toString());
+        return loginWith(oauthId, UserRole.ROLE_CREW.toString());
     }
 
     protected String loginWithCoach() {

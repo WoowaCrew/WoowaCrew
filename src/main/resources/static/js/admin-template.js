@@ -66,6 +66,22 @@ const AdminTemplates = (() => {
             </div>`
     }
 
+    addFeedForm() {
+      return `
+            <div id="rss-input-form">
+            <div class="feed-form-row">
+                <div class="feed-form-info">sourceUrl</div>
+                <input type="text" id="source-url" class="feed-source-input">
+            </div>
+            <div class="feed-form-row">
+                <div class="feed-form-info">간단 설명</div>
+                <input type="text" id="description" class="feed-source-input">
+            </div>
+                <button type="button" class="feed-submit-button" onclick='AdminApp.addFeedSource()'>등록</button>
+            </div>
+      `
+    }
+
     convertDegree(degreeNumber) {
       if (degreeNumber === 0) {
         return '크루 아님'

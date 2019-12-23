@@ -7,9 +7,11 @@ function article() {
     method: 'GET'
   }).then(response => response.json())
       .then(article => {
+        const articleIdArea = document.getElementById("article-id")
         const articleTitle = document.getElementById('article-title')
         const articleUserInfo = document.getElementById('article-userInfo')
 
+        articleIdArea.innerText = articleId;
         articleTitle.innerHTML += article.title
         articleUserInfo.innerHTML += article.userResponseDto.nickname
 
@@ -19,6 +21,7 @@ function article() {
           height: '100%',
           initialValue: article.content
         })
+        CommentListApp.showComments()
       })
       .catch(error => {
         console.log(error)
