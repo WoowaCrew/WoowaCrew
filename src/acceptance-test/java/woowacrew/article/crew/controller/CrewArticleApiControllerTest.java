@@ -149,4 +149,17 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void 로그인_하지_않고_검색하는_경우_로그인_페이지로_이동한다() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/crew/search")
+                        .queryParam("type", "title")
+                        .queryParam("content", "1기")
+                        .build())
+                .exchange()
+                .expectStatus().is3xxRedirection()
+                .expectHeader()
+                .value("Location", Matchers.containsString("/login"));
+    }
 }
