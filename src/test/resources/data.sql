@@ -86,3 +86,10 @@ INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(6,'
 
 INSERT INTO crew_article(id,title,content,author) values(1,'1기 게시글','1기 게시글',1);
 INSERT INTO crew_article(id,title,content,author) values(2,'2기 게시글','2기 게시글',7);
+
+
+INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (1, 'title', 'content', 'password', true);
+INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (2, 'title', 'content', 'password', true);
+INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (3, 'title', 'content', 'password', true);
+INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (4, 'title', 'content', 'password', false);
+INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (5, 'title', 'content', 'password', false);

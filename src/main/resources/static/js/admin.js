@@ -100,6 +100,38 @@ const AdminApp = (() => {
         .catch(error => alert('오류가 발생했습니다.'));
     }
 
+    async showUnapprovedAnonymousArticles() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+
+      fetch(BASE_URL + "/api/articles/anonymous/unapproved", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(anonymousArticles => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.anonymousArticleInfoTitle())
+          anonymousArticles.forEach(anonymousArticle => {
+            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.anonymousArticleListTemplate(anonymousArticle))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    async approveAnonymousArticle(anonymousArticleId) {
+      fetch(BASE_URL + "/api/articles/anonymous/" + anonymousArticleId + "/approve", {
+        method: 'PUT',
+      }).then(response => {
+        alert("정상적으로 승인 되었습니다.")
+        const anonymousArticle = document.getElementById("anonymousArticle-" + anonymousArticleId)
+        anonymousArticle.remove()
+      }).catch(error => alert("에러가 발생했습니다."))
+    }
+
+    async confirmAnonymousArticle(anonymousArticleId) {
+      window.location.href = origin + "/articles/anonymous/" + anonymousArticleId
+    }
+
     renderUserList(users) {
       const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
@@ -291,6 +323,20 @@ const AdminApp = (() => {
 
     showDetailUsersOfDegree(degreeId) {
       this.adminService.showDetailUsersOfDegree(degreeId)
+    }
+
+    showUnapprovedAnonymousArticles() {
+      this.adminService.showUnapprovedAnonymousArticles()
+      const leftBar = document.getElementById('anonymous-article-manage-button')
+      this.adminService.activeButton(leftBar)
+    }
+
+    approveAnonymousArticle(anonymousArticleId) {
+      this.adminService.approveAnonymousArticle(anonymousArticleId)
+    }
+
+    confirmAnonymousArticle(anonymousArticleId) {
+      this.adminService.confirmAnonymousArticle(anonymousArticleId)
     }
 
     showAddFeedForm() {
