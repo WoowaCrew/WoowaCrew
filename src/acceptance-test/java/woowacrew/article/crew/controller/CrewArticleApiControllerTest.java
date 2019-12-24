@@ -107,4 +107,46 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .returnResult()
                 .getResponseBody();
     }
+
+    @Test
+    void 정상적으로_자신의_기수에_맞는_게시글을_제목_검색한다() {
+        String cookie = loginWithCrew();
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/crew/search")
+                        .queryParam("type", "title")
+                        .queryParam("content", "1기")
+                        .build())
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void 정상적으로_자신의_기수에_맞는_게시글을_제목과_내용으로_검색한다() {
+        String cookie = loginWithCrew();
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/crew/search")
+                        .queryParam("type", "titleWithContent")
+                        .queryParam("content", "1기")
+                        .build())
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void 정상적으로_자신의_기수에_맞는_게시글을_작성자로_검색한다() {
+        String cookie = loginWithCrew();
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/crew/search")
+                        .queryParam("type", "author")
+                        .queryParam("content", "woowacrew")
+                        .build())
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

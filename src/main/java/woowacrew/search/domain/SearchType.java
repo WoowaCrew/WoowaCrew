@@ -7,7 +7,8 @@ import java.util.Arrays;
 public enum SearchType {
     TITLE("title", FieldPath.TITLE_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM),
     AUTHOR("author", FieldPath.NICKNAME_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM),
-    TITLE_WITH_CONTENT("titleWithContent", FieldPath.TITLE_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM, FieldPath.CONTENT_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM);
+    TITLE_WITH_CONTENT("titleWithContent", FieldPath.TITLE_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM, FieldPath.CONTENT_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM),
+    DEGREE("degree", FieldPath.DEGREE_NUMBER_OF_DEGREE_OF_AUTHOR_OF_BASIC_ARTICLE_FORM);
 
     private String type;
     private String[][] fieldPaths;

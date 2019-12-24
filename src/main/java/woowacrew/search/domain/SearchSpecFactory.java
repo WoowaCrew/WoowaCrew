@@ -4,47 +4,57 @@ import org.springframework.data.jpa.domain.Specification;
 import woowacrew.search.exception.InvalidFieldPathException;
 
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 public class SearchSpecFactory {
-    private static final String PREFIX_REGEX = "%";
-    private static final String SUBFIX_REGEX = "%";
-    private static final int MIN_SIZE = 1;
-    private static final int MAX_SIZE = 2;
+    private static final String CONTENT_FORMAT = "%%%s%%";
 
-    public static <T> Specification<T> createSpecification(SearchType type, String content) {
+    public static <T> Specification<T> createLikeSpecification(SearchType type, String content) {
         String[][] fieldPaths = type.getFieldPaths();
-        String pattern = PREFIX_REGEX + content + SUBFIX_REGEX;
+        String pattern = String.format(CONTENT_FORMAT, content);
 
-        return createSpecBy(fieldPaths, pattern);
+        return createSpecificationBy(fieldPaths, pattern);
     }
 
-    private static <T> Specification<T> createSpecBy(String[][] fieldPaths, String pattern) {
-        if (fieldPaths.length == MAX_SIZE) {
-            return createSpecBy(fieldPaths[0], fieldPaths[1], pattern);
+    private static <T> Specification<T> createSpecificationBy(String[][] fieldPaths, String pattern) {
+        if (fieldPaths.length == 0) {
+            throw new InvalidFieldPathException();
         }
-        if (fieldPaths.length == MIN_SIZE) {
-            return createSpecBy(fieldPaths[0], pattern);
+        Specification<T> specification = createLikeSpecBy(fieldPaths[0], pattern);
+        for (int i = 1; i < fieldPaths.length; i++) {
+            specification = specification.or(createLikeSpecBy(fieldPaths[i], pattern));
         }
-        throw new InvalidFieldPathException();
+        return specification;
     }
 
-    private static <T> Specification<T> createSpecBy(String[] firstFieldPath, String[] secondFieldPath, String pattern) {
-        Specification<T> firstSpecification = createSpecBy(firstFieldPath, pattern);
-        Specification<T> secondSpecification = createSpecBy(secondFieldPath, pattern);
-
-        return firstSpecification.or(secondSpecification);
-    }
-
-    private static <T> Specification<T> createSpecBy(String[] fieldPath, String pattern) {
+    private static <T> Specification<T> createLikeSpecBy(String[] fieldPath, String pattern) {
         return (Specification<T>) (root, query, builder) -> {
-            if (fieldPath.length == 0) {
-                throw new InvalidFieldPathException();
-            }
-            Path<String> path = root.get(fieldPath[0]);
-            for (int i = 1; i < fieldPath.length; i++) {
-                path = path.get(fieldPath[i]);
-            }
+            Path<String> path = convertPath(root, fieldPath);
             return builder.like(path, pattern);
         };
+    }
+
+    public static <T> Specification<T> createMatchSpecification(SearchType type, Object content) {
+        String[][] fieldPaths = type.getFieldPaths();
+
+        return createMatchSpecBy(fieldPaths[0], content);
+    }
+
+    private static <T> Specification<T> createMatchSpecBy(String[] fieldPath, Object content) {
+        return (Specification<T>) (root, query, builder) -> {
+            Path<String> path = convertPath(root, fieldPath);
+            return builder.equal(path, content);
+        };
+    }
+
+    private static <T> Path<String> convertPath(Root<T> root, String[] fieldPath) {
+        if (fieldPath.length == 0) {
+            throw new InvalidFieldPathException();
+        }
+        Path<String> path = root.get(fieldPath[0]);
+        for (int i = 1; i < fieldPath.length; i++) {
+            path = path.get(fieldPath[i]);
+        }
+        return path;
     }
 }
