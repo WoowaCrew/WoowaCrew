@@ -78,8 +78,8 @@ class ArticleServiceTest {
         articles.add(new Article(title, content, user));
 
         Page<Article> articlePages = new PageImpl<>(articles);
-        SearchSpec<Article> searchSpec = new SearchSpec<>(SearchType.values());
-        Specification<Article> specification = searchSpec.getSpecification("title", "delete");
+        SearchSpec<Article> searchSpec = new SearchSpec<>("title", "delete", SearchType.values());
+        Specification<Article> specification = searchSpec.getSpecification();
 
         when(articleInternalService.findAll(any(), any())).thenReturn(articlePages);
 
