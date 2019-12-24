@@ -41,8 +41,8 @@ public class CommentInternalService {
         return commentRepository.findAllByArticle(article);
     }
 
-    public Comment update(CommentUpdateDto commentUpdateDto, UserContext userContext) {
-        Comment comment = findById(commentUpdateDto.getCommentId());
+    public Comment update(Long commentId, CommentUpdateDto commentUpdateDto, UserContext userContext) {
+        Comment comment = findById(commentId);
         User user = userInternalService.findById(userContext.getId());
         comment.update(user, commentUpdateDto.getUpdateContent());
 

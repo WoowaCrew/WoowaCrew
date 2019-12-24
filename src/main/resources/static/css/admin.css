@@ -56,7 +56,6 @@
 }
 
 .approve-button {
-    float: left;
     margin-left: 10px;
     width: 60px;
     text-align: center;
@@ -149,4 +148,18 @@
     cursor: pointer;
     transition: 800ms ease all;
     outline: none;
+}
+
+.feed-description-summary {
+    color: white;
+    background-color: black;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+    font-size: 15px;
+}
+
+
+.hover-red:hover {
+    color: red;
 }

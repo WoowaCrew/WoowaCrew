@@ -30,8 +30,8 @@ public class CommentService {
         return CommentConverter.toDtos(comments);
     }
 
-    public CommentResponseDto update(CommentUpdateDto commentUpdateDto, UserContext userContext) {
-        return CommentConverter.toDto(commentInternalService.update(commentUpdateDto, userContext));
+    public CommentResponseDto update(Long commentId, CommentUpdateDto commentUpdateDto, UserContext userContext) {
+        return CommentConverter.toDto(commentInternalService.update(commentId, commentUpdateDto, userContext));
     }
 
     public void delete(Long commentId, UserContext userContext) {

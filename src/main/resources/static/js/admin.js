@@ -100,6 +100,38 @@ const AdminApp = (() => {
         .catch(error => alert('오류가 발생했습니다.'));
     }
 
+    async showUnapprovedAnonymousArticles() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+
+      fetch(BASE_URL + "/api/articles/anonymous/unapproved", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(anonymousArticles => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.anonymousArticleInfoTitle())
+          anonymousArticles.forEach(anonymousArticle => {
+            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.anonymousArticleListTemplate(anonymousArticle))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    async approveAnonymousArticle(anonymousArticleId) {
+      fetch(BASE_URL + "/api/articles/anonymous/" + anonymousArticleId + "/approve", {
+        method: 'PUT',
+      }).then(response => {
+        alert("정상적으로 승인 되었습니다.")
+        const anonymousArticle = document.getElementById("anonymousArticle-" + anonymousArticleId)
+        anonymousArticle.remove()
+      }).catch(error => alert("에러가 발생했습니다."))
+    }
+
+    async confirmAnonymousArticle(anonymousArticleId) {
+      window.location.href = origin + "/articles/anonymous/" + anonymousArticleId
+    }
+
     renderUserList(users) {
       const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
@@ -148,19 +180,80 @@ const AdminApp = (() => {
     showAddFeedForm() {
       const infoTitle = document.getElementById('info-title')
       const infoContent = document.getElementById('info-content')
-      infoTitle.innerHTML=''
-      infoContent.innerHTML=''
+      infoTitle.innerHTML = ''
+      infoContent.innerHTML = ''
       infoContent.insertAdjacentHTML("beforeend", AdminTemplates.addFeedForm())
+    }
+
+    showFeedList() {
+      const infoTitle = document.getElementById('info-title')
+      const infoContent = document.getElementById('info-content')
+      fetch(BASE_URL + "/api/feeds", {
+        method: 'GET'
+      }).then(response => response.json())
+        .then(feedSources => {
+          infoTitle.innerHTML = ''
+          infoContent.innerHTML = ''
+          infoTitle.insertAdjacentHTML("afterbegin", AdminTemplates.feedSourceInfoTitle())
+          feedSources.forEach(feedSource => {
+            infoContent.insertAdjacentHTML("beforeend", AdminTemplates.feedSourceListTemplate(feedSource))
+          })
+        })
+        .catch(error => alert('오류가 발생했습니다.'));
+    }
+
+    async editFeedSource(feedSourceId) {
+      const description = document.querySelector('#feed-source-' + feedSourceId + ' input').value;
+
+      if (description === '') {
+        alert("설명을 입력해 주세요.")
+        exit()
+      }
+
+      const formData = new FormData()
+      formData.append('description', description)
+
+      fetch(BASE_URL + '/api/feeds/' + feedSourceId, {
+        method: 'PUT',
+        body: formData
+      }).then(response => {
+        if (response.ok) {
+          return alert('수정 완료')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
+
+    }
+
+    async deleteFeedSource(feedSourceId) {
+      const feedSource = document.querySelector('#feed-source-' + feedSourceId);
+
+      fetch(BASE_URL + '/api/feeds/' + feedSourceId, {
+        method: 'DELETE'
+      }).then(response => {
+        if (response.ok) {
+          feedSource.remove()
+          return alert('삭제 완료')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
+
     }
 
     async addFeedSource() {
       const sourceUrl = document.getElementById('source-url').value
       const description = document.getElementById('description').value
-      if(sourceUrl === '') {
+      if (sourceUrl === '') {
         alert("주소를 입력해주세요.")
         exit()
       }
-      if(description === '') {
+      if (description === '') {
         alert("설명을 입력해 주세요.")
         exit()
       }
@@ -171,8 +264,22 @@ const AdminApp = (() => {
         method: 'POST',
         body: formData
       }).then(response => {
-        if(response.ok) {
+        if (response.ok) {
           return alert('RSS 등록 성공')
+        }
+        throw new Error(response.status);
+      })
+        .catch(error => {
+          alert('오류가 발생했습니다.' + error)
+        });
+    }
+
+    updateFeedArticles() {
+      fetch(BASE_URL + "/api/feeds/new", {
+        method: 'POST'
+      }).then(response => {
+        if (response.ok) {
+          return alert('피드 게시글 업데이트 성공')
         }
         throw new Error(response.status);
       })
@@ -218,6 +325,20 @@ const AdminApp = (() => {
       this.adminService.showDetailUsersOfDegree(degreeId)
     }
 
+    showUnapprovedAnonymousArticles() {
+      this.adminService.showUnapprovedAnonymousArticles()
+      const leftBar = document.getElementById('anonymous-article-manage-button')
+      this.adminService.activeButton(leftBar)
+    }
+
+    approveAnonymousArticle(anonymousArticleId) {
+      this.adminService.approveAnonymousArticle(anonymousArticleId)
+    }
+
+    confirmAnonymousArticle(anonymousArticleId) {
+      this.adminService.confirmAnonymousArticle(anonymousArticleId)
+    }
+
     showAddFeedForm() {
       this.adminService.showAddFeedForm()
       const leftBar = document.getElementById('rss-add-button')
@@ -226,6 +347,24 @@ const AdminApp = (() => {
 
     addFeedSource() {
       this.adminService.addFeedSource()
+    }
+
+    showFeedList() {
+      this.adminService.showFeedList()
+      const leftBar = document.getElementById('rss-manage-button')
+      this.adminService.activeButton(leftBar)
+    }
+
+    editFeedSource(feedSourceId) {
+      this.adminService.editFeedSource(feedSourceId)
+    }
+
+    deleteFeedSource(feedSourceId) {
+      this.adminService.deleteFeedSource(feedSourceId)
+    }
+
+    updateFeedArticles() {
+      this.adminService.updateFeedArticles()
     }
   }
 

@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.dto.FeedArticleResponseDto;
-import woowacrew.feed.dto.FeedSourceDto;
+import woowacrew.feed.dto.FeedSourceRequestDto;
+import woowacrew.feed.dto.FeedSourceResponseDto;
 
 import java.time.LocalDateTime;
 
@@ -16,8 +17,8 @@ class FeedConverterTest {
     void registerDtoToFeedSource() {
         String url = "url";
         String description = "description";
-        FeedSourceDto feedSourceDto = new FeedSourceDto(url, description);
-        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceDto);
+        FeedSourceRequestDto feedSourceRequestDto = new FeedSourceRequestDto(url, description);
+        FeedSource feedSource = FeedConverter.toFeedSource(feedSourceRequestDto);
 
         assertThat(feedSource.getSourceUrl()).isEqualTo(url);
         assertThat(feedSource.getDescription()).isEqualTo(description);
@@ -28,7 +29,7 @@ class FeedConverterTest {
         String url = "url";
         String description = "description";
         FeedSource feedSource = new FeedSource(url, description);
-        FeedSourceDto feedSourceDto = FeedConverter.toFeedSourceDto(feedSource);
+        FeedSourceResponseDto feedSourceDto = FeedConverter.toFeedSourceResponseDto(feedSource);
 
 
         assertThat(feedSourceDto.getSourceUrl()).isEqualTo(url);
@@ -39,7 +40,7 @@ class FeedConverterTest {
     void toFeedArticleResponseDto() {
         String title = "title";
         String link = "link";
-        FeedArticle feedArticle = new FeedArticle(title, link, LocalDateTime.now(), new FeedSource("source","description"));
+        FeedArticle feedArticle = new FeedArticle(title, link, LocalDateTime.now(), new FeedSource("source", "description"));
         FeedArticleResponseDto feedArticleResponseDto = FeedConverter.toFeedArticleResponseDto(feedArticle);
 
         assertThat(feedArticleResponseDto.getTitle()).isEqualTo(title);
