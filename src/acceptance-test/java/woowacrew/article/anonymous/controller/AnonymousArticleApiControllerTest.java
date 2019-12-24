@@ -18,22 +18,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AnonymousArticleApiControllerTest extends CommonTestController {
 
+    private static String TITLE = "title";
+    private static String CONTENT = "content";
+    private static String SIGNING_KEY = "password";
+
     @Autowired
     private WebTestClient webTestClient;
 
     @Test
     void 익명_게시글_생성_테스트() {
         String cookie = loginWithCrew();
-        String title = "title";
-        String content = "content";
-        String signingKey = "password";
 
         webTestClient.post()
                 .uri("/api/articles/anonymous")
                 .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", title)
-                        .with("content", content)
-                        .with("signingKey", signingKey))
+                .body(BodyInserters.fromFormData("title", TITLE)
+                        .with("content", CONTENT)
+                        .with("signingKey", SIGNING_KEY))
                 .exchange()
                 .expectStatus().isCreated();
     }
@@ -131,21 +132,8 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     @Test
     void 올바른_비밀번호로_익명_게시글_수정_테스트() {
         String cookie = loginWithCrew();
-        String title = "title";
-        String content = "content";
-        String signingKey = "password";
 
-        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
-                .uri("/api/articles/anonymous")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", title)
-                        .with("content", content)
-                        .with("signingKey", signingKey))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(AnonymousArticleResponseDto.class)
-                .returnResult()
-                .getResponseBody();
+        AnonymousArticleResponseDto anonymousArticle = createAnonymousArticle(cookie, TITLE, CONTENT, SIGNING_KEY);
 
         String updateTitle = "UpdatedTitle";
         String updateContent = "UpdatedContent";
@@ -153,7 +141,7 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
         AnonymousArticleResponseDto updatedAnonymousArticle = webTestClient.put()
                 .uri("/api/articles/anonymous/{anonymousArticleId}", anonymousArticle.getAnonymousArticleId())
                 .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("signingKey", signingKey)
+                .body(BodyInserters.fromFormData("signingKey", SIGNING_KEY)
                         .with("title", updateTitle)
                         .with("content", updateContent))
                 .exchange()
@@ -169,21 +157,8 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     @Test
     void 올바르지_않은_비밀번호로_익명_게시글_수정_테스트() {
         String cookie = loginWithCrew();
-        String title = "title";
-        String content = "content";
-        String signingKey = "password";
 
-        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
-                .uri("/api/articles/anonymous")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", title)
-                        .with("content", content)
-                        .with("signingKey", signingKey))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(AnonymousArticleResponseDto.class)
-                .returnResult()
-                .getResponseBody();
+        AnonymousArticleResponseDto anonymousArticle = createAnonymousArticle(cookie, TITLE, CONTENT, SIGNING_KEY);
 
         String updateTitle = "UpdatedTitle";
         String updateContent = "UpdatedContent";
@@ -201,26 +176,13 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     @Test
     void 올바른_비밀번호로_익명_게시글_삭제_테스트() {
         String cookie = loginWithCrew();
-        String title = "title";
-        String content = "content";
-        String signingKey = "password";
 
-        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
-                .uri("/api/articles/anonymous")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", title)
-                        .with("content", content)
-                        .with("signingKey", signingKey))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(AnonymousArticleResponseDto.class)
-                .returnResult()
-                .getResponseBody();
+        AnonymousArticleResponseDto anonymousArticle = createAnonymousArticle(cookie, TITLE, CONTENT, SIGNING_KEY);
 
         webTestClient.put()
                 .uri("/api/articles/anonymous/{anonymousArticleId}/delete", anonymousArticle.getAnonymousArticleId())
                 .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("signingKey", signingKey))
+                .body(BodyInserters.fromFormData("signingKey", SIGNING_KEY))
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -232,17 +194,7 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
         String content = "content";
         String signingKey = "password";
 
-        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
-                .uri("/api/articles/anonymous")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", title)
-                        .with("content", content)
-                        .with("signingKey", signingKey))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(AnonymousArticleResponseDto.class)
-                .returnResult()
-                .getResponseBody();
+        AnonymousArticleResponseDto anonymousArticle = createAnonymousArticle(cookie, TITLE, CONTENT, SIGNING_KEY);
 
         webTestClient.put()
                 .uri("/api/articles/anonymous/{anonymousArticleId}/delete", anonymousArticle.getAnonymousArticleId())
@@ -255,26 +207,13 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     @Test
     void 익명_게시글의_올바른_비밀번호_확인_테스트() {
         String cookie = loginWithCrew();
-        String title = "title";
-        String content = "content";
-        String signingKey = "password";
 
-        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
-                .uri("/api/articles/anonymous")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", title)
-                        .with("content", content)
-                        .with("signingKey", signingKey))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(AnonymousArticleResponseDto.class)
-                .returnResult()
-                .getResponseBody();
+        AnonymousArticleResponseDto anonymousArticle = createAnonymousArticle(cookie, TITLE, CONTENT, SIGNING_KEY);
 
         webTestClient.post()
                 .uri("/api/articles/anonymous/{anonymousArticleId}/check", anonymousArticle.getAnonymousArticleId())
                 .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("signingKey", signingKey))
+                .body(BodyInserters.fromFormData("signingKey", SIGNING_KEY))
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -282,21 +221,8 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
     @Test
     void 익명_게시글의_잘못된_비밀번호_확인_테스트() {
         String cookie = loginWithCrew();
-        String title = "title";
-        String content = "content";
-        String signingKey = "password";
 
-        AnonymousArticleResponseDto anonymousArticle = webTestClient.post()
-                .uri("/api/articles/anonymous")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("title", title)
-                        .with("content", content)
-                        .with("signingKey", signingKey))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(AnonymousArticleResponseDto.class)
-                .returnResult()
-                .getResponseBody();
+        AnonymousArticleResponseDto anonymousArticle = createAnonymousArticle(cookie, TITLE, CONTENT, SIGNING_KEY);
 
         webTestClient.post()
                 .uri("/api/articles/anonymous/{anonymousArticleId}/check", anonymousArticle.getAnonymousArticleId())
@@ -322,5 +248,19 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                         .getResponseBody();
 
         assertTrue(anonymousArticle.getIsApproved());
+    }
+
+    private AnonymousArticleResponseDto createAnonymousArticle(String cookie, String title, String content, String signingKey) {
+        return webTestClient.post()
+                .uri("/api/articles/anonymous")
+                .header("Cookie", cookie)
+                .body(BodyInserters.fromFormData("title", title)
+                        .with("content", content)
+                        .with("signingKey", signingKey))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(AnonymousArticleResponseDto.class)
+                .returnResult()
+                .getResponseBody();
     }
 }
