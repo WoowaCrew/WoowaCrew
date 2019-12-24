@@ -29,7 +29,7 @@ public class SecurityConfig extends AbstractSecurityConfig {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth
                 .authenticationProvider(socialLoginAuthenticationProvider)
                 .authenticationProvider(authorityUpdateProvider);
