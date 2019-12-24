@@ -6,6 +6,9 @@ import woowacrew.degree.dto.DegreeResponseDto;
 import woowacrew.degree.dto.DegreeWithUserCountResponseDto;
 
 public class DegreeConverter {
+    private DegreeConverter() {
+    }
+
     public static DegreeWithUserCountResponseDto degreeToWithUserCountReponseDto(Degree degree, int userCount) {
         DegreeWithUserCountResponseDto responseDto = new ModelMapper().map(degree, DegreeWithUserCountResponseDto.class);
         responseDto.setUserCount(userCount);

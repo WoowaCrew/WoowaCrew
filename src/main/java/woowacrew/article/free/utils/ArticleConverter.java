@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ArticleConverter {
+    private ArticleConverter() {
+    }
+
     public static ArticleResponseDto articleToArticleResponseDto(Article article) {
         return new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent(),
                 UserConverter.userToUserResponseDto(article.getAuthor()), article.getCreatedDate(), article.getLastModifiedDate());

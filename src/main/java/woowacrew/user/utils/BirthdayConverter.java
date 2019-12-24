@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class BirthdayConverter {
+    private BirthdayConverter() {
+    }
 
     public static LocalDate convert(String rawBirthday) {
         try {

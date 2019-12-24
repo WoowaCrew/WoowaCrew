@@ -11,6 +11,9 @@ public class SearchSpecFactory {
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 2;
 
+    private SearchSpecFactory() {
+    }
+
     public static <T> Specification<T> createSpecification(SearchType type, String content) {
         String[][] fieldPaths = type.getFieldPaths();
         String pattern = PREFIX_REGEX + content + SUBFIX_REGEX;
