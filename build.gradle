@@ -62,8 +62,6 @@ dependencies {
     implementation 'com.rometools:rome:1.12.0'
 
     runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
-    runtimeOnly 'org.springframework:spring-jdbc:+'
-    runtimeOnly 'commons-dbcp:commons-dbcp:1.4'
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'com.h2database:h2'
 
@@ -73,7 +71,6 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit'
     }
-    testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'
