@@ -27,20 +27,20 @@ const AnonymousArticleTemplates = (() => {
     }
 
     selectedPageBarTemplate(numberOfPage) {
-      return `<div class="page-number selected-page" onclick="AnonymousArticleListApp.showAnonymousArticles(${numberOfPage})">${numberOfPage}</div>`
+      return `<div class="page-number selected-page" onclick="AnonymousArticleListApp.searchByNumberOfPage(${numberOfPage})">${numberOfPage}</div>`
     }
 
 
     pageBarTemplate(numberOfPage) {
-      return `<div class="page-number" onclick="AnonymousArticleListApp.showAnonymousArticles(${numberOfPage})">${numberOfPage}</div>`
+      return `<div class="page-number" onclick="AnonymousArticleListApp.searchByNumberOfPage(${numberOfPage})">${numberOfPage}</div>`
     }
 
     nextBarTemplate(numberOfPage) {
-      return `<div class="next-bar" onclick="AnonymousArticleListApp.showAnonymousArticles(${numberOfPage})">다음</div>`
+      return `<div class="next-bar" onclick="AnonymousArticleListApp.searchByNumberOfPage(${numberOfPage})">다음</div>`
     }
 
     prevBarTemplate(numberOfPage) {
-      return `<div class="prev-bar" onclick="AnonymousArticleListApp.showAnonymousArticles(${numberOfPage})">이전</div>`
+      return `<div class="prev-bar" onclick="AnonymousArticleListApp.searchByNumberOfPage(${numberOfPage})">이전</div>`
     }
   }
 

@@ -5,11 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 public enum FieldPath {
+    IS_APPROVED("isApproved"),
+    TITLE("title"),
+    TITLE_OF_ARTICLE_FORM("articleForm", "title"),
     TITLE_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "articleForm", "title"),
-    FEED_TITLE("title"),
-    FEED_DESCRIPTION_OF_FEED_SOURCE("feedSource", "description"),
+    CONTENT_OF_ARTICLE_FORM("articleForm", "content"),
     CONTENT_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "articleForm", "content"),
     NICKNAME_OF_AUTHOR_OF_BASIC_ARTICLE_FORM("basicArticleForm", "author", "nickname"),
+    DESCRIPTION_OF_FEED_SOURCE("feedSource", "description"),
     DEGREE_NUMBER_OF_DEGREE_OF_AUTHOR_OF_BASIC_ARTICLE_FORM("basicArticleForm", "author", "degree", "degreeNumber");
 
     private static final int ROOT_INDEX = 0;
