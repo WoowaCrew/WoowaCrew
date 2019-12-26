@@ -5,13 +5,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import woowacrew.article.crew.domain.CrewArticle;
 import woowacrew.article.crew.service.CrewArticleService;
 import woowacrew.article.free.dto.ArticleRequestDto;
 import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.service.ArticleInternalService;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
 import woowacrew.user.dto.UserContext;
+import woowacrew.utils.annotation.AllowedSearchType;
 
 import java.net.URI;
 
@@ -36,6 +40,14 @@ public class CrewArticleApiController {
     @GetMapping("/{articleId}")
     public ResponseEntity<ArticleResponseDto> show(@PathVariable Long articleId, UserContext userContext) {
         return ResponseEntity.ok(crewArticleService.findById(articleId, userContext));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ArticleResponseDtos> search(
+            @AllowedSearchType(type = {SearchType.TITLE, SearchType.TITLE_WITH_CONTENT, SearchType.AUTHOR}) SearchSpec<CrewArticle> searchSpec,
+            @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            UserContext userContext) {
+        return ResponseEntity.ok(crewArticleService.findSearchedArticles(searchSpec, pageable, userContext));
     }
 
     @PostMapping

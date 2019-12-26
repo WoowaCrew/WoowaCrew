@@ -12,12 +12,11 @@ import woowacrew.degree.domain.Degree;
 import woowacrew.security.token.AuthorityUpdateToken;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserRepository;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserContext;
+import woowacrew.user.service.UserInternalService;
 
 import java.util.Collections;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AuthorityUpdateProviderTest {
     @Mock
-    private UserRepository userRepository;
+    private UserInternalService userInternalService;
 
     @InjectMocks
     private AuthorityUpdateProvider provider;
@@ -47,7 +46,7 @@ class AuthorityUpdateProviderTest {
     void 유저_정보를_업데이트한_SocialPostAuthenticationFilter를_리턴하는지_테스트() {
         User user = new User("oauthId", UserRole.ROLE_ADMIN, new Degree());
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userInternalService.findById(1L)).thenReturn(user);
 
         Authentication authenticate = provider.authenticate(token);
 

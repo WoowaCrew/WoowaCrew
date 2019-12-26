@@ -1,5 +1,7 @@
 package woowacrew.user.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.degree.domain.Degree;
@@ -30,6 +32,7 @@ public class UserInternalService {
                 .orElseThrow(NotExistUserException::new);
     }
 
+    @Cacheable(value = "user", key = "#id")
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(NotExistUserException::new);
@@ -52,6 +55,7 @@ public class UserInternalService {
     }
 
     @Transactional
+    @CacheEvict(value = "user", key = "#userId")
     public void approveUserFor(Long userId, UserContext userContext, UserApproveDto userApproveDto) {
         User user = findById(userId);
         User admin = findById(userContext.getId());
@@ -61,6 +65,7 @@ public class UserInternalService {
     }
 
     @Transactional
+    @CacheEvict(value = "user", key = "#userId")
     public User update(Long userId, String nickname, LocalDate birthday) {
         User user = findById(userId);
         user.updateUserInfo(nickname, birthday);

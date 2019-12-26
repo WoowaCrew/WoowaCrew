@@ -1,5 +1,7 @@
 package woowacrew.feed.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,16 +31,14 @@ public class FeedInternalService {
         this.feedSourceRepository = feedSourceRepository;
     }
 
-
+    @CacheEvict(value = "feed", allEntries = true)
     public FeedSource registerFeedSource(FeedSourceRequestDto feedSourceRequestDto) {
         if (isExistUrl(feedSourceRequestDto.getSourceUrl())) {
             throw new AlreadyExistSourceUrlException();
         }
 
         FeedSource feedSource = feedSourceRepository.save(FeedConverter.toFeedSource(feedSourceRequestDto));
-        FeedArticles feedArticles = feedSource.createFeedArticles();
-
-        feedArticleRepository.saveAll(feedArticles.getFeedArticles());
+        saveNewFeedArticles(feedSource);
 
         return feedSource;
     }
@@ -53,6 +53,7 @@ public class FeedInternalService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "feed", key = "#pageable.pageNumber")
     public Page<FeedArticle> findAllFeedArticles(Pageable pageable) {
         if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
             throw new InvalidPageRequstException();
@@ -60,6 +61,7 @@ public class FeedInternalService {
         return feedArticleRepository.findAll(pageable);
     }
 
+    @CacheEvict(value = "feed", allEntries = true)
     public List<FeedArticle> updateFeedArticles() {
         return feedSourceRepository.findAll().stream()
                 .map(this::saveNewFeedArticles)
@@ -67,6 +69,7 @@ public class FeedInternalService {
                 .collect(Collectors.toList());
     }
 
+    @CacheEvict(value = "feed", allEntries = true)
     public void deleteFeedSource(Long feedSourceId) {
         feedSourceRepository.deleteById(feedSourceId);
     }

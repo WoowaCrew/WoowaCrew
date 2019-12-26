@@ -24,27 +24,27 @@ public class UserService {
 
     public UserResponseDto findById(Long userId) {
         User user = userInternalService.findById(userId);
-        return UserConverter.userToUserResponseDto(user);
+        return UserConverter.toDto(user);
     }
 
     public List<UserResponseDto> findApprovedUser() {
         List<User> approvedUsers = userInternalService.findByRoleNotIn(UserRole.ROLE_PRECOURSE);
 
-        return UserConverter.usersToUserResponseDtos(approvedUsers);
+        return UserConverter.toDtos(approvedUsers);
     }
 
     public List<UserResponseDto> findDisapprovedUser() {
         List<User> disapprovedUsers = userInternalService.findByRole(UserRole.ROLE_PRECOURSE);
 
-        return UserConverter.usersToUserResponseDtos(disapprovedUsers);
+        return UserConverter.toDtos(disapprovedUsers);
     }
 
     public UserResponseDto update(Long userId, UserUpdateDto userUpdateDto) {
         String nickname = userUpdateDto.getNickname();
-        LocalDate birthday = BirthdayConverter.convert(userUpdateDto.getBirthday());
+        LocalDate birthday = BirthdayConverter.toEntity(userUpdateDto.getBirthday());
 
         User updatedUser = userInternalService.update(userId, nickname, birthday);
-        return UserConverter.userToUserResponseDto(updatedUser);
+        return UserConverter.toDto(updatedUser);
     }
 
     public void approveUserFor(Long userId, UserContext userContext, UserApproveDto userApproveDto) {

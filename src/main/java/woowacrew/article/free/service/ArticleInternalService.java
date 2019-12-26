@@ -32,7 +32,7 @@ public class ArticleInternalService {
 
     public Article save(ArticleRequestDto articleRequestDto, UserContext userContext) {
         User user = userInternalService.findByOauthId(userContext.getOauthId());
-        Article article = ArticleConverter.articleDtoToArticle(articleRequestDto, user);
+        Article article = ArticleConverter.toEntity(articleRequestDto, user);
         articleRepository.save(article);
         return article;
     }
