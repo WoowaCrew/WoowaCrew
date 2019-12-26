@@ -1,7 +1,7 @@
 package woowacrew.user.domain;
 
-import woowacrew.degree.domain.Degree;
 import org.junit.jupiter.api.Test;
+import woowacrew.degree.domain.Degree;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
 import woowacrew.user.utils.UserConverter;
@@ -14,7 +14,7 @@ class UserConverterTest {
     @Test
     void 올바른_유저를_입력했을_때_UserDto가_정상_출력() {
         User user = new User("userId", new Degree());
-        UserContext userContext = UserConverter.userToUserContextDto(user);
+        UserContext userContext = UserConverter.toContextDto(user);
 
         assertThat(userContext.getOauthId()).isEqualTo("userId");
     }
@@ -24,7 +24,7 @@ class UserConverterTest {
         User user = new User("123", new Degree());
         user.updateUserInfo("hyojae", LocalDate.of(1995, 6, 8));
 
-        UserResponseDto actual = UserConverter.userToUserResponseDto(user);
+        UserResponseDto actual = UserConverter.toDto(user);
 
         assertThat(actual.getOauthId()).isEqualTo("123");
         assertThat(actual.getNickname()).isEqualTo("hyojae");

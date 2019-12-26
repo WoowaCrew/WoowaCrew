@@ -23,8 +23,10 @@ public class AuthorityUpdateProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UserContext userContext = (UserContext) authentication.getPrincipal();
+
         User user = userInternalService.findById(userContext.getId());
-        UserContext updatedUserContext = UserConverter.userToUserContextDto(user);
+        UserContext updatedUserContext = UserConverter.toContextDto(user);
+
         return new SocialPostAuthorizationToken(updatedUserContext);
     }
 

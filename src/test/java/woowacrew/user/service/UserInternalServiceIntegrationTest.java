@@ -40,7 +40,7 @@ public class UserInternalServiceIntegrationTest {
 
         User updatedUser = userInternalService.findById(1L);
         assertThat(cacheManager.getCache("user").get(1L)).isNotNull();
-        UserContext userContext = UserConverter.userToUserContextDto(updatedUser);
+        UserContext userContext = UserConverter.toContextDto(updatedUser);
         UserApproveDto approveDto = new UserApproveDto(UserRole.ROLE_ADMIN, 1);
         userInternalService.approveUserFor(updatedUser.getId(), userContext, approveDto);
         assertThat(cacheManager.getCache("user").get(1L)).isNull();
