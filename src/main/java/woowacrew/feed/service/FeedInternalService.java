@@ -30,7 +30,6 @@ public class FeedInternalService {
         this.feedSourceRepository = feedSourceRepository;
     }
 
-
     public FeedSource registerFeedSource(FeedSourceRequestDto feedSourceRequestDto) {
         if (isExistUrl(feedSourceRequestDto.getSourceUrl())) {
             throw new AlreadyExistSourceUrlException();
