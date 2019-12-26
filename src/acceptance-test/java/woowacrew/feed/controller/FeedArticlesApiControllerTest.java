@@ -44,14 +44,15 @@ public class FeedArticlesApiControllerTest extends CommonTestController {
 
     @Test
     void 블로그로_정상적으로_검색한다() {
-        String cookie = loginWithCrew();
+        String cookie = loginWithCoach();
         String requestSearchType = "feedDescription";
-        String requestSearchContent = "SHAKEVAN";
+        String requestSearchContent = "TEST";
         FeedArticleResponseDtos result = searchFeedArticles(cookie, requestSearchType, requestSearchContent);
 
         List<FeedArticleResponseDto> feedArticles = result.getArticles();
         assertTrue(feedArticles.size() != 0);
         for (FeedArticleResponseDto feedArticle : feedArticles) {
+            System.out.println(feedArticle.getFeedSourceDto().getDescription());
             assertThat(feedArticle.getFeedSourceDto().getDescription()).contains(requestSearchContent);
         }
     }
