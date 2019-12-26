@@ -33,4 +33,14 @@ public class CommentResponseDto {
     public LocalDateTime getCreateDateTime() {
         return createDateTime;
     }
+
+    @Override
+    public String toString() {
+        return "CommentResponseDto{" +
+                "id=" + id +
+                ", userNickName='" + userNickName + '\'' +
+                ", content='" + content + '\'' +
+                ", createDateTime=" + createDateTime +
+                '}';
+    }
 }

@@ -49,4 +49,14 @@ public class FeedArticleResponseDto {
     public void setFeedSourceDto(FeedSourceResponseDto feedSourceDto) {
         this.feedSourceDto = feedSourceDto;
     }
+
+    @Override
+    public String toString() {
+        return "FeedArticleResponseDto{" +
+                "title='" + title + '\'' +
+                ", link='" + link + '\'' +
+                ", publishedDate=" + publishedDate +
+                ", feedSourceDto=" + feedSourceDto +
+                '}';
+    }
 }

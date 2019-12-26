@@ -2,6 +2,7 @@ package woowacrew.feed.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
@@ -50,5 +51,13 @@ public class FeedService {
 
     public void deleteFeedSource(Long feedSourceId) {
         feedInternalService.deleteFeedSource(feedSourceId);
+    }
+
+    public FeedArticleResponseDtos findSearchedArticles(Specification<FeedArticle> specification, Pageable pageable) {
+        Page<FeedArticle> feedArticles = feedInternalService.findAll(specification, pageable);
+        List<FeedArticleResponseDto> feedArticleDtos = feedArticles.getContent().stream()
+                .map(FeedConverter::toFeedArticleResponseDto)
+                .collect(Collectors.toList());
+        return new FeedArticleResponseDtos(pageable.getPageNumber(), feedArticles.getTotalPages(), feedArticleDtos);
     }
 }

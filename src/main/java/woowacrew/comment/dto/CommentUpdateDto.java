@@ -13,4 +13,11 @@ public class CommentUpdateDto {
     public String getUpdateContent() {
         return updateContent;
     }
+
+    @Override
+    public String toString() {
+        return "CommentUpdateDto{" +
+                "updateContent='" + updateContent + '\'' +
+                '}';
+    }
 }

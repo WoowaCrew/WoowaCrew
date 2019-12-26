@@ -13,4 +13,11 @@ public class UserOauthDto {
     public String getOauthId() {
         return oauthId;
     }
+
+    @Override
+    public String toString() {
+        return "UserOauthDto{" +
+                "oauthId='" + oauthId + '\'' +
+                '}';
+    }
 }

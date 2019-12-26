@@ -4,6 +4,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.free.exception.InvalidPageRequstException;
@@ -87,5 +88,13 @@ public class FeedInternalService {
         feedSource.updateDescription(updateRequestDto.getDescription());
 
         return feedSource;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<FeedArticle> findAll(Specification<FeedArticle> specification, Pageable pageable) {
+        if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
+            throw new InvalidPageRequstException();
+        }
+        return feedArticleRepository.findAll(specification, pageable);
     }
 }

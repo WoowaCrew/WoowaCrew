@@ -16,4 +16,12 @@ public class UserUpdateDto {
     public String getBirthday() {
         return birthday;
     }
+
+    @Override
+    public String toString() {
+        return "UserUpdateDto{" +
+                "nickname='" + nickname + '\'' +
+                ", birthday='" + birthday + '\'' +
+                '}';
+    }
 }
