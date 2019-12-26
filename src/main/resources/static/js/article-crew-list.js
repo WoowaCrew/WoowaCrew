@@ -106,7 +106,8 @@ const CrewArticleListApp = (() => {
     }
 
     searchByEnterKey(event, numberOfPage) {
-      if (event.keyCode === 13) {
+      const enterKeyCode = 13;
+      if (event.keyCode === enterKeyCode) {
         this.searchByNumberOfPage(numberOfPage);
       }
     }
