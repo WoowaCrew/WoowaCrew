@@ -128,6 +128,20 @@ const AdminTemplates = (() => {
         }
       }
     }
+
+    anonymousArticleInfoTitle() {
+      return `<div class="info-title-id cell">아이디</div>
+                <div class="info-title-title cell">제목</div>`
+    }
+
+    anonymousArticleListTemplate(anonymousArticle) {
+      return `<div class="info-content" id="anonymousArticle-${anonymousArticle.anonymousArticleId}">
+                <div class="info-cell">${anonymousArticle.anonymousArticleId}</div>
+                <div class="info-cell margin-left-10">${anonymousArticle.title}</div>
+                <button class="confirm-button" onclick="AdminApp.confirmAnonymousArticle(${anonymousArticle.anonymousArticleId})">게시글 확인</button>
+                <button class="approve-button" onclick="AdminApp.approveAnonymousArticle(${anonymousArticle.anonymousArticleId})">승인</button>
+            </div>`
+    }
   }
 
   return new Templates()
