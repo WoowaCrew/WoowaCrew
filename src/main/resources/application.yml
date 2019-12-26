@@ -1,4 +1,11 @@
 spring:
+  profiles:
+    active: develop
+
+---
+
+spring:
+  profiles: develop
   devtools:
     livereload:
       enabled: true
@@ -12,4 +19,8 @@ spring:
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 

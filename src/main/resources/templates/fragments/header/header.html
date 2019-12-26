@@ -18,12 +18,6 @@
                     class="fa fa-caret-down"></i></a>
             <span id="user-id" sec:authentication="principal.id"></span>
             <ul id="header-dropdown">
-                <!--       임시입니다 추후 삭제 예정       -->
-                <li><a href="/role/precourse">ROLE_PRECOURSE</a></li>
-                <li><a href="/role/crew">ROLE_CREW</a></li>
-                <li><a href="/role/coach">ROLE_COACH</a></li>
-                <li><a href="/role/admin">ROLE_ADMIN</a></li>
-                <!--     여기까지 임시           -->
                 <li sec:authorize="hasRole('ADMIN')"><a href="/admin">관리자 페이지</a></li>
                 <li><a href="#" id="update-form">개인정보 수정</a></li>
                 <li><a href="/logout">logout</a></li>
