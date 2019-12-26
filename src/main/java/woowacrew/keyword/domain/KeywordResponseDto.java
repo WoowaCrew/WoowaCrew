@@ -22,4 +22,13 @@ public class KeywordResponseDto {
     public Long getViews() {
         return views;
     }
+
+    @Override
+    public String toString() {
+        return "KeywordResponseDto{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", views=" + views +
+                '}';
+    }
 }
