@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminApiController {
 
     private UserService userService;
@@ -21,7 +22,6 @@ public class AdminApiController {
     }
 
     @GetMapping("/approve")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDto>> approveUserList() {
         List<UserResponseDto> users = userService.findApprovedUser();
 
@@ -29,7 +29,6 @@ public class AdminApiController {
     }
 
     @GetMapping("/disapprove")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDto>> disapproveUserList() {
         List<UserResponseDto> users = userService.findDisapprovedUser();
 
@@ -37,7 +36,6 @@ public class AdminApiController {
     }
 
     @PutMapping("/{userId}/approve")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity approve(@PathVariable Long userId, UserContext userContext, @RequestBody UserApproveDto userApproveDto) {
         userService.approveUserFor(userId, userContext, userApproveDto);
 

@@ -1,5 +1,6 @@
 package woowacrew.utils.configuration;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -11,6 +12,7 @@ import woowacrew.utils.resolver.SearchTypeHandlerMethodArgumentResolver;
 
 import java.util.List;
 
+@EnableCaching
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 

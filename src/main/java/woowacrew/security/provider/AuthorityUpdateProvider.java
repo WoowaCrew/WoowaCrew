@@ -7,25 +7,26 @@ import org.springframework.stereotype.Component;
 import woowacrew.security.token.AuthorityUpdateToken;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.user.domain.User;
-import woowacrew.user.domain.UserRepository;
 import woowacrew.user.dto.UserContext;
-import woowacrew.user.service.exception.NotExistUserException;
+import woowacrew.user.service.UserInternalService;
 import woowacrew.user.utils.UserConverter;
 
 @Component
 public class AuthorityUpdateProvider implements AuthenticationProvider {
-    private final UserRepository userRepository;
+    private final UserInternalService userInternalService;
 
-    public AuthorityUpdateProvider(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthorityUpdateProvider(UserInternalService userInternalService) {
+        this.userInternalService = userInternalService;
     }
+
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UserContext userContext = (UserContext) authentication.getPrincipal();
-        User user = userRepository.findById(userContext.getId())
-                .orElseThrow(NotExistUserException::new);
+
+        User user = userInternalService.findById(userContext.getId());
         UserContext updatedUserContext = UserConverter.toContextDto(user);
+
         return new SocialPostAuthorizationToken(updatedUserContext);
     }
 
