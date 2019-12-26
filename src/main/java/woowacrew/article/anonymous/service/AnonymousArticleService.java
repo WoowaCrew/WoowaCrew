@@ -2,6 +2,7 @@ package woowacrew.article.anonymous.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import woowacrew.article.anonymous.domain.AnonymousArticle;
 import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
@@ -68,5 +69,11 @@ public class AnonymousArticleService {
 
     public void checkSigningKey(Long anonymousArticleId, String signingKey) {
         anonymousArticleInternalService.checkSigningKey(anonymousArticleId, signingKey);
+    }
+
+    public AnonymousArticleResponseDtos findSearchedArticles(Specification<AnonymousArticle> specification, Pageable pageable) {
+        Page<AnonymousArticle> anonymousArticlePages = anonymousArticleInternalService.findAll(specification, pageable);
+        List<AnonymousArticleResponseDto> anonymousArticleResponseDtos = AnonymousArticleConverter.toDtos(anonymousArticlePages);
+        return new AnonymousArticleResponseDtos(pageable.getPageNumber(), anonymousArticlePages.getTotalPages(), anonymousArticleResponseDtos);
     }
 }

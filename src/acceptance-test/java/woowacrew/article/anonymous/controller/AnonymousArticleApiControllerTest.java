@@ -263,4 +263,66 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .returnResult()
                 .getResponseBody();
     }
+
+    @Test
+    void 없는_타입으로_검색하면_예외가_발생한다() {
+        String cookie = loginWithCrew();
+        String requestType = "zzzz";
+        String requestContent = "ti";
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/anonymous/search")
+                        .queryParam("page", "1")
+                        .queryParam("type", requestType)
+                        .queryParam("content", requestContent)
+                        .build())
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().is5xxServerError();
+    }
+
+    @Test
+    void 제목으로_정상적으로_검색한다() {
+        String cookie = loginWithCrew();
+        String requestType = "anonymousArticleTitle";
+        String requestContent = "ti";
+
+        AnonymousArticleResponseDtos result = searchAnonymousArticle(cookie, requestType, requestContent);
+
+        List<AnonymousArticleResponseDto> articles = result.getArticles();
+        assertTrue(articles.size() != 0);
+        for (AnonymousArticleResponseDto article : articles) {
+            assertTrue(article.getTitle().contains(requestContent));
+        }
+    }
+
+    @Test
+    void 제목과_내용으로_정상적으로_검색한다() {
+        String cookie = loginWithCrew();
+        String requestType = "anonymousArticleTitleWithContent";
+        String requestContent = "co";
+
+        AnonymousArticleResponseDtos result = searchAnonymousArticle(cookie, requestType, requestContent);
+
+        List<AnonymousArticleResponseDto> articles = result.getArticles();
+        assertTrue(articles.size() != 0);
+        for (AnonymousArticleResponseDto article : articles) {
+            assertTrue(article.getTitle().contains(requestContent) || article.getContent().contains(requestContent));
+        }
+    }
+
+    private AnonymousArticleResponseDtos searchAnonymousArticle(String cookie, String requestType, String requestContent) {
+        return webTestClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/api/articles/anonymous/search")
+                        .queryParam("page", "1")
+                        .queryParam("type", requestType)
+                        .queryParam("content", requestContent)
+                        .build())
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(AnonymousArticleResponseDtos.class)
+                .returnResult()
+                .getResponseBody();
+    }
 }

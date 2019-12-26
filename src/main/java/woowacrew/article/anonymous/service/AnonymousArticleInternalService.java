@@ -2,6 +2,7 @@ package woowacrew.article.anonymous.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.anonymous.domain.AnonymousArticle;
@@ -36,6 +37,13 @@ public class AnonymousArticleInternalService {
         checkPageSize(pageable);
 
         return anonymousArticleRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<AnonymousArticle> findAll(Specification<AnonymousArticle> specification, Pageable pageable) {
+        checkPageSize(pageable);
+
+        return anonymousArticleRepository.findAll(specification, pageable);
     }
 
     @Transactional(readOnly = true)

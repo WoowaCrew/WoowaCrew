@@ -6,13 +6,18 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import woowacrew.article.anonymous.domain.AnonymousArticle;
 import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
 import woowacrew.article.anonymous.dto.AnonymousArticleUpdateDto;
 import woowacrew.article.anonymous.service.AnonymousArticleInternalService;
 import woowacrew.article.anonymous.service.AnonymousArticleService;
+import woowacrew.article.free.service.ArticleInternalService;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
 import woowacrew.user.dto.UserContext;
+import woowacrew.utils.annotation.AllowedSearchType;
 
 import java.net.URI;
 import java.util.List;
@@ -51,6 +56,13 @@ public class AnonymousArticleApiController {
             return ResponseEntity.ok(anonymousArticleService.findById(anonymousArticleId));
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<AnonymousArticleResponseDtos> search(
+            @AllowedSearchType(type = {SearchType.ANONYMOUS_ARTICLE_TITLE, SearchType.ANONYMOUS_ARTICLE_TITLE_WITH_CONTENT}) SearchSpec<AnonymousArticle> searchSpec,
+            @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(anonymousArticleService.findSearchedArticles(searchSpec.getSpecification(), pageable));
     }
 
     @PostMapping
