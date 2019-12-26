@@ -29,8 +29,9 @@ public class TempController {
         if ("1234".equals(id)) {
             Degree degree = degreeRepository.findByDegreeNumber(0).get();
             User user = new User("1", UserRole.ROLE_ADMIN, degree);
-            userRepository.findByOauthId(user.getOauthId()).orElse(userRepository.save(user));
-            SecurityContextSupport.updateContext(new ModelMapper().map(user, UserContext.class));
+            User savedUser = userRepository.findByOauthId(user.getOauthId())
+                    .orElseGet(() -> userRepository.save(user));
+            SecurityContextSupport.updateContext(new ModelMapper().map(savedUser, UserContext.class));
         }
         return new RedirectView("/");
     }
