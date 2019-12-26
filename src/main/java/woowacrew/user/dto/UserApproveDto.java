@@ -37,4 +37,12 @@ public class UserApproveDto {
     public int hashCode() {
         return Objects.hash(role, degreeNumber);
     }
+
+    @Override
+    public String toString() {
+        return "UserApproveDto{" +
+                "role=" + role +
+                ", degreeNumber=" + degreeNumber +
+                '}';
+    }
 }

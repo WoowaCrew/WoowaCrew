@@ -23,4 +23,13 @@ public class AnonymousArticleRequestDto {
     public String getSigningKey() {
         return signingKey;
     }
+
+    @Override
+    public String toString() {
+        return "AnonymousArticleRequestDto{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", signingKey='" + signingKey + '\'' +
+                '}';
+    }
 }

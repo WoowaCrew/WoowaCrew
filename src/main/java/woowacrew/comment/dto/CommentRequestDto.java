@@ -13,4 +13,11 @@ public class CommentRequestDto {
     public String getContent() {
         return content;
     }
+
+    @Override
+    public String toString() {
+        return "CommentRequestDto{" +
+                "content='" + content + '\'' +
+                '}';
+    }
 }

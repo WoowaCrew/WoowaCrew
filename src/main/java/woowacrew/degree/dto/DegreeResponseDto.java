@@ -27,4 +27,12 @@ public class DegreeResponseDto {
     public void setDegreeNumber(int degreeNumber) {
         this.degreeNumber = degreeNumber;
     }
+
+    @Override
+    public String toString() {
+        return "DegreeResponseDto{" +
+                "id=" + id +
+                ", degreeNumber=" + degreeNumber +
+                '}';
+    }
 }

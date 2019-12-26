@@ -22,4 +22,11 @@ public class FeedSourceUpdateRequestDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "FeedSourceUpdateRequestDto{" +
+                "description='" + description + '\'' +
+                '}';
+    }
 }

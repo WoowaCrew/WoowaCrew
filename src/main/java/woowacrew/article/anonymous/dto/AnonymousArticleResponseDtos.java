@@ -41,4 +41,13 @@ public class AnonymousArticleResponseDtos {
     public void setArticles(List<AnonymousArticleResponseDto> articles) {
         this.articles = articles;
     }
+
+    @Override
+    public String toString() {
+        return "AnonymousArticleResponseDtos{" +
+                "pageNumber=" + pageNumber +
+                ", totalPages=" + totalPages +
+                ", articles=" + articles +
+                '}';
+    }
 }

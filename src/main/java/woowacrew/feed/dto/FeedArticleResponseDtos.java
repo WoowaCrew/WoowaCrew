@@ -40,4 +40,13 @@ public class FeedArticleResponseDtos {
     public void setArticles(List<FeedArticleResponseDto> articles) {
         this.articles = articles;
     }
+
+    @Override
+    public String toString() {
+        return "FeedArticleResponseDtos{" +
+                "pageNumber=" + pageNumber +
+                ", totalPages=" + totalPages +
+                ", articles=" + articles +
+                '}';
+    }
 }
