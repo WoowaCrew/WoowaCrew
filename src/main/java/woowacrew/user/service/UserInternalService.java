@@ -2,7 +2,6 @@ package woowacrew.user.service;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.degree.domain.Degree;
@@ -18,7 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@EnableCaching
 @Transactional(readOnly = true)
 public class UserInternalService {
     private UserRepository userRepository;
