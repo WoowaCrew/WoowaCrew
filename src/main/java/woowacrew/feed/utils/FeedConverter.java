@@ -9,6 +9,9 @@ import woowacrew.feed.dto.FeedSourceRequestDto;
 import woowacrew.feed.dto.FeedSourceResponseDto;
 
 public class FeedConverter {
+    private FeedConverter() {
+    }
+
     public static FeedSource toFeedSource(FeedSourceRequestDto registerDto) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()

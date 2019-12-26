@@ -21,7 +21,7 @@ class ArticleConverterTest {
         User user = new User("userId", new Degree());
         Article article = new Article(title, content, user);
 
-        ArticleResponseDto articleResponseDto = ArticleConverter.articleToArticleResponseDto(article);
+        ArticleResponseDto articleResponseDto = ArticleConverter.toDto(article);
         assertThat(articleResponseDto.getTitle()).isEqualTo(title);
         assertThat(articleResponseDto.getContent()).isEqualTo(content);
     }
@@ -39,7 +39,7 @@ class ArticleConverterTest {
 
         Page<Article> articlePages = new PageImpl<>(articles);
 
-        List<ArticleResponseDto> articleResponseDtos = ArticleConverter.articlePagesToArticleResponseDtos(articlePages);
+        List<ArticleResponseDto> articleResponseDtos = ArticleConverter.toDtos(articlePages);
         assertThat(articleResponseDtos.size()).isEqualTo(3);
     }
 }

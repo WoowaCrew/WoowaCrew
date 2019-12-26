@@ -5,6 +5,9 @@ import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 
 public class AnonymousArticleConverter {
+    private AnonymousArticleConverter() {
+    }
+
     public static AnonymousArticle toEntity(AnonymousArticleRequestDto anonymousArticleRequestDto) {
         return new AnonymousArticle(
                 anonymousArticleRequestDto.getTitle(),

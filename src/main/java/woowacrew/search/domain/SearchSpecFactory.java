@@ -10,6 +10,9 @@ import java.util.List;
 public class SearchSpecFactory {
     private static final String CONTENT_FORMAT = "%%%s%%";
 
+    private SearchSpecFactory() {
+    }
+
     public static <T> Specification<T> createLikeSpecification(SearchType requestType, String requestContent) {
         List<FieldPath> fieldPaths = requestType.getFieldPaths();
         String pattern = String.format(CONTENT_FORMAT, requestContent);

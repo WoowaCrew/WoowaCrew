@@ -26,23 +26,23 @@ public class ArticleService {
 
     public ArticleResponseDto save(ArticleRequestDto articleRequestDto, UserContext userContext) {
         Article article = articleInternalService.save(articleRequestDto, userContext);
-        return ArticleConverter.articleToArticleResponseDto(article);
+        return ArticleConverter.toDto(article);
     }
 
     public ArticleResponseDto findById(Long articleId) {
-        return ArticleConverter.articleToArticleResponseDto(articleInternalService.findById(articleId));
+        return ArticleConverter.toDto(articleInternalService.findById(articleId));
     }
 
     public ArticleResponseDtos findAll(Pageable pageable) {
         Page<Article> articlePages = articleInternalService.findAll(pageable);
         List<ArticleResponseDto> articleResponseDtos = articlePages.stream()
-                .map(ArticleConverter::articleToArticleResponseDto)
+                .map(ArticleConverter::toDto)
                 .collect(Collectors.toList());
         return new ArticleResponseDtos(pageable.getPageNumber(), articlePages.getTotalPages(), articleResponseDtos);
     }
 
     public ArticleResponseDto update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
-        return ArticleConverter.articleToArticleResponseDto(articleInternalService.update(articleUpdateDto, userContext));
+        return ArticleConverter.toDto(articleInternalService.update(articleUpdateDto, userContext));
     }
 
     public void delete(Long articleId, UserContext userContext) {
@@ -51,7 +51,7 @@ public class ArticleService {
 
     public ArticleResponseDtos findSearchedArticles(Specification<Article> specification, Pageable pageable) {
         Page<Article> articlePages = articleInternalService.findAll(specification, pageable);
-        List<ArticleResponseDto> articleResponseDtos = ArticleConverter.articlePagesToArticleResponseDtos(articlePages);
+        List<ArticleResponseDto> articleResponseDtos = ArticleConverter.toDtos(articlePages);
 
         return new ArticleResponseDtos(pageable.getPageNumber(), articlePages.getTotalPages(), articleResponseDtos);
     }
