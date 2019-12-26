@@ -29,3 +29,5 @@ out/
 ### MAC ###
 .DS_Store
 github.yml
+### Logging ###
+log/

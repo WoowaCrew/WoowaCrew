@@ -12,6 +12,10 @@ spring:
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
+logging:
+  config: "classpath:logback-prod.xml"
+
 ---
 spring:
   profiles: production
@@ -26,3 +30,6 @@ spring:
     hibernate:
       ddl-auto: create
     database-platform:  org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  config: "classpath:logback-prod.xml"
