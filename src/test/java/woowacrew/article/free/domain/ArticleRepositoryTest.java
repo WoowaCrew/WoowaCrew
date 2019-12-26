@@ -44,7 +44,7 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_제목으로_게시물들을_찾는다() {
         String inputData = "test";
-        SearchSpec<Article> searchSpec = new SearchSpec<>("title", inputData, ALLOWED_SEARCH_TYPES);
+        SearchSpec<Article> searchSpec = SearchSpec.init("title", inputData, ALLOWED_SEARCH_TYPES);
         Specification<Article> specification = searchSpec.getSpecification();
 
         Pageable pageable = PageRequest.of(0, 20);
@@ -57,7 +57,7 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_제목과_내용으로_게시물들을_찾는다() {
         String inputData = "test";
-        SearchSpec<Article> searchSpec = new SearchSpec<>("titleWithContent", inputData, ALLOWED_SEARCH_TYPES);
+        SearchSpec<Article> searchSpec = SearchSpec.init("titleWithContent", inputData, ALLOWED_SEARCH_TYPES);
         Specification<Article> specification = searchSpec.getSpecification();
 
         Pageable pageable = PageRequest.of(0, 20);
@@ -71,7 +71,7 @@ class ArticleRepositoryTest {
     @Test
     void 정상적으로_작성자로_게시물들을_찾는다() {
         String inputData = "woowacrew";
-        SearchSpec<Article> searchSpec = new SearchSpec<>("author", inputData, ALLOWED_SEARCH_TYPES);
+        SearchSpec<Article> searchSpec = SearchSpec.init("author", inputData, ALLOWED_SEARCH_TYPES);
         Specification<Article> specification = searchSpec.getSpecification();
 
         Pageable pageable = PageRequest.of(0, 20);

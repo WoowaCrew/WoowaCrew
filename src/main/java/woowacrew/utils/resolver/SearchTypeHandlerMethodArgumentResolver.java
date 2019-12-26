@@ -28,6 +28,6 @@ public class SearchTypeHandlerMethodArgumentResolver implements HandlerMethodArg
         String searchContent = webRequest.getParameter(CONTENT);
         SearchType[] searchTypes = Objects.requireNonNull(parameter.getParameterAnnotation(AllowedSearchType.class)).type();
 
-        return new SearchSpec<>(searchType, searchContent, searchTypes);
+        return SearchSpec.init(searchType, searchContent, searchTypes);
     }
 }

@@ -33,14 +33,14 @@ class SearchSpecTest {
     void 지정하지_않은_타입을_생성하려는_경우_예외가_발생한다() {
         assertThrows(NotExistSearchTypeException.class, () -> {
             SearchType[] searchTypes = {SearchType.TITLE_WITH_CONTENT, SearchType.AUTHOR};
-            SearchSpec<Article> searchSpec = new SearchSpec<>("title", "test", searchTypes);
+            SearchSpec<Article> searchSpec = SearchSpec.init("title", "test", searchTypes);
             searchSpec.getSpecification();
         });
     }
 
     private Specification<Article> createTestSearchSpec(String type) {
         SearchType[] searchTypes = {SearchType.TITLE, SearchType.TITLE_WITH_CONTENT, SearchType.AUTHOR};
-        SearchSpec<Article> searchSpec = new SearchSpec<>(type, "test", searchTypes);
+        SearchSpec<Article> searchSpec = SearchSpec.init(type, "test", searchTypes);
         return searchSpec.getSpecification();
     }
 }

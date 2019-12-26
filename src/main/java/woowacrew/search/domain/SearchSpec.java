@@ -2,29 +2,29 @@ package woowacrew.search.domain;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class SearchSpec<T> {
 
     private Specification<T> specification;
 
-    public SearchSpec(String type, String content, SearchType... allowedSearchTypes) {
-        List<SearchType> convertSearchTypes = Arrays.asList(allowedSearchTypes);
-        convertSearchTypes = Collections.unmodifiableList(convertSearchTypes);
+    private SearchSpec() {
+    }
 
-        SearchType searchType = SearchTypeFactory.createSearchType(convertSearchTypes, type);
-        this.specification = SearchSpecFactory.createLikeSpecification(searchType, content);
+    public static <T> SearchSpec<T> init(String requestType, String requestContent, SearchType[] requestAllowedTypes) {
+        AllowedSearchTypes allowedSearchTypes = new AllowedSearchTypes(requestAllowedTypes);
+        SearchType searchType = allowedSearchTypes.find(requestType);
+
+        SearchSpec<T> searchSpec = new SearchSpec<>();
+        searchSpec.specification = SearchSpecFactory.createLikeSpecification(searchType, requestContent);
+        return searchSpec;
     }
 
     public Specification<T> getSpecification() {
         return specification;
     }
 
-    public Specification<T> and(String type, Object content) {
-        SearchType searchType = SearchType.find(type);
-        Specification<T> specification = SearchSpecFactory.createMatchSpecification(searchType, content);
+    public Specification<T> and(String requestType, Object requestContent) {
+        SearchType searchType = SearchType.find(requestType);
+        Specification<T> specification = SearchSpecFactory.createMatchSpecification(searchType, requestContent);
 
         return this.specification.and(specification);
     }
