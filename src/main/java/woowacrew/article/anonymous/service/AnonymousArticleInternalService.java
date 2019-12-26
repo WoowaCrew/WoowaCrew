@@ -12,12 +12,15 @@ import woowacrew.article.anonymous.dto.AnonymousArticleUpdateDto;
 import woowacrew.article.anonymous.exception.NotFoundAnonymousArticleException;
 import woowacrew.article.anonymous.utils.AnonymousArticleConverter;
 import woowacrew.article.free.exception.InvalidPageRequstException;
+import woowacrew.search.domain.SearchSpec;
 
 import java.util.List;
 
 @Service
 @Transactional
 public class AnonymousArticleInternalService {
+    private static final String IS_APPROVED = "isApproved";
+    private static final Boolean APPROVED = true;
     public static final int DEFAULT_ANONYMOUS_ARTICLE_PAGE_SIZE = 20;
 
     private final AnonymousArticleRepository anonymousArticleRepository;
@@ -40,8 +43,9 @@ public class AnonymousArticleInternalService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AnonymousArticle> findAll(Specification<AnonymousArticle> specification, Pageable pageable) {
+    public Page<AnonymousArticle> findAllByIsApproved(SearchSpec<AnonymousArticle> searchSpec, Pageable pageable) {
         checkPageSize(pageable);
+        Specification<AnonymousArticle> specification = searchSpec.and(IS_APPROVED, APPROVED);
 
         return anonymousArticleRepository.findAll(specification, pageable);
     }

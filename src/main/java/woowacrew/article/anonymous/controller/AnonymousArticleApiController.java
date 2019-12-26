@@ -62,7 +62,7 @@ public class AnonymousArticleApiController {
     public ResponseEntity<AnonymousArticleResponseDtos> search(
             @AllowedSearchType(type = {SearchType.ANONYMOUS_ARTICLE_TITLE, SearchType.ANONYMOUS_ARTICLE_TITLE_WITH_CONTENT}) SearchSpec<AnonymousArticle> searchSpec,
             @PageableDefault(size = ArticleInternalService.DEFAULT_ARTICLE_PAGE_SIZE, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(anonymousArticleService.findSearchedArticles(searchSpec.getSpecification(), pageable));
+        return ResponseEntity.ok(anonymousArticleService.findSearchedArticles(searchSpec, pageable));
     }
 
     @PostMapping

@@ -13,6 +13,7 @@ public enum SearchType {
     FEED_DESCRIPTION("feedDescription", FieldPath.DESCRIPTION_OF_FEED_SOURCE),
     ANONYMOUS_ARTICLE_TITLE("anonymousArticleTitle", FieldPath.TITLE_OF_ARTICLE_FORM),
     ANONYMOUS_ARTICLE_TITLE_WITH_CONTENT("anonymousArticleTitleWithContent", FieldPath.TITLE_OF_ARTICLE_FORM, FieldPath.CONTENT_OF_ARTICLE_FORM),
+    IS_APPROVED("isApproved", FieldPath.IS_APPROVED),
     DEGREE("degree", FieldPath.DEGREE_NUMBER_OF_DEGREE_OF_AUTHOR_OF_BASIC_ARTICLE_FORM);
 
     private String type;

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public enum FieldPath {
+    IS_APPROVED("isApproved"),
     TITLE("title"),
     TITLE_OF_ARTICLE_FORM("articleForm", "title"),
     TITLE_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "articleForm", "title"),

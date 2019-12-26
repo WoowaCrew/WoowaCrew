@@ -198,20 +198,18 @@ class AnonymousArticleInternalServiceTest {
     @Test
     void 정상적으로_게시물을_가져온다() {
         SearchSpec<AnonymousArticle> searchSpec = SearchSpec.init("anonymousArticleTitle", "test", new SearchType[]{SearchType.ANONYMOUS_ARTICLE_TITLE, SearchType.ANONYMOUS_ARTICLE_TITLE_WITH_CONTENT});
-        Specification<AnonymousArticle> specification = searchSpec.getSpecification();
         PageRequest pageable = PageRequest.of(0, 20);
 
-        anonymousArticleInternalService.findAll(specification, pageable);
+        anonymousArticleInternalService.findAllByIsApproved(searchSpec, pageable);
 
-        verify(anonymousArticleRepository, times(1)).findAll(specification, pageable);
+        verify(anonymousArticleRepository, times(1)).findAll(any(Specification.class), any(Pageable.class));
     }
 
     @Test
     void 유효하지_않은_페이지수로_인해_게시물을_가져오지_못한다() {
         SearchSpec<AnonymousArticle> searchSpec = SearchSpec.init("anonymousArticleTitle", "test", new SearchType[]{SearchType.ANONYMOUS_ARTICLE_TITLE, SearchType.ANONYMOUS_ARTICLE_TITLE_WITH_CONTENT});
-        Specification<AnonymousArticle> specification = searchSpec.getSpecification();
         PageRequest pageable = PageRequest.of(0, 19);
 
-        assertThrows(InvalidPageRequstException.class, () -> anonymousArticleInternalService.findAll(specification, pageable));
+        assertThrows(InvalidPageRequstException.class, () -> anonymousArticleInternalService.findAllByIsApproved(searchSpec, pageable));
     }
 }
