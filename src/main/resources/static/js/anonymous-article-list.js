@@ -49,8 +49,40 @@ const AnonymousArticleListApp = (() => {
         pageBar.insertAdjacentHTML("beforeend", AnonymousArticleTemplates.nextBarTemplate(parseInt(lastPageNumber) + 1))
       }
     }
-  }
 
+    searchByNumberOfPage(numberOfPage) {
+      const editBarDiv = document.getElementById("edit-bar")
+      const selectBoxDiv = editBarDiv.getElementsByClassName("search-type")[0]
+      const selectedValue = selectBoxDiv.selectedOptions[0].value
+      const userInputData = editBarDiv.getElementsByClassName("search-form")[0].value
+
+      this.searchByTypeAndNumberOfPageAndContent(selectedValue, numberOfPage, userInputData);
+    }
+
+    searchByNumberOfPageAndContent(numberOfPage, content) {
+      const editBarDiv = document.getElementById("edit-bar")
+      const selectBoxDiv = editBarDiv.getElementsByClassName("search-type")[0]
+      const searchType = selectBoxDiv.selectedOptions[0].value
+
+      this.searchByTypeAndNumberOfPageAndContent(searchType, numberOfPage, content);
+    }
+
+    searchByTypeAndNumberOfPageAndContent(type, numberOfPage, content) {
+      const articleList = document.getElementById('article-list')
+
+      fetch(BASE_URL + "/api/articles/anonymous/search?page=" + numberOfPage + "&type=" + type + "&content=" + content,{
+        method: 'GET'
+      }).then(response => response.json())
+          .then(articleResponse => {
+            this.renderPageBar(articleResponse.pageNumber, articleResponse.totalPages)
+            articleList.innerHTML = ''
+            articleResponse.articles.forEach(article => {
+              articleList.insertAdjacentHTML("beforeend", AnonymousArticleTemplates.articleListTemplate(article))
+            })
+          })
+          .catch(error => alert('오류가 발생했습니다.'));
+    }
+  }
 
   class Controller {
     constructor(articleService) {
@@ -67,6 +99,20 @@ const AnonymousArticleListApp = (() => {
 
     showAnonymousArticleCreatePage() {
       AnonymousArticleService.showAnonymousArticleCreatePage()
+    }
+
+    searchByEnterKey(event, numberOfPage) {
+      if (event.keyCode === 13) {
+        this.searchByNumberOfPage(numberOfPage);
+      }
+    }
+
+    searchByNumberOfPage(numberOfPage) {
+      this.articleService.searchByNumberOfPage(numberOfPage);
+    }
+
+    searchByNumberOfPageAndContent(numberOfPage, content) {
+      this.articleService.searchByNumberOfPageAndContent(numberOfPage, content)
     }
   }
 
