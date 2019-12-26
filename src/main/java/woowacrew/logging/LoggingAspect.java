@@ -17,11 +17,14 @@ public class LoggingAspect {
     public void restController() {
     }
 
+    @Pointcut("within(@org.springframework.stereotype.Controller *)")
+    public void controller() {}
+
     @Pointcut("execution(* *.*(..))")
     protected void allMethod() {
     }
 
-    @Around("restController() && allMethod()")
+    @Around("(restController() || controller()) && allMethod()")
     public Object doLogging(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         log.debug("{}, Arguments : {}", proceedingJoinPoint.getSignature(), proceedingJoinPoint.getArgs());
         Object retVal = proceedingJoinPoint.proceed();
