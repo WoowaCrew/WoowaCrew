@@ -8,6 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
 import woowacrew.feed.domain.FeedArticle;
 import woowacrew.feed.domain.FeedSource;
 import woowacrew.feed.dto.FeedSourceRequestDto;
@@ -24,6 +25,7 @@ class FeedInternalServiceIntegrationTest {
     private CacheManager cacheManager;
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void delete_테스트() throws IOException {
         String sourceUrl = new ClassPathResource("feed.xml").getURL().toString();
         FeedSourceRequestDto requestDto = new FeedSourceRequestDto(sourceUrl, "description");
@@ -46,8 +48,25 @@ class FeedInternalServiceIntegrationTest {
         assertThat(cacheManager.getCache("feed").get(pageNumber)).isNull();
 
         Pageable pageable = PageRequest.of(pageNumber, 20);
-        Page<FeedArticle> feedArticles = feedInternalService.findAllFeedArticles(pageable);
+        feedInternalService.findAllFeedArticles(pageable);
 
         assertThat(cacheManager.getCache("feed").get(pageNumber)).isNotNull();
+    }
+
+    @Test
+    void FeedArticle을_업데이트하면_캐시를_모두_지운다() {
+        Pageable pageable = PageRequest.of(0, 20);
+        feedInternalService.findAllFeedArticles(pageable);
+
+        pageable = PageRequest.of(1, 20);
+        feedInternalService.findAllFeedArticles(pageable);
+
+        assertThat(cacheManager.getCache("feed").get(0)).isNotNull();
+        assertThat(cacheManager.getCache("feed").get(1)).isNotNull();
+
+        feedInternalService.updateFeedArticles();
+
+        assertThat(cacheManager.getCache("feed").get(0)).isNull();
+        assertThat(cacheManager.getCache("feed").get(1)).isNull();
     }
 }
