@@ -22,10 +22,10 @@ public class LoggingAspect {
     }
 
     @Around("restController() && allMethod()")
-    public Object doBasicProfiling(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        log.debug("args : {}", proceedingJoinPoint.getArgs());
+    public Object doLogging(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        log.debug("{}, Arguments : {}", proceedingJoinPoint.getSignature(), proceedingJoinPoint.getArgs());
         Object retVal = proceedingJoinPoint.proceed();
-        log.debug("return value : {}", retVal);
+        log.debug("{}, Return Value : {}", proceedingJoinPoint.getSignature(), retVal);
         return retVal;
     }
 }
