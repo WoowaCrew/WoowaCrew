@@ -9,6 +9,7 @@ import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.article.free.dto.ArticleUpdateDto;
 import woowacrew.article.free.utils.ArticleConverter;
+import woowacrew.search.domain.SearchSpec;
 import woowacrew.user.dto.UserContext;
 
 import java.util.List;
@@ -45,5 +46,13 @@ public class CrewArticleService {
 
     public void delete(Long articleId, UserContext userContext) {
         crewArticleInternalService.delete(articleId, userContext);
+    }
+
+    public ArticleResponseDtos findSearchedArticles(SearchSpec<CrewArticle> searchSpec, Pageable pageable, UserContext userContext) {
+        Page<CrewArticle> articlePages = crewArticleInternalService.findSearchedArticles(searchSpec, pageable, userContext);
+        List<ArticleResponseDto> articleResponseDtos = articlePages.stream()
+                .map(ArticleConverter::crewArticleToArticleResponseDto)
+                .collect(Collectors.toList());
+        return new ArticleResponseDtos(pageable.getPageNumber(), articlePages.getTotalPages(), articleResponseDtos);
     }
 }
