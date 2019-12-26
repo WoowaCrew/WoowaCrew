@@ -7,7 +7,10 @@ import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
 import woowacrew.common.controller.CommonTestController;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CrewArticleApiControllerTest extends CommonTestController {
 
@@ -111,43 +114,73 @@ public class CrewArticleApiControllerTest extends CommonTestController {
     @Test
     void 정상적으로_자신의_기수에_맞는_게시글을_제목_검색한다() {
         String cookie = loginWithCrew();
+        String inputData = "1기";
 
-        webTestClient.get()
+        ArticleResponseDtos articleResponseDtos = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/articles/crew/search")
                         .queryParam("type", "title")
-                        .queryParam("content", "1기")
+                        .queryParam("content", inputData)
                         .build())
                 .header("Cookie", cookie)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody(ArticleResponseDtos.class)
+                .returnResult()
+                .getResponseBody();
+
+        List<ArticleResponseDto> articles = articleResponseDtos.getArticles();
+        assertTrue(articles.size() != 0);
+        for (ArticleResponseDto article : articles) {
+            assertTrue(article.getTitle().contains(inputData));
+        }
     }
 
     @Test
     void 정상적으로_자신의_기수에_맞는_게시글을_제목과_내용으로_검색한다() {
         String cookie = loginWithCrew();
+        String inputData = "1기";
 
-        webTestClient.get()
+        ArticleResponseDtos articleResponseDtos = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/articles/crew/search")
                         .queryParam("type", "titleWithContent")
-                        .queryParam("content", "1기")
+                        .queryParam("content", inputData)
                         .build())
                 .header("Cookie", cookie)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody(ArticleResponseDtos.class)
+                .returnResult()
+                .getResponseBody();
+
+        List<ArticleResponseDto> articles = articleResponseDtos.getArticles();
+        assertTrue(articles.size() != 0);
+        for (ArticleResponseDto article : articles) {
+            assertTrue(article.getTitle().contains(inputData) || article.getContent().contains(inputData));
+        }
     }
 
     @Test
     void 정상적으로_자신의_기수에_맞는_게시글을_작성자로_검색한다() {
         String cookie = loginWithCrew();
+        String inputData = "woowacrew";
 
-        webTestClient.get()
+        ArticleResponseDtos articleResponseDtos = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/articles/crew/search")
                         .queryParam("type", "author")
-                        .queryParam("content", "woowacrew")
+                        .queryParam("content", inputData)
                         .build())
                 .header("Cookie", cookie)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody(ArticleResponseDtos.class)
+                .returnResult()
+                .getResponseBody();
+
+        List<ArticleResponseDto> articles = articleResponseDtos.getArticles();
+        assertTrue(articles.size() != 0);
+        for (ArticleResponseDto article : articles) {
+            assertTrue(article.getUserResponseDto().getNickname().contains(inputData));
+        }
     }
 
     @Test
