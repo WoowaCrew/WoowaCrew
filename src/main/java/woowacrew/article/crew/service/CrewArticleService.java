@@ -51,7 +51,7 @@ public class CrewArticleService {
     public ArticleResponseDtos findSearchedArticles(SearchSpec<CrewArticle> searchSpec, Pageable pageable, UserContext userContext) {
         Page<CrewArticle> articlePages = crewArticleInternalService.findSearchedArticles(searchSpec, pageable, userContext);
         List<ArticleResponseDto> articleResponseDtos = articlePages.stream()
-                .map(ArticleConverter::crewArticleToArticleResponseDto)
+                .map(ArticleConverter::toDto)
                 .collect(Collectors.toList());
         return new ArticleResponseDtos(pageable.getPageNumber(), articlePages.getTotalPages(), articleResponseDtos);
     }
