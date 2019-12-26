@@ -7,7 +7,7 @@ const CrewArticleListApp = (() => {
     async showArticles(numberOfPage) {
       const articleList = document.getElementById('article-list')
 
-      fetch(BASE_URL + "/api/articles/crew?page=" + numberOfPage, {
+      fetch(`${BASE_URL}/api/articles/crew?page=${numberOfPage}`, {
         method: 'GET'
       }).then(response => response.json())
         .then(articleResponse => {
@@ -70,7 +70,7 @@ const CrewArticleListApp = (() => {
     searchByTypeAndNumberOfPageAndContent(type, numberOfPage, content) {
       const articleList = document.getElementById('article-list')
 
-      fetch(BASE_URL + "/api/articles/crew/search?page=" + numberOfPage + "&type=" + type + "&content=" + content,{
+      fetch(`${BASE_URL}/api/articles/crew/search?page=${numberOfPage}&type=${type}&content=${content}`,{
         method: 'GET'
       }).then(response => response.json())
           .then(articleResponse => {
