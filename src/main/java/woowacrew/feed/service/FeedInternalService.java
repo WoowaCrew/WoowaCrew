@@ -1,5 +1,6 @@
 package woowacrew.feed.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class FeedInternalService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "feed", key = "#pageable.pageNumber")
     public Page<FeedArticle> findAllFeedArticles(Pageable pageable) {
         if (pageable.getPageSize() != DEFAULT_ARTICLE_PAGE_SIZE) {
             throw new InvalidPageRequstException();
