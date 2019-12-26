@@ -10,13 +10,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import woowacrew.article.anonymous.domain.AnonymousArticle;
 import woowacrew.article.anonymous.domain.AnonymousArticleRepository;
 import woowacrew.article.anonymous.dto.AnonymousArticleRequestDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleUpdateDto;
 import woowacrew.article.anonymous.exception.MismatchPasswordException;
 import woowacrew.article.anonymous.utils.AnonymousArticleConverter;
+import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.common.service.FieldSetter;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AnonymousArticleInternalServiceTest {
@@ -189,5 +193,23 @@ class AnonymousArticleInternalServiceTest {
             articles.add(new AnonymousArticle(String.valueOf(i), String.valueOf(i), signingKey));
         }
         return articles;
+    }
+
+    @Test
+    void 정상적으로_게시물을_가져온다() {
+        SearchSpec<AnonymousArticle> searchSpec = SearchSpec.init("anonymousArticleTitle", "test", new SearchType[]{SearchType.ANONYMOUS_ARTICLE_TITLE, SearchType.ANONYMOUS_ARTICLE_TITLE_WITH_CONTENT});
+        PageRequest pageable = PageRequest.of(0, 20);
+
+        anonymousArticleInternalService.findAllByIsApproved(searchSpec, pageable);
+
+        verify(anonymousArticleRepository, times(1)).findAll(any(Specification.class), any(Pageable.class));
+    }
+
+    @Test
+    void 유효하지_않은_페이지수로_인해_게시물을_가져오지_못한다() {
+        SearchSpec<AnonymousArticle> searchSpec = SearchSpec.init("anonymousArticleTitle", "test", new SearchType[]{SearchType.ANONYMOUS_ARTICLE_TITLE, SearchType.ANONYMOUS_ARTICLE_TITLE_WITH_CONTENT});
+        PageRequest pageable = PageRequest.of(0, 19);
+
+        assertThrows(InvalidPageRequstException.class, () -> anonymousArticleInternalService.findAllByIsApproved(searchSpec, pageable));
     }
 }

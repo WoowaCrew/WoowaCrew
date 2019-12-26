@@ -9,6 +9,7 @@ import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
 import woowacrew.article.anonymous.dto.AnonymousArticleUpdateDto;
 import woowacrew.article.anonymous.utils.AnonymousArticleConverter;
+import woowacrew.search.domain.SearchSpec;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,5 +69,11 @@ public class AnonymousArticleService {
 
     public void checkSigningKey(Long anonymousArticleId, String signingKey) {
         anonymousArticleInternalService.checkSigningKey(anonymousArticleId, signingKey);
+    }
+
+    public AnonymousArticleResponseDtos findSearchedArticles(SearchSpec<AnonymousArticle> searchSpec, Pageable pageable) {
+        Page<AnonymousArticle> anonymousArticlePages = anonymousArticleInternalService.findAllByIsApproved(searchSpec, pageable);
+        List<AnonymousArticleResponseDto> anonymousArticleResponseDtos = AnonymousArticleConverter.toDtos(anonymousArticlePages);
+        return new AnonymousArticleResponseDtos(pageable.getPageNumber(), anonymousArticlePages.getTotalPages(), anonymousArticleResponseDtos);
     }
 }

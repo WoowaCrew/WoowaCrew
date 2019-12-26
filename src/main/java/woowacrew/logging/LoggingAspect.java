@@ -18,7 +18,8 @@ public class LoggingAspect {
     }
 
     @Pointcut("within(@org.springframework.stereotype.Controller *)")
-    public void controller() {}
+    public void controller() {
+    }
 
     @Pointcut("execution(* *.*(..))")
     protected void allMethod() {
