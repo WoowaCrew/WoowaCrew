@@ -14,7 +14,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 
 logging:
-  config: "classpath:logback-prod.xml"
+  config: "classpath:logback-dev.xml"
 
 ---
 spring:
