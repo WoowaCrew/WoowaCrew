@@ -24,23 +24,23 @@ public class CrewArticleService {
 
     public ArticleResponseDto save(ArticleRequestDto articleRequestDto, UserContext userContext) {
         CrewArticle article = crewArticleInternalService.save(articleRequestDto, userContext);
-        return ArticleConverter.crewArticleToArticleResponseDto(article);
+        return ArticleConverter.toDto(article);
     }
 
     public ArticleResponseDto findById(Long articleId, UserContext userContext) {
-        return ArticleConverter.crewArticleToArticleResponseDto(crewArticleInternalService.findById(articleId, userContext));
+        return ArticleConverter.toDto(crewArticleInternalService.findById(articleId, userContext));
     }
 
     public ArticleResponseDtos findAllByCrew(UserContext userContext, Pageable pageable) {
         Page<CrewArticle> articlePages = crewArticleInternalService.findAllByCrew(userContext, pageable);
         List<ArticleResponseDto> articleResponseDtos = articlePages.stream()
-                .map(ArticleConverter::crewArticleToArticleResponseDto)
+                .map(ArticleConverter::toDto)
                 .collect(Collectors.toList());
         return new ArticleResponseDtos(pageable.getPageNumber(), articlePages.getTotalPages(), articleResponseDtos);
     }
 
     public ArticleResponseDto update(ArticleUpdateDto articleUpdateDto, UserContext userContext) {
-        return ArticleConverter.crewArticleToArticleResponseDto(crewArticleInternalService.update(articleUpdateDto, userContext));
+        return ArticleConverter.toDto(crewArticleInternalService.update(articleUpdateDto, userContext));
     }
 
     public void delete(Long articleId, UserContext userContext) {

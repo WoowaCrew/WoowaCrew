@@ -24,14 +24,14 @@ public class DegreeService {
         return degreeInternalService.findAll().stream()
                 .map(degree -> {
                     int userCount = userInternalService.countByDegreeId(degree.getId());
-                    return DegreeConverter.degreeToWithUserCountReponseDto(degree, userCount);
+                    return DegreeConverter.degreeToWithUserCountResponseDto(degree, userCount);
                 })
                 .collect(Collectors.toList());
     }
 
     public List<UserResponseDto> findUserByDegreeId(Long degreeId) {
         return userInternalService.findByDegreeId(degreeId).stream()
-                .map(UserConverter::userToUserResponseDto)
+                .map(UserConverter::toDto)
                 .collect(Collectors.toList());
     }
 }

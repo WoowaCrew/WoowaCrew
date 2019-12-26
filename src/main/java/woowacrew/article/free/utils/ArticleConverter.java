@@ -15,23 +15,23 @@ public class ArticleConverter {
     private ArticleConverter() {
     }
 
-    public static ArticleResponseDto articleToArticleResponseDto(Article article) {
+    public static ArticleResponseDto toDto(Article article) {
         return new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent(),
-                UserConverter.userToUserResponseDto(article.getAuthor()), article.getCreatedDate(), article.getLastModifiedDate());
+                UserConverter.toDto(article.getAuthor()), article.getCreatedDate(), article.getLastModifiedDate());
     }
 
-    public static ArticleResponseDto crewArticleToArticleResponseDto(CrewArticle article) {
+    public static ArticleResponseDto toDto(CrewArticle article) {
         return new ArticleResponseDto(article.getId(), article.getTitle(), article.getContent(),
-                UserConverter.userToUserResponseDto(article.getAuthor()), article.getCreatedDate(), article.getLastModifiedDate());
+                UserConverter.toDto(article.getAuthor()), article.getCreatedDate(), article.getLastModifiedDate());
     }
 
-    public static List<ArticleResponseDto> articlePagesToArticleResponseDtos(Page<Article> articlePages) {
+    public static List<ArticleResponseDto> toDtos(Page<Article> articlePages) {
         return articlePages.stream()
-                .map(ArticleConverter::articleToArticleResponseDto)
+                .map(ArticleConverter::toDto)
                 .collect(Collectors.toList());
     }
 
-    public static Article articleDtoToArticle(ArticleRequestDto articleRequestDto, User user) {
+    public static Article toEntity(ArticleRequestDto articleRequestDto, User user) {
         return new Article(articleRequestDto.getTitle(), articleRequestDto.getContent(), user);
     }
 }

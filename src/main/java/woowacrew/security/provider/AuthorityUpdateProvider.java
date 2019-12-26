@@ -25,7 +25,7 @@ public class AuthorityUpdateProvider implements AuthenticationProvider {
         UserContext userContext = (UserContext) authentication.getPrincipal();
         User user = userRepository.findById(userContext.getId())
                 .orElseThrow(NotExistUserException::new);
-        UserContext updatedUserContext = UserConverter.userToUserContextDto(user);
+        UserContext updatedUserContext = UserConverter.toContextDto(user);
         return new SocialPostAuthorizationToken(updatedUserContext);
     }
 
