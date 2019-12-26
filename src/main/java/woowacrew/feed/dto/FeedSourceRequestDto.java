@@ -34,4 +34,12 @@ public class FeedSourceRequestDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "FeedSourceRequestDto{" +
+                "sourceUrl='" + sourceUrl + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

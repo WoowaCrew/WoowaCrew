@@ -74,4 +74,14 @@ public class UserContext {
     public int hashCode() {
         return Objects.hash(id, oauthId, nickname, role);
     }
+
+    @Override
+    public String toString() {
+        return "UserContext{" +
+                "id=" + id +
+                ", oauthId='" + oauthId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

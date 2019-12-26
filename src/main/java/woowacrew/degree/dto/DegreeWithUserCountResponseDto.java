@@ -37,4 +37,13 @@ public class DegreeWithUserCountResponseDto {
     public void setUserCount(int userCount) {
         this.userCount = userCount;
     }
+
+    @Override
+    public String toString() {
+        return "DegreeWithUserCountResponseDto{" +
+                "id=" + id +
+                ", degreeNumber=" + degreeNumber +
+                ", userCount=" + userCount +
+                '}';
+    }
 }

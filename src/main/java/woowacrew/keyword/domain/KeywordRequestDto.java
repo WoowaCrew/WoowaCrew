@@ -10,4 +10,11 @@ public class KeywordRequestDto {
     public String getContent() {
         return content;
     }
+
+    @Override
+    public String toString() {
+        return "KeywordRequestDto{" +
+                "content='" + content + '\'' +
+                '}';
+    }
 }
