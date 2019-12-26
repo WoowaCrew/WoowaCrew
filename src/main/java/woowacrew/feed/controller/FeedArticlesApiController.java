@@ -34,7 +34,7 @@ public class FeedArticlesApiController {
     @GetMapping("/search")
     public ResponseEntity<FeedArticleResponseDtos> search
             (@PageableDefault(size = DEFAULT_ARTICLE_PAGE_SIZE, sort = "publishedDate", direction = Sort.Direction.DESC) Pageable pageable,
-             @AllowedSearchType(type = {SearchType.FEED_TITLE}) SearchSpec<FeedArticle> searchSpec) {
+             @AllowedSearchType(type = {SearchType.FEED_TITLE, SearchType.FEED_DESCRIPTION}) SearchSpec<FeedArticle> searchSpec) {
         return ResponseEntity.ok(feedService.findSearchedArticles(searchSpec.getSpecification(), pageable));
     }
 }

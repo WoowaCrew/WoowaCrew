@@ -29,7 +29,7 @@ public class FeedArticlesApiControllerTest extends CommonTestController {
     }
 
     @Test
-    void 정상적으로_제목으로_검색한다() {
+    void 제목으로_정상적으로_검색한다() {
         String cookie = loginWithCrew();
         String requestSearchType = "feedTitle";
         String requestSearchContent = "title";
@@ -39,6 +39,20 @@ public class FeedArticlesApiControllerTest extends CommonTestController {
         assertTrue(feedArticles.size() != 0);
         for (FeedArticleResponseDto feedArticle : feedArticles) {
             assertThat(feedArticle.getTitle()).contains(requestSearchContent);
+        }
+    }
+
+    @Test
+    void 블로그로_정상적으로_검색한다() {
+        String cookie = loginWithCrew();
+        String requestSearchType = "feedDescription";
+        String requestSearchContent = "SHAKEVAN";
+        FeedArticleResponseDtos result = searchFeedArticles(cookie, requestSearchType, requestSearchContent);
+
+        List<FeedArticleResponseDto> feedArticles = result.getArticles();
+        assertTrue(feedArticles.size() != 0);
+        for (FeedArticleResponseDto feedArticle : feedArticles) {
+            assertThat(feedArticle.getFeedSourceDto().getDescription()).contains(requestSearchContent);
         }
     }
 

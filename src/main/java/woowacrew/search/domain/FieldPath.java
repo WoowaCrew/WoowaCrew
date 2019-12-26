@@ -7,6 +7,7 @@ import java.util.List;
 public enum FieldPath {
     TITLE_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "articleForm", "title"),
     FEED_TITLE("title"),
+    FEED_DESCRIPTION_OF_FEED_SOURCE("feedSource", "description"),
     CONTENT_OF_ARTICLE_FORM_OF_BASIC_ARTICLE_FORM("basicArticleForm", "articleForm", "content"),
     NICKNAME_OF_AUTHOR_OF_BASIC_ARTICLE_FORM("basicArticleForm", "author", "nickname"),
     DEGREE_NUMBER_OF_DEGREE_OF_AUTHOR_OF_BASIC_ARTICLE_FORM("basicArticleForm", "author", "degree", "degreeNumber");
