@@ -1,5 +1,7 @@
 package woowacrew.user.service;
 
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.degree.domain.Degree;
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@EnableCaching
 @Transactional(readOnly = true)
 public class UserInternalService {
     private UserRepository userRepository;
@@ -30,6 +33,7 @@ public class UserInternalService {
                 .orElseThrow(NotExistUserException::new);
     }
 
+    @Cacheable(value = "user", key = "#id")
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(NotExistUserException::new);
