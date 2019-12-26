@@ -5,13 +5,14 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
 import woowacrew.security.token.SocialPreAuthorizationToken;
-import woowacrew.degree.domain.Degree;
-import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
+import woowacrew.user.domain.exception.DegreeBoundException;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserOauthDto;
 
@@ -46,7 +47,7 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
 
     private User registerUser(UserOauthDto userOauthDto) {
         Degree degree = degreeRepository.findByDegreeNumber(0)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(DegreeBoundException::new);
         return userRepository.save(new User(userOauthDto.getOauthId(), degree));
     }
 }
