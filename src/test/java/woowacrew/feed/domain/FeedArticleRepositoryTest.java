@@ -26,8 +26,8 @@ class FeedArticleRepositoryTest {
         Pageable pageable = PageRequest.of(0, 20, sort);
 
         List<FeedArticle> articles = feedArticleRepository.findAll(pageable).getContent();
-        assertThat(articles.size()).isEqualTo(6);
-        assertThat(articles.get(0).getPublishedDate().toString()).contains("2019-10-06");
+        assertThat(articles.size()).isEqualTo(12);
+        assertThat(articles.get(0).getPublishedDate().toString()).contains("2019-10-12");
     }
 
     @Test

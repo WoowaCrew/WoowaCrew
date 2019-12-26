@@ -11,12 +11,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import woowacrew.article.free.exception.InvalidPageRequstException;
 import woowacrew.feed.domain.*;
 import woowacrew.feed.dto.FeedSourceRequestDto;
 import woowacrew.feed.dto.FeedSourceUpdateRequestDto;
 import woowacrew.feed.exception.AlreadyExistSourceUrlException;
 import woowacrew.feed.exception.NotFoundFeedSourceException;
+import woowacrew.search.domain.SearchSpec;
+import woowacrew.search.domain.SearchType;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -137,5 +140,24 @@ class FeedInternalServiceTest {
         Long feedSourceId = 1L;
         feedInternalService.deleteFeedSource(feedSourceId);
         verify(feedSourceRepository, times(1)).deleteById(feedSourceId);
+    }
+
+    @Test
+    void 정상적으로_검색한다() {
+        SearchSpec<FeedArticle> searchSpec = SearchSpec.init("feedTitle", "test", new SearchType[]{SearchType.FEED_TITLE});
+        Specification<FeedArticle> specification = searchSpec.getSpecification();
+        PageRequest pageable = PageRequest.of(0, 20);
+
+        feedInternalService.findAll(specification, pageable);
+        verify(feedArticleRepository, times(1)).findAll(specification, pageable);
+    }
+
+    @Test
+    void pageable_사이즈로_인해_검색을_실패한다() {
+        SearchSpec<FeedArticle> searchSpec = SearchSpec.init("feedTitle", "test", new SearchType[]{SearchType.FEED_TITLE});
+        Specification<FeedArticle> specification = searchSpec.getSpecification();
+        PageRequest pageable = PageRequest.of(0, 19);
+
+        assertThrows(InvalidPageRequstException.class, () -> feedInternalService.findAll(specification, pageable));
     }
 }

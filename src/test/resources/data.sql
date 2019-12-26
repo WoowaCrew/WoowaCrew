@@ -75,6 +75,7 @@ INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (7, '15','woow
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (8, '15','woowacrew','ROLE_PRECOURSE', 1);
 
 INSERT INTO feed_source(id,source_url,description) values (1,'https://vsh123.github.io/feed.xml', 'SHAKEVAN');
+INSERT INTO feed_source(id,source_url,description) values (2,'https://jojoldu.tistory.com/feed', 'TEST');
 
 INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(1,'title1','link1','2019-10-01T00:00:00',1);
 INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(2,'title2','link2','2019-10-02T00:00:00',1);
@@ -82,6 +83,13 @@ INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(3,'
 INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(4,'title4','link4','2019-10-04T00:00:00',1);
 INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(5,'title5','link5','2019-10-05T00:00:00',1);
 INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(6,'title6','link6','2019-10-06T00:00:00',1);
+
+INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(7,'title7','link7','2019-10-07T00:00:00',2);
+INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(8,'title8','link8','2019-10-08T00:00:00',2);
+INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(9,'title9','link9','2019-10-09T00:00:00',2);
+INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(10,'title10','link10','2019-10-10T00:00:00',2);
+INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(11,'title11','link11','2019-10-11T00:00:00',2);
+INSERT INTO feed_article(id,title,link,published_date,feed_source_id) values(12,'title12','link12','2019-10-12T00:00:00',2);
 
 
 INSERT INTO crew_article(id,title,content,author) values(1,'1기 게시글','1기 게시글',1);
