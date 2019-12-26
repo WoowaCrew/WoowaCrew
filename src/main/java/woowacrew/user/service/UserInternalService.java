@@ -1,5 +1,6 @@
 package woowacrew.user.service;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,7 @@ public class UserInternalService {
     }
 
     @Transactional
+    @CacheEvict(value = "user", key = "#userId")
     public void approveUserFor(Long userId, UserContext userContext, UserApproveDto userApproveDto) {
         User user = findById(userId);
         User admin = findById(userContext.getId());
@@ -65,6 +67,7 @@ public class UserInternalService {
     }
 
     @Transactional
+    @CacheEvict(value = "user", key = "#userId")
     public User update(Long userId, String nickname, LocalDate birthday) {
         User user = findById(userId);
         user.updateUserInfo(nickname, birthday);
