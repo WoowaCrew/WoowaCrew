@@ -55,7 +55,6 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
         http
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .anyRequest().permitAll()
                 .antMatchers("/", "/login", "/login/**", "/search", "/search/**", "/docs/**").permitAll()
                 .antMatchers("/accessdeny", "/users/form", "/users/update").authenticated()
                 .anyRequest().hasAnyRole(UserRole.ROLE_CREW.getRoleName(), UserRole.ROLE_COACH.getRoleName(), UserRole.ROLE_ADMIN.getRoleName())
