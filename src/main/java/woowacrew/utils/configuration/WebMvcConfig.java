@@ -7,7 +7,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import woowacrew.user.utils.UserRoleConverter;
-import woowacrew.utils.resolver.CustomHandlerMethodArgumentResolver;
+import woowacrew.utils.resolver.UserContextArgumentResolver;
 import woowacrew.utils.resolver.SearchTypeHandlerMethodArgumentResolver;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new CustomHandlerMethodArgumentResolver());
+        resolvers.add(new UserContextArgumentResolver());
         resolvers.add(new SearchTypeHandlerMethodArgumentResolver());
     }
 
