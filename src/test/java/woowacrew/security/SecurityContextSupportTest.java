@@ -32,12 +32,12 @@ class SecurityContextSupportTest {
         SocialPostAuthorizationToken token = new SocialPostAuthorizationToken(userContext);
         SecurityContextHolder.getContext().setAuthentication(token);
 
-        assertThat(SecurityContextSupport.getContext()).isEqualTo(userContext);
+        assertThat(SecurityContextSupport.getUserContext()).isEqualTo(userContext);
         SecurityContextHolder.clearContext();
     }
 
     @Test
     void 로그인이_되어있지_않은채로_userContext를_얻으려하면_exception_발생() {
-        assertThrows(NotLoginException.class, SecurityContextSupport::getContext);
+        assertThrows(NotLoginException.class, SecurityContextSupport::getUserContext);
     }
 }

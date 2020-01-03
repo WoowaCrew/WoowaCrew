@@ -14,6 +14,6 @@ public class LoginApiController {
         if (SecurityContextSupport.isNotLogined()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.ok(SecurityContextSupport.getContext());
+        return ResponseEntity.ok(SecurityContextSupport.getUserContext());
     }
 }
