@@ -1,12 +1,6 @@
 package woowacrew.article.anonymous.controller;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDtos;
@@ -24,25 +18,12 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
-@ExtendWith(RestDocumentationExtension.class)
 public class AnonymousArticleApiControllerTest extends CommonTestController {
 
     private static String TITLE = "title";
     private static String CONTENT = "content";
     private static String SIGNING_KEY = "password";
-
-    @LocalServerPort
-    private String port;
-
-    @BeforeEach
-    void setUp(RestDocumentationContextProvider restDocumentation) {
-        webTestClient = WebTestClient.bindToServer()
-                .baseUrl("http://localhost:" + port)
-                .filter(documentationConfiguration(restDocumentation))
-                .build();
-    }
 
     @Test
     void 익명_게시글_생성_테스트() {

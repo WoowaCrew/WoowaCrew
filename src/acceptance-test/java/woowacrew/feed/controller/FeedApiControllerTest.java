@@ -1,15 +1,9 @@
 package woowacrew.feed.controller;
 
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.feed.dto.FeedSourceResponseDto;
@@ -23,21 +17,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
-@ExtendWith(RestDocumentationExtension.class)
 public class FeedApiControllerTest extends CommonTestController {
-
-    @LocalServerPort
-    private String port;
-
-    @BeforeEach
-    void setUp(RestDocumentationContextProvider restDocumentation) {
-        webTestClient = WebTestClient.bindToServer()
-                .baseUrl("http://localhost:" + port)
-                .filter(documentationConfiguration(restDocumentation))
-                .build();
-    }
 
     @Test
     void FeedSource_목록을_잘불러오는지_테스트() {
