@@ -359,3 +359,16 @@ include::{snippets}/search/save/request-parameters.adoc[]
 include::{snippets}/search/save/http-response.adoc[]
 - 응답 헤더(redirect)
 include::{snippets}/search/save/response-headers.adoc[]
+
+== LoginApi
+
+=== Login
+
+- curl 요청
+include::{snippets}/login/signin/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/login/signin/http-request.adoc[]
+- 응답 예시
+include::{snippets}/login/signin/http-response.adoc[]
+- 응답 필드
+include::{snippets}/login/signin/response-fields.adoc[]
