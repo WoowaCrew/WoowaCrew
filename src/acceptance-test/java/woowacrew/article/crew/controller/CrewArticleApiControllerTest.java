@@ -53,6 +53,22 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .consumeWith(document("crew-api/list",
                         requestParameters(
                                 parameterWithName("page").description("페이지 넘버")
+                        ),
+                        responseFields(
+                                fieldWithPath("pageNumber").description("페이지 넘버"),
+                                fieldWithPath("totalPages").description("전체 페이지 수"),
+                                fieldWithPath("articles[].id").description("게시글 넘버"),
+                                fieldWithPath("articles[].title").description("게시글 제목"),
+                                fieldWithPath("articles[].content").description("게시글 내용"),
+                                fieldWithPath("articles[].userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("articles[].userResponseDto.oauthId").description("Oauth 아이디"),
+                                fieldWithPath("articles[].userResponseDto.nickname").description("유저 닉네임").optional(),
+                                fieldWithPath("articles[].userResponseDto.birthday").description("유저 생일").optional(),
+                                fieldWithPath("articles[].userResponseDto.userRole").description("유저 권한").optional(),
+                                fieldWithPath("articles[].userResponseDto.degreeResponseDto.id").description("유저 기수 넘버").optional(),
+                                fieldWithPath("articles[].userResponseDto.degreeResponseDto.degreeNumber").description("유저 기수").optional(),
+                                fieldWithPath("articles[].createdDate").description("게시글 생성 시간").optional(),
+                                fieldWithPath("articles[].lastModifiedDate").description("게시글 최종 수정 시간").optional()
                         )
                 ))
                 .returnResult()

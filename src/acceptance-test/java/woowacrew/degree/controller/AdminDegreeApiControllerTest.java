@@ -1,7 +1,13 @@
 package woowacrew.degree.controller;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.degree.dto.DegreeWithUserCountResponseDto;
 import woowacrew.user.dto.UserResponseDto;
@@ -9,8 +15,24 @@ import woowacrew.user.dto.UserResponseDto;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
+@ExtendWith(RestDocumentationExtension.class)
 class AdminDegreeApiControllerTest extends CommonTestController {
+
+    @LocalServerPort
+    private String port;
+
+    @BeforeEach
+    void setUp(RestDocumentationContextProvider restDocumentation) {
+        webTestClient = WebTestClient.bindToServer()
+                .baseUrl("http://localhost:" + port)
+                .filter(documentationConfiguration(restDocumentation))
+                .build();
+    }
 
     @Test
     void 관리자가_아니면_접근이_거부된다() {
@@ -35,6 +57,12 @@ class AdminDegreeApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk()
                 .expectBodyList(DegreeWithUserCountResponseDto.class)
+                .consumeWith(document("degree/read",
+                        responseFields(
+                                fieldWithPath("[].id").description("기수 별 아이디"),
+                                fieldWithPath("[].degreeNumber").description("기수"),
+                                fieldWithPath("[].userCount").description("기수 별 사람 수"))
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -52,6 +80,15 @@ class AdminDegreeApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk()
                 .expectBodyList(UserResponseDto.class)
+                .consumeWith(document("degree/list",
+                        responseFields(
+                                fieldWithPath("[].id").description("유저 아이디"),
+                                fieldWithPath("[].oauthId").description("Oauth 아이디"),
+                                fieldWithPath("[].nickname").description("유저 닉네임"),
+                                fieldWithPath("[].birthday").description("유저 생일").optional(),
+                                fieldWithPath("[].userRole").description("유저 권한"),
+                                fieldWithPath("[].degreeResponseDto.*").description("유저 기수")
+                        )))
                 .returnResult()
                 .getResponseBody();
 
