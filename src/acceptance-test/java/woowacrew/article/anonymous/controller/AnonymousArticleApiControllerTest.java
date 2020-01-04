@@ -23,6 +23,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
@@ -62,13 +64,18 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .expectStatus().isCreated()
                 .expectBody()
                 .consumeWith(document("anonymous-api/create",
+                        requestParameters(
+                                parameterWithName("title").description("생성할 익명 게시글 제목"),
+                                parameterWithName("content").description("생성할 익명 게시글 내용"),
+                                parameterWithName("signingKey").description("익명 게시글 생성 시 패스워드")
+                        ),
                         responseHeaders(
                                 headerWithName("Location").description("생성된 익명 게시글 경로")
                         ),
                         responseFields(
                                 fieldWithPath("anonymousArticleId").description("익명 게시글 번호"),
-                                fieldWithPath("title").description("익명 게시글 제목"),
-                                fieldWithPath("content").description("익명 게시글 내용"),
+                                fieldWithPath("title").description("생성된 익명 게시글 제목"),
+                                fieldWithPath("content").description("생성된 익명 게시글 내용"),
                                 fieldWithPath("isApproved").description("승인 여부"),
                                 fieldWithPath("createdDate").ignored(),
                                 fieldWithPath("lastModifiedDate").ignored()
@@ -198,6 +205,11 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .expectStatus().isOk()
                 .expectBody(AnonymousArticleResponseDto.class)
                 .consumeWith(document("anonymous-api/update",
+                        requestParameters(
+                                parameterWithName("title").description("수정할 익명 게시글 제목"),
+                                parameterWithName("content").description("수정할 익명 게시글 내용"),
+                                parameterWithName("signingKey").description("익명 게시글 수정 시 패스워드")
+                        ),
                         responseFields(
                                 fieldWithPath("anonymousArticleId").description("수정한 익명 게시글 번호"),
                                 fieldWithPath("title").description("수정된 익명 게시글 제목"),
