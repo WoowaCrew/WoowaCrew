@@ -344,3 +344,18 @@ include::{snippets}/feed-article/search/request-parameters.adoc[]
 include::{snippets}/feed-article/search/http-response.adoc[]
 - 응답 필드
 include::{snippets}/feed-article/search/response-fields.adoc[]
+
+== SearchApi
+
+=== Search Save
+
+- curl 요청
+include::{snippets}/search/save/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/search/save/http-request.adoc[]
+- 요청 파라미터
+include::{snippets}/search/save/request-parameters.adoc[]
+- 응답 예시
+include::{snippets}/search/save/http-response.adoc[]
+- 응답 헤더(redirect)
+include::{snippets}/search/save/response-headers.adoc[]
