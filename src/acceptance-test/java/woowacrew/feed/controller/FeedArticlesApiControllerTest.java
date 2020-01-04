@@ -10,6 +10,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
 public class FeedArticlesApiControllerTest extends CommonTestController {
 
@@ -21,6 +26,21 @@ public class FeedArticlesApiControllerTest extends CommonTestController {
                 .header("Cookie", cookie)
                 .exchange()
                 .expectBody(FeedArticleResponseDtos.class)
+                .consumeWith(document("feed-article/list",
+                        requestParameters(
+                                parameterWithName("page").description("페이지 넘버")
+                        ),
+                        responseFields(
+                                fieldWithPath("pageNumber").description("페이지 넘버"),
+                                fieldWithPath("totalPages").description("전체 페이지 수"),
+                                fieldWithPath("articles[].title").description("피드 내 게시글 제목"),
+                                fieldWithPath("articles[].link").description("피드 내 게시글 링크"),
+                                fieldWithPath("articles[].publishedDate").description("피드 내 게시글 발행 날짜"),
+                                fieldWithPath("articles[].feedSourceDto.id").description("Feed Source 아이디"),
+                                fieldWithPath("articles[].feedSourceDto.sourceUrl").description("Feed Source URL"),
+                                fieldWithPath("articles[].feedSourceDto.description").description("Feed Source 설명")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -68,6 +88,23 @@ public class FeedArticlesApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(FeedArticleResponseDtos.class)
+                .consumeWith(document("feed-article/search",
+                        requestParameters(
+                                parameterWithName("type").description("검색 조건"),
+                                parameterWithName("content").description("검색 내용"),
+                                parameterWithName("page").description("페이지 넘버")
+                        ),
+                        responseFields(
+                                fieldWithPath("pageNumber").description("페이지 넘버"),
+                                fieldWithPath("totalPages").description("전체 페이지 수"),
+                                fieldWithPath("articles[].title").description("피드 내 게시글 제목"),
+                                fieldWithPath("articles[].link").description("피드 내 게시글 링크"),
+                                fieldWithPath("articles[].publishedDate").description("피드 내 게시글 발행 날짜"),
+                                fieldWithPath("articles[].feedSourceDto.id").description("Feed Source 아이디"),
+                                fieldWithPath("articles[].feedSourceDto.sourceUrl").description("Feed Source URL"),
+                                fieldWithPath("articles[].feedSourceDto.description").description("Feed Source 설명")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
     }
