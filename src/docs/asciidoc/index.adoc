@@ -135,3 +135,62 @@ include::{snippets}/crew-api/delete/curl-request.adoc[]
 include::{snippets}/crew-api/delete/http-request.adoc[]
 - 정상 응답 예시
 include::{snippets}/crew-api/delete/http-response.adoc[]
+
+== FreeArticleApi
+
+=== List
+
+- curl 요청
+include::{snippets}/free-api/list/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/free-api/list/http-request.adoc[]
+- 요청 파라미터
+include::{snippets}/free-api/list/request-parameters.adoc[]
+
+=== CREATE
+
+- curl 요청
+include::{snippets}/free-api/create/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/free-api/create/http-request.adoc[]
+- 요청 파라미터
+include::{snippets}/free-api/create/request-parameters.adoc[]
+- 응답 예시
+include::{snippets}/free-api/create/http-response.adoc[]
+- 응답 헤더
+include::{snippets}/free-api/create/response-headers.adoc[]
+- 응답 필드
+include::{snippets}/free-api/create/response-fields.adoc[]
+
+=== READ
+
+- curl 요청
+include::{snippets}/free-api/read/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/free-api/read/http-request.adoc[]
+- 정상 응답 예시
+include::{snippets}/free-api/read/http-response.adoc[]
+- 응답 필드
+include::{snippets}/free-api/read/response-fields.adoc[]
+
+=== UPDATE
+
+- curl 요청
+include::{snippets}/free-api/update/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/free-api/update/http-request.adoc[]
+- 요청 파라미터
+include::{snippets}/free-api/update/request-parameters.adoc[]
+- 정상 응답 예시
+include::{snippets}/free-api/update/http-response.adoc[]
+- 응답 필드
+include::{snippets}/free-api/update/response-fields.adoc[]
+
+=== DELETE
+
+- curl 요청
+include::{snippets}/free-api/delete/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/free-api/delete/http-request.adoc[]
+- 정상 응답 예시
+include::{snippets}/free-api/delete/http-response.adoc[]
