@@ -253,8 +253,6 @@ include::{snippets}/degree/read/response-fields.adoc[]
 include::{snippets}/degree/list/curl-request.adoc[]
 - 요청 예시
 include::{snippets}/degree/list/http-request.adoc[]
-- 정상 응답 예시
-include::{snippets}/degree/list/http-response.adoc[]
 - 응답 필드
 include::{snippets}/degree/list/response-fields.adoc[]
 
@@ -290,8 +288,6 @@ include::{snippets}/feed/read/response-fields.adoc[]
 include::{snippets}/feed/update/curl-request.adoc[]
 - 요청 예시
 include::{snippets}/feed/update/http-request.adoc[]
-- 정상 응답 예시
-include::{snippets}/feed/update/http-response.adoc[]
 - 응답 필드
 include::{snippets}/feed/update/response-fields.adoc[]
 
@@ -326,9 +322,7 @@ include::{snippets}/feed-article/list/curl-request.adoc[]
 - 요청 예시
 include::{snippets}/feed-article/list/http-request.adoc[]
 - 요청 파라미터
-include::{snippets}/feed-article/list/request-parameters.adoc[]
-- 응답 예시
-include::{snippets}/feed-article/list/http-response.adoc[]
+include::{snippets}/feed-article/list/request-parameters.adoc[]]
 - 응답 필드
 include::{snippets}/feed-article/list/response-fields.adoc[]
 
@@ -355,8 +349,6 @@ include::{snippets}/search/save/curl-request.adoc[]
 include::{snippets}/search/save/http-request.adoc[]
 - 요청 파라미터
 include::{snippets}/search/save/request-parameters.adoc[]
-- 응답 예시
-include::{snippets}/search/save/http-response.adoc[]
 - 응답 헤더(redirect)
 include::{snippets}/search/save/response-headers.adoc[]
 
