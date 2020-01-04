@@ -36,9 +36,9 @@ public class SocialLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         UserContext userContext = (UserContext) authResult.getPrincipal();
         if(userContext.getNickname() == null) {
-            response.sendRedirect("/users/form");
+            response.sendRedirect("http://localhost:8081");
             return;
         }
-        response.sendRedirect("/");
+        response.sendRedirect("http://localhost:8081");
     }
 }
