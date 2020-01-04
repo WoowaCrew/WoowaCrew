@@ -23,7 +23,7 @@
 
       <v-spacer></v-spacer>
 
-      <Login></Login>
+      <LoginHeader></LoginHeader>
     </v-app-bar>
 
     <v-content>
@@ -34,14 +34,14 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld";
-import Login from "./components/login/Login";
+import LoginHeader from "./components/header/LoginHeader";
 
 export default {
   name: "App",
 
   components: {
     HelloWorld,
-    Login
+    LoginHeader
   },
 
   data: () => ({
