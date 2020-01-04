@@ -1,8 +1,13 @@
 package woowacrew.article.anonymous.controller;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.anonymous.dto.AnonymousArticleResponseDto;
@@ -14,7 +19,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
+@ExtendWith(RestDocumentationExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AnonymousArticleApiControllerTest extends CommonTestController {
 
@@ -24,6 +36,17 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @LocalServerPort
+    private String port;
+
+    @BeforeEach
+    void setUp(RestDocumentationContextProvider restDocumentation) {
+        webTestClient = WebTestClient.bindToServer()
+                .baseUrl("http://localhost:" + port)
+                .filter(documentationConfiguration(restDocumentation))
+                .build();
+    }
 
     @Test
     void 익명_게시글_생성_테스트() {
@@ -36,7 +59,21 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                         .with("content", CONTENT)
                         .with("signingKey", SIGNING_KEY))
                 .exchange()
-                .expectStatus().isCreated();
+                .expectStatus().isCreated()
+                .expectBody()
+                .consumeWith(document("anonymous-api/create",
+                        responseHeaders(
+                                headerWithName("Location").description("생성된 익명 게시글 경로")
+                        ),
+                        responseFields(
+                                fieldWithPath("anonymousArticleId").description("익명 게시글 번호"),
+                                fieldWithPath("title").description("익명 게시글 제목"),
+                                fieldWithPath("content").description("익명 게시글 내용"),
+                                fieldWithPath("isApproved").description("승인 여부"),
+                                fieldWithPath("createdDate").ignored(),
+                                fieldWithPath("lastModifiedDate").ignored()
+                        )
+                ));
     }
 
     @Test
@@ -48,7 +85,18 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .uri("/api/articles/anonymous/{anonymousArticleId}", approvedId)
                 .header("Cookie", cookie)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(document("anonymous-api/read",
+                        responseFields(
+                                fieldWithPath("anonymousArticleId").description("익명 게시글 번호"),
+                                fieldWithPath("title").description("익명 게시글 제목"),
+                                fieldWithPath("content").description("익명 게시글 내용"),
+                                fieldWithPath("isApproved").description("승인 여부"),
+                                fieldWithPath("createdDate").ignored(),
+                                fieldWithPath("lastModifiedDate").ignored()
+                        )
+                ));
     }
 
     @Test
@@ -60,7 +108,9 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .uri("/api/articles/anonymous/{anonymousArticleId}", unapprovedId)
                 .header("Cookie", cookie)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .consumeWith(document("anonymous-api/read-badRequest"));
     }
 
     @Test
@@ -147,6 +197,16 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(AnonymousArticleResponseDto.class)
+                .consumeWith(document("anonymous-api/update",
+                        responseFields(
+                                fieldWithPath("anonymousArticleId").description("수정한 익명 게시글 번호"),
+                                fieldWithPath("title").description("수정된 익명 게시글 제목"),
+                                fieldWithPath("content").description("수정된 익명 게시글 내용"),
+                                fieldWithPath("isApproved").description("승인 여부"),
+                                fieldWithPath("createdDate").description("최초 생성 시간"),
+                                fieldWithPath("lastModifiedDate").description("최종 수정 시간")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -184,7 +244,9 @@ public class AnonymousArticleApiControllerTest extends CommonTestController {
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("signingKey", SIGNING_KEY))
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(document("anonymous-api/delete"));
     }
 
     @Test
