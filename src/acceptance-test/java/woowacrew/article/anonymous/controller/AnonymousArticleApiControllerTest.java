@@ -3,8 +3,6 @@ package woowacrew.article.anonymous.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -29,15 +27,11 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
 @ExtendWith(RestDocumentationExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AnonymousArticleApiControllerTest extends CommonTestController {
 
     private static String TITLE = "title";
     private static String CONTENT = "content";
     private static String SIGNING_KEY = "password";
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @LocalServerPort
     private String port;

@@ -2,10 +2,8 @@ package woowacrew.feed.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.feed.dto.FeedSourceResponseDto;
@@ -16,8 +14,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FeedApiControllerTest extends CommonTestController {
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void FeedSoruce_목록을_잘불러오는지_테스트() {

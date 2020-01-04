@@ -2,8 +2,6 @@ package woowacrew.article.free.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.free.dto.ArticleResponseDto;
@@ -17,14 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ArticleApiControllerTest extends CommonTestController {
 
     private static final String TYPE = "type";
     private static final String CONTENT = "content";
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void 게시글_생성_테스트() {

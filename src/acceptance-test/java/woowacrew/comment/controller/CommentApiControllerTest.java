@@ -1,9 +1,6 @@
 package woowacrew.comment.controller;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.comment.dto.CommentResponseDto;
 import woowacrew.common.controller.CommonTestController;
@@ -12,11 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CommentApiControllerTest extends CommonTestController {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void 댓글_생성_테스트() {
