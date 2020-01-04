@@ -1,7 +1,13 @@
 package woowacrew.article.crew.controller;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.article.free.dto.ArticleResponseDtos;
@@ -11,8 +17,28 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
+@ExtendWith(RestDocumentationExtension.class)
 public class CrewArticleApiControllerTest extends CommonTestController {
+
+    @LocalServerPort
+    private String port;
+
+    @BeforeEach
+    void setUp(RestDocumentationContextProvider restDocumentation) {
+        webTestClient = WebTestClient.bindToServer()
+                .baseUrl("http://localhost:" + port)
+                .filter(documentationConfiguration(restDocumentation))
+                .build();
+    }
 
     @Test
     void 게시글_목록_불러오기테스트_1페이지() {
@@ -24,6 +50,11 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk()
                 .expectBody(ArticleResponseDtos.class)
+                .consumeWith(document("crew-api/list",
+                        requestParameters(
+                                parameterWithName("page").description("페이지 넘버")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -42,6 +73,21 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk()
                 .expectBody(ArticleResponseDto.class)
+                .consumeWith(document("crew-api/read",
+                        responseFields(
+                                fieldWithPath("id").description("게시글 아이디"),
+                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("content").description("게시글 내용"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
+                                fieldWithPath("createdDate").description("게시글 생성 시간"),
+                                fieldWithPath("lastModifiedDate").description("게시글 최종 수정 시간")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -60,7 +106,30 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isCreated()
                 .expectHeader()
-                .value("Location", Matchers.containsString("/articles/crew"));
+                .value("Location", Matchers.containsString("/articles/crew"))
+                .expectBody()
+                .consumeWith(document("crew-api/create",
+                        requestParameters(
+                                parameterWithName("title").description("게시글 제목"),
+                                parameterWithName("content").description("게시글 내용")
+                        ),
+                        responseHeaders(
+                                headerWithName("Location").description("생성된 게시글 경로")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("게시글 아이디"),
+                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("content").description("게시글 내용"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
+                                fieldWithPath("createdDate").description("게시글 생성 시간"),
+                                fieldWithPath("lastModifiedDate").description("게시글 최종 수정 시간")
+                        )
+                ));
     }
 
     @Test
@@ -78,6 +147,26 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk()
                 .expectBody(ArticleResponseDto.class)
+                .consumeWith(document("crew-api/update",
+                        requestParameters(
+                                parameterWithName("articleId").description("수정할 게시글 번호"),
+                                parameterWithName("title").description("수정할 게시글 제목"),
+                                parameterWithName("content").description("수정할 게시글 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("게시글 아이디"),
+                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("content").description("게시글 내용"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
+                                fieldWithPath("createdDate").description("게시글 생성 시간"),
+                                fieldWithPath("lastModifiedDate").description("게시글 최종 수정 시간")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
         assertThat(result.getId()).isEqualTo(articleResponseDto.getId());
@@ -94,7 +183,9 @@ public class CrewArticleApiControllerTest extends CommonTestController {
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus()
-                .isOk();
+                .isOk()
+                .expectBody()
+                .consumeWith(document("crew-api/delete"));
     }
 
     private ArticleResponseDto createCrewArticle(String cookie) {
