@@ -23,14 +23,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <Login></Login>
     </v-app-bar>
 
     <v-content>
@@ -41,12 +34,14 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld";
+import Login from "./components/login/Login";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld
+    HelloWorld,
+    Login
   },
 
   data: () => ({
