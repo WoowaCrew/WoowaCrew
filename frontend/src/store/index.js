@@ -11,13 +11,13 @@ export default new Vuex.Store({
   mutations: {
     setUserContext(state, userContext) {
       state.userContext = userContext;
+    },
+    removeUserContext(state) {
+      state.userContext = null;
     }
   },
   actions: {
-    checkLogin({ commit, state }) {
-      if (state.userContext !== null) {
-        return;
-      }
+    checkLogin({ commit }) {
       axios
         .get("http://localhost:8080/login/info", {
           withCredentials: true
@@ -30,6 +30,18 @@ export default new Vuex.Store({
           if (statusCode === 401) {
             console.log("로그인 되어있지 않음");
             return;
+          }
+        });
+    },
+    logout({ commit }) {
+      axios
+        .get("http://localhost:8080/logout", {
+          withCredentials: true
+        })
+        .then(res => {
+          if (res.status === 200) {
+            commit("removeUserContext");
+            window.location.href = "/";
           }
         });
     }
