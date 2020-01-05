@@ -2,10 +2,8 @@ package woowacrew.feed.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.feed.dto.FeedSourceResponseDto;
@@ -14,19 +12,29 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
 public class FeedApiControllerTest extends CommonTestController {
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
-    void FeedSoruce_목록을_잘불러오는지_테스트() {
+    void FeedSource_목록을_잘불러오는지_테스트() {
         String cookie = loginWithAdmin();
         List<FeedSourceResponseDto> responseDtos = webTestClient.get()
                 .uri("/api/feeds")
                 .header("Cookie", cookie)
                 .exchange()
                 .expectBodyList(FeedSourceResponseDto.class)
+                .consumeWith(document("feed/read",
+                        responseFields(
+                                fieldWithPath("[].id").description("Feed Source 아이디"),
+                                fieldWithPath("[].sourceUrl").description("Feed Source URL"),
+                                fieldWithPath("[].description").description("Feed Source 설명")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -61,6 +69,17 @@ public class FeedApiControllerTest extends CommonTestController {
                         .with("description", description))
                 .exchange()
                 .expectBody(FeedSourceResponseDto.class)
+                .consumeWith(document("feed/create",
+                        requestParameters(
+                                parameterWithName("sourceUrl").description("등록할 Feed Source Url"),
+                                parameterWithName("description").description("등록할 Feed Source 설명")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("Feed Source 아이디"),
+                                fieldWithPath("sourceUrl").description("Feed Source URL"),
+                                fieldWithPath("description").description("Feed Source 설명")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -87,7 +106,18 @@ public class FeedApiControllerTest extends CommonTestController {
                 .header("Cookie", cookie)
                 .exchange()
                 .expectStatus()
-                .isOk();
+                .isOk()
+                .expectBody()
+                .consumeWith(document("feed/update",
+                        responseFields(
+                                fieldWithPath("[].title").description("Feed 의 게시글 제목"),
+                                fieldWithPath("[].link").description("Feed 의 게시글 링크"),
+                                fieldWithPath("[].publishedDate").description("Feed 의 게시글 발행 날짜"),
+                                fieldWithPath("[].feedSourceDto.id").description("Feed Source 아이디"),
+                                fieldWithPath("[].feedSourceDto.sourceUrl").description("Feed Source URL"),
+                                fieldWithPath("[].feedSourceDto.description").description("Feed Source 설명")
+                        )
+                ));
     }
 
     @Test
@@ -102,6 +132,17 @@ public class FeedApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk()
                 .expectBody(FeedSourceResponseDto.class)
+                .consumeWith(document("feed/update-one",
+                        requestParameters(
+                                parameterWithName("sourceUrl").description("등록할 Feed Source Url").optional(),
+                                parameterWithName("description").description("등록할 Feed Source 설명").optional()
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("Feed Source 아이디"),
+                                fieldWithPath("sourceUrl").description("Feed Source URL"),
+                                fieldWithPath("description").description("Feed Source 설명")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -122,6 +163,7 @@ public class FeedApiControllerTest extends CommonTestController {
                         .with("description", description))
                 .exchange()
                 .expectBody(FeedSourceResponseDto.class)
+                .consumeWith(document("feed/delete"))
                 .returnResult()
                 .getResponseBody();
 
