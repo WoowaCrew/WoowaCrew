@@ -2,8 +2,6 @@ package woowacrew.article.free.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.free.dto.ArticleResponseDto;
@@ -16,15 +14,18 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ArticleApiControllerTest extends CommonTestController {
 
     private static final String TYPE = "type";
     private static final String CONTENT = "content";
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void 게시글_생성_테스트() {
@@ -38,7 +39,30 @@ class ArticleApiControllerTest extends CommonTestController {
                 .body(BodyInserters.fromFormData("title", title)
                         .with("content", content))
                 .exchange()
-                .expectStatus().isCreated();
+                .expectStatus().isCreated()
+                .expectBody()
+                .consumeWith(document("free-api/create",
+                        requestParameters(
+                                parameterWithName("title").description("게시글 제목"),
+                                parameterWithName("content").description("게시글 내용")
+                        ),
+                        responseHeaders(
+                                headerWithName("Location").description("생성된 게시글 경로")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("게시글 아이디"),
+                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("content").description("게시글 내용"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
+                                fieldWithPath("createdDate").description("게시글 생성 시간"),
+                                fieldWithPath("lastModifiedDate").description("게시글 최종 수정 시간")
+                        )
+                ));
     }
 
     @Test
@@ -51,6 +75,11 @@ class ArticleApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ArticleResponseDtos.class)
+                .consumeWith(document("free-api/list",
+                        requestParameters(
+                                parameterWithName("page").description("페이지 넘버")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -67,6 +96,21 @@ class ArticleApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ArticleResponseDto.class)
+                .consumeWith(document("free-api/read",
+                        responseFields(
+                                fieldWithPath("id").description("게시글 아이디"),
+                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("content").description("게시글 내용"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
+                                fieldWithPath("createdDate").description("게시글 생성 시간"),
+                                fieldWithPath("lastModifiedDate").description("게시글 최종 수정 시간")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
@@ -90,7 +134,28 @@ class ArticleApiControllerTest extends CommonTestController {
                         .with("title", updateTitle)
                         .with("content", updateContent))
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody(ArticleResponseDto.class)
+                .consumeWith(document("free-api/update",
+                        requestParameters(
+                                parameterWithName("articleId").description("수정할 게시글 번호"),
+                                parameterWithName("title").description("수정할 게시글 제목"),
+                                parameterWithName("content").description("수정할 게시글 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("게시글 아이디"),
+                                fieldWithPath("title").description("게시글 제목"),
+                                fieldWithPath("content").description("게시글 내용"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
+                                fieldWithPath("createdDate").description("게시글 생성 시간"),
+                                fieldWithPath("lastModifiedDate").description("게시글 최종 수정 시간")
+                        )
+                ));
 
         ArticleResponseDto article = webTestClient.get()
                 .uri("/api/articles/" + articleId)
@@ -115,7 +180,9 @@ class ArticleApiControllerTest extends CommonTestController {
                 .uri("/api/articles/" + articleId)
                 .header("Cookie", cookie)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(document("free-api/delete"));
 
         webTestClient.get()
                 .uri("/api/articles/" + articleId)

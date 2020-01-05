@@ -2,17 +2,12 @@ package woowacrew.user.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserApproveDto;
 
 public class AdminApproveAcceptenceTest extends CommonTestController {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void 관리자가_권한_변경_요청을_보내면_해당_id의_유저_권한을_변경한다() {

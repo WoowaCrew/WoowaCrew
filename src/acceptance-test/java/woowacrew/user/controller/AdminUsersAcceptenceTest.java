@@ -3,8 +3,6 @@ package woowacrew.user.controller;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserResponseDto;
@@ -14,9 +12,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AdminUsersAcceptenceTest extends CommonTestController {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     @DisplayName("관리자의 승인을 받지 않은 유저들을 정상적으로 가져온다.")

@@ -5,6 +5,9 @@ import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.dto.UserContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
 public class LoginApiControllerTest extends CommonTestController {
     @Test
@@ -26,6 +29,14 @@ public class LoginApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk()
                 .expectBody(UserContext.class)
+                .consumeWith(document("login/signin",
+                        responseFields(
+                                fieldWithPath("id").description("유저 아이디"),
+                                fieldWithPath("oauthId").description("Oauth 아이디"),
+                                fieldWithPath("nickname").description("유저 닉네임"),
+                                fieldWithPath("role").description("유저 권한")
+                        )
+                ))
                 .returnResult()
                 .getResponseBody();
 
