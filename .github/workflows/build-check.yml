@@ -11,4 +11,6 @@ jobs:
       with:
         java-version: 11
     - name: Build with Gradle
+      env:
+          githubClientUserAuthorizationUri: ${{ secrets.githubClientUserAuthorizationUri }}
       run: ./gradlew build
