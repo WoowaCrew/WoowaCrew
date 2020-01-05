@@ -10,5 +10,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+    - name: copy secret
+      env: # Or as an environment variable
+        github_secret: ${{ secrets. testSecret }}
+      run: echo "$github_secret"
     - name: Build with Gradle
       run: ./gradlew build
