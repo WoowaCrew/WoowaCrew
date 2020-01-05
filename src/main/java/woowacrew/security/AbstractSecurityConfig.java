@@ -12,6 +12,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import woowacrew.security.filter.AuthorityUpdateFilter;
 import woowacrew.security.filter.SocialLoginFilter;
 import woowacrew.security.handler.AccessDenyHandler;
+import woowacrew.security.handler.CustomLogoutSuccessHandler;
 import woowacrew.security.requestmatcher.AuthorityUpdateRequestMatcher;
 import woowacrew.user.domain.UserRole;
 
@@ -65,7 +66,7 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
                 .exceptionHandling().accessDeniedHandler(new AccessDenyHandler())
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessHandler(new CustomLogoutSuccessHandler());
         http
                 .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(authorityUpdateFilter(), UsernamePasswordAuthenticationFilter.class);
