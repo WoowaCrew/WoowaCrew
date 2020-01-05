@@ -11,8 +11,8 @@ jobs:
       with:
         java-version: 11
     - name: copy secret
-      env: # Or as an environment variable
-        github_secret: ${{ secrets. testSecret }}
-      run: echo "$github_secret"
+      env:
+        github_secret: ${{ secrets.githubClientUserAuthorizationUri }}
+      run: echo "$github_secret" > ./src/main/resources/github.yml
     - name: Build with Gradle
       run: ./gradlew build
