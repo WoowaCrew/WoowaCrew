@@ -13,6 +13,6 @@ jobs:
     - name: copy secret
       env:
         github_secret: ${{ secrets.githubClientUserAuthorizationUri }}
-      run: echo "$github_secret" > ./src/main/resources/github.yml
+      run: cat "$github_secret" > ./src/main/resources/github.yml
     - name: Build with Gradle
       run: ./gradlew build
