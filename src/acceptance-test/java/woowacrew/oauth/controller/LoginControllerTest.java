@@ -79,4 +79,16 @@ class LoginControllerTest extends CommonTestController {
                     assertThat(body.contains("닉네임")).isTrue();
                 });
     }
+
+    @Test
+    void 로그아웃시_200을_리턴한다() {
+        String cookie = loginWithPrecourse();
+
+        webTestClient.get()
+                .uri("/logout")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus()
+                .isOk();
+    }
 }
