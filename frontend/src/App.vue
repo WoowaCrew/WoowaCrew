@@ -27,20 +27,18 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld />
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 import LoginHeader from "./components/header/LoginHeader";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
     LoginHeader
   },
 
