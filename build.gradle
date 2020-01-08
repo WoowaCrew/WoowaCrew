@@ -62,6 +62,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'org.modelmapper:modelmapper:2.3.2'
     implementation 'com.rometools:rome:1.12.0'
+    implementation 'com.ullink.slack:simpleslackapi:1.2.0'
 
     runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
     runtimeOnly 'mysql:mysql-connector-java'
