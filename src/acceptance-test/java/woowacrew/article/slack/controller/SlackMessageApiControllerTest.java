@@ -9,8 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import woowacrew.article.slack.TestSlackConfig;
-
-@SpringBootTest(properties = "spring.config.location=classpath:/slack.yml",
+@SpringBootTest(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SlackMessageApiControllerTest {
 
