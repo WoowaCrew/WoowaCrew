@@ -24,6 +24,14 @@ const routes = [
     name: "userEdit",
     component: () =>
       import(/* webpackChunkName: "userEdit" */ "../components/user/UserEdit")
+  },
+  {
+    path: "/article/edit",
+    name: "articleEdit",
+    component: () =>
+      import(
+        /* webpackChunkName: "articleEdit" */ "../components/article/ArticleEdit"
+      )
   }
 ];
 
