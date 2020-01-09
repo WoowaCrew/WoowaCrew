@@ -47,11 +47,11 @@ class SlackMessageInternalServiceTest {
     @Test
     @DisplayName("정상적으로 슬랙에서 온 메시지를 저장한다")
     void save() {
-        String invalidToken = testSlackConfig.getToken();
+        String token = testSlackConfig.getToken();
         String channelId = testSlackConfig.getChannelId();
         String authorId = testSlackConfig.getAuthorId();
 
-        SlackMessage result = saveSlackMessage(invalidToken, channelId, authorId);
+        SlackMessage result = saveSlackMessage(token, channelId, authorId);
 
         assertThat(result.getAuthor()).isEqualTo("authorName");
         assertThat(result.getChannel()).isEqualTo("channelName");
