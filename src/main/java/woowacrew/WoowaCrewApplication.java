@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class WoowaCrewApplication {
     private static final String PROPERTIES = "spring.config.location="
             + "classpath:/github.yml,"
+            + "classpath:/slack.yml,"
             + "classpath:/application.yml,"
             + "classpath:/application-production.yml";
 

@@ -7,8 +7,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import woowacrew.user.utils.UserRoleConverter;
-import woowacrew.utils.resolver.UserContextArgumentResolver;
 import woowacrew.utils.resolver.SearchTypeHandlerMethodArgumentResolver;
+import woowacrew.utils.resolver.SlackMessageArgumentResolver;
+import woowacrew.utils.resolver.UserContextArgumentResolver;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new UserContextArgumentResolver());
         resolvers.add(new SearchTypeHandlerMethodArgumentResolver());
+        resolvers.add(new SlackMessageArgumentResolver());
     }
 
     @Override

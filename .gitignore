@@ -30,5 +30,6 @@ out/
 ### MAC ###
 .DS_Store
 github.yml
+slack.yml
 ### Logging ###
 log/

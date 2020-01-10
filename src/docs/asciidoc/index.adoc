@@ -364,3 +364,14 @@ include::{snippets}/login/signin/http-request.adoc[]
 include::{snippets}/login/signin/http-response.adoc[]
 - 응답 필드
 include::{snippets}/login/signin/response-fields.adoc[]
+
+== SlackApi
+
+=== CREATE
+
+- curl 요청
+include::{snippets}/slack-api/create/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/slack-api/create/http-request.adoc[]
+- 정상 응답 예시
+include::{snippets}/slack-api/create/http-response.adoc[]

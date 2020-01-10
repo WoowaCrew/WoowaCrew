@@ -13,6 +13,8 @@ jobs:
     - name: copy secret
       env:
         github_secret: ${{ secrets.githubClientAuthorization }}
-      run: echo "$github_secret" > ./src/main/resources/github.yml
+        slack_secret: ${{ secrets.slackInfo }}
+        slack_test_secret: ${{ secrets.slackTestInfo }}
+      run: echo "$github_secret" > ./src/main/resources/github.yml | echo "$slack_secret" > ./src/main/resources/slack.yml | echo "$slack_test_secret" > ./src/test/resources/slack.yml
     - name: Build with Gradle
       run: ./gradlew build
