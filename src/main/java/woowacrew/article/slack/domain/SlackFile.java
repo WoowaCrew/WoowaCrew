@@ -1,15 +1,12 @@
 package woowacrew.article.slack.domain;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Lob;
 import java.util.Objects;
 
 @Embeddable
 public class SlackFile {
-    @Lob
     private String downloadLink;
 
-    @Lob
     private String downloadLinkFromSlack;
 
     private SlackFile() {
