@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import woowacrew.article.slack.TestSlackConfig;
+
 @SpringBootTest(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SlackMessageApiControllerTest {
@@ -73,6 +74,29 @@ class SlackMessageApiControllerTest {
                 .body(Mono.just(request.toString()), String.class)
                 .exchange()
                 .expectStatus().is5xxServerError();
+    }
+
+    @Test
+    @DisplayName("봇이 메세지를 보내는 경우 슬랙 메세지를 저장하는데 실패한다.")
+    void createSlackMessageFailBecauseBot() throws JSONException {
+        String channelId = slackConfig.getChannelId();
+        String authorId = slackConfig.getAuthorId();
+
+        JSONObject request = requestSlackMessageFromBot(channelId, authorId);
+        webTestClient.post()
+                .uri("/api/slack")
+                .body(Mono.just(request.toString()), String.class)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    private JSONObject requestSlackMessageFromBot(String channelId, String authorId) throws JSONException {
+        JSONObject result = requestSlackMessage(channelId, authorId);
+        JSONObject event = (JSONObject) result.get("event");
+
+        event.put("bot_profile", "I am bot");
+        result.put("event", event);
+        return result;
     }
 
     private JSONObject requestSlackMessage(String channelId, String authorId) throws JSONException {
