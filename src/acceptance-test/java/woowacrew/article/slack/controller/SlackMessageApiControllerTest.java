@@ -5,20 +5,21 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.context.TestPropertySource;
 import reactor.core.publisher.Mono;
 import woowacrew.article.slack.TestSlackConfig;
+import woowacrew.common.controller.CommonTestController;
 
-@SpringBootTest(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml",
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class SlackMessageApiControllerTest {
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
+
+@TestPropertySource(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml")
+class SlackMessageApiControllerTest extends CommonTestController {
 
     @Autowired
     private TestSlackConfig slackConfig;
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     @DisplayName("정상적으로 슬랙 메시지를 저장한다.")
@@ -26,7 +27,7 @@ class SlackMessageApiControllerTest {
         String channelId = slackConfig.getChannelId();
         String authorId = slackConfig.getAuthorId();
 
-        JSONObject request = requestSlackMessageWithFile(channelId, authorId);
+        JSONObject request = requestSlackMessage(channelId, authorId);
         webTestClient.post()
                 .uri("/api/slack")
                 .body(Mono.just(request.toString()), String.class)
@@ -45,7 +46,17 @@ class SlackMessageApiControllerTest {
                 .uri("/api/slack")
                 .body(Mono.just(request.toString()), String.class)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(document("slack-api/create",
+                        requestFields(
+                                fieldWithPath("event.channel").type(JsonFieldType.STRING).description("채널 ID"),
+                                fieldWithPath("event.user").type(JsonFieldType.STRING).description("작성자 ID"),
+                                fieldWithPath("event.text").type(JsonFieldType.STRING).description("메세지 내용"),
+                                fieldWithPath("event.files.url_private_download").type(JsonFieldType.STRING).description("다운로드 링크"),
+                                fieldWithPath("event.files.permalink").type(JsonFieldType.STRING).description("슬랙으로 이동해서 다운받는 링크")
+                        )
+                ));
     }
 
     @Test
