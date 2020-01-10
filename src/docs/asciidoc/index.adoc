@@ -375,3 +375,14 @@ include::{snippets}/slack-api/create/curl-request.adoc[]
 include::{snippets}/slack-api/create/http-request.adoc[]
 - 정상 응답 예시
 include::{snippets}/slack-api/create/http-response.adoc[]
+
+=== READ
+
+- curl 요청
+include::{snippets}/slack-api/read/curl-request.adoc[]
+- 요청 예시
+include::{snippets}/slack-api/read/http-request.adoc[]
+- 정상 응답 예시
+include::{snippets}/slack-api/read/http-response.adoc[]
+- 응답 필드
+include::{snippets}/slack-api/read/response-fields.adoc[]

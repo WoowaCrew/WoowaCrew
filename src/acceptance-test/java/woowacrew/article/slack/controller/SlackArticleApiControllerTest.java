@@ -10,6 +10,11 @@ import woowacrew.common.controller.CommonTestController;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
 class SlackArticleApiControllerTest extends CommonTestController {
     @Test
@@ -52,6 +57,17 @@ class SlackArticleApiControllerTest extends CommonTestController {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(SlackMessageResponseDto.class)
+                .consumeWith(document("slack-api/read",
+                        pathParameters(
+                                parameterWithName("id").description("슬랙 메세지 ID")),
+                        responseFields(
+                                fieldWithPath("id").description("슬랙 메세지 ID"),
+                                fieldWithPath("channel").description("채널 이름"),
+                                fieldWithPath("author").description("작성자 이름"),
+                                fieldWithPath("content").description("메시지 내용"),
+                                fieldWithPath("downloadLink").description("파일 다운로드 링크"),
+                                fieldWithPath("downloadLinkFromSlack").description("슬랙에서 파일 다운로드 하는 링크"))
+                ))
                 .returnResult()
                 .getResponseBody();
 
