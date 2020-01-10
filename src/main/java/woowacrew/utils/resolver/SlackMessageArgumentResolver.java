@@ -46,12 +46,11 @@ public class SlackMessageArgumentResolver implements HandlerMethodArgumentResolv
     private JsonNode createJsonNode(NativeWebRequest webRequest) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-        Iterator<String> body = request.getReader().lines().iterator();
+        Iterator<String> requestBodyReader = request.getReader().lines().iterator();
         StringBuilder result = new StringBuilder();
 
-        while (body.hasNext()) {
-            String next = body.next();
-            result.append(next);
+        while (requestBodyReader.hasNext()) {
+            result.append(requestBodyReader.next());
         }
         return objectMapper.readTree(result.toString());
     }
