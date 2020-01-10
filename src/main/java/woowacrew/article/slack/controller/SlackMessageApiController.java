@@ -2,6 +2,7 @@ package woowacrew.article.slack.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
@@ -19,11 +20,12 @@ public class SlackMessageApiController {
     }
 
     @PostMapping("/api/slack")
-    public void save(SlackMessageRequestDto slackMessageRequestDto) {
+    public ResponseEntity<Void> save(SlackMessageRequestDto slackMessageRequestDto) {
         if (slackMessageRequestDto.isBot()) {
-            return;
+            return ResponseEntity.badRequest().build();
         }
         SlackMessageResponseDto savedSlackMessage = slackMessageService.save(slackMessageRequestDto);
         logger.debug("Successful saved of slack message : {}", savedSlackMessage.toString());
+        return ResponseEntity.ok().build();
     }
 }
