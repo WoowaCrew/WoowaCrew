@@ -67,4 +67,21 @@ class SlackMessageServiceTest {
         }
         return slackMessages;
     }
+
+    @Test
+    @DisplayName("정상적으로 ID로 슬랙 메세지를 찾는다.")
+    void findById() {
+        SlackMessage slackMessage = createSlackMessages(1).get(0);
+
+        when(slackMessageInternalService.findById(1L)).thenReturn(slackMessage);
+
+        SlackMessageResponseDto result = slackMessageService.findById(1L);
+
+        assertThat(result.getId()).isEqualTo(slackMessage.getId());
+        assertThat(result.getChannel()).isEqualTo(slackMessage.getChannel());
+        assertThat(result.getAuthor()).isEqualTo(slackMessage.getAuthor());
+        assertThat(result.getContent()).isEqualTo(slackMessage.getContent());
+        assertThat(result.getDownloadLink()).isEqualTo(slackMessage.getDownloadLink());
+        assertThat(result.getDownloadLinkFromSlack()).isEqualTo(slackMessage.getDownloadLinkFromSlack());
+    }
 }

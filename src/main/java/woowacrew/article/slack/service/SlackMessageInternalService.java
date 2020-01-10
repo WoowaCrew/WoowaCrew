@@ -15,6 +15,7 @@ import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.domain.SlackMessageRepository;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.exception.CreateSlackMessageFailException;
+import woowacrew.article.slack.exception.NotFoundSlackMessageException;
 import woowacrew.article.slack.utils.SlackMessageConverter;
 
 import java.io.IOException;
@@ -54,5 +55,11 @@ public class SlackMessageInternalService {
     @Transactional(readOnly = true)
     public Page<SlackMessage> findAll(Pageable pageable) {
         return slackMessageRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public SlackMessage findById(Long id) {
+        return slackMessageRepository.findById(id)
+                .orElseThrow(NotFoundSlackMessageException::new);
     }
 }

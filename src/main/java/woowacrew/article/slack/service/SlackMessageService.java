@@ -26,4 +26,9 @@ public class SlackMessageService {
         Page<SlackMessage> slackMessages = slackMessageInternalService.findAll(pageable);
         return SlackMessageConverter.toDtos(slackMessages);
     }
+
+    public SlackMessageResponseDto findById(Long id) {
+        SlackMessage slackMessage = slackMessageInternalService.findById(id);
+        return SlackMessageConverter.toDto(slackMessage);
+    }
 }
