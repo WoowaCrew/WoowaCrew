@@ -101,3 +101,6 @@ INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VAL
 INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (3, 'title', 'content', 'password', true);
 INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (4, 'title', 'content', 'password', false);
 INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VALUES (5, 'title', 'content', 'password', false);
+
+
+INSERT INTO slack_message (id, channel, author, content, download_link, download_link_from_slack) VALUES (1, 'testChannel', 'testAuthor', 'testContent', 'test.com', 'test2.com');
