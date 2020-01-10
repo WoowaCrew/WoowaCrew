@@ -21,6 +21,9 @@ public class SlackMessage {
     @Embedded
     private SlackFile slackFile;
 
+    private SlackMessage() {
+    }
+
     public SlackMessage(String channel, String author, String content, String downloadLink, String downloadLinkFromSlack) {
         this.channel = channel;
         this.author = author;

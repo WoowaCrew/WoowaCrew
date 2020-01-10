@@ -6,6 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import woowacrew.article.slack.TestSlackConfig;
 import woowacrew.article.slack.domain.SlackConfig;
 import woowacrew.article.slack.domain.SlackMessage;
@@ -14,9 +16,12 @@ import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.exception.CreateSlackMessageFailException;
 import woowacrew.article.slack.utils.SlackMessageConverter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(properties = "spring.config.location=classpath:/slack.yml",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -88,5 +93,17 @@ class SlackMessageInternalServiceTest {
         String invalidAuthorId = "invalid author id";
 
         assertThrows(CreateSlackMessageFailException.class, () -> saveSlackMessage(token, channelId, invalidAuthorId));
+    }
+
+    @Test
+    @DisplayName("정상적으로 슬랙 메세지들을 찾는다.")
+    void findAll() {
+        PageRequest pageable = PageRequest.of(0, 20);
+        List<SlackMessage> slackMessages = new ArrayList<>();
+
+        when(slackMessageRepository.findAll(pageable)).thenReturn(new PageImpl<>(slackMessages));
+
+        slackMessageInternalService.findAll(pageable);
+        verify(slackMessageRepository, times(1)).findAll(pageable);
     }
 }
