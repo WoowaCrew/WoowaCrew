@@ -9,7 +9,21 @@
             absolute
             horizontal
           >
-            <v-btn width="400" color="red" block @click="save">저장</v-btn>
+            <FreeArticleEditButton
+              v-if="idFreeArticleEdit"
+              :articleForm="{
+                title: this.title,
+                content: this.editorText
+              }"
+            ></FreeArticleEditButton>
+
+            <CrewArticleEditButton
+              v-if="idCrewArticleEdit"
+              :articleForm="{
+                title: this.title,
+                content: this.editorText
+              }"
+            ></CrewArticleEditButton>
           </v-bottom-navigation>
           <v-card-title>
             <v-text-field
@@ -41,10 +55,14 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 import axios from "axios";
+import FreeArticleEditButton from "./free/FreeArticleEditButton";
+import CrewArticleEditButton from "./free/CrewArticleEditButton";
 
 export default {
   components: {
-    Editor
+    Editor,
+    FreeArticleEditButton,
+    CrewArticleEditButton
   },
   data() {
     return {
@@ -55,8 +73,19 @@ export default {
       },
       editorHtml: "",
       editorVisible: true,
-      isRight: true
+      isRight: true,
+      path: this.$route.path
     };
+  },
+  computed: {
+    idFreeArticleEdit() {
+      console.log(this.path);
+      return this.path === "/article/free/new";
+    },
+    idCrewArticleEdit() {
+      console.log(this.path);
+      return this.path === "/article/crew/new";
+    }
   },
   methods: {
     save() {
