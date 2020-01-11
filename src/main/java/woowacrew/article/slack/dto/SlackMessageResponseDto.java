@@ -8,6 +8,9 @@ public class SlackMessageResponseDto {
     private String downloadLink;
     private String downloadLinkFromSlack;
 
+    private SlackMessageResponseDto() {
+    }
+
     public SlackMessageResponseDto(Long id, String channel, String author, String content, String downloadLink, String downloadLinkFromSlack) {
         this.id = id;
         this.channel = channel;

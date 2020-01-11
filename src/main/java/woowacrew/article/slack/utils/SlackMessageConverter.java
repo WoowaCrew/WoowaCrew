@@ -1,8 +1,13 @@
 package woowacrew.article.slack.utils;
 
+import org.springframework.data.domain.Page;
 import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
+import woowacrew.article.slack.dto.SlackMessageResponseDtos;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SlackMessageConverter {
     private SlackMessageConverter() {
@@ -25,5 +30,12 @@ public class SlackMessageConverter {
                 slackMessage.getContent(),
                 slackMessage.getDownloadLink(),
                 slackMessage.getDownloadLinkFromSlack());
+    }
+
+    public static SlackMessageResponseDtos toDtos(Page<SlackMessage> slackMessages) {
+        List<SlackMessageResponseDto> convertSlackMessages = slackMessages.stream()
+                .map(SlackMessageConverter::toDto)
+                .collect(Collectors.toList());
+        return new SlackMessageResponseDtos(slackMessages.getNumber(), slackMessages.getTotalPages(), convertSlackMessages);
     }
 }

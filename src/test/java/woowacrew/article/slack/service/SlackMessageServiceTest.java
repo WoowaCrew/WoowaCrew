@@ -6,12 +6,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
+import woowacrew.article.slack.dto.SlackMessageResponseDtos;
 import woowacrew.article.slack.utils.SlackMessageConverter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,5 +45,43 @@ class SlackMessageServiceTest {
         assertThat(savedSlackMessage.getContent()).isEqualTo(slackMessageRequestDto.getContent());
         assertThat(savedSlackMessage.getDownloadLink()).isEqualTo(slackMessageRequestDto.getDownloadLink());
         assertThat(savedSlackMessage.getDownloadLinkFromSlack()).isEqualTo(slackMessageRequestDto.getDownloadLinkFromSlack());
+    }
+
+    @Test
+    @DisplayName("정상적으로 슬랙 메세지들을 가져온다.")
+    void list() {
+        int slackMessageSize = 10;
+        List<SlackMessage> slackMessages = createSlackMessages(slackMessageSize);
+
+        when(slackMessageInternalService.findAll(any())).thenReturn(new PageImpl<>(slackMessages));
+
+        SlackMessageResponseDtos result = slackMessageService.findAll(PageRequest.of(1, 20));
+        assertEquals(result.getSlackMessages().size(), slackMessageSize);
+    }
+
+    private List<SlackMessage> createSlackMessages(int slackMessageSize) {
+        List<SlackMessage> slackMessages = new ArrayList<>();
+        for (int i = 0; i < slackMessageSize; i++) {
+            SlackMessage slackMessage = new SlackMessage("channel", "author", "content", "test.com", "test2.com");
+            slackMessages.add(slackMessage);
+        }
+        return slackMessages;
+    }
+
+    @Test
+    @DisplayName("정상적으로 ID로 슬랙 메세지를 찾는다.")
+    void findById() {
+        SlackMessage slackMessage = createSlackMessages(1).get(0);
+
+        when(slackMessageInternalService.findById(1L)).thenReturn(slackMessage);
+
+        SlackMessageResponseDto result = slackMessageService.findById(1L);
+
+        assertThat(result.getId()).isEqualTo(slackMessage.getId());
+        assertThat(result.getChannel()).isEqualTo(slackMessage.getChannel());
+        assertThat(result.getAuthor()).isEqualTo(slackMessage.getAuthor());
+        assertThat(result.getContent()).isEqualTo(slackMessage.getContent());
+        assertThat(result.getDownloadLink()).isEqualTo(slackMessage.getDownloadLink());
+        assertThat(result.getDownloadLinkFromSlack()).isEqualTo(slackMessage.getDownloadLinkFromSlack());
     }
 }
