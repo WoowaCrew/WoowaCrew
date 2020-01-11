@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn :href="githubLogin" color="primary">로그인</v-btn>
+    <v-btn :href="githubLogin" text class="white--text">로그인</v-btn>
   </div>
 </template>
 
