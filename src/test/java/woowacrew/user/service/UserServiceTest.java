@@ -47,7 +47,7 @@ class UserServiceTest {
     @Test
     void 정상적으로_유저의_정보를_업데이트한다() {
         User user = new User("test", new Degree());
-        user.updateUserInfo("test nickname", LocalDate.of(1995, 6,8));
+        user.updateUserInfo("test nickname", LocalDate.of(1995, 6, 8));
 
         when(userInternalService.update(anyLong(), anyString(), any())).thenReturn(user);
 
