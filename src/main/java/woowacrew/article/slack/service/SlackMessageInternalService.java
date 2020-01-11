@@ -6,6 +6,8 @@ import com.ullink.slack.simpleslackapi.SlackUser;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.article.slack.domain.SlackConfig;
@@ -13,6 +15,7 @@ import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.domain.SlackMessageRepository;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.exception.CreateSlackMessageFailException;
+import woowacrew.article.slack.exception.NotFoundSlackMessageException;
 import woowacrew.article.slack.utils.SlackMessageConverter;
 
 import java.io.IOException;
@@ -47,5 +50,16 @@ public class SlackMessageInternalService {
         SlackUser author = session.findUserById(slackMessageRequestDto.getAuthorId());
         session.disconnect();
         return SlackMessageConverter.toEntity(channel.getName(), author.getUserName(), slackMessageRequestDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<SlackMessage> findAll(Pageable pageable) {
+        return slackMessageRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public SlackMessage findById(Long id) {
+        return slackMessageRepository.findById(id)
+                .orElseThrow(NotFoundSlackMessageException::new);
     }
 }
