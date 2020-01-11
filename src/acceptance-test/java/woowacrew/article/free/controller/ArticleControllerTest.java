@@ -2,9 +2,6 @@ package woowacrew.article.free.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.free.dto.ArticleResponseDto;
 import woowacrew.common.controller.CommonTestController;
@@ -12,11 +9,7 @@ import woowacrew.common.controller.CommonTestController;
 import static org.assertj.core.api.Assertions.assertThat;
 import static woowacrew.article.free.controller.ArticleApiControllerTest.createArticle;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ArticleControllerTest extends CommonTestController {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void 로그인이_되어있지_않으면_로그인페이지가_리다이렉트() {

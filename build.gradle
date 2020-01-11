@@ -38,9 +38,11 @@ sourceSets {
 }
 
 task acceptanceTest(type: Test) {
+    useJUnitPlatform()
     description = 'run acceptance test'
     testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
     classpath = sourceSets.acceptanceTest.runtimeClasspath
+    outputs.dir snippetsDir
 
     dependsOn test
 }
@@ -60,6 +62,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'org.modelmapper:modelmapper:2.3.2'
     implementation 'com.rometools:rome:1.12.0'
+    implementation 'com.ullink.slack:simpleslackapi:1.2.0'
 
     runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
     runtimeOnly 'mysql:mysql-connector-java'
@@ -74,6 +77,7 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
 
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
@@ -85,7 +89,7 @@ test {
 
 asciidoctor {
     inputs.dir snippetsDir
-    dependsOn test
+    dependsOn acceptanceTest
 }
 
 bootJar {

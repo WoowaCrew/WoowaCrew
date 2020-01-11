@@ -2,8 +2,6 @@ package woowacrew.user.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.dto.UserUpdateDto;
@@ -12,9 +10,6 @@ import woowacrew.user.service.exception.InvalidBirthdayException;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserControllerTest extends CommonTestController {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void 유저_추가정보_수정_페이지로_이동한다() {
