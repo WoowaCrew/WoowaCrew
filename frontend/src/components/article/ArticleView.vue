@@ -1,9 +1,15 @@
 <template>
   <v-container fill-height>
     <FreeArticleView
+      v-if="isFreeArticleView"
       :articleId="this.$route.params.articleId"
       @setupData="setData"
     ></FreeArticleView>
+    <CrewArticleView
+      v-if="isCrewArticleView"
+      :articleId="this.$route.params.articleId"
+      @setupData="setData"
+    ></CrewArticleView>
     <v-layout row wrap>
       <v-flex fill-height>
         <v-card width="1000" class="overflow-hidden mx-auto my-2 fill-height">
@@ -31,6 +37,7 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "highlight.js/styles/github.css";
 import { Viewer } from "@toast-ui/vue-editor";
 import FreeArticleView from "./view/FreeArticleView";
+import CrewArticleView from "./view/CrewArticleView";
 
 export default {
   data() {
@@ -38,16 +45,28 @@ export default {
       title: "",
       content: "",
       nickname: "",
-      createdDate: ""
+      createdDate: "",
+      path: this.$route.path
     };
   },
   components: {
     viewer: Viewer,
-    FreeArticleView
+    FreeArticleView,
+    CrewArticleView
   },
   computed: {
     dateCut() {
       return this.createdDate.split("T")[0];
+    },
+    isFreeArticleView() {
+      const freeArticleViewPattern = new RegExp("/articles/[0-9]+");
+
+      return freeArticleViewPattern.test(this.path);
+    },
+    isCrewArticleView() {
+      const crewArticleViewPattern = new RegExp("/articles/crew/[0-9]+");
+      console.log(crewArticleViewPattern.test(this.path));
+      return crewArticleViewPattern.test(this.path);
     }
   },
   methods: {
