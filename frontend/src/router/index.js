@@ -42,8 +42,16 @@ const routes = [
       )
   },
   {
-    path: "/articles/:articleId",
-    name: "articleView",
+    path: "/articles/free/:articleId",
+    name: "freeArticleView",
+    component: () =>
+      import(
+        /* webpackChunkName: "articleView" */ "../components/article/ArticleView"
+      )
+  },
+  {
+    path: "/articles/crew/:articleId",
+    name: "crewArticleView",
     component: () =>
       import(
         /* webpackChunkName: "articleView" */ "../components/article/ArticleView"
