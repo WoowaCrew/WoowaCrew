@@ -55,8 +55,8 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 import axios from "axios";
-import FreeArticleEditButton from "./free/FreeArticleEditButton";
-import CrewArticleEditButton from "./free/CrewArticleEditButton";
+import FreeArticleEditButton from "./edit/FreeArticleEditButton";
+import CrewArticleEditButton from "./edit/CrewArticleEditButton";
 
 export default {
   components: {
