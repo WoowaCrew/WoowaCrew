@@ -42,7 +42,7 @@ const routes = [
       )
   },
   {
-    path: "/articles/:articleId",
+    path: "/articles/free/:articleId",
     name: "freeArticleView",
     component: () =>
       import(

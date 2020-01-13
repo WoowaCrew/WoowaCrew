@@ -59,7 +59,7 @@ export default {
       return this.createdDate.split("T")[0];
     },
     isFreeArticleView() {
-      const freeArticleViewPattern = new RegExp("/articles/[0-9]+");
+      const freeArticleViewPattern = new RegExp("/articles/free/[0-9]+");
 
       return freeArticleViewPattern.test(this.path);
     },
