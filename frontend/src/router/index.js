@@ -40,6 +40,14 @@ const routes = [
       import(
         /* webpackChunkName: "articleEdit" */ "../components/article/ArticleEdit"
       )
+  },
+  {
+    path: "/articles/:articleId",
+    name: "articleView",
+    component: () =>
+      import(
+        /* webpackChunkName: "articleView" */ "../components/article/ArticleView"
+      )
   }
 ];
 
