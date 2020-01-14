@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-app-bar color="#212121" dark app style="left: 0; z-index: 5">
-      <div class="d-flex align-center">
-        <span class="font-weight-black white--text">WoowaCrew</span>
-      </div>
+      <a style="padding-left: 8px; text-decoration: none" href="/">
+        <span class="font-weight-black white--text">WOOWA CREW</span>
+      </a>
 
       <v-spacer />
 
