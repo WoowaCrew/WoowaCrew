@@ -9,16 +9,19 @@
     <v-divider />
 
     <ArticleMenu />
+    <ServiceMenu />
   </v-navigation-drawer>
 </template>
 
 <script>
 import ArticleMenu from "./menu/ArticleMenu";
+import ServiceMenu from "./menu/ServiceMenu";
 
 export default {
   name: "SideNav",
   components: {
-    ArticleMenu
+    ArticleMenu,
+    ServiceMenu
   }
 };
 </script>
