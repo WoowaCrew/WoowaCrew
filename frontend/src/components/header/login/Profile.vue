@@ -2,11 +2,11 @@
   <div class="text-center">
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
-        <v-btn text class="white--text" color="#78909C" v-on="on">{{
+        <v-btn text class="white--text" color="#212121" v-on="on">{{
           setNickname
         }}</v-btn>
       </template>
-      <v-list dense small color="#78909C">
+      <v-list dense small color="#212121">
         <AdminPage v-if="isAdmin"></AdminPage>
         <UserEditPage></UserEditPage>
         <Logout></Logout>
