@@ -48,6 +48,22 @@ const routes = [
       import(
         /* webpackChunkName: "articleView" */ "../components/article/ArticleView"
       )
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: () =>
+      import(/* webpackChunkName: "admin" */ "../components/admin/Admin"),
+    children: [
+      {
+        path: ":id",
+        name: "users-detail",
+        component: () =>
+          import(
+            /* webpackChunkName: "UserApprove" */ "../components/admin/UserApprove"
+          )
+      }
+    ]
   }
 ];
 
