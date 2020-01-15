@@ -11,25 +11,25 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in userData" :key="item.id" :id="item.id">
+        <tr v-for="(item, index) in userData" :key="item.id" :id="item.id">
           <td>{{ item.id }}</td>
-          <td>{{ item.calories }}</td>
+          <td>{{ item.nickname }}</td>
           <td>
             <v-overflow-btn
               v-model="form.degree[item.id]"
-              :items="item.degree"
+              :items="degreeList"
               label="기수를 선택해 주세요"
             ></v-overflow-btn>
           </td>
           <td>
             <v-overflow-btn
               v-model="form.userRole[item.id]"
-              :items="item.userRole"
+              :items="userRoleList"
               label="권한을 선택해 주세요"
             ></v-overflow-btn>
           </td>
           <td>
-            <v-btn @click="approve(item.id)">
+            <v-btn @click="approve(item.id, index)">
               승인
             </v-btn>
           </td>
@@ -44,7 +44,7 @@ import axios from "axios";
 
 export default {
   methods: {
-    approve(id) {
+    approve(id, index) {
       const degree = this.form.degree[id];
       const userRole = this.form.userRole[id];
       if (degree == null) {
@@ -67,8 +67,9 @@ export default {
         headers: { "Content-Type": "application/json; charset=utf-8" },
         withCredentials: true
       }).then(res => {
-        console.log(res);
+        res.data;
         alert("정상적으로 저장되었습니다");
+        this.$delete(this.userData, index);
       });
     }
   },
@@ -79,64 +80,19 @@ export default {
         userRole: []
       },
       degreeList: ["0", "1", "2"],
-      userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"],
-      userData: [
-        {
-          id: "Frozen Yogurt",
-          calories: 159,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          degree: ["0", "1", "2"],
-          userRole: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"]
-        }
-      ]
+      userRoleList: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"],
+      userData: []
     };
+  },
+  created() {
+    axios
+      .get("http://localhost:8080/api/users/disapprove", {
+        withCredentials: true
+      })
+      .then(res => {
+        const object = res.data;
+        this.userData = object;
+      });
   }
 };
 </script>
