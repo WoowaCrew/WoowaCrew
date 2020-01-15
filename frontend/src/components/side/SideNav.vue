@@ -1,0 +1,55 @@
+<template>
+  <v-navigation-drawer width="280px" style="z-index: 4" permanent app>
+    <v-list-item style="height: 63px; padding-left: 24px">
+      <v-list-item-content>
+        <v-list-item-title class="font-weight-black">WOOWA CREW</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-divider />
+
+    <ArticleMenu />
+    <ServiceMenu />
+  </v-navigation-drawer>
+</template>
+
+<script>
+import ArticleMenu from "./menu/ArticleMenu";
+import ServiceMenu from "./menu/ServiceMenu";
+
+export default {
+  name: "SideNav",
+  components: {
+    ArticleMenu,
+    ServiceMenu
+  }
+};
+</script>
+
+<style>
+.menu-header {
+  padding: 40px 0 12px 24px;
+}
+
+.menu-header .v-list-item__content {
+  padding: 0;
+}
+
+.menu-header .v-list-item__title {
+  color: #212121;
+  font-size: 18px;
+}
+
+.menu-buttons {
+  padding: 0 0 40px;
+}
+
+.menu-buttons .v-list-item {
+  padding: 0 0 0 24px;
+}
+
+.menu-buttons .v-list-item__title {
+  color: #616161;
+  font-size: 12px !important;
+}
+</style>

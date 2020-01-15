@@ -1,14 +1,16 @@
 <template>
   <v-app>
-    <v-app-bar app color="#78909C" dark>
-      <div class="d-flex align-center">
-        <span class="font-weight-black white--text">WoowaCrew</span>
-      </div>
+    <v-app-bar color="#212121" dark app style="left: 0; z-index: 5">
+      <a style="padding-left: 8px; text-decoration: none" href="/">
+        <span class="font-weight-black white--text">WOOWA CREW</span>
+      </a>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
-      <LoginHeader></LoginHeader>
+      <LoginHeader />
     </v-app-bar>
+
+    <SideNav />
 
     <v-content>
       <router-view />
@@ -18,12 +20,14 @@
 
 <script>
 import LoginHeader from "./components/header/LoginHeader";
+import SideNav from "./components/side/SideNav";
 
 export default {
   name: "App",
 
   components: {
-    LoginHeader
+    LoginHeader,
+    SideNav
   },
 
   data: () => ({
