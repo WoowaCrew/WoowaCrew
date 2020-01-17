@@ -2,26 +2,38 @@
   <v-navigation-drawer width="280px" style="z-index: 4" permanent app>
     <v-list-item style="height: 63px; padding-left: 24px">
       <v-list-item-content>
-        <v-list-item-title class="font-weight-black">WOOWA CREW</v-list-item-title>
+        <v-list-item-title class="font-weight-black"
+          >WOOWA CREW</v-list-item-title
+        >
       </v-list-item-content>
     </v-list-item>
 
     <v-divider />
-
+    <AdminMenu v-if="isAdmin" />
     <ArticleMenu />
     <ServiceMenu />
   </v-navigation-drawer>
 </template>
 
 <script>
+import AdminMenu from "../admin/Admin";
 import ArticleMenu from "./menu/ArticleMenu";
 import ServiceMenu from "./menu/ServiceMenu";
 
 export default {
   name: "SideNav",
   components: {
+    AdminMenu,
     ArticleMenu,
     ServiceMenu
+  },
+  computed: {
+    isAdmin() {
+      if (this.$store.state.userContext === null) {
+        return false;
+      }
+      return this.$store.state.userContext.role === "ROLE_ADMIN";
+    }
   }
 };
 </script>

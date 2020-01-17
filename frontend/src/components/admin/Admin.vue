@@ -1,23 +1,26 @@
 <template>
-  <v-card style="height: 100%">
-    <v-layout row wrap fill-height>
-      <v-navigation-drawer permanent>
-        <v-list nav dense>
-          <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            @click="move(item.link)"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-      <router-view></router-view>
-    </v-layout>
-  </v-card>
+  <v-list>
+    <v-list-item class="menu-header">
+      <v-list-item-content>
+        <v-list-item-title>관리자 기능</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-list class="menu-buttons" dense nav>
+      <v-list-item v-for="(item, i) in items" :key="i" @click="move(item.link)">
+        <v-list-item-content>
+          <v-list-item-title style="color: #212121">
+            {{ item.title }}
+          </v-list-item-title>
+          <v-list-item-title>
+            {{ item.description }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
+    <v-divider />
+  </v-list>
 </template>
 
 <script>
@@ -26,13 +29,16 @@ export default {
     return {
       item: 1,
       items: [
-        { icon: "mdi-folder", title: "My Files", link: "a" },
         {
-          icon: "mdi-account-multiple",
           title: "승인 대기 회원 관리",
+          description: "회원가입 후 승인을 기다리고 있습니다.",
           link: "/admin/user-approve"
         },
-        { icon: "mdi-star", title: "Starred", link: "c" }
+        {
+          title: "rss 등록/관리",
+          description: "rss피드를 등록하고 관리해보세요",
+          link: "/admin"
+        }
       ]
     };
   },
