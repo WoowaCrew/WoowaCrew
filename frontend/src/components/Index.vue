@@ -7,8 +7,11 @@
         vertical
         style="height: 500px; max-height: 500px; overflow: scroll; background-color: white"
       >
-        <v-window-item v-for="button in buttons" :key="button.name">
-          <div v-bind:is="button.component"></div>
+        <v-window-item
+          v-for="indexContent in indexContents"
+          :key="indexContent.id"
+        >
+          <div v-bind:is="indexContent.content" />
         </v-window-item>
       </v-window>
 
@@ -19,14 +22,15 @@
         v-model="window"
       >
         <v-item
-          v-for="button in buttons"
-          :key="button"
+          v-for="indexContent in indexContents"
+          :key="indexContent.id"
           v-slot:default="{ active, toggle }"
         >
-          <v-btn :input-value="active" @click="toggle">
-            <span>{{ button.name }}</span>
-            <v-icon>{{ button.icon }}</v-icon>
-          </v-btn>
+          <div
+            v-bind:is="indexContent.button"
+            :input-value="active"
+            @click="toggle"
+          />
         </v-item>
       </v-bottom-navigation>
     </v-col>
@@ -39,15 +43,17 @@
 import BirthdayList from "./home/BirthdayList";
 import Notice from "./home/Notice";
 import KeywordRank from "./home/KeywordRank";
+import KeywordRankButton from "./home/KeywordRankButton";
+import NoticeButton from "./home/NoticeButton";
 export default {
   name: "Index",
   components: {
     BirthdayList
   },
   data: () => ({
-    buttons: [
-      { name: "공지사항", icon: "mdi-home-variant", component: Notice },
-      { name: "검색어 순위", icon: "mdi-chart-bar", component: KeywordRank }
+    indexContents: [
+      { id: 1, button: NoticeButton, content: Notice },
+      { id: 2, button: KeywordRankButton, content: KeywordRank }
     ],
     window: 0
   })
