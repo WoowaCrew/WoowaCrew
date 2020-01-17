@@ -6,7 +6,7 @@
           "Happy Birthday to You! 🥳"
         </v-subheader>
         <template v-for="user in users">
-          <v-list-item :key="user.nickname">
+          <v-list-item :key="user.id">
             <v-list-item-content>
               <v-list-item-title>{{ user.nickname }}</v-list-item-title>
               <v-list-item-subtitle>
@@ -27,9 +27,9 @@ export default {
   name: "BirthdayList",
   data: () => ({
     users: [
-      { nickname: "테스트 유저 1", degree: 1, birthday: 5 },
-      { nickname: "테스트 유저 1", degree: 1, birthday: 5 },
-      { nickname: "테스트 유저 1", degree: 1, birthday: 5 }
+      { id: 1, nickname: "테스트 유저 1", degree: 1, birthday: 5 },
+      { id: 2, nickname: "테스트 유저 2", degree: 1, birthday: 5 },
+      { id: 3, nickname: "테스트 유저 3", degree: 1, birthday: 5 }
     ]
   })
 };
