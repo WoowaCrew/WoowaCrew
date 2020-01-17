@@ -9,7 +9,7 @@
     </v-list-item>
 
     <v-divider />
-    <AdminMenu />
+    <AdminMenu v-if="isAdmin" />
     <ArticleMenu />
     <ServiceMenu />
   </v-navigation-drawer>
@@ -26,6 +26,14 @@ export default {
     AdminMenu,
     ArticleMenu,
     ServiceMenu
+  },
+  computed: {
+    isAdmin() {
+      if (this.$store.state.userContext === null) {
+        return false;
+      }
+      return this.$store.state.userContext.role === "ROLE_ADMIN";
+    }
   }
 };
 </script>
