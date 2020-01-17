@@ -1,10 +1,12 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <div class="mb-4">
+      <div style="padding: 16px">
         <strong class="title">공지사항</strong>
       </div>
-      <p>내용</p>
+      <div style="padding: 12px 12px 16px 16px">
+        내용
+      </div>
     </v-card-text>
   </v-card>
 </template>
