@@ -2,11 +2,11 @@
   <div class="text-center">
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
-        <v-btn text class="white--text" color="#212121" v-on="on">{{
+        <v-btn text class="white--text" color="#78909C" v-on="on">{{
           setNickname
         }}</v-btn>
       </template>
-      <v-list dense small color="#212121">
+      <v-list dense small color="#78909C">
         <AdminPage v-if="isAdmin"></AdminPage>
         <UserEditPage></UserEditPage>
         <Logout></Logout>
@@ -16,12 +16,10 @@
 </template>
 
 <script>
-import AdminPage from "../userdropbar/AdminPage";
 import UserEditPage from "../userdropbar/UserEditPage";
 import Logout from "../userdropbar/Logout";
 export default {
   components: {
-    AdminPage,
     UserEditPage,
     Logout
   },
@@ -32,12 +30,6 @@ export default {
         return "닉네임 미설정";
       }
       return nickname;
-    },
-    isAdmin() {
-      if (this.$store.state.userContext.role === "ROLE_ADMIN") {
-        return true;
-      }
-      return false;
     }
   }
 };
