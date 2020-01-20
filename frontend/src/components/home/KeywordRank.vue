@@ -46,7 +46,9 @@ export default {
   methods: {
     updateKeywordRank() {
       axios.get("http://localhost:8080/api/search/rank").then(response => {
-        this.keywords = response.data;
+        if (response.request.responseURL.includes("/api/search/rank")) {
+          this.keywords = response.data;
+        }
       });
     }
   },
