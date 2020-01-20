@@ -2,9 +2,9 @@
   <v-navigation-drawer width="280px" style="z-index: 4" permanent app>
     <v-list-item style="height: 63px; padding-left: 24px">
       <v-list-item-content>
-        <v-list-item-title class="font-weight-black"
-          >WOOWA CREW</v-list-item-title
-        >
+        <v-list-item-title class="font-weight-black">
+          WOOWA CREW
+        </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
