@@ -1,15 +1,22 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn width="400" color="red" block v-on="on">
-        삭제
+      <v-btn width="400" color="blue" block v-on="on">
+        피드 수정
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="headline pink" primary-title>
-        정말로 삭제하시겠습니까?
+        피드 수정
       </v-card-title>
+
+      <v-card-text>
+        <v-form>
+          <v-text-field v-model="sourceUrl" readonly="true" label="주소" />
+          <v-text-field v-model="description" label="설명" />
+        </v-form>
+      </v-card-text>
 
       <v-divider></v-divider>
 
@@ -18,8 +25,8 @@
         <v-btn color="red" text @click="dialog = false">
           취소
         </v-btn>
-        <v-btn color="primary" text @click="deleteFeed">
-          삭제
+        <v-btn color="primary" text @click="editFeed">
+          수정
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -33,13 +40,19 @@ export default {
   props: ["feedSource"],
   data() {
     return {
+      sourceUrl: this.feedSource.sourceUrl,
+      description: this.feedSource.description,
       dialog: false
     };
   },
   methods: {
-    deleteFeed() {
+    editFeed() {
+      const data = new FormData();
+      data.append("description", this.description);
+
       axios("http://localhost:8080/api/feeds/" + this.feedSource.id, {
-        method: "delete",
+        method: "put",
+        data: data,
         withCredentials: true
       })
         .then(res => {
@@ -47,7 +60,7 @@ export default {
             alert("오류가 발생했습니다. 다시한번 확인해주세요");
             return;
           }
-          alert("삭제 완료!");
+          alert("정상적으로 수정되었습니다");
           this.dialog = false;
           location.reload(true);
         })

@@ -25,7 +25,13 @@
             <td>{{ item.sourceUrl }}</td>
             <td>{{ item.description }}</td>
             <td>
-              <NewRssButton />
+              <RssEditButton
+                :feedSource="{
+                  id: item.id,
+                  sourceUrl: item.sourceUrl,
+                  description: item.description
+                }"
+              />
             </td>
             <td>
               <RssDeleteButton
@@ -33,7 +39,6 @@
                   id: item.id,
                   index: index
                 }"
-                :deleteFeed="deleteFeedRow"
               />
             </td>
           </tr>
@@ -46,18 +51,14 @@
 <script>
 import axios from "axios";
 import NewRssButton from "./rss/NewRssButton";
+import RssEditButton from "./rss/RssEditButton";
 import RssDeleteButton from "./rss/RssDeleteButton";
 
 export default {
   components: {
     NewRssButton,
+    RssEditButton,
     RssDeleteButton
-  },
-  methods: {
-    deleteFeedRow(index) {
-      console.log(index);
-      this.$delete(this.feedData, index);
-    }
   },
   data() {
     return {
