@@ -20,116 +20,59 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in userData" :key="item.id" :id="item.id">
+          <tr v-for="(item, index) in feedData" :key="item.id" :id="item.id">
             <td>{{ item.id }}</td>
-            <td>{{ item.nickname }}</td>
+            <td>{{ item.sourceUrl }}</td>
+            <td>{{ item.description }}</td>
             <td>
-              <v-overflow-btn
-                v-model="form.degree[item.id]"
-                :items="degreeList"
-                label="기수를 선택해 주세요"
-              ></v-overflow-btn>
+              <NewRssButton />
             </td>
             <td>
-              <v-overflow-btn
-                v-model="form.userRole[item.id]"
-                :items="userRoleList"
-                label="권한을 선택해 주세요"
-              ></v-overflow-btn>
-            </td>
-            <td>
-              <v-btn @click="approve(item.id, index)">
-                승인
-              </v-btn>
+              <RssDeleteButton
+                :feedSource="{
+                  id: item.id,
+                  index: index
+                }"
+                :deleteFeed="deleteFeedRow"
+              />
             </td>
           </tr>
         </tbody>
       </template>
     </v-simple-table>
-    <v-dialog v-model="dialog" max-width="290">
-      <v-card>
-        <v-card-title class="headline"
-          >Use Google's location service?</v-card-title
-        >
-
-        <v-card-text>
-          Let Google help apps determine location. This means sending anonymous
-          location data to Google, even when no apps are running.
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn color="green darken-1" text @click="dialog = false">
-            Disagree
-          </v-btn>
-
-          <v-btn color="green darken-1" text @click="dialog = false">
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
 import NewRssButton from "./rss/NewRssButton";
+import RssDeleteButton from "./rss/RssDeleteButton";
 
 export default {
   components: {
-    NewRssButton
+    NewRssButton,
+    RssDeleteButton
   },
   methods: {
-    approve(id, index) {
-      const degree = this.form.degree[id];
-      const userRole = this.form.userRole[id];
-      if (degree == null) {
-        alert("기수를 입력해주세요.");
-        return;
-      }
-      if (userRole == null) {
-        alert("권한을 입력해주세요.");
-        return;
-      }
-
-      const data = {
-        role: userRole,
-        degreeNumber: degree
-      };
-
-      axios("http://localhost:8080/api/users/2/approve", {
-        method: "put",
-        data: JSON.stringify(data),
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        withCredentials: true
-      }).then(res => {
-        res.data;
-        alert("정상적으로 저장되었습니다");
-        this.$delete(this.userData, index);
-      });
+    deleteFeedRow(index) {
+      console.log(index);
+      this.$delete(this.feedData, index);
     }
   },
   data() {
     return {
-      form: {
-        degree: [],
-        userRole: []
-      },
-      degreeList: ["0", "1", "2"],
-      userRoleList: ["ROLE_PRECOURSE", "ROLE_CREW", "ROLE_COACH", "ROLE_ADMIN"],
-      userData: []
+      feedData: []
     };
   },
   created() {
     axios
-      .get("http://localhost:8080/api/users/disapprove", {
+      .get("http://localhost:8080/api/feeds", {
         withCredentials: true
       })
       .then(res => {
         const object = res.data;
-        this.userData = object;
+        console.log(object);
+        this.feedData = object;
       });
   }
 };
