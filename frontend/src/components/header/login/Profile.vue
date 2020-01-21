@@ -7,7 +7,6 @@
         }}</v-btn>
       </template>
       <v-list dense small color="#78909C">
-        <AdminPage v-if="isAdmin"></AdminPage>
         <UserEditPage></UserEditPage>
         <Logout></Logout>
       </v-list>

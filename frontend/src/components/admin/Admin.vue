@@ -37,7 +37,7 @@ export default {
         {
           title: "rss 등록/관리",
           description: "rss피드를 등록하고 관리해보세요",
-          link: "/admin"
+          link: "/admin/rss"
         }
       ]
     };
