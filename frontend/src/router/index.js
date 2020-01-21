@@ -64,6 +64,12 @@ const routes = [
       import(
         /* webpackChunkName: "UserApprove" */ "../components/admin/UserApprove"
       )
+  },
+  {
+    path: "/admin/rss",
+    name: "admin-rss",
+    component: () =>
+      import(/* webpackChunkName: "AdminRss" */ "../components/admin/Rss")
   }
 ];
 
