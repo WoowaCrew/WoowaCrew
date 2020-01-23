@@ -21,7 +21,22 @@
         <tbody>
           <tr v-for="item in articles" :key="item.id" :id="item.id">
             <td width="100">{{ item.id }}</td>
-            <td width="500">{{ item.title }}</td>
+            <td
+              width="500"
+              class="hover-cursor"
+              @click="
+                $router
+                  .push({
+                    name: 'freeArticleView',
+                    params: {
+                      articleId: item.id
+                    }
+                  })
+                  .catch(err => {})
+              "
+            >
+              {{ item.title }}
+            </td>
             <td width="200">{{ item.userResponseDto.nickname }}</td>
             <td width="100">{{ item.createdDate }}</td>
           </tr>
@@ -110,5 +125,8 @@ export default {
 <style>
 .v-data-table {
   width: 100%;
+}
+.hover-cursor:hover {
+  cursor: pointer;
 }
 </style>
