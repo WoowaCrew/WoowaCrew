@@ -63,7 +63,7 @@ export default {
         degreeNumber: degree
       };
 
-      axios("http://localhost:8080/api/users/2/approve", {
+      axios("http://localhost:8080/api/users/" + id + "/approve", {
         method: "put",
         data: JSON.stringify(data),
         headers: { "Content-Type": "application/json; charset=utf-8" },

@@ -1,13 +1,5 @@
 <template>
   <v-card height="100%">
-    <v-bottom-navigation
-      height="50"
-      scroll-target="#scroll-area-1"
-      absolute
-      horizontal
-    >
-      <NewRssButton />
-    </v-bottom-navigation>
     <v-simple-table class="mx-auto user-table" fixed-header height="600px">
       <template v-slot:default>
         <thead>
@@ -29,7 +21,7 @@
                 @click="
                   $router.push({
                     name: 'admin-crew-detail',
-                    query: { degreeNumber: item.degreeNumber }
+                    query: { degreeId: item.id }
                   })
                 "
               >
