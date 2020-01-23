@@ -42,11 +42,27 @@ const routes = [
       )
   },
   {
+    path: "/articles/free",
+    name: "freeArticlesList",
+    component: () =>
+      import(
+        /* webpackChunkName: "ArticleList" */ "../components/article/ArticleList"
+      )
+  },
+  {
     path: "/articles/free/:articleId",
     name: "freeArticleView",
     component: () =>
       import(
         /* webpackChunkName: "articleView" */ "../components/article/ArticleView"
+      )
+  },
+  {
+    path: "/articles/crew",
+    name: "crewArticlesList",
+    component: () =>
+      import(
+        /* webpackChunkName: "ArticleList" */ "../components/article/ArticleList"
       )
   },
   {

@@ -8,7 +8,7 @@
 
     <v-list class="menu-buttons" dense nav>
       <v-list-item v-for="article in articles" :key="article.title" link>
-        <v-list-item-content>
+        <v-list-item-content @click="movePath(article.link)">
           <v-list-item-title style="color: #212121">
             {{ article.title }}
           </v-list-item-title>
@@ -31,11 +31,13 @@ export default {
       articles: [
         {
           title: "자유 게시판",
-          description: "자유롭게 소통해요."
+          description: "자유롭게 소통해요.",
+          link: "/articles/free"
         },
         {
           title: "크루 게시판",
-          description: "같은 기수와 소통해요."
+          description: "같은 기수와 소통해요.",
+          link: "/articles/crew"
         },
         {
           title: "익명 게시판",
@@ -47,6 +49,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    movePath(link) {
+      window.location.href = link + "?page=1";
+    }
   }
 };
 </script>
