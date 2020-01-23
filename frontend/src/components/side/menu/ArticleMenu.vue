@@ -8,7 +8,18 @@
 
     <v-list class="menu-buttons" dense nav>
       <v-list-item v-for="article in articles" :key="article.title" link>
-        <v-list-item-content>
+        <v-list-item-content
+          @click="
+            $router
+              .push({
+                name: 'freeArticlesList',
+                query: {
+                  page: 1
+                }
+              })
+              .catch(err => {})
+          "
+        >
           <v-list-item-title style="color: #212121">
             {{ article.title }}
           </v-list-item-title>
