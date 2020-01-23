@@ -58,6 +58,14 @@ const routes = [
       )
   },
   {
+    path: "/slack/notice/:articleId",
+    name: "slackNoticeView",
+    component: () =>
+      import(
+        /* webpackChunkName: "slackArticleView" */ "../components/slack/SlackArticleView"
+      )
+  },
+  {
     path: "/admin/user-approve",
     name: "user-approve",
     component: () =>
