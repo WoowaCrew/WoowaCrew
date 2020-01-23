@@ -70,6 +70,20 @@ const routes = [
     name: "admin-rss",
     component: () =>
       import(/* webpackChunkName: "AdminRss" */ "../components/admin/Rss")
+  },
+  {
+    path: "/admin/crew",
+    name: "admin-crew",
+    component: () =>
+      import(/* webpackChunkName: "AdminCrew" */ "../components/admin/Crew")
+  },
+  {
+    path: "/admin/crew/detail",
+    name: "admin-crew-detail",
+    component: () =>
+      import(
+        /* webpackChunkName: "AdminCrewDetail" */ "../components/admin/CrewDetail"
+      )
   }
 ];
 
