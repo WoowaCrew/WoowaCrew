@@ -1,0 +1,73 @@
+<template>
+  <v-card height="100%">
+    <v-bottom-navigation
+      height="50"
+      scroll-target="#scroll-area-1"
+      absolute
+      horizontal
+    >
+      <NewRssButton />
+    </v-bottom-navigation>
+    <v-simple-table class="mx-auto user-table" fixed-header height="600px">
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-center">기수</th>
+            <th class="text-center">인원</th>
+            <th class="text-center">상세 보기</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in degreeData" :key="item.id" :id="item.id">
+            <td class="text-center">{{ item.degreeNumber }}</td>
+            <td class="text-center">{{ item.userCount }}</td>
+            <td>
+              <v-btn
+                width="10"
+                color="blue"
+                block
+                @click="
+                  $router.push({
+                    name: 'admin-crew-detail',
+                    query: { degreeNumber: item.degreeNumber }
+                  })
+                "
+              >
+                상세보기
+              </v-btn>
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+  </v-card>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      degreeData: []
+    };
+  },
+  created() {
+    axios
+      .get("http://localhost:8080/api/degrees", {
+        withCredentials: true
+      })
+      .then(res => {
+        const object = res.data;
+        console.log(object);
+        this.degreeData = object;
+      });
+  }
+};
+</script>
+
+<style>
+.v-data-table {
+  width: 100%;
+}
+</style>
