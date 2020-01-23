@@ -27,7 +27,7 @@
               @click="
                 $router
                   .push({
-                    name: 'freeArticleView',
+                    name: viewPath,
                     params: {
                       articleId: item.id
                     }
@@ -54,7 +54,7 @@
       @click="
         $router
           .push({
-            name: 'freeArticleEdit'
+            name: editPath
           })
           .catch(err => {})
       "
@@ -73,17 +73,34 @@ export default {
     return {
       page: "",
       totalPage: 0,
+      apiPath: "",
+      viewPath: "",
+      editPath: "",
       articles: []
     };
   },
   created() {
+    const path = this.$route.path;
+    if (path.startsWith("/articles/free")) {
+      this.apiPath = "/api/articles";
+      this.viewPath = "freeArticleView";
+      this.editPath = "freeArticleEdit";
+    }
+    if (path.startsWith("/articles/crew")) {
+      this.apiPath = "/api/articles/crew";
+      this.viewPath = "crewArticleView";
+      this.editPath = "crewArticleEdit";
+    }
+    console.log(this.apiPath);
+    console.log(this.viewPath);
+    console.log(this.editPath);
     let page = this.$route.query.page;
     if (page == null) {
       page = 1;
     }
     this.page = Number(page);
     axios
-      .get("http://localhost:8080/api/articles?page=" + this.page, {
+      .get("http://localhost:8080" + this.apiPath + "?page=" + this.page, {
         withCredentials: true
       })
       .then(res => {
@@ -95,11 +112,10 @@ export default {
   },
   watch: {
     page() {
-      console.log("re!!!!!!");
-      console.log(this.page);
+      console.log(this.viewPath);
       this.$router
         .push({
-          name: "freeArticlesList",
+          path: this.$route.path,
           query: {
             page: this.page
           }
@@ -108,7 +124,7 @@ export default {
           err;
         });
       axios
-        .get("http://localhost:8080/api/articles?page=" + this.page, {
+        .get("http://localhost:8080" + this.apiPath + "?page=" + this.page, {
           withCredentials: true
         })
         .then(res => {

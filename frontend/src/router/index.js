@@ -58,6 +58,14 @@ const routes = [
       )
   },
   {
+    path: "/articles/crew",
+    name: "crewArticlesList",
+    component: () =>
+      import(
+        /* webpackChunkName: "ArticleList" */ "../components/article/ArticleList"
+      )
+  },
+  {
     path: "/articles/crew/:articleId",
     name: "crewArticleView",
     component: () =>
