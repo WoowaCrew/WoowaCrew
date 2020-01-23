@@ -10,7 +10,7 @@
             horizontal
           >
             <FreeArticleEditButton
-              v-if="idFreeArticleEdit"
+              v-if="isFreeArticleEdit"
               :articleForm="{
                 title: this.title,
                 content: this.editorText
@@ -18,7 +18,7 @@
             ></FreeArticleEditButton>
 
             <CrewArticleEditButton
-              v-if="idCrewArticleEdit"
+              v-if="isCrewArticleEdit"
               :articleForm="{
                 title: this.title,
                 content: this.editorText
@@ -78,11 +78,11 @@ export default {
     };
   },
   computed: {
-    idFreeArticleEdit() {
+    isFreeArticleEdit() {
       console.log(this.path);
       return this.path === "/article/free/new";
     },
-    idCrewArticleEdit() {
+    isCrewArticleEdit() {
       console.log(this.path);
       return this.path === "/article/crew/new";
     }

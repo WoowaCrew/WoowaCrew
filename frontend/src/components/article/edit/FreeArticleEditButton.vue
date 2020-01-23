@@ -33,7 +33,7 @@ export default {
         }
         const articleId = res.data.id;
         alert("정상적으로 저장되었습니다");
-        window.location.href = "/articles/" + articleId;
+        window.location.href = "/articles/free/" + articleId;
       });
     }
   }
