@@ -6,20 +6,21 @@ export default {
   props: ["articleId"],
   created() {
     const articleId = this.articleId;
-    console.log(articleId);
     const requestUrl = "http://localhost:8080/api/articles/" + articleId;
-    console.log(requestUrl);
 
     axios
       .get(requestUrl, {
         withCredentials: true
       })
       .then(res => {
+        console.log(res.data);
+
         const data = {
           title: res.data.title,
           content: res.data.content,
           nickname: res.data.userResponseDto.nickname,
-          createdDate: res.data.createdDate
+          createdDate: res.data.createdDate,
+          authorId: res.data.userResponseDto.id
         };
         console.log(data);
         this.$emit("setupData", data);
