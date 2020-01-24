@@ -59,13 +59,7 @@
       fixed
       right
       bottom
-      @click="
-        $router
-          .push({
-            name: editPath
-          })
-          .catch(err => {})
-      "
+      @click="deleteArticle"
     >
       <v-icon>fa-minus</v-icon>
     </v-btn>
@@ -76,6 +70,7 @@
 import "tui-editor/dist/tui-editor-contents.css";
 import "highlight.js/styles/github.css";
 import { Viewer } from "@toast-ui/vue-editor";
+import axios from "axios";
 import FreeArticleView from "./view/FreeArticleView";
 import CrewArticleView from "./view/CrewArticleView";
 
@@ -116,6 +111,32 @@ export default {
       this.content = data.content;
       this.nickname = data.nickname;
       this.createdDate = data.createdDate;
+    },
+    deleteArticle() {
+      const articleId = this.$route.params.articleId;
+      let apiPath = "";
+      let hrefPath = "";
+      console.log("articleId:" + articleId);
+      if (this.isFreeArticleView) {
+        apiPath = "/api/articles/";
+        hrefPath = "/articles/free";
+      }
+      if (this.isCrewArticleView) {
+        apiPath = "/api/articles/crew/";
+        hrefPath = "/articles/crew";
+      }
+
+      axios("http://localhost:8080" + apiPath + articleId, {
+        method: "delete",
+        withCredentials: true
+      }).then(res => {
+        if (res.status !== 200) {
+          alert("게시글 삭제에 실패하였습니다.");
+          return;
+        }
+        alert("정상적으로 삭제되었습니다");
+        window.location.href = hrefPath;
+      });
     }
   },
   created() {
