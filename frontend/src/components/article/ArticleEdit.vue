@@ -16,7 +16,16 @@
                 content: this.editorText
               }"
             ></FreeArticleEditButton>
-
+            <FreeArticleModifyButton
+              v-if="isFreeArticleModify"
+              :articleId="this.$route.params.articleId"
+              :articleForm="{
+                id: this.articleId,
+                title: this.title,
+                content: this.editorText
+              }"
+              @setupData="setData"
+            />
             <CrewArticleEditButton
               v-if="isCrewArticleEdit"
               :articleForm="{
@@ -24,6 +33,16 @@
                 content: this.editorText
               }"
             ></CrewArticleEditButton>
+            <CrewArticleModifyButton
+              v-if="isCrewArticleModify"
+              :articleId="this.$route.params.articleId"
+              :articleForm="{
+                id: this.articleId,
+                title: this.title,
+                content: this.editorText
+              }"
+              @setupData="setData"
+            />
           </v-bottom-navigation>
           <v-card-title>
             <v-text-field
@@ -54,18 +73,22 @@ import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
-import axios from "axios";
 import FreeArticleEditButton from "./edit/FreeArticleEditButton";
+import FreeArticleModifyButton from "./edit/FreeArticleModifyButton";
 import CrewArticleEditButton from "./edit/CrewArticleEditButton";
+import CrewArticleModifyButton from "./edit/CrewArticleModifyButton";
 
 export default {
   components: {
     Editor,
     FreeArticleEditButton,
-    CrewArticleEditButton
+    FreeArticleModifyButton,
+    CrewArticleEditButton,
+    CrewArticleModifyButton
   },
   data() {
     return {
+      articleId: this.$route.params.articleId,
       title: "",
       editorText: "",
       editorOptions: {
@@ -82,33 +105,29 @@ export default {
       console.log(this.path);
       return this.path === "/article/free/new";
     },
+    isFreeArticleModify() {
+      console.log(this.path);
+      const freeArticleModifyPattern = new RegExp(
+        "/articles/free/[0-9]+/modify"
+      );
+
+      return freeArticleModifyPattern.test(this.path);
+    },
     isCrewArticleEdit() {
       console.log(this.path);
       return this.path === "/article/crew/new";
+    },
+    isCrewArticleModify() {
+      const crewArticleModifyPattern = new RegExp(
+        "/articles/crew/[0-9]+/modify"
+      );
+      return crewArticleModifyPattern.test(this.path);
     }
   },
   methods: {
-    save() {
-      if (this.title.trim().length === 0) {
-        alert("제목을 입력해주세요");
-        return;
-      }
-      if (this.editorText.trim().length === 0) {
-        alert("내용을 입력해주세요");
-        return;
-      }
-      const formData = new FormData();
-      formData.append("title", this.title);
-      formData.append("content", this.editorText);
-      axios("http://localhost:8080/api/articles", {
-        method: "post",
-        data: formData,
-        withCredentials: true
-      }).then(res => {
-        const articleId = res.data.id;
-        alert("정상적으로 저장되었습니다");
-        window.location.href = "/articles/" + articleId;
-      });
+    setData(data) {
+      this.title = data.title;
+      this.editorText = data.content;
     }
   }
 };

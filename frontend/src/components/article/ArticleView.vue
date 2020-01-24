@@ -29,6 +29,46 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-btn
+      style="right: 100px"
+      class="right-100"
+      fab
+      dark
+      large
+      color="primary"
+      fixed
+      right
+      bottom
+      @click="
+        $router
+          .push({
+            name: editPath,
+            params: {
+              articleId: $route.params.articleId
+            }
+          })
+          .catch(err => {})
+      "
+    >
+      <v-icon>fa-edit</v-icon> </v-btn
+    ><v-btn
+      fab
+      dark
+      large
+      color="red"
+      fixed
+      right
+      bottom
+      @click="
+        $router
+          .push({
+            name: editPath
+          })
+          .catch(err => {})
+      "
+    >
+      <v-icon>fa-minus</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -46,7 +86,8 @@ export default {
       content: "",
       nickname: "",
       createdDate: "",
-      path: this.$route.path
+      path: this.$route.path,
+      editPath: ""
     };
   },
   components: {
@@ -76,8 +117,23 @@ export default {
       this.nickname = data.nickname;
       this.createdDate = data.createdDate;
     }
+  },
+  created() {
+    const freeArticleViewPattern = new RegExp("/articles/free/[0-9]+");
+    const crewArticleViewPattern = new RegExp("/articles/crew/[0-9]+");
+
+    if (freeArticleViewPattern.test(this.path)) {
+      this.editPath = "freeArticleModify";
+    }
+    if (crewArticleViewPattern.test(this.path)) {
+      this.editPath = "crewArticleModify";
+    }
   }
 };
 </script>
 
-<style></style>
+<style>
+.right-100 {
+  right: 100px;
+}
+</style>
