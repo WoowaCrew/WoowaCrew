@@ -34,8 +34,24 @@ const routes = [
       )
   },
   {
+    path: "/articles/free/:articleId/modify",
+    name: "freeArticleModify",
+    component: () =>
+      import(
+        /* webpackChunkName: "articleEdit" */ "../components/article/ArticleEdit"
+      )
+  },
+  {
     path: "/article/crew/new",
     name: "crewArticleEdit",
+    component: () =>
+      import(
+        /* webpackChunkName: "articleEdit" */ "../components/article/ArticleEdit"
+      )
+  },
+  {
+    path: "/articles/crew/:articleId/modify",
+    name: "crewArticleModify",
     component: () =>
       import(
         /* webpackChunkName: "articleEdit" */ "../components/article/ArticleEdit"

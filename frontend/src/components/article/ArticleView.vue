@@ -29,6 +29,42 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-btn
+      v-if="isAuthor"
+      style="right: 100px"
+      class="right-100"
+      fab
+      dark
+      large
+      color="primary"
+      fixed
+      right
+      bottom
+      @click="
+        $router
+          .push({
+            name: editPath,
+            params: {
+              articleId: $route.params.articleId
+            }
+          })
+          .catch(err => {})
+      "
+    >
+      <v-icon>fa-edit</v-icon> </v-btn
+    ><v-btn
+      v-if="isAuthor"
+      fab
+      dark
+      large
+      color="red"
+      fixed
+      right
+      bottom
+      @click="deleteArticle"
+    >
+      <v-icon>fa-minus</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -36,6 +72,7 @@
 import "tui-editor/dist/tui-editor-contents.css";
 import "highlight.js/styles/github.css";
 import { Viewer } from "@toast-ui/vue-editor";
+import axios from "axios";
 import FreeArticleView from "./view/FreeArticleView";
 import CrewArticleView from "./view/CrewArticleView";
 
@@ -46,7 +83,9 @@ export default {
       content: "",
       nickname: "",
       createdDate: "",
-      path: this.$route.path
+      authorId: "",
+      path: this.$route.path,
+      editPath: ""
     };
   },
   components: {
@@ -55,6 +94,14 @@ export default {
     CrewArticleView
   },
   computed: {
+    isAuthor() {
+      const user = this.$store.state.userContext;
+      console.log(user);
+      if (user == null) {
+        return false;
+      }
+      return this.authorId === user.id;
+    },
     dateCut() {
       return this.createdDate.split("T")[0];
     },
@@ -75,9 +122,51 @@ export default {
       this.content = data.content;
       this.nickname = data.nickname;
       this.createdDate = data.createdDate;
+      this.authorId = data.authorId;
+    },
+    deleteArticle() {
+      const articleId = this.$route.params.articleId;
+      let apiPath = "";
+      let hrefPath = "";
+      console.log("articleId:" + articleId);
+      if (this.isFreeArticleView) {
+        apiPath = "/api/articles/";
+        hrefPath = "/articles/free";
+      }
+      if (this.isCrewArticleView) {
+        apiPath = "/api/articles/crew/";
+        hrefPath = "/articles/crew";
+      }
+
+      axios("http://localhost:8080" + apiPath + articleId, {
+        method: "delete",
+        withCredentials: true
+      }).then(res => {
+        if (res.status !== 200) {
+          alert("게시글 삭제에 실패하였습니다.");
+          return;
+        }
+        alert("정상적으로 삭제되었습니다");
+        window.location.href = hrefPath;
+      });
+    }
+  },
+  created() {
+    const freeArticleViewPattern = new RegExp("/articles/free/[0-9]+");
+    const crewArticleViewPattern = new RegExp("/articles/crew/[0-9]+");
+
+    if (freeArticleViewPattern.test(this.path)) {
+      this.editPath = "freeArticleModify";
+    }
+    if (crewArticleViewPattern.test(this.path)) {
+      this.editPath = "crewArticleModify";
     }
   }
 };
 </script>
 
-<style></style>
+<style>
+.right-100 {
+  right: 100px;
+}
+</style>

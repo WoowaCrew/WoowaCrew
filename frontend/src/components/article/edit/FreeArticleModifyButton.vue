@@ -1,0 +1,65 @@
+<template>
+  <v-btn width="400" color="red" block @click="save">수정</v-btn>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  props: ["articleForm", "articleId"],
+  methods: {
+    save() {
+      const title = this.articleForm.title;
+      const content = this.articleForm.content;
+      if (title.trim().length === 0) {
+        alert("제목을 입력해주세요");
+        return;
+      }
+      if (content.trim().length === 0) {
+        alert("내용을 입력해주세요");
+        return;
+      }
+      const formData = new FormData();
+      formData.append("articleId", this.articleId);
+      formData.append("title", title);
+      formData.append("content", content);
+      axios("http://localhost:8080/api/articles/" + this.articleId, {
+        method: "put",
+        data: formData,
+        withCredentials: true
+      }).then(res => {
+        if (res.status !== 200) {
+          alert("게시글 수정에 실패하였습니다.");
+          return;
+        }
+        alert("정상적으로 수정되었습니다");
+        window.location.href = "/articles/free/" + this.articleId;
+      });
+    }
+  },
+  created() {
+    console.log("isFreeArtice수정버튼");
+
+    const articleId = this.articleId;
+    const requestUrl = "http://localhost:8080/api/articles/" + articleId;
+    axios
+      .get(requestUrl, {
+        withCredentials: true
+      })
+      .then(res => {
+        const data = {
+          title: res.data.title,
+          content: res.data.content,
+          nickname: res.data.userResponseDto.nickname,
+          createdDate: res.data.createdDate
+        };
+        console.log(data);
+        this.$emit("setupData", data);
+        this.title = res.data.title;
+        this.content = res.data.content;
+      });
+  }
+};
+</script>
+
+<style></style>
