@@ -30,6 +30,7 @@
       </v-flex>
     </v-layout>
     <v-btn
+      v-if="isAuthor"
       style="right: 100px"
       class="right-100"
       fab
@@ -52,6 +53,7 @@
     >
       <v-icon>fa-edit</v-icon> </v-btn
     ><v-btn
+      v-if="isAuthor"
       fab
       dark
       large
@@ -81,6 +83,7 @@ export default {
       content: "",
       nickname: "",
       createdDate: "",
+      authorId: "",
       path: this.$route.path,
       editPath: ""
     };
@@ -91,6 +94,14 @@ export default {
     CrewArticleView
   },
   computed: {
+    isAuthor() {
+      const user = this.$store.state.userContext;
+      console.log(user);
+      if (user == null) {
+        return false;
+      }
+      return this.authorId === user.id;
+    },
     dateCut() {
       return this.createdDate.split("T")[0];
     },
@@ -111,6 +122,7 @@ export default {
       this.content = data.content;
       this.nickname = data.nickname;
       this.createdDate = data.createdDate;
+      this.authorId = data.authorId;
     },
     deleteArticle() {
       const articleId = this.$route.params.articleId;
