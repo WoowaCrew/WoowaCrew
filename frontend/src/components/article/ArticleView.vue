@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height>
+  <v-container>
     <FreeArticleView
       v-if="isFreeArticleView"
       :articleId="this.$route.params.articleId"
@@ -56,7 +56,17 @@
     >
       <v-icon>fa-edit</v-icon>
     </v-btn>
-    <v-btn v-if="isAuthor" fab dark large color="red" fixed right bottom @click="deleteArticle">
+    <v-btn
+      v-if="isAuthor"
+      fab
+      dark
+      large
+      color="red"
+      fixed
+      right
+      bottom
+      @click="deleteArticle"
+    >
       <v-icon>fa-trash</v-icon>
     </v-btn>
     <v-container v-if="isFreeArticleView">
@@ -93,7 +103,9 @@
                     </template>
 
                     <v-card>
-                      <v-card-title class="headline pink" primary-title>댓글 수정</v-card-title>
+                      <v-card-title class="headline pink" primary-title>
+                        댓글 수정
+                      </v-card-title>
 
                       <v-card-text>
                         <v-form>
@@ -114,8 +126,20 @@
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="red" text @click="form.dialog[item.id] = false">취소</v-btn>
-                        <v-btn color="primary" text @click="editComment(item.id)">수정</v-btn>
+                        <v-btn
+                          color="red"
+                          text
+                          @click="form.dialog[item.id] = false"
+                        >
+                          취소
+                        </v-btn>
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="editComment(item.id)"
+                        >
+                          수정
+                        </v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
