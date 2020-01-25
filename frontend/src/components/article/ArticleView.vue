@@ -13,17 +13,19 @@
     <v-layout row wrap>
       <v-flex fill-height>
         <v-card width="1000" class="overflow-hidden mx-auto my-2 fill-height">
-          <v-card-title class="justify-center">
-            <h1>
-              {{ title }}
-            </h1>
-          </v-card-title>
-          <v-card-title class="justify-right" style="border-bottom: 1px solid">
-            {{ nickname }}
-            <v-spacer></v-spacer>
-            {{ dateCut }}
-          </v-card-title>
-          <v-card-text>
+          <div style="padding: 30px">
+            <v-card-title class="justify-center">
+              <h1>
+                {{ title }}
+              </h1>
+            </v-card-title>
+            <v-card-title class="justify-right" style="border-bottom: 1px solid #333; color: gray; font-size: 18px">
+              {{ nickname }}
+              <v-spacer></v-spacer>
+              {{ dateCut }}
+            </v-card-title>
+          </div>
+          <v-card-text style="padding: 0 60px 60px;">
             <viewer :value="content" height="500px" />
           </v-card-text>
         </v-card>
@@ -63,7 +65,7 @@
       bottom
       @click="deleteArticle"
     >
-      <v-icon>fa-minus</v-icon>
+      <v-icon>fa-trash</v-icon>
     </v-btn>
   </v-container>
 </template>
