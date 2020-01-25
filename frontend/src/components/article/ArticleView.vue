@@ -75,7 +75,7 @@
           <v-row v-for="item in comments" :key="item.id" :id="item.id">
             <v-card max-width="100%" min-width="100%" class="mb-5">
               <v-card-title>
-                <p>{{ item.userNickName }}</p>
+                <div>{{ item.content }}</div>
                 <v-spacer />
                 <div>
                   <v-dialog v-model="form.dialog[item.id]" width="500">
@@ -127,24 +127,11 @@
                     </v-card>
                   </v-dialog>
                   <v-btn icon @click="deleteComment(item.id)">
-                    <v-icon>fa-minus</v-icon>
+                    <v-icon>fa-trash</v-icon>
                   </v-btn>
                 </div>
               </v-card-title>
-              <v-card-subtitle>{{ item.createDateTime }}</v-card-subtitle>
-              <v-card-text>
-                <v-textarea
-                  v-model="item.content"
-                  label="댓글을 작성해 주세요."
-                  auto-grow
-                  full-width
-                  outlined
-                  rows="1"
-                  row-height="15"
-                  class="mr-10"
-                  readonly
-                ></v-textarea>
-              </v-card-text>
+              <v-card-subtitle>{{ item.userNickName }} &ndash; {{ item.createDateTime }}</v-card-subtitle>
             </v-card>
           </v-row>
         </v-col>
