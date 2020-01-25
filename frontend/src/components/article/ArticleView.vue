@@ -1,75 +1,64 @@
 <template>
   <v-container fill-height>
-    <v-container fill-height>
-      <FreeArticleView
-        v-if="isFreeArticleView"
-        :articleId="this.$route.params.articleId"
-        @setupData="setData"
-      ></FreeArticleView>
-      <CrewArticleView
-        v-if="isCrewArticleView"
-        :articleId="this.$route.params.articleId"
-        @setupData="setData"
-      ></CrewArticleView>
-      <v-layout row wrap class="mb-10">
-        <v-flex fill-height>
-          <v-card width="1000" class="overflow-hidden mx-auto my-2 fill-height">
+    <FreeArticleView
+      v-if="isFreeArticleView"
+      :articleId="this.$route.params.articleId"
+      @setupData="setData"
+    ></FreeArticleView>
+    <CrewArticleView
+      v-if="isCrewArticleView"
+      :articleId="this.$route.params.articleId"
+      @setupData="setData"
+    ></CrewArticleView>
+    <v-layout row wrap>
+      <v-flex fill-height>
+        <v-card width="1000" class="overflow-hidden mx-auto my-2 fill-height">
+          <div style="padding: 30px">
             <v-card-title class="justify-center">
-              <h1>
-                {{ title }}
-              </h1>
+              <h1>{{ title }}</h1>
             </v-card-title>
             <v-card-title
               class="justify-right"
-              style="border-bottom: 1px solid"
+              style="border-bottom: 1px solid #333; color: gray; font-size: 18px"
             >
               {{ nickname }}
               <v-spacer></v-spacer>
               {{ dateCut }}
             </v-card-title>
-            <v-card-text>
-              <viewer :value="content" height="500px" />
-            </v-card-text>
-          </v-card>
-        </v-flex>
-        <v-btn
-          v-if="isAuthor"
-          style="right: 100px"
-          class="right-100"
-          fab
-          dark
-          large
-          color="primary"
-          fixed
-          right
-          bottom
-          @click="
-            $router
-              .push({
-                name: editPath,
-                params: {
-                  articleId: $route.params.articleId
-                }
-              })
-              .catch(err => {})
-          "
-        >
-          <v-icon>fa-edit</v-icon> </v-btn
-        ><v-btn
-          v-if="isAuthor"
-          fab
-          dark
-          large
-          color="red"
-          fixed
-          right
-          bottom
-          @click="deleteArticle"
-        >
-          <v-icon>fa-minus</v-icon>
-        </v-btn>
-      </v-layout>
-    </v-container>
+          </div>
+          <v-card-text style="padding: 0 60px 60px;">
+            <viewer :value="content" height="500px" />
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-btn
+      v-if="isAuthor"
+      style="right: 100px"
+      class="right-100"
+      fab
+      dark
+      large
+      color="primary"
+      fixed
+      right
+      bottom
+      @click="
+        $router
+          .push({
+            name: editPath,
+            params: {
+              articleId: $route.params.articleId
+            }
+          })
+          .catch(err => {})
+      "
+    >
+      <v-icon>fa-edit</v-icon>
+    </v-btn>
+    <v-btn v-if="isAuthor" fab dark large color="red" fixed right bottom @click="deleteArticle">
+      <v-icon>fa-trash</v-icon>
+    </v-btn>
     <v-container v-if="isFreeArticleView">
       <v-row justify="center">
         <v-col sm="6">
@@ -84,9 +73,7 @@
               row-height="15"
               class="mr-10"
             ></v-textarea>
-            <v-btn height="50" color="primary" @click="saveComment">
-              작성
-            </v-btn>
+            <v-btn height="50" color="primary" @click="saveComment">작성</v-btn>
           </v-row>
         </v-col>
       </v-row>
@@ -106,9 +93,7 @@
                     </template>
 
                     <v-card>
-                      <v-card-title class="headline pink" primary-title>
-                        댓글 수정
-                      </v-card-title>
+                      <v-card-title class="headline pink" primary-title>댓글 수정</v-card-title>
 
                       <v-card-text>
                         <v-form>
@@ -129,20 +114,8 @@
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn
-                          color="red"
-                          text
-                          @click="form.dialog[item.id] = false"
-                        >
-                          취소
-                        </v-btn>
-                        <v-btn
-                          color="primary"
-                          text
-                          @click="editComment(item.id)"
-                        >
-                          수정
-                        </v-btn>
+                        <v-btn color="red" text @click="form.dialog[item.id] = false">취소</v-btn>
+                        <v-btn color="primary" text @click="editComment(item.id)">수정</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
@@ -151,9 +124,7 @@
                   </v-btn>
                 </div>
               </v-card-title>
-              <v-card-subtitle>
-                {{ item.createDateTime }}
-              </v-card-subtitle>
+              <v-card-subtitle>{{ item.createDateTime }}</v-card-subtitle>
               <v-card-text>
                 <v-textarea
                   v-model="item.content"
@@ -165,8 +136,8 @@
                   row-height="15"
                   class="mr-10"
                   readonly
-                ></v-textarea
-              ></v-card-text>
+                ></v-textarea>
+              </v-card-text>
             </v-card>
           </v-row>
         </v-col>
