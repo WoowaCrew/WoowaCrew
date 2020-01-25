@@ -4,10 +4,11 @@
       <v-flex fill-height>
         <v-card width="1000" class="overflow-hidden mx-auto my-2">
           <v-bottom-navigation
-            height="20"
+            height="30"
             scroll-target="#scroll-area-1"
             absolute
             horizontal
+            style="background-color: #1976d2"
           >
             <FreeArticleEditButton
               v-if="isFreeArticleEdit"
