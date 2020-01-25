@@ -86,21 +86,17 @@
                     </template>
 
                     <v-card>
-                      <v-card-title class="headline pink" primary-title>
-                        댓글 수정
+                      <v-card-title class="headline primary" style="color: white">
+                        Comment 💬
                       </v-card-title>
 
-                      <v-card-text>
+                      <v-card-text style="padding: 25px 15px 15px;">
                         <v-form>
                           <v-textarea
                             v-model="form.comment[item.id]"
                             label="댓글을 작성해 주세요."
                             auto-grow
-                            full-width
                             outlined
-                            rows="1"
-                            row-height="15"
-                            class="mr-10"
                           ></v-textarea>
                         </v-form>
                       </v-card-text>
@@ -141,7 +137,7 @@
           <v-row>
             <v-textarea
                     v-model="comment"
-                    label="댓글을 작성해 주세요."
+                    label="댓글을 작성해 주세요. 💬"
                     auto-grow
                     full-width
                     outlined
