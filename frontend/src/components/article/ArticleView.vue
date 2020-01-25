@@ -69,26 +69,9 @@
     >
       <v-icon>fa-trash</v-icon>
     </v-btn>
-    <v-container v-if="isFreeArticleView">
+    <v-container v-if="isFreeArticleView" style="max-width: 900px">
       <v-row justify="center">
-        <v-col sm="6">
-          <v-row>
-            <v-textarea
-              v-model="comment"
-              label="댓글을 작성해 주세요."
-              auto-grow
-              full-width
-              outlined
-              rows="1"
-              row-height="15"
-              class="mr-10"
-            ></v-textarea>
-            <v-btn height="50" color="primary" @click="saveComment">작성</v-btn>
-          </v-row>
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col sm="6">
+        <v-col>
           <v-row v-for="item in comments" :key="item.id" :id="item.id">
             <v-card max-width="100%" min-width="100%" class="mb-5">
               <v-card-title>
@@ -163,6 +146,23 @@
                 ></v-textarea>
               </v-card-text>
             </v-card>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col>
+          <v-row>
+            <v-textarea
+                    v-model="comment"
+                    label="댓글을 작성해 주세요."
+                    auto-grow
+                    full-width
+                    outlined
+                    rows="1"
+                    row-height="15"
+                    class="mr-10"
+            ></v-textarea>
+            <v-btn height="50" color="primary" @click="saveComment">작성</v-btn>
           </v-row>
         </v-col>
       </v-row>
