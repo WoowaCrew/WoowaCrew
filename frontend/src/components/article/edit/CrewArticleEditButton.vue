@@ -1,5 +1,7 @@
 <template>
-  <v-btn width="400" color="red" block @click="save">저장</v-btn>
+  <v-btn width="400" block @click="save" style="color: ghostwhite !important;">
+    저장
+  </v-btn>
 </template>
 
 <script>
