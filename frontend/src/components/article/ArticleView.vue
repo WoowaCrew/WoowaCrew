@@ -105,7 +105,7 @@
                             label="댓글을 작성해 주세요."
                             auto-grow
                             outlined
-                          ></v-textarea>
+                          />
                         </v-form>
                       </v-card-text>
 
@@ -146,13 +146,11 @@
               v-model="comment"
               label="댓글을 작성해 주세요. 💬"
               auto-grow
-              full-width
               outlined
-              rows="1"
-              row-height="15"
+              row-height="9"
               class="mr-3"
-            ></v-textarea>
-            <v-btn height="56" color="primary" @click="saveComment">작성</v-btn>
+            />
+            <v-btn height="57" color="primary" @click="saveComment">작성</v-btn>
           </v-row>
         </v-col>
       </v-row>
