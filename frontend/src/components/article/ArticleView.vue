@@ -69,24 +69,32 @@
     >
       <v-icon>fa-trash</v-icon>
     </v-btn>
-    <v-container v-if="isFreeArticleView" style="max-width: 900px">
+    <v-container v-if="isFreeArticleView" style="max-width: 1000px">
+      <h3 style="color: #333; margin-top: 25px">댓글 {{ comments.length }}</h3>
       <v-row justify="center">
-        <v-col>
+        <v-col style="padding-right: 25px; padding-left: 25px">
           <v-row v-for="item in comments" :key="item.id" :id="item.id">
             <v-card max-width="100%" min-width="100%" class="mb-5">
+              <v-card-subtitle style="padding-bottom: 0">
+                {{ item.userNickName }} &ndash;
+                {{ item.createDateTime }}
+              </v-card-subtitle>
               <v-card-title>
-                <div>{{ item.content }}</div>
+                <div style="font-size: 18px">{{ item.content }}</div>
                 <v-spacer />
                 <div>
                   <v-dialog v-model="form.dialog[item.id]" width="500">
                     <template v-slot:activator="{ on }">
                       <v-btn icon v-on="on">
-                        <v-icon class="mr-5">fa-edit</v-icon>
+                        <v-icon size="1.2rem">fa-edit</v-icon>
                       </v-btn>
                     </template>
 
                     <v-card>
-                      <v-card-title class="headline primary" style="color: white">
+                      <v-card-title
+                        class="headline primary"
+                        style="color: white"
+                      >
                         Comment 💬
                       </v-card-title>
 
@@ -123,29 +131,28 @@
                     </v-card>
                   </v-dialog>
                   <v-btn icon @click="deleteComment(item.id)">
-                    <v-icon>fa-trash</v-icon>
+                    <v-icon size="1.2rem">fa-trash</v-icon>
                   </v-btn>
                 </div>
               </v-card-title>
-              <v-card-subtitle>{{ item.userNickName }} &ndash; {{ item.createDateTime }}</v-card-subtitle>
             </v-card>
           </v-row>
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col>
+        <v-col style="padding-right: 25px; padding-left: 25px">
           <v-row>
             <v-textarea
-                    v-model="comment"
-                    label="댓글을 작성해 주세요. 💬"
-                    auto-grow
-                    full-width
-                    outlined
-                    rows="1"
-                    row-height="15"
-                    class="mr-10"
+              v-model="comment"
+              label="댓글을 작성해 주세요. 💬"
+              auto-grow
+              full-width
+              outlined
+              rows="1"
+              row-height="15"
+              class="mr-3"
             ></v-textarea>
-            <v-btn height="50" color="primary" @click="saveComment">작성</v-btn>
+            <v-btn height="56" color="primary" @click="saveComment">작성</v-btn>
           </v-row>
         </v-col>
       </v-row>
