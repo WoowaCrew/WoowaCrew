@@ -1,5 +1,7 @@
 package woowacrew.comment.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import woowacrew.article.free.domain.Article;
 import woowacrew.article.free.exception.MisMatchUserException;
 import woowacrew.comment.domain.exception.NotValidCommentException;
@@ -26,6 +28,7 @@ public class Comment extends TimeEntity {
 
     @JoinColumn(name = "article")
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Article article;
 
     private Comment() {
