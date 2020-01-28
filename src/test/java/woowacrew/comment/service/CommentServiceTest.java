@@ -42,9 +42,9 @@ class CommentServiceTest {
     @Test
     void Comment_생성_테스트() {
         given(commentInternalService.save(1L, commentRequestDto, userContext)).willReturn(comment);
-        CommentResponseDto commentResponseDto = commentService.save(1L,commentRequestDto, userContext);
+        CommentResponseDto commentResponseDto = commentService.save(1L, commentRequestDto, userContext);
 
-        assertThat(commentResponseDto.getUserNickName()).isEqualTo(author.getNickname());
+        assertThat(commentResponseDto.getUserResponseDto().getNickname()).isEqualTo(author.getNickname());
         assertThat(commentResponseDto.getContent()).isEqualTo(commentRequestDto.getContent());
     }
 
