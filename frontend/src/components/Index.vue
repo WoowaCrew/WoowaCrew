@@ -1,6 +1,7 @@
 <template>
-  <v-row style="margin-left: 40px; margin-top: 60px">
+  <v-row style="margin-left: 40px; margin-top: 50px">
     <v-col sm="7">
+      <SearchBox />
       <v-window
         v-model="window"
         class="elevation-1"
@@ -35,7 +36,7 @@
       </v-bottom-navigation>
     </v-col>
 
-    <BirthdayList />
+    <BirthdayList style="padding-top: 70px" />
   </v-row>
 </template>
 
@@ -45,10 +46,12 @@ import Notice from "./home/Notice";
 import KeywordRank from "./home/KeywordRank";
 import KeywordRankButton from "./home/KeywordRankButton";
 import NoticeButton from "./home/NoticeButton";
+import SearchBox from "./home/SearchBox";
 export default {
   name: "Index",
   components: {
-    BirthdayList
+    BirthdayList,
+    SearchBox
   },
   data: () => ({
     indexContents: [
