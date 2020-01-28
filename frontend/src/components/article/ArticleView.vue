@@ -76,13 +76,13 @@
           <v-row v-for="item in comments" :key="item.id" :id="item.id">
             <v-card max-width="100%" min-width="100%" class="mb-5">
               <v-card-subtitle style="padding-bottom: 0">
-                {{ item.userNickName }} &ndash;
+                {{ item.userResponseDto.nickname }} &ndash;
                 {{ item.createDateTime }}
               </v-card-subtitle>
               <v-card-title>
                 <div style="font-size: 18px">{{ item.content }}</div>
                 <v-spacer />
-                <div>
+                <div v-if="isCommentAuthor(item.userResponseDto.id)">
                   <v-dialog v-model="form.dialog[item.id]" width="500">
                     <template v-slot:activator="{ on }">
                       <v-btn icon v-on="on">
@@ -193,7 +193,6 @@ export default {
   computed: {
     isAuthor() {
       const user = this.$store.state.userContext;
-      console.log(user);
       if (user == null) {
         return false;
       }
@@ -209,7 +208,6 @@ export default {
     },
     isCrewArticleView() {
       const crewArticleViewPattern = new RegExp("/articles/crew/[0-9]+");
-      console.log(crewArticleViewPattern.test(this.path));
       return crewArticleViewPattern.test(this.path);
     }
   },
@@ -221,11 +219,17 @@ export default {
       this.createdDate = data.createdDate;
       this.authorId = data.authorId;
     },
+    isCommentAuthor(commentAuthorId) {
+      const user = this.$store.state.userContext;
+      if (user == null) {
+        return false;
+      }
+      return commentAuthorId === user.id;
+    },
     deleteArticle() {
       const articleId = this.$route.params.articleId;
       let apiPath = "";
       let hrefPath = "";
-      console.log("articleId:" + articleId);
       if (this.isFreeArticleView) {
         apiPath = "/api/articles/";
         hrefPath = "/articles/free";
@@ -268,8 +272,6 @@ export default {
     },
     editComment(commentId) {
       const comment = this.form.comment[commentId];
-      console.log(comment);
-      console.log(commentId);
       const articleId = this.$route.params.articleId;
       const formData = new FormData();
       formData.append("updateContent", comment);

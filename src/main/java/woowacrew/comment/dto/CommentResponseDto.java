@@ -1,19 +1,21 @@
 package woowacrew.comment.dto;
 
+import woowacrew.user.dto.UserResponseDto;
+
 import java.time.LocalDateTime;
 
 public class CommentResponseDto {
     private Long id;
-    private String userNickName;
+    private UserResponseDto userResponseDto;
     private String content;
     private LocalDateTime createDateTime;
 
     public CommentResponseDto() {
     }
 
-    public CommentResponseDto(Long id, String userNickName, String content, LocalDateTime createDateTime) {
+    public CommentResponseDto(Long id, UserResponseDto userResponseDto, String content, LocalDateTime createDateTime) {
         this.id = id;
-        this.userNickName = userNickName;
+        this.userResponseDto = userResponseDto;
         this.content = content;
         this.createDateTime = createDateTime;
     }
@@ -22,8 +24,8 @@ public class CommentResponseDto {
         return id;
     }
 
-    public String getUserNickName() {
-        return userNickName;
+    public UserResponseDto getUserResponseDto() {
+        return userResponseDto;
     }
 
     public String getContent() {
@@ -38,7 +40,7 @@ public class CommentResponseDto {
     public String toString() {
         return "CommentResponseDto{" +
                 "id=" + id +
-                ", userNickName='" + userNickName + '\'' +
+                ", userResponseDto=" + userResponseDto +
                 ", content='" + content + '\'' +
                 ", createDateTime=" + createDateTime +
                 '}';

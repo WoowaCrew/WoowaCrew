@@ -33,7 +33,12 @@ public class CommentApiControllerTest extends CommonTestController {
                         ),
                         responseFields(
                                 fieldWithPath("id").description("댓글 아이디"),
-                                fieldWithPath("userNickName").description("댓글 작성 유저 닉네임"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
                                 fieldWithPath("content").description("댓글 내용"),
                                 fieldWithPath("createDateTime").description("댓글 생성 시간")
                         )
@@ -80,7 +85,12 @@ public class CommentApiControllerTest extends CommonTestController {
                         ),
                         responseFields(
                                 fieldWithPath("id").description("댓글 아이디"),
-                                fieldWithPath("userNickName").description("수정한 댓글 유저 닉네임"),
+                                fieldWithPath("userResponseDto.id").description("유저 아이디"),
+                                fieldWithPath("userResponseDto.oauthId").ignored(),
+                                fieldWithPath("userResponseDto.nickname").description("유저 닉네임"),
+                                fieldWithPath("userResponseDto.birthday").description("유저 생일"),
+                                fieldWithPath("userResponseDto.userRole").description("유저 권한"),
+                                fieldWithPath("userResponseDto.degreeResponseDto.*").description("유저 기수"),
                                 fieldWithPath("content").description("수정한 댓글 내용"),
                                 fieldWithPath("createDateTime").description("수정한 댓글 생성 시간")
                         )

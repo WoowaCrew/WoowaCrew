@@ -2,6 +2,7 @@ package woowacrew.comment.utils;
 
 import woowacrew.comment.domain.Comment;
 import woowacrew.comment.dto.CommentResponseDto;
+import woowacrew.user.utils.UserConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ public class CommentConverter {
     public static CommentResponseDto toDto(Comment comment) {
         return new CommentResponseDto(
                 comment.getId(),
-                comment.getAuthor().getNickname(),
+                UserConverter.toDto(comment.getAuthor()),
                 comment.getContent(),
                 comment.getCreatedDate()
         );
