@@ -9,12 +9,38 @@
     background-color="#214b7d"
     append-icon="fa-search search-icon"
     placeholder="Google 검색 또는 URL 입력"
+    @input="setKeyword"
+    @click:append="search"
+    @keydown="search"
   />
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "SearchBox"
+  name: "SearchBox",
+  data() {
+    return {
+      keyword: ""
+    };
+  },
+  methods: {
+    setKeyword(keyword) {
+      this.keyword = keyword;
+    },
+    search(key) {
+      if (key.code === "Enter" || key.type === "click") {
+        axios
+          .post("http://localhost:8080/api/search", {
+            content: this.keyword
+          })
+          .finally(() => {
+            window.open("https://www.google.com/search?q=" + this.keyword);
+          });
+      }
+    }
+  }
 };
 </script>
 
