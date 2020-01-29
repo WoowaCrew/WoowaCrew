@@ -8,7 +8,7 @@
     style="max-height: 56px"
     background-color="#214b7d"
     append-icon="fa-search search-icon"
-    placeholder="Google 검색 또는 URL 입력"
+    placeholder="Google 검색하기.."
     @input="setKeyword"
     @click:append="search"
     @keydown="search"
