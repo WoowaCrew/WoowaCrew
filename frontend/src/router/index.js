@@ -90,6 +90,14 @@ const routes = [
       )
   },
   {
+    path: "/articles/feed",
+    name: "FeedArticleList",
+    component: () =>
+      import(
+        /* webpackChunkName: "FeedArticleList" */ "../components/article/FeedArticleList"
+      )
+  },
+  {
     path: "/slack/notice/:articleId",
     name: "slackNoticeView",
     component: () =>

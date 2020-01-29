@@ -45,7 +45,8 @@ export default {
         },
         {
           title: "피드 게시판",
-          description: "어떤 블로그 게시물을 볼까요?"
+          description: "어떤 블로그 게시물을 볼까요?",
+          link: "/articles/feed"
         }
       ]
     };
