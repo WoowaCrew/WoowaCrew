@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn width="400" color="white" block v-on="on">
+      <v-btn width="100" color="pink" v-on="on" class="mr-5">
         신규 등록
       </v-btn>
     </template>

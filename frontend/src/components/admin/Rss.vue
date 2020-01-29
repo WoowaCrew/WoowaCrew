@@ -1,51 +1,51 @@
 <template>
-  <v-card height="100%">
-    <v-bottom-navigation
-      height="50"
-      scroll-target="#scroll-area-1"
-      absolute
-      horizontal
-    >
+  <div style="height: 100%">
+    <v-row class="mb-1 mt-1 mr-1">
+      <v-spacer />
       <NewRssButton />
-    </v-bottom-navigation>
-    <v-simple-table class="mx-auto user-table" fixed-header height="600px">
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left">등록 번호</th>
-            <th class="text-left">주소</th>
-            <th class="text-left">설명</th>
-            <th class="text-left">수정 버튼</th>
-            <th class="text-left">삭제 버튼</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in feedData" :key="item.id" :id="item.id">
-            <td>{{ item.id }}</td>
-            <td>{{ item.sourceUrl }}</td>
-            <td>{{ item.description }}</td>
-            <td>
-              <RssEditButton
-                :feedSource="{
-                  id: item.id,
-                  sourceUrl: item.sourceUrl,
-                  description: item.description
-                }"
-              />
-            </td>
-            <td>
-              <RssDeleteButton
-                :feedSource="{
-                  id: item.id,
-                  index: index
-                }"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
-  </v-card>
+      <RssUpdateButton />
+    </v-row>
+
+    <v-card height="100%">
+      <v-simple-table class="mx-auto user-table" fixed-header height="600px">
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">등록 번호</th>
+              <th class="text-left">주소</th>
+              <th class="text-left">설명</th>
+              <th class="text-left">수정 버튼</th>
+              <th class="text-left">삭제 버튼</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in feedData" :key="item.id" :id="item.id">
+              <td>{{ item.id }}</td>
+              <td>{{ item.sourceUrl }}</td>
+              <td>{{ item.description }}</td>
+              <td>
+                <RssEditButton
+                  :feedSource="{
+                    id: item.id,
+                    sourceUrl: item.sourceUrl,
+                    description: item.description
+                  }"
+                />
+              </td>
+              <td>
+                <RssDeleteButton
+                  :feedSource="{
+                    id: item.id,
+                    index: index
+                  }"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -53,12 +53,14 @@ import axios from "axios";
 import NewRssButton from "./rss/NewRssButton";
 import RssEditButton from "./rss/RssEditButton";
 import RssDeleteButton from "./rss/RssDeleteButton";
+import RssUpdateButton from "./rss/RssUpdateButton";
 
 export default {
   components: {
     NewRssButton,
     RssEditButton,
-    RssDeleteButton
+    RssDeleteButton,
+    RssUpdateButton
   },
   data() {
     return {
