@@ -32,7 +32,7 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
     public void configure(WebSecurity web) throws Exception {
         //정적 페이지는 무시한다.
         web.ignoring()
-                .mvcMatchers("/css/**", "/img/**", "/js/**", "/fonts/**", "/favicon.ico");
+                .mvcMatchers("/css/**", "/img/**", "/js/**", "/fonts/**", "/favicon.ico", "/h2-console", "/h2-console**", "/h2-console/", "/h2-console/**");
     }
 
     @Bean
@@ -53,9 +53,14 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
         http
                 .csrf().disable()
                 .cors();
+
+        http
+                .headers().frameOptions().disable();
+
         http
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers("/h2-console", "/h2-console**", "/h2-console/", "/h2-console/**").permitAll()
                 .antMatchers("/", "/error", "/login", "/login/**", "/search", "/search/**", "/docs/**", "/api/slack").permitAll()
                 .antMatchers("/accessdeny", "/user/edit", "/users/update").authenticated()
                 .anyRequest().hasAnyRole(UserRole.ROLE_CREW.getRoleName(), UserRole.ROLE_COACH.getRoleName(), UserRole.ROLE_ADMIN.getRoleName())
