@@ -77,7 +77,7 @@
             <v-card max-width="100%" min-width="100%" class="mb-5">
               <v-card-subtitle style="padding-bottom: 0">
                 {{ item.userResponseDto.nickname }} &ndash;
-                {{ item.createDateTime }}
+                {{ convert(item.createDateTime) }}
               </v-card-subtitle>
               <v-card-title>
                 <div style="font-size: 18px">{{ item.content }}</div>
@@ -163,6 +163,7 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "highlight.js/styles/github.css";
 import { Viewer } from "@toast-ui/vue-editor";
 import axios from "axios";
+import dateConverter from "../../store/dateConverter";
 import FreeArticleView from "./view/FreeArticleView";
 import CrewArticleView from "./view/CrewArticleView";
 
@@ -216,7 +217,7 @@ export default {
       this.title = data.title;
       this.content = data.content;
       this.nickname = data.nickname;
-      this.createdDate = data.createdDate;
+      this.createdDate = dateConverter(data.createdDate);
       this.authorId = data.authorId;
     },
     isCommentAuthor(commentAuthorId) {
@@ -313,6 +314,9 @@ export default {
         alert("정상적으로 삭제되었습니다");
         location.reload(true);
       });
+    },
+    convert(date) {
+      return dateConverter(date);
     }
   },
   created() {

@@ -29,7 +29,7 @@
             <td width="200">
               {{ item.feedSourceDto.description }}
             </td>
-            <td width="200">{{ item.publishedDate }}</td>
+            <td width="200">{{ convert(item.publishedDate) }}</td>
           </tr>
         </tbody>
       </template>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import dateConverter from "../../store/dateConverter";
 import axios from "axios";
 
 export default {
@@ -54,6 +55,9 @@ export default {
   methods: {
     open(link) {
       window.open(link);
+    },
+    convert(date) {
+      return dateConverter(date).split(" ")[0];
     }
   },
   created() {
