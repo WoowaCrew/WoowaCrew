@@ -38,7 +38,7 @@
               {{ item.title }}
             </td>
             <td width="200">{{ item.userResponseDto.nickname }}</td>
-            <td width="100">{{ item.createdDate }}</td>
+            <td width="100">{{ convert(item.createdDate) }}</td>
           </tr>
         </tbody>
       </template>
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import dateConverter from "../../store/dateConverter";
 import axios from "axios";
 
 export default {
@@ -91,9 +92,6 @@ export default {
       this.viewPath = "crewArticleView";
       this.editPath = "crewArticleEdit";
     }
-    console.log(this.apiPath);
-    console.log(this.viewPath);
-    console.log(this.editPath);
     let page = this.$route.query.page;
     if (page == null) {
       page = 1;
@@ -105,14 +103,17 @@ export default {
       })
       .then(res => {
         const object = res.data;
-        console.log(object);
         this.totalPage = object.totalPages;
         this.articles = object.articles;
       });
   },
+  methods: {
+    convert(date) {
+      return dateConverter(date).split(" ")[0];
+    }
+  },
   watch: {
     page() {
-      console.log(this.viewPath);
       this.$router
         .push({
           path: this.$route.path,
@@ -129,7 +130,6 @@ export default {
         })
         .then(res => {
           const object = res.data;
-          console.log(object);
           this.totalPage = object.totalPages;
           this.articles = object.articles;
         });

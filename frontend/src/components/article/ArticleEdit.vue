@@ -103,11 +103,9 @@ export default {
   },
   computed: {
     isFreeArticleEdit() {
-      console.log(this.path);
       return this.path === "/article/free/new";
     },
     isFreeArticleModify() {
-      console.log(this.path);
       const freeArticleModifyPattern = new RegExp(
         "/articles/free/[0-9]+/modify"
       );
@@ -115,7 +113,6 @@ export default {
       return freeArticleModifyPattern.test(this.path);
     },
     isCrewArticleEdit() {
-      console.log(this.path);
       return this.path === "/article/crew/new";
     },
     isCrewArticleModify() {

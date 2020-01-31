@@ -74,7 +74,6 @@ export default {
       })
       .then(res => {
         const object = res.data;
-        console.log(object);
         this.feedData = object;
       });
   }

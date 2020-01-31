@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     move(link) {
-      console.log(link);
       window.location.href = link;
     }
   }

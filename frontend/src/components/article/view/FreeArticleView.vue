@@ -13,8 +13,6 @@ export default {
         withCredentials: true
       })
       .then(res => {
-        console.log(res.data);
-
         const data = {
           title: res.data.title,
           content: res.data.content,
@@ -22,7 +20,6 @@ export default {
           createdDate: res.data.createdDate,
           authorId: res.data.userResponseDto.id
         };
-        console.log(data);
         this.$emit("setupData", data);
         this.title = res.data.title;
         this.content = res.data.content;
