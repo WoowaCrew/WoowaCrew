@@ -20,7 +20,7 @@ export default new Vuex.Store({
   actions: {
     checkLogin({ commit, state }) {
       axios
-        .get(state.requestUrl + "/api/login/info", {
+        .get(state.requestUrl + "/login/info", {
           withCredentials: true
         })
         .then(res => {
