@@ -10,7 +10,7 @@ import axios from "axios";
 export default {
   methods: {
     updateFeed() {
-      axios("http://localhost:8080/api/feeds/new", {
+      axios(this.$store.state.requestUrl + "/api/feeds/new", {
         method: "post",
         withCredentials: true
       })

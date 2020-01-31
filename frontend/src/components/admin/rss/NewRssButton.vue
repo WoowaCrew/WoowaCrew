@@ -50,7 +50,7 @@ export default {
       data.append("sourceUrl", this.sourceUrl);
       data.append("description", this.description);
 
-      axios("http://localhost:8080/api/feeds", {
+      axios(this.$store.state.requestUrl + "/api/feeds", {
         method: "post",
         data: data,
         withCredentials: true

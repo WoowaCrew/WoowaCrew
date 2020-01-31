@@ -46,7 +46,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:8080/api/degrees", {
+      .get(this.$store.state.requestUrl + "/api/degrees", {
         withCredentials: true
       })
       .then(res => {

@@ -100,7 +100,7 @@ export default {
     }
     this.page = Number(page);
     axios
-      .get("http://localhost:8080" + this.apiPath + "?page=" + this.page, {
+      .get(this.$store.state.requestUrl + this.apiPath + "?page=" + this.page, {
         withCredentials: true
       })
       .then(res => {
@@ -124,7 +124,7 @@ export default {
           err;
         });
       axios
-        .get("http://localhost:8080" + this.apiPath + "?page=" + this.page, {
+        .get(this.$store.state.requestUrl + this.apiPath + "?page=" + this.page, {
           withCredentials: true
         })
         .then(res => {

@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     deleteFeed() {
-      axios("http://localhost:8080/api/feeds/" + this.feedSource.id, {
+      axios(this.$store.state.requestUrl + "/api/feeds/" + this.feedSource.id, {
         method: "delete",
         withCredentials: true
       })

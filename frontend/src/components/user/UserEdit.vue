@@ -60,7 +60,7 @@ export default {
       const formData = new FormData();
       formData.append("nickname", this.nickname);
       formData.append("birthday", this.birth);
-      axios("http://localhost:8080/users/update", {
+      axios(this.$store.state.requestUrl + "/users/update", {
         method: "post",
         data: formData,
         withCredentials: true

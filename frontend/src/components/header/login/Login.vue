@@ -8,7 +8,7 @@
 export default {
   data() {
     return {
-      githubLogin: "http://localhost:8080/login/github",
+      githubLogin: this.$store.state.requestUrl + "/login/github",
       nickname: "닉네임"
     };
   },

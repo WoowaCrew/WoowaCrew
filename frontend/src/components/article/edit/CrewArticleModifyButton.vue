@@ -25,7 +25,7 @@ export default {
       formData.append("articleId", this.articleId);
       formData.append("title", title);
       formData.append("content", content);
-      axios("http://localhost:8080/api/articles/crew/" + this.articleId, {
+      axios(this.$store.state.requestUrl + "/api/articles/crew/" + this.articleId, {
         method: "put",
         data: formData,
         withCredentials: true
@@ -43,7 +43,7 @@ export default {
     console.log("isCrewArtice수정버튼");
 
     const articleId = this.articleId;
-    const requestUrl = "http://localhost:8080/api/articles/crew/" + articleId;
+    const requestUrl = this.$store.state.requestUrl + "/api/articles/crew/" + articleId;
     axios
       .get(requestUrl, {
         withCredentials: true

@@ -12,7 +12,7 @@ export default {
   name: "KeywordRankButton",
   methods: {
     findKeywordRank() {
-      axios.get("http://localhost:8080/api/search/rank").then(response => {
+      axios.get(this.$store.state.requestUrl + "/api/search/rank").then(response => {
         if (response.request.responseURL.includes("/api/search/rank")) {
           const keywords = response.data;
           IndexEventBus.$emit("keywordRank", keywords);

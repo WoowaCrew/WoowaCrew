@@ -69,7 +69,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:8080/api/feeds", {
+      .get(this.$store.state.requestUrl + "/api/feeds", {
         withCredentials: true
       })
       .then(res => {

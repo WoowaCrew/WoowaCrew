@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userContext: null
+    userContext: null,
+    requestUrl: window.location.origin
   },
   mutations: {
     setUserContext(state, userContext) {
@@ -17,9 +18,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    checkLogin({ commit }) {
+    checkLogin({ commit, state }) {
       axios
-        .get("http://localhost:8080/login/info", {
+        .get(state.requestUrl + "/api/login/info", {
           withCredentials: true
         })
         .then(res => {
@@ -33,9 +34,9 @@ export default new Vuex.Store({
           }
         });
     },
-    logout({ commit }) {
+    logout({ commit, state }) {
       axios
-        .get("http://localhost:8080/logout", {
+        .get(state.requestUrl + "/logout", {
           withCredentials: true
         })
         .then(res => {
