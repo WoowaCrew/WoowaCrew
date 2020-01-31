@@ -38,7 +38,7 @@
               {{ item.title }}
             </td>
             <td width="200">{{ item.userResponseDto.nickname }}</td>
-            <td width="100">{{ item.createdDate }}</td>
+            <td width="100">{{ convert(item.createdDate) }}</td>
           </tr>
         </tbody>
       </template>
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import dateConverter from "../../store/dateConverter";
 import axios from "axios";
 
 export default {
@@ -105,6 +106,11 @@ export default {
         this.totalPage = object.totalPages;
         this.articles = object.articles;
       });
+  },
+  methods: {
+    convert(date) {
+      return dateConverter(date)
+    }
   },
   watch: {
     page() {

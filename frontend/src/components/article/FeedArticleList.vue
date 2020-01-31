@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import dateConverter from "../../store/dateConverter";
 import axios from "axios";
 
 export default {
@@ -54,6 +55,9 @@ export default {
   methods: {
     open(link) {
       window.open(link);
+    },
+    convert(date) {
+      dateConverter(date);
     }
   },
   created() {
