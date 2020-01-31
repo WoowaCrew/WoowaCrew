@@ -40,8 +40,6 @@ export default {
     }
   },
   created() {
-    console.log("isCrewArtice수정버튼");
-
     const articleId = this.articleId;
     const requestUrl = "http://localhost:8080/api/articles/crew/" + articleId;
     axios
@@ -55,7 +53,6 @@ export default {
           nickname: res.data.userResponseDto.nickname,
           createdDate: res.data.createdDate
         };
-        console.log(data);
         this.$emit("setupData", data);
         this.title = res.data.title;
         this.content = res.data.content;

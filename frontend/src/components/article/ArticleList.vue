@@ -91,9 +91,6 @@ export default {
       this.viewPath = "crewArticleView";
       this.editPath = "crewArticleEdit";
     }
-    console.log(this.apiPath);
-    console.log(this.viewPath);
-    console.log(this.editPath);
     let page = this.$route.query.page;
     if (page == null) {
       page = 1;
@@ -105,14 +102,12 @@ export default {
       })
       .then(res => {
         const object = res.data;
-        console.log(object);
         this.totalPage = object.totalPages;
         this.articles = object.articles;
       });
   },
   watch: {
     page() {
-      console.log(this.viewPath);
       this.$router
         .push({
           path: this.$route.path,
@@ -129,7 +124,6 @@ export default {
         })
         .then(res => {
           const object = res.data;
-          console.log(object);
           this.totalPage = object.totalPages;
           this.articles = object.articles;
         });

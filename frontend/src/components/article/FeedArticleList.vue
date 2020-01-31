@@ -69,7 +69,6 @@ export default {
       })
       .then(res => {
         const object = res.data;
-        console.log(object);
         this.totalPage = object.totalPages;
         this.articles = object.articles;
       });
@@ -92,7 +91,6 @@ export default {
         })
         .then(res => {
           const object = res.data;
-          console.log(object);
           this.totalPage = object.totalPages;
           this.articles = object.articles;
         });
