@@ -14,16 +14,17 @@
       <v-flex fill-height>
         <v-card width="1000" class="overflow-hidden mx-auto my-2 fill-height">
           <div style="padding: 30px">
-            <v-card-title class="justify-center">
+            <v-card-title style="border-bottom: 1px solid rgba(0, 0, 0, 0.1)">
               <h1>{{ title }}</h1>
-            </v-card-title>
-            <v-card-title
-              class="justify-right"
-              style="border-bottom: 1px solid #333; color: gray; font-size: 18px"
-            >
-              {{ nickname }}
-              <v-spacer></v-spacer>
-              {{ dateCut }}
+              <v-spacer />
+              <div class="text-right">
+                <p
+                  style="font-size: 12px; color: #666666; margin: 0; line-height: 1.2rem"
+                >
+                  {{ dateCut }}
+                </p>
+                <p style="margin: 0">{{ nickname }}</p>
+              </div>
             </v-card-title>
           </div>
           <v-card-text style="padding: 0 60px 60px;">
