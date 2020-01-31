@@ -12,20 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LoginControllerTest extends CommonTestController {
 
     @Test
-    @DisplayName("/login으로 요청시 로그인 방법을 선택할 수 있는 창이 표시된다.")
-    void loginTest() {
-        webTestClient.get()
-                .uri("/login")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .consumeWith(response -> {
-                    String body = new String(response.getResponseBody());
-                    assertThat(body.contains("/login/github")).isTrue();
-                });
-    }
-
-    @Test
     @DisplayName("로그인이 안된 상태로 인덱스, 로그인 페이지가 아닌 다른 페이지 요청 시 /login으로 리다이렉트 한다")
     void loginPageRedirectTest() {
         webTestClient.get()
@@ -60,24 +46,6 @@ class LoginControllerTest extends CommonTestController {
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/accessdeny"));
-    }
-
-    @Test
-    @DisplayName("닉네임을 입력하지 않은 사람이 /article/new에 접근하면 닉네임 입력하라고 나온다.")
-    void accessDenyTestWithNotNickName() {
-        String cookie = loginWithPrecourse();
-
-        webTestClient.get()
-                .uri("/accessdeny")
-                .header("Cookie", cookie)
-                .exchange()
-                .expectStatus()
-                .isOk()
-                .expectBody()
-                .consumeWith(response -> {
-                    String body = new String(response.getResponseBody());
-                    assertThat(body.contains("닉네임")).isTrue();
-                });
     }
 
     @Test

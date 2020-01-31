@@ -62,22 +62,6 @@ class SearchControllerTest {
     }
 
     @Test
-    void 조회수_순으로_순위를_보여준다() {
-        webTestClient.get()
-                .uri("/search/rank")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .consumeWith(response -> {
-                    String responseBody = new String(Objects.requireNonNull(response.getResponseBody()), StandardCharsets.UTF_8);
-                    assertThat(responseBody).contains("최다 조회수 A")
-                            .contains("최다 조회수 B")
-                            .contains("최다 조회수 C");
-                });
-    }
-
-    @Test
     void 검색어_조회수를_증가시키고_검색한다() {
         webTestClient.post()
                 .uri("/search/1")
