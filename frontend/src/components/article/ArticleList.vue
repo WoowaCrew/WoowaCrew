@@ -12,18 +12,20 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">게시글 번호</th>
-            <th class="text-left">제목</th>
-            <th class="text-left">작성자</th>
-            <th class="text-left">작성일</th>
+            <th class="text-center article-mini-cell">번호</th>
+            <th class="text-center article-title">제목</th>
+            <th class="text-left article-mini-cell">작성자</th>
+            <th class="text-center article-mini-cell">작성일</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in articles" :key="item.id" :id="item.id">
-            <td width="100">{{ item.id }}</td>
+            <td class="text-center article-mini-cell text-truncate">
+              {{ item.id }}
+            </td>
             <td
               width="500"
-              class="hover-cursor"
+              class="hover-cursor text-truncate article-title"
               @click="
                 $router
                   .push({
@@ -37,8 +39,12 @@
             >
               {{ item.title }}
             </td>
-            <td width="200">{{ item.userResponseDto.nickname }}</td>
-            <td width="100">{{ convert(item.createdDate) }}</td>
+            <td class="article-mini-cell text-truncate">
+              {{ item.userResponseDto.nickname }}
+            </td>
+            <td class="article-mini-cell text-center">
+              {{ convert(item.createdDate) }}
+            </td>
           </tr>
         </tbody>
       </template>
@@ -144,5 +150,13 @@ export default {
 }
 .hover-cursor:hover {
   cursor: pointer;
+}
+.article-mini-cell {
+  width: 100px;
+  max-width: 110px;
+}
+.article-title {
+  width: 600px;
+  max-width: 750px;
 }
 </style>
