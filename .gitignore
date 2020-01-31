@@ -33,3 +33,6 @@ github.yml
 slack.yml
 ### Logging ###
 log/
+
+### fronted ###
+src/main/resources/static
