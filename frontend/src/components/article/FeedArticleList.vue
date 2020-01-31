@@ -12,9 +12,9 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">제목</th>
-            <th class="text-left">작성자</th>
-            <th class="text-left">작성일</th>
+            <th class="text-center article-title">제목</th>
+            <th class="text-left article-mini-cell">작성자</th>
+            <th class="text-center article-mini-cell">작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -25,11 +25,13 @@
             class="hover-cursor"
             @click="open(item.link)"
           >
-            <td width="500">{{ item.title }}</td>
-            <td width="200">
+            <td class="article-title text-truncate">{{ item.title }}</td>
+            <td class="article-mini-cell text-truncate">
               {{ item.feedSourceDto.description }}
             </td>
-            <td width="200">{{ item.publishedDate }}</td>
+            <td class="text-center article-mini-cell">
+              {{ convert(item.publishedDate) }}
+            </td>
           </tr>
         </tbody>
       </template>
@@ -38,6 +40,7 @@
 </template>
 
 <script>
+import dateConverter from "../../store/dateConverter";
 import axios from "axios";
 
 export default {
@@ -54,6 +57,9 @@ export default {
   methods: {
     open(link) {
       window.open(link);
+    },
+    convert(date) {
+      return dateConverter(date).split(" ")[0];
     }
   },
   created() {
@@ -69,7 +75,6 @@ export default {
       })
       .then(res => {
         const object = res.data;
-        console.log(object);
         this.totalPage = object.totalPages;
         this.articles = object.articles;
       });
@@ -92,7 +97,6 @@ export default {
         })
         .then(res => {
           const object = res.data;
-          console.log(object);
           this.totalPage = object.totalPages;
           this.articles = object.articles;
         });
@@ -107,5 +111,13 @@ export default {
 }
 .hover-cursor:hover {
   cursor: pointer;
+}
+.article-mini-cell {
+  width: 100px;
+  max-width: 110px;
+}
+.article-title {
+  width: 600px;
+  max-width: 750px;
 }
 </style>

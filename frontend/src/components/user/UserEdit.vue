@@ -64,8 +64,7 @@ export default {
         method: "post",
         data: formData,
         withCredentials: true
-      }).then(res => {
-        console.log(res);
+      }).then(() => {
         window.location.href = "/";
       });
     }
