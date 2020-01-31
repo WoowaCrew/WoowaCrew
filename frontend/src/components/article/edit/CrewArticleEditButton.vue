@@ -24,7 +24,7 @@ export default {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", content);
-      axios("http://localhost:8080/api/articles/crew", {
+      axios(this.$store.state.requestUrl + "/api/articles/crew", {
         method: "post",
         data: formData,
         withCredentials: true

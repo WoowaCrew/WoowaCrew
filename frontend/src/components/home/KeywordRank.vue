@@ -45,7 +45,7 @@ export default {
   }),
   methods: {
     updateKeywordRank() {
-      axios.get("http://localhost:8080/api/search/rank").then(response => {
+      axios.get(this.$store.state.requestUrl + "/api/search/rank").then(response => {
         if (response.request.responseURL.includes("/api/search/rank")) {
           this.keywords = response.data;
         }

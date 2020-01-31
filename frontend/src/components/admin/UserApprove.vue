@@ -63,7 +63,7 @@ export default {
         degreeNumber: degree
       };
 
-      axios("http://localhost:8080/api/users/" + id + "/approve", {
+      axios(this.$store.state.requestUrl + "/api/users/" + id + "/approve", {
         method: "put",
         data: JSON.stringify(data),
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -88,7 +88,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:8080/api/users/disapprove", {
+      .get(this.$store.state.requestUrl + "/api/users/disapprove", {
         withCredentials: true
       })
       .then(res => {

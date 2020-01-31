@@ -24,18 +24,9 @@ class SecurityConfigTest {
     }
 
     @Test
-    void 인덱스_페이지는_인터셉터를_거치지_않는다() {
-        webTestClient.get()
-                .uri("/")
-                .exchange()
-                .expectStatus()
-                .isOk();
-    }
-
-    @Test
     void 정적파일_요청은_인터셉터를_거치지_않는다() {
         webTestClient.get()
-                .uri("/css/index.css")
+                .uri("/favicon.ico")
                 .exchange()
                 .expectStatus()
                 .isOk();

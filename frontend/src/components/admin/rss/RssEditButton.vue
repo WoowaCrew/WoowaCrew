@@ -50,7 +50,7 @@ export default {
       const data = new FormData();
       data.append("description", this.description);
 
-      axios("http://localhost:8080/api/feeds/" + this.feedSource.id, {
+      axios(this.$store.state.requestUrl + "/api/feeds/" + this.feedSource.id, {
         method: "put",
         data: data,
         withCredentials: true

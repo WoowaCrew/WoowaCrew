@@ -7,7 +7,7 @@ export default {
   props: ["articleId"],
   created() {
     const articleId = this.articleId;
-    const requestUrl = "http://localhost:8080/api/slack/notice/" + articleId;
+    const requestUrl = this.$store.state.requestUrl + "/api/slack/notice/" + articleId;
 
     axios.get(requestUrl).then(res => {
       const data = {

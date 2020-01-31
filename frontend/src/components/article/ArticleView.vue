@@ -241,7 +241,7 @@ export default {
         hrefPath = "/articles/crew";
       }
 
-      axios("http://localhost:8080" + apiPath + articleId, {
+      axios(this.$store.state.requestUrl + apiPath + articleId, {
         method: "delete",
         withCredentials: true
       }).then(res => {
@@ -259,7 +259,7 @@ export default {
       const formData = new FormData();
       formData.append("content", comment);
       //Todo: 자유게시판, 크루게시판 별로 댓글 목록 불러오게끔
-      axios("http://localhost:8080/api/articles/" + articleId + "/comments", {
+      axios(this.$store.state.requestUrl + "/api/articles/" + articleId + "/comments", {
         method: "post",
         data: formData,
         withCredentials: true
@@ -278,7 +278,7 @@ export default {
       const formData = new FormData();
       formData.append("updateContent", comment);
       axios(
-        "http://localhost:8080/api/articles/" +
+        this.$store.state.requestUrl + "/api/articles/" +
           articleId +
           "/comments/" +
           commentId,
@@ -299,7 +299,7 @@ export default {
     deleteComment(commentId) {
       const articleId = this.$route.params.articleId;
       axios(
-        "http://localhost:8080/api/articles/" +
+        this.$store.state.requestUrl + "/api/articles/" +
           articleId +
           "/comments/" +
           commentId,
@@ -333,7 +333,7 @@ export default {
     }
 
     axios
-      .get("http://localhost:8080/api/articles/" + articleId + "/comments", {
+      .get(this.$store.state.requestUrl + "/api/articles/" + articleId + "/comments", {
         withCredentials: true
       })
       .then(res => {

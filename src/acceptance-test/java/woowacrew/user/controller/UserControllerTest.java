@@ -12,17 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserControllerTest extends CommonTestController {
 
     @Test
-    void 유저_추가정보_수정_페이지로_이동한다() {
-        String cookie = loginWithCrew();
-
-        webTestClient.get()
-                .uri("/users/form")
-                .header("Cookie", cookie)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
     void 비로그인시_로그인_페이지로_이동한다() {
         webTestClient.get()
                 .uri("/users/form")
@@ -44,33 +33,5 @@ public class UserControllerTest extends CommonTestController {
                         .with("birthday", "1995-06-08"))
                 .exchange()
                 .expectStatus().is3xxRedirection();
-    }
-
-    @Test
-    void 올바르지_않은_추가정보_입력값을_받을때_수정_폼에_에러메세지를_포함한다() {
-        String cookie = loginWithCrew();
-        String redirectLocation = "/users/form";
-
-        webTestClient.post()
-                .uri("/users/update")
-                .header("Cookie", cookie)
-                .body(BodyInserters.fromFormData("nickname", "test")
-                        .with("birthday", "1995-13-08"))
-                .exchange()
-                .expectStatus().is3xxRedirection()
-                .expectHeader()
-                .value("Location", Matchers.containsString(redirectLocation))
-                .expectBody()
-                .consumeWith(body -> {
-                    String responseBody = webTestClient.get()
-                            .uri(redirectLocation)
-                            .header("Cookie", cookie)
-                            .exchange()
-                            .expectBody(String.class)
-                            .returnResult()
-                            .getResponseBody();
-
-                    assertTrue(responseBody.contains(InvalidBirthdayException.ERROR_MESSAGE));
-                });
     }
 }

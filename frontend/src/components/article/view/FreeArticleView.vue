@@ -6,7 +6,7 @@ export default {
   props: ["articleId"],
   created() {
     const articleId = this.articleId;
-    const requestUrl = "http://localhost:8080/api/articles/" + articleId;
+    const requestUrl = this.$store.state.requestUrl + "/api/articles/" + articleId;
 
     axios
       .get(requestUrl, {

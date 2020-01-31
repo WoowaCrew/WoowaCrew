@@ -25,7 +25,7 @@ export default {
       formData.append("articleId", this.articleId);
       formData.append("title", title);
       formData.append("content", content);
-      axios("http://localhost:8080/api/articles/" + this.articleId, {
+      axios(this.$store.state.requestUrl + "/api/articles/" + this.articleId, {
         method: "put",
         data: formData,
         withCredentials: true
@@ -41,7 +41,7 @@ export default {
   },
   created() {
     const articleId = this.articleId;
-    const requestUrl = "http://localhost:8080/api/articles/" + articleId;
+    const requestUrl = this.$store.state.requestUrl + "/api/articles/" + articleId;
     axios
       .get(requestUrl, {
         withCredentials: true

@@ -32,7 +32,7 @@ export default {
     search(key) {
       if (key.code === "Enter" || key.type === "click") {
         axios
-          .post("http://localhost:8080/api/search", {
+          .post(this.$store.state.requestUrl + "/api/search", {
             content: this.keyword
           })
           .finally(() => {

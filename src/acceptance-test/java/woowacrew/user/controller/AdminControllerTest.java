@@ -20,20 +20,4 @@ class AdminControllerTest extends CommonTestController {
                 .expectHeader()
                 .value("Location", Matchers.containsString("/accessdeny"));
     }
-
-    @Test
-    void admin이면_admin페이지가_보여진다() {
-        String cookie = loginWithAdmin();
-
-        webTestClient.get()
-                .uri("/admin")
-                .header("Cookie", cookie)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .consumeWith(response -> {
-                    String body = new String(response.getResponseBody());
-                    assertTrue(body.contains("관리자 페이지"));
-                });
-    }
 }
