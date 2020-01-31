@@ -1,17 +1,17 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn width="400" color="blue" block v-on="on">
-        피드 수정
+      <v-btn color="primary" block v-on="on" class="mini-button">
+        수정
       </v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="headline pink" primary-title>
-        피드 수정
+      <v-card-title class="headline primary" style="color: whitesmoke" primary-title>
+        피드 정보
       </v-card-title>
 
-      <v-card-text>
+      <v-card-text style="margin-top: 15px">
         <v-form>
           <v-text-field v-model="sourceUrl" readonly="true" label="주소" />
           <v-text-field v-model="description" label="설명" />
@@ -74,4 +74,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.mini-button {
+  width: 100px;
+  max-width: 100px;
+}
+</style>

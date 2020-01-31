@@ -1,18 +1,20 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn width="100" color="blue" block v-on="on">
-        크루 정보 수정
-      </v-btn>
+      <v-btn width="100" color="primary" block v-on="on">수정</v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="headline yellow" primary-title>
-        크루 정보 수정
+      <v-card-title
+        class="headline primary"
+        style="color: whitesmoke"
+        primary-title
+      >
+        크루 정보
       </v-card-title>
 
       <v-card-text>
-        <v-form>
+        <v-form style="margin-top: 10px">
           <div>기수</div>
           <v-overflow-btn
             v-model="degreeNumber"

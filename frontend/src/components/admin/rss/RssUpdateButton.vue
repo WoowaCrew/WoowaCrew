@@ -1,6 +1,6 @@
 <template>
-  <v-btn width="100" color="orange" @click="updateFeed">
-    업데이트
+  <v-btn width="50" color="orange" style="color: white" @click="updateFeed">
+    <v-icon>mdi-refresh</v-icon>
   </v-btn>
 </template>
 

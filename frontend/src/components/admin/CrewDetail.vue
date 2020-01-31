@@ -4,19 +4,21 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">아이디</th>
-            <th class="text-left">닉네임</th>
-            <th class="text-left">기수</th>
+            <th class="text-center mini-cell">아이디</th>
+            <th class="text-center mini-cell">기수</th>
+            <th class="text-center">닉네임</th>
             <th class="text-left">권한</th>
-            <th class="text-left">수정 버튼</th>
+            <th />
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in userData" :key="item.id" :id="item.id">
-            <td>{{ item.id }}</td>
-            <td>{{ item.nickname }}</td>
-            <td>{{ item.degreeResponseDto.degreeNumber }}</td>
-            <td>{{ item.userRole }}</td>
+            <td class="text-center mini-cell">{{ item.id }}</td>
+            <td class="text-center mini-cell">
+              {{ item.degreeResponseDto.degreeNumber }}
+            </td>
+            <td class="text-center">{{ item.nickname }}</td>
+            <td class="text-left">{{ item.userRole }}</td>
             <td>
               <CrewEditButton
                 :user="{
@@ -63,5 +65,9 @@ export default {
 <style>
 .v-data-table {
   width: 100%;
+}
+.mini-cell {
+  width: 100px;
+  max-width: 120px;
 }
 </style>

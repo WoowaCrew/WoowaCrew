@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn width="100" color="pink" v-on="on" class="mr-5">
-        신규 등록
+      <v-btn width="50" color="primary" v-on="on" class="mr-5">
+        <v-icon>mdi-plus</v-icon>
       </v-btn>
     </template>
 

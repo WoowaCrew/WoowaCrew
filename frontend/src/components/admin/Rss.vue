@@ -1,26 +1,23 @@
 <template>
   <div style="height: 100%">
-    <v-row class="mb-1 mt-1 mr-1">
-      <v-spacer />
-      <NewRssButton />
-      <RssUpdateButton />
-    </v-row>
-
     <v-card height="100%">
       <v-simple-table class="mx-auto user-table" fixed-header height="600px">
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left">등록 번호</th>
+              <th class="text-center">등록 번호</th>
               <th class="text-left">주소</th>
               <th class="text-left">설명</th>
-              <th class="text-left">수정 버튼</th>
-              <th class="text-left">삭제 버튼</th>
+              <th />
+              <th class="text-right">
+                <NewRssButton />
+                <RssUpdateButton />
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, index) in feedData" :key="item.id" :id="item.id">
-              <td>{{ item.id }}</td>
+              <td class="text-center">{{ item.id }}</td>
               <td>{{ item.sourceUrl }}</td>
               <td>{{ item.description }}</td>
               <td>
