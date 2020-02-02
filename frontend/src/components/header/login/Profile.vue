@@ -2,9 +2,10 @@
   <div class="text-center">
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
-        <v-btn text class="white--text" color="#424242" v-on="on">{{
-          setNickname
-        }}</v-btn>
+        <v-btn text class="white--text" color="#424242" v-on="on">
+          {{ setNickname }}
+          <v-icon small>mdi-menu-down</v-icon>
+        </v-btn>
       </template>
       <v-list dense small color="#424242">
         <UserEditPage></UserEditPage>

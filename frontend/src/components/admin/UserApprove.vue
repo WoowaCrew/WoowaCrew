@@ -4,7 +4,7 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">아이디</th>
+            <th class="text-center">아이디</th>
             <th class="text-left">닉네임</th>
             <th class="text-left">기수</th>
             <th class="text-left">권한</th>
@@ -13,7 +13,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in userData" :key="item.id" :id="item.id">
-            <td>{{ item.id }}</td>
+            <td class="text-center">{{ item.id }}</td>
             <td>{{ item.nickname }}</td>
             <td>
               <v-overflow-btn

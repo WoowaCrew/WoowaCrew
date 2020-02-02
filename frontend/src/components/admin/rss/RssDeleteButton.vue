@@ -1,13 +1,19 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn width="400" color="red" block v-on="on">
+      <v-btn
+        color="gray"
+        style="color: #333333"
+        block
+        v-on="on"
+        class="mini-button"
+      >
         삭제
       </v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="headline pink" primary-title>
+      <v-card-title class="headline">
         정말로 삭제하시겠습니까?
       </v-card-title>
 
@@ -61,4 +67,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.mini-button {
+  width: 100px;
+  max-width: 100px;
+}
+</style>

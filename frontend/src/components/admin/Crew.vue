@@ -6,7 +6,7 @@
           <tr>
             <th class="text-center">기수</th>
             <th class="text-center">인원</th>
-            <th class="text-center">상세 보기</th>
+            <th class="text-center" />
           </tr>
         </thead>
         <tbody>
@@ -16,7 +16,7 @@
             <td>
               <v-btn
                 width="10"
-                color="blue"
+                color="primary"
                 block
                 @click="
                   $router.push({
