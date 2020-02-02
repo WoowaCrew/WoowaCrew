@@ -1,13 +1,23 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn color="primary" block v-on="on" class="mini-button">
+      <v-btn
+        color="gray"
+        style="color: #333333"
+        block
+        v-on="on"
+        class="mini-button"
+      >
         수정
       </v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="headline primary" style="color: whitesmoke" primary-title>
+      <v-card-title
+        class="headline primary"
+        style="color: whitesmoke"
+        primary-title
+      >
         피드 정보
       </v-card-title>
 

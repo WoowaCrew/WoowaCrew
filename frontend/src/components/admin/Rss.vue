@@ -8,8 +8,8 @@
               <th class="text-center">등록 번호</th>
               <th class="text-left">주소</th>
               <th class="text-left">설명</th>
-              <th />
-              <th class="text-right">
+              <th style="max-width: 100px" />
+              <th class="text-right" style="max-width: 100px">
                 <NewRssButton />
                 <RssUpdateButton />
               </th>

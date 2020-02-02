@@ -1,7 +1,13 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn color="red" style="color: white" block v-on="on" class="mini-button">
+      <v-btn
+        color="gray"
+        style="color: #333333"
+        block
+        v-on="on"
+        class="mini-button"
+      >
         삭제
       </v-btn>
     </template>

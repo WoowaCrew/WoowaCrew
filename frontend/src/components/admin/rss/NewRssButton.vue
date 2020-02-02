@@ -1,18 +1,23 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-btn width="50" color="primary" v-on="on" class="mr-5">
+      <v-btn v-on="on" text small color="primary">
         <v-icon>mdi-plus</v-icon>
+        등록
       </v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="headline pink" primary-title>
+      <v-card-title
+        class="headline primary"
+        primary-title
+        style="color: whitesmoke"
+      >
         신규 등록
       </v-card-title>
 
       <v-card-text>
-        <v-form>
+        <v-form style="margin-top: 10px">
           <v-text-field v-model="sourceUrl" label="주소" />
           <v-text-field v-model="description" label="설명" />
         </v-form>

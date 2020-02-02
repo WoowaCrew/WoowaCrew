@@ -1,6 +1,7 @@
 <template>
-  <v-btn width="50" color="orange" style="color: white" @click="updateFeed">
+  <v-btn text small color="orange" @click="updateFeed">
     <v-icon>mdi-refresh</v-icon>
+    새로고침
   </v-btn>
 </template>
 
