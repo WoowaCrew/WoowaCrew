@@ -13,16 +13,6 @@ public class LoginController {
         this.oauthService = oauthService;
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping("/accessdeny")
-    public String accessDeny() {
-        return "accessdeny";
-    }
-
     @GetMapping("/login/github")
     public RedirectView loginWithGithub() {
         String authorizationUrl = oauthService.getAuthorizationUrl();
