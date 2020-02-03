@@ -7,6 +7,7 @@ public class SlackMessageRequestDto {
     private String downloadLink;
     private String downloadLinkFromSlack;
     private boolean isBot;
+    private String challenge;
 
     public SlackMessageRequestDto(String channelId, String authorId, String content, boolean isBot) {
         this.channelId = channelId;
@@ -19,6 +20,10 @@ public class SlackMessageRequestDto {
         this(channelId, authorId, content, isBot);
         this.downloadLink = downloadLink;
         this.downloadLinkFromSlack = downloadLinkFromSlack;
+    }
+
+    public SlackMessageRequestDto(String challenge) {
+        this.challenge = challenge;
     }
 
     public String getChannelId() {
@@ -43,5 +48,9 @@ public class SlackMessageRequestDto {
 
     public boolean isBot() {
         return isBot;
+    }
+
+    public String getChallenge() {
+        return challenge;
     }
 }
