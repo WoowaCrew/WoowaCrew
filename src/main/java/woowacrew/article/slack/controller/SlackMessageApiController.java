@@ -20,7 +20,10 @@ public class SlackMessageApiController {
     }
 
     @PostMapping("/api/slack")
-    public ResponseEntity<Void> save(SlackMessageRequestDto slackMessageRequestDto) {
+    public ResponseEntity<String> save(SlackMessageRequestDto slackMessageRequestDto) {
+        if (slackMessageRequestDto.getChallenge() != null) {
+            return ResponseEntity.ok(slackMessageRequestDto.getChallenge());
+        }
         if (slackMessageRequestDto.isBot()) {
             return ResponseEntity.badRequest().build();
         }

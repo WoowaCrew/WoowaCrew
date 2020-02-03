@@ -32,6 +32,9 @@ public class SlackMessageArgumentResolver implements HandlerMethodArgumentResolv
     @Override
     public SlackMessageRequestDto resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         JsonNode request = createJsonNode(webRequest);
+        if (request.get("challenge") != null) {
+            return new SlackMessageRequestDto(request.get("challenge").asText());
+        }
         JsonNode event = request.get(EVENT);
 
         JsonNode channel = event.get(CHANNEL);
