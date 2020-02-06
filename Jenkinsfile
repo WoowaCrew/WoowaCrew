@@ -30,7 +30,7 @@ node {
                 sh "cp -f \$slack_test $JENKINS_HOME/workspace/WoowaCrew/src/test/resources/slack.yml"
                 sh "cp -f \$config $JENKINS_HOME/workspace/WoowaCrew/src/main/resources/application.yml"
             }
-            sh "./gradlew clean build --info"
+            sh "./gradlew clean build"
         } finally {
             junit allowEmptyResults: true, keepLongStdio: true, testResults: 'build/test-results/*.xml'
         }
