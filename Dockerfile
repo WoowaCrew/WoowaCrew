@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-COPY ./build/libs/woowacrew-*.jar /usr/src/app/
+COPY ./build/libs/WoowaCrew-*.jar /usr/src/app/
 
 WORKDIR /usr/src/app
 
