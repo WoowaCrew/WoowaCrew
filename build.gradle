@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'org.asciidoctor.convert' version '1.5.9.2'
+    id 'com.moowork.node' version '1.3.1'
     id 'java'
 }
 
@@ -98,3 +99,39 @@ bootJar {
         into 'static/docs'
     }
 }
+
+apply plugin: 'com.moowork.node'
+
+node {
+    version = '12.13.1'
+    npmVersion = '6.12.1'
+    workDir = file("./frontend")
+    npmWorkDir = file("./frontend")
+    nodeModulesDir = file("./frontend")
+}
+
+task setUp(type: NpmTask) {
+    description = "Install Node.js packages"
+    args = ['install']
+    inputs.files file('package.json')
+    outputs.files file('node_modules')
+}
+
+task url(type: NpmTask, dependsOn: setUp) {
+    description = "Install url-search-params-polyfill packages"
+    args = ['install', 'url-search-params-polyfill', '--save']
+    outputs.files file('node_modules')
+}
+
+task axios(type: NpmTask, dependsOn: url) {
+    description = "Install Axios packages"
+    args = ['install', 'axios', '--save']
+    outputs.files file('node_modules')
+}
+
+task buildFrontEnd(type: NpmTask, dependsOn: axios) {
+    description = "Build vue.js"
+    args = ['run', 'build']
+}
+
+processResources.dependsOn 'buildFrontEnd'
