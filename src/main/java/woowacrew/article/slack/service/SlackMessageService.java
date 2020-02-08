@@ -31,4 +31,9 @@ public class SlackMessageService {
         SlackMessage slackMessage = slackMessageInternalService.findById(id);
         return SlackMessageConverter.toDto(slackMessage);
     }
+
+    public SlackMessageResponseDto findRecentlyMessage() {
+        SlackMessage slackMessage = slackMessageInternalService.findRecentlyMessage();
+        return SlackMessageConverter.toDto(slackMessage);
+    }
 }

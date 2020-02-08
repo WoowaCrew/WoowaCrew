@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -83,5 +84,15 @@ class SlackMessageServiceTest {
         assertThat(result.getContent()).isEqualTo(slackMessage.getContent());
         assertThat(result.getDownloadLink()).isEqualTo(slackMessage.getDownloadLink());
         assertThat(result.getDownloadLinkFromSlack()).isEqualTo(slackMessage.getDownloadLinkFromSlack());
+    }
+
+    @Test
+    @DisplayName("정상적으로 최근 슬랙 메세지를 가져온다.")
+    void findRecentlyMessage() {
+        SlackMessage slackMessage = createSlackMessages(1).get(0);
+
+        when(slackMessageInternalService.findRecentlyMessage()).thenReturn(slackMessage);
+
+        assertNotNull(slackMessageService.findRecentlyMessage());
     }
 }

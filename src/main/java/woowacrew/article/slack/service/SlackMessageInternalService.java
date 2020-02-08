@@ -62,4 +62,10 @@ public class SlackMessageInternalService {
         return slackMessageRepository.findById(id)
                 .orElseThrow(NotFoundSlackMessageException::new);
     }
+
+    @Transactional(readOnly = true)
+    public SlackMessage findRecentlyMessage() {
+        return slackMessageRepository.findFirstByOrderByCreatedDateDesc()
+                .orElseThrow(NotFoundSlackMessageException::new);
+    }
 }

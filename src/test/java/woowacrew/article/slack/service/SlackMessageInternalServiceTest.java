@@ -129,4 +129,13 @@ class SlackMessageInternalServiceTest {
 
         assertThrows(NotFoundSlackMessageException.class, () -> slackMessageInternalService.findById(1L));
     }
+
+    @Test
+    @DisplayName("최근 슬랙 메세지를 가져온다.")
+    void findRecentlyMessage() {
+        SlackMessage slackMessage = saveSlackMessage(testSlackConfig.getToken(), testSlackConfig.getChannelId(), testSlackConfig.getAuthorId());
+        when(slackMessageRepository.findFirstByOrderByCreatedDateDesc()).thenReturn(Optional.ofNullable(slackMessage));
+
+        assertThat(slackMessageInternalService.findRecentlyMessage()).isEqualTo(slackMessage);
+    }
 }
