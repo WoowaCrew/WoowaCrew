@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer width="280px" style="z-index: 4" permanent app>
+  <div>
     <v-list-item style="height: 63px; padding-left: 24px">
       <v-list-item-content>
         <v-list-item-title class="font-weight-black">
@@ -12,7 +12,7 @@
     <AdminMenu v-if="isAdmin" />
     <ArticleMenu />
     <ServiceMenu />
-  </v-navigation-drawer>
+  </div>
 </template>
 
 <script>
