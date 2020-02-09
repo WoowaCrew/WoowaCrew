@@ -14,6 +14,7 @@ import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.domain.SlackMessageRepository;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.exception.CreateSlackMessageFailException;
+import woowacrew.article.slack.exception.NotFoundRecentlySlackMessageException;
 import woowacrew.article.slack.exception.NotFoundSlackMessageException;
 import woowacrew.article.slack.utils.SlackMessageConverter;
 
@@ -137,5 +138,13 @@ class SlackMessageInternalServiceTest {
         when(slackMessageRepository.findFirstByOrderByCreatedDateDesc()).thenReturn(Optional.ofNullable(slackMessage));
 
         assertThat(slackMessageInternalService.findRecentlyMessage()).isEqualTo(slackMessage);
+    }
+
+    @Test
+    @DisplayName("최근 슬랙 메세지가 없는 경우, 예외가 발생한다.")
+    void notFoundRecentlySlackMessage() {
+        when(slackMessageRepository.findFirstByOrderByCreatedDateDesc()).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundRecentlySlackMessageException.class, () -> slackMessageInternalService.findRecentlyMessage());
     }
 }
