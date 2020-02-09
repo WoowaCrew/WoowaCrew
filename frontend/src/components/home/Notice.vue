@@ -2,7 +2,9 @@
   <v-card flat>
     <v-card-text v-if="isLogin && existMessage">
       <div v-if="downloadLinkFromSlack" style="padding: 16px">
-        <a :href="downloadLinkFromSlack" class="title">#{{ channel }} - {{ author }}</a>
+        <a :href="downloadLinkFromSlack" class="title">
+          #{{ channel }} - {{ author }}
+        </a>
       </div>
       <div v-else style="padding: 16px; color: gray">
         <strong class="title">#{{ channel }} - {{ author }}</strong>
