@@ -23,13 +23,16 @@ public class SlackMessageConverter {
     }
 
     public static SlackMessageResponseDto toDto(SlackMessage slackMessage) {
-        return new SlackMessageResponseDto(
-                slackMessage.getId(),
-                slackMessage.getChannel(),
-                slackMessage.getAuthor(),
-                slackMessage.getContent(),
-                slackMessage.getDownloadLink(),
-                slackMessage.getDownloadLinkFromSlack());
+        if (slackMessage.existSlackFile()) {
+            return new SlackMessageResponseDto(
+                    slackMessage.getId(),
+                    slackMessage.getChannel(),
+                    slackMessage.getAuthor(),
+                    slackMessage.getContent(),
+                    slackMessage.getDownloadLink(),
+                    slackMessage.getDownloadLinkFromSlack());
+        }
+        return new SlackMessageResponseDto(slackMessage.getId(), slackMessage.getChannel(), slackMessage.getAuthor(), slackMessage.getContent());
     }
 
     public static SlackMessageResponseDtos toDtos(Page<SlackMessage> slackMessages) {

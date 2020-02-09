@@ -11,6 +11,10 @@ public class SlackMessageResponseDto {
     private SlackMessageResponseDto() {
     }
 
+    public SlackMessageResponseDto(Long id, String channel, String author, String content) {
+        this(id, channel, author, content, null, null);
+    }
+
     public SlackMessageResponseDto(Long id, String channel, String author, String content, String downloadLink, String downloadLinkFromSlack) {
         this.id = id;
         this.channel = channel;

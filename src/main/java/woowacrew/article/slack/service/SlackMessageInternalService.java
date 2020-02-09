@@ -15,6 +15,7 @@ import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.domain.SlackMessageRepository;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.exception.CreateSlackMessageFailException;
+import woowacrew.article.slack.exception.NotFoundRecentlySlackMessageException;
 import woowacrew.article.slack.exception.NotFoundSlackMessageException;
 import woowacrew.article.slack.utils.SlackMessageConverter;
 
@@ -61,5 +62,11 @@ public class SlackMessageInternalService {
     public SlackMessage findById(Long id) {
         return slackMessageRepository.findById(id)
                 .orElseThrow(NotFoundSlackMessageException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public SlackMessage findRecentlyMessage() {
+        return slackMessageRepository.findFirstByOrderByCreatedDateDesc()
+                .orElseThrow(NotFoundRecentlySlackMessageException::new);
     }
 }

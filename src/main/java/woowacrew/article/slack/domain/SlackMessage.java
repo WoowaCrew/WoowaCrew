@@ -1,10 +1,13 @@
 package woowacrew.article.slack.domain;
 
+import woowacrew.common.domain.TimeEntity;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class SlackMessage {
+public class SlackMessage extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,6 +34,10 @@ public class SlackMessage {
         this.slackFile = new SlackFile(downloadLink, downloadLinkFromSlack);
     }
 
+    public boolean existSlackFile() {
+        return slackFile != null;
+    }
+
     public Long getId() {
         return id;
     }
@@ -53,6 +60,10 @@ public class SlackMessage {
 
     public String getDownloadLinkFromSlack() {
         return slackFile.getDownloadLinkFromSlack();
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
     @Override
