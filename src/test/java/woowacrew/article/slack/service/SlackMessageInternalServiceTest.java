@@ -25,9 +25,12 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest(properties = "spring.config.location=classpath:/slack.yml",
+@SpringBootTest(properties = "spring.config.location=classpath:/slack.yml, classpath:/application.yml",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SlackMessageInternalServiceTest {
 
