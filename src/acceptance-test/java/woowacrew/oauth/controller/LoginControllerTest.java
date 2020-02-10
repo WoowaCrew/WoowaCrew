@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import woowacrew.common.controller.CommonTestController;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@SpringBootTest(properties = "spring.config.location=classpath:/github.yml", webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(properties = "spring.config.location=classpath:/github.yml,classpath:/application.yml"
+        , webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class LoginControllerTest extends CommonTestController {
 
     @Test

@@ -174,4 +174,13 @@ public class FeedApiControllerTest extends CommonTestController {
                 .expectStatus()
                 .isOk();
     }
+
+    @Test
+    void jenkins_ip는_로그인_없이도_피드_업데이트_요청이_가능하다() {
+        webTestClient.post()
+                .uri("/api/feeds/new")
+                .exchange()
+                .expectStatus()
+                .isOk();
+    }
 }

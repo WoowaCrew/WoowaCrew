@@ -1,5 +1,6 @@
 package woowacrew.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -17,6 +18,11 @@ import woowacrew.security.requestmatcher.AuthorityUpdateRequestMatcher;
 import woowacrew.user.domain.UserRole;
 
 public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("${jenkins.ipv4}")
+    private String jenkinsIpv4Address;
+    @Value("${jenkins.ipv6}")
+    private String jenkinsIpv6Address;
 
     protected abstract SocialLoginFilter socialLoginFilter() throws Exception;
 
@@ -60,6 +66,8 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
         http
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers("/api/feeds/new")
+                .access("hasRole('ROLE_ADMIN') or hasIpAddress('" + jenkinsIpv4Address + "') or hasIpAddress('" + jenkinsIpv6Address + "')")
                 .antMatchers("/h2-console", "/h2-console**", "/h2-console/", "/h2-console/**").permitAll()
                 .antMatchers("/", "/error", "/login", "/login/**", "/search", "/search/**", "/docs/**", "/api/slack").permitAll()
                 .antMatchers("/accessdeny", "/user/edit", "/users/update").authenticated()

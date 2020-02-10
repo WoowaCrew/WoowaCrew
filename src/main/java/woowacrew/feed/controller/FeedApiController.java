@@ -33,6 +33,7 @@ public class FeedApiController {
     }
 
     @PostMapping("/new")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<List<FeedArticleResponseDto>> updateFeed() {
         return ResponseEntity.ok(feedService.updateFeed());
     }
