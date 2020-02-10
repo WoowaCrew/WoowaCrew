@@ -3,6 +3,11 @@ spring:
     active: develop
   thymeleaf:
     prefix: classpath:/static/
+
+jenkins:
+  ipv4: 127.0.0.1
+  ipv6: 0:0:0:0:0:0:0:1 #localhost
+
 ---
 
 spring:

@@ -18,7 +18,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
-@TestPropertySource(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml")
+@TestPropertySource(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml,classpath:/application.yml")
 class SlackMessageApiControllerTest extends CommonTestController {
 
     @Autowired
