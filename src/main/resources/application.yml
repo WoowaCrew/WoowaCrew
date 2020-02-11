@@ -4,10 +4,6 @@ spring:
   thymeleaf:
     prefix: classpath:/static/
 
-jenkins:
-  ipv4: 127.0.0.1
-  ipv6: 0:0:0:0:0:0:0:1 #localhost
-
 ---
 
 spring:
@@ -29,6 +25,9 @@ spring:
     console:
       enabled: true
 
+jenkins:
+  ipv4: 127.0.0.1
+  ipv6: 0:0:0:0:0:0:0:1 #localhost
 
 logging:
   config: "classpath:logback-dev.xml"
