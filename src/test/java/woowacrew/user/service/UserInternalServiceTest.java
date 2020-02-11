@@ -1,5 +1,6 @@
 package woowacrew.user.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,6 +10,8 @@ import woowacrew.degree.domain.Degree;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRepository;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -56,5 +59,25 @@ class UserInternalServiceTest {
         int actualNumberOfCount = userInternalService.countByDegreeId(degreeId);
 
         assertThat(actualNumberOfCount).isEqualTo(numberOfUser);
+    }
+
+    @Test
+    @DisplayName("정상적으로 이번달 생일자들을 가져온다.")
+    void findUpcomingBirthdayBy() {
+        User firstUser = new User("test", new Degree());
+        User secondUser = new User("test2", new Degree());
+        User thirdUser = new User("test3", new Degree());
+        firstUser.updateUserInfo("test", LocalDate.of(1995, 6, 20));
+        secondUser.updateUserInfo("test", LocalDate.of(1991, 6, 1));
+        thirdUser.updateUserInfo("test", LocalDate.of(1991, 7, 1));
+        List<User> users = Arrays.asList(firstUser, secondUser);
+
+        when(userRepository.findAll()).thenReturn(users);
+
+        List<User> result = userInternalService.findUpcomingBirthdayBy(Month.JUNE);
+
+        for (User user : result) {
+            assertThat(user.getBirthday().getMonth()).isEqualTo(Month.JUNE);
+        }
     }
 }

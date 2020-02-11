@@ -11,6 +11,7 @@ import woowacrew.user.dto.UserContext;
 import woowacrew.user.utils.UserConverter;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,5 +45,14 @@ public class UserInternalServiceIntegrationTest {
         UserApproveDto approveDto = new UserApproveDto(UserRole.ROLE_ADMIN, 1);
         userInternalService.approveUserFor(updatedUser.getId(), userContext, approveDto);
         assertThat(cacheManager.getCache("user").get(1L)).isNull();
+    }
+
+    @Test
+    void findUpcomingBirthdayBy_캐싱_테스트() {
+        assertThat(cacheManager.getCache("birthday").get(Month.JUNE)).isNull();
+
+        userInternalService.findUpcomingBirthdayBy(Month.JUNE);
+
+        assertThat(cacheManager.getCache("birthday").get(Month.JUNE)).isNotNull();
     }
 }

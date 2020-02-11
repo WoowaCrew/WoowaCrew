@@ -14,7 +14,10 @@ import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.exception.NotExistUserException;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -48,6 +51,15 @@ public class UserInternalService {
 
     public List<User> findByDegreeId(Long degreeId) {
         return userRepository.findByDegreeIdAndNicknameNotNull(degreeId);
+    }
+
+    @Cacheable(value = "birthday", key = "#month")
+    public List<User> findUpcomingBirthdayBy(Month month) {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> user.getBirthday() != null && user.getBirthday().getMonth() == month)
+                .sorted(Comparator.comparingInt(user -> user.getBirthday().getDayOfMonth()))
+                .collect(Collectors.toList());
     }
 
     public int countByDegreeId(Long degreeId) {
