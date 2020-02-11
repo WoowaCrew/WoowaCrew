@@ -6,11 +6,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import woowacrew.security.filter.AuthorityUpdateFilter;
+import woowacrew.security.filter.AddressLoggingFilter;
 import woowacrew.security.filter.SocialLoginFilter;
 import woowacrew.security.handler.AccessDenyHandler;
 import woowacrew.security.handler.CustomLogoutSuccessHandler;
@@ -82,6 +84,7 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
                 .logoutSuccessHandler(new CustomLogoutSuccessHandler());
         http
                 .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(authorityUpdateFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authorityUpdateFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AddressLoggingFilter(), WebAsyncManagerIntegrationFilter.class);
     }
 }
