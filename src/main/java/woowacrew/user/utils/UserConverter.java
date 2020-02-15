@@ -3,6 +3,7 @@ package woowacrew.user.utils;
 import org.modelmapper.ModelMapper;
 import woowacrew.degree.utils.DegreeConverter;
 import woowacrew.user.domain.User;
+import woowacrew.user.dto.UpcomingBirthdayUserResponseDto;
 import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
 
@@ -21,6 +22,16 @@ public class UserConverter {
         UserResponseDto responseDto = new ModelMapper().map(user, UserResponseDto.class);
         responseDto.setDegreeResponseDto(DegreeConverter.toDto(user.getDegree()));
         return responseDto;
+    }
+
+    public static List<UpcomingBirthdayUserResponseDto> toBirthdayDtos(List<User> users) {
+        return users.stream()
+                .map(user -> new UpcomingBirthdayUserResponseDto(
+                        user.getId(),
+                        user.getDegree().getDegreeNumber(),
+                        user.getNickname(),
+                        user.getBirthday()))
+                .collect(Collectors.toList());
     }
 
     public static List<UserResponseDto> toDtos(List<User> users) {

@@ -10,7 +10,6 @@ import woowacrew.user.utils.UserConverter;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -41,13 +40,7 @@ public class UserService {
     public List<UpcomingBirthdayUserResponseDto> findUpcomingBirthday() {
         Month month = LocalDate.now().getMonth();
         List<User> users = userInternalService.findUpcomingBirthdayBy(month);
-        return users.stream()
-                .map(user -> new UpcomingBirthdayUserResponseDto(
-                        user.getId(),
-                        user.getDegree().getDegreeNumber(),
-                        user.getNickname(),
-                        user.getBirthday()))
-                .collect(Collectors.toList());
+        return UserConverter.toBirthdayDtos(users);
     }
 
     public UserResponseDto update(Long userId, UserUpdateDto userUpdateDto) {
