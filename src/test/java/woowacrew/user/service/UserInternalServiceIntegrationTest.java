@@ -1,5 +1,6 @@
 package woowacrew.user.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -54,5 +57,17 @@ public class UserInternalServiceIntegrationTest {
         userInternalService.findUpcomingBirthdayBy(Month.JUNE);
 
         assertThat(cacheManager.getCache("birthday").get(Month.JUNE)).isNotNull();
+    }
+
+    @Test
+    @DisplayName("새로운 유저가 등록되면 캐싱 되어 있는 생일 유저들을 삭제한다")
+    void findUpcomingBirthdayBy_캐싱_삭제_테스트() {
+        assertNull(cacheManager.getCache("birthday").get(Month.JUNE));
+        userInternalService.findUpcomingBirthdayBy(Month.JUNE);
+
+        assertNotNull(cacheManager.getCache("birthday").get(Month.JUNE));
+        userInternalService.update(1L, "test", LocalDate.of(1995, 6, 8));
+
+        assertNull(cacheManager.getCache("birthday").get(Month.JUNE));
     }
 }

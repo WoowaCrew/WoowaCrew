@@ -2,6 +2,7 @@ package woowacrew.user.service;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.degree.domain.Degree;
@@ -77,7 +78,10 @@ public class UserInternalService {
     }
 
     @Transactional
-    @CacheEvict(value = "user", key = "#userId")
+    @Caching(evict = {
+            @CacheEvict(value = "user", key = "#userId"),
+            @CacheEvict(value = "birthday", key = "#birthday.getMonth()")
+    })
     public User update(Long userId, String nickname, LocalDate birthday) {
         User user = findById(userId);
         user.updateUserInfo(nickname, birthday);
