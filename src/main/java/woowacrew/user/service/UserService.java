@@ -3,14 +3,12 @@ package woowacrew.user.service;
 import org.springframework.stereotype.Service;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRole;
-import woowacrew.user.dto.UserApproveDto;
-import woowacrew.user.dto.UserContext;
-import woowacrew.user.dto.UserResponseDto;
-import woowacrew.user.dto.UserUpdateDto;
+import woowacrew.user.dto.*;
 import woowacrew.user.utils.BirthdayConverter;
 import woowacrew.user.utils.UserConverter;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 @Service
@@ -37,6 +35,12 @@ public class UserService {
         List<User> disapprovedUsers = userInternalService.findByRole(UserRole.ROLE_PRECOURSE);
 
         return UserConverter.toDtos(disapprovedUsers);
+    }
+
+    public List<UpcomingBirthdayUserResponseDto> findUpcomingBirthday() {
+        Month month = LocalDate.now().getMonth();
+        List<User> users = userInternalService.findUpcomingBirthdayBy(month);
+        return UserConverter.toBirthdayDtos(users);
     }
 
     public UserResponseDto update(Long userId, UserUpdateDto userUpdateDto) {

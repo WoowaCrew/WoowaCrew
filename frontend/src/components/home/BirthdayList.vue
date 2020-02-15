@@ -3,15 +3,15 @@
     <v-card>
       <v-list two-line>
         <v-subheader style="color: #214b7d">
-          "Happy Birthday to You! 🥳"
+          이번 달 생일자 🥳
         </v-subheader>
         <template v-for="user in users">
           <v-list-item :key="user.id">
             <v-list-item-content>
               <v-list-item-title>{{ user.nickname }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ user.degree }}기 크루 &mdash; 생일까지 {{ user.birthday }}일
-                남았습니다.
+                {{ user.degree }}기 크루 &mdash;
+                {{ convertBirthday(user.birthday) }}
               </v-list-item-subtitle>
               <v-divider style="margin-top: 10px" :inset="true" />
             </v-list-item-content>
@@ -23,14 +23,28 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "BirthdayList",
   data: () => ({
-    users: [
-      { id: 1, nickname: "테스트 유저 1", degree: 1, birthday: 5 },
-      { id: 2, nickname: "테스트 유저 2", degree: 1, birthday: 5 },
-      { id: 3, nickname: "테스트 유저 3", degree: 1, birthday: 5 }
-    ]
-  })
+    users: []
+  }),
+  created() {
+    axios
+      .get(this.$store.state.requestUrl + "/api/user/birthday", {
+        withCredentials: true
+      })
+      .then(response => (this.users = response.data));
+  },
+  methods: {
+    convertBirthday(birthday) {
+      const data = birthday.split("-");
+      if (new Date().getDate() == data[2]) {
+        return "🎉오늘의 생일 축하드립니다!! 🎉";
+      }
+      return `${data[1]}월 ${data[2]}일 생일 입니다.`;
+    }
+  }
 };
 </script>

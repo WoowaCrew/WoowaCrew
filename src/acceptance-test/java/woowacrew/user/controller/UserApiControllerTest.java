@@ -1,6 +1,7 @@
 package woowacrew.user.controller;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.user.dto.UserResponseDto;
@@ -33,5 +34,17 @@ class UserApiControllerTest extends CommonTestController {
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/login"));
+    }
+
+    @Test
+    @DisplayName("정상적으로 생일이 다가오는 유저들을 가져온다.")
+    void findBirthdayUsers() {
+        String cookie = loginWithCrew();
+
+        webTestClient.get()
+                .uri("/api/user/birthday")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk();
     }
 }

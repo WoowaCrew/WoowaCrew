@@ -73,6 +73,9 @@ INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (5, '13','woow
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (6, '14','woowacrew','ROLE_COACH', 1);
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (7, '15','woowacrew','ROLE_CREW', 2);
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (8, '15','woowacrew','ROLE_PRECOURSE', 1);
+INSERT INTO user (id, oauth_id, nickname, role, degree_id, birthday) VALUES (9, '10','woowacrew1','ROLE_PRECOURSE', 1, '1991-06-15');
+INSERT INTO user (id, oauth_id, nickname, role, degree_id, birthday) VALUES (10, '11','woowacrew2','ROLE_PRECOURSE', 1, '1995-05-20');
+INSERT INTO user (id, oauth_id, nickname, role, degree_id, birthday) VALUES (11, '12','woowacrew3','ROLE_PRECOURSE', 1, '1995-06-12');
 
 INSERT INTO feed_source(id,source_url,description) values (1,'https://vsh123.github.io/feed.xml', 'SHAKEVAN');
 INSERT INTO feed_source(id,source_url,description) values (2,'https://jojoldu.tistory.com/feed', 'TEST');
