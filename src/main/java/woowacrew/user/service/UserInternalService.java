@@ -57,7 +57,7 @@ public class UserInternalService {
     public List<User> findUpcomingBirthdayBy(Month month) {
         return userRepository.findAll()
                 .stream()
-                .filter(user -> user.getBirthday() != null && user.getBirthday().getMonth() == month)
+                .filter(user -> user.isUpcomingBirthday(month))
                 .sorted(Comparator.comparingInt(user -> user.getBirthday().getDayOfMonth()))
                 .collect(Collectors.toList());
     }
