@@ -6,6 +6,7 @@ import woowacrew.user.domain.exception.NotExistNicknameException;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Objects;
 
 @Entity
@@ -59,6 +60,10 @@ public class User {
 
     public boolean isSameDegree(User requestAuthor) {
         return degree.equals(requestAuthor.degree);
+    }
+
+    public boolean isUpcomingBirthday(Month month) {
+        return this.birthday != null && this.birthday.getMonth() == month;
     }
 
     public void updateByAdmin(User user, UserRole role, Degree degree) {

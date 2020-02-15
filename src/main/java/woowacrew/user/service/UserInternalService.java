@@ -2,6 +2,7 @@ package woowacrew.user.service;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woowacrew.degree.domain.Degree;
@@ -14,7 +15,10 @@ import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.exception.NotExistUserException;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -50,6 +54,15 @@ public class UserInternalService {
         return userRepository.findByDegreeIdAndNicknameNotNull(degreeId);
     }
 
+    @Cacheable(value = "birthday", key = "#month")
+    public List<User> findUpcomingBirthdayBy(Month month) {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> user.isUpcomingBirthday(month))
+                .sorted(Comparator.comparingInt(user -> user.getBirthday().getDayOfMonth()))
+                .collect(Collectors.toList());
+    }
+
     public int countByDegreeId(Long degreeId) {
         return userRepository.countByDegreeIdAndNicknameNotNull(degreeId);
     }
@@ -65,7 +78,10 @@ public class UserInternalService {
     }
 
     @Transactional
-    @CacheEvict(value = "user", key = "#userId")
+    @Caching(evict = {
+            @CacheEvict(value = "user", key = "#userId"),
+            @CacheEvict(value = "birthday", key = "#birthday.getMonth()")
+    })
     public User update(Long userId, String nickname, LocalDate birthday) {
         User user = findById(userId);
         user.updateUserInfo(nickname, birthday);
