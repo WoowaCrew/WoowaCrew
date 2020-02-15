@@ -1,5 +1,5 @@
 <template>
-  <v-btn text small color="orange" v-bind:class="{ 'cursor-wait': !isUpdatable}" @click="updateFeed">
+  <v-btn text small color="orange" :disabled="!isUpdatable" @click="updateFeed">
     <v-icon>mdi-refresh</v-icon>새로고침
   </v-btn>
 </template>
@@ -40,7 +40,4 @@ export default {
 </script>
 
 <style>
-.cursor-wait {
-  cursor: wait;
-}
 </style>
