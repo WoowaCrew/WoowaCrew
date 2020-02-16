@@ -66,6 +66,11 @@ public class User {
         return this.birthday != null && this.birthday.getMonth() == month;
     }
 
+    public boolean isBirthday(LocalDate today) {
+        return isUpcomingBirthday(today.getMonth()) &&
+                this.birthday.getDayOfMonth() == today.getDayOfMonth();
+    }
+
     public void updateByAdmin(User user, UserRole role, Degree degree) {
         if (!user.role.matchAdmin()) {
             throw new ForbiddenUserException();

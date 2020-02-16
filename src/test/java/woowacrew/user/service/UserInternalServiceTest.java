@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -78,6 +79,22 @@ class UserInternalServiceTest {
 
         for (User user : result) {
             assertThat(user.getBirthday().getMonth()).isEqualTo(Month.JUNE);
+        }
+    }
+
+    @Test
+    @DisplayName("오늘 생일인 유저들을 가져온다")
+    void todayBirthdayUser() {
+        LocalDate today = LocalDate.of(2020, 6, 8);
+        User birthdayUser = new User("test", new Degree());
+        birthdayUser.updateUserInfo("kim", LocalDate.of(1995, 6, 8));
+
+        when(userRepository.findAll()).thenReturn(Arrays.asList(birthdayUser));
+
+        List<User> users = userInternalService.findBirthdayBy(today);
+
+        for (User user : users) {
+            assertTrue(user.isBirthday(today));
         }
     }
 }
