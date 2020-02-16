@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userContext: null,
-    requestUrl: window.location.origin
+    requestUrl: 'http://localhost:8080'
   },
   mutations: {
     setUserContext(state, userContext) {

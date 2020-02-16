@@ -25,7 +25,7 @@ import java.io.IOException;
 @Transactional
 public class SlackMessageInternalService {
     private static final Logger logger = LoggerFactory.getLogger(SlackMessageInternalService.class);
-    private static final String NOTICE_CHANNEL_NAME = "전체_공지사항";
+    private static final String NOTICE_CHANNEL_NAME = "전체-공지사항";
 
     private SlackConfig slackConfig;
     private SlackMessageRepository slackMessageRepository;

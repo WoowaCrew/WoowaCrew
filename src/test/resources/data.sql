@@ -109,6 +109,6 @@ INSERT INTO anonymous_article (id, title, content, signing_key, is_approved) VAL
 INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('testChannel', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:01');
 INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('testChannel2', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:02');
 INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('testChannel3', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:03');
-INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('전체_공지사항', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:01');
-INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('전체_공지사항', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:02');
-INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('전체_공지사항', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:03');
+INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('전체-공지사항', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:01');
+INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('전체-공지사항', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:02');
+INSERT INTO slack_message (channel, author, content, download_link, download_link_from_slack, created_date) VALUES ('전체-공지사항', 'testAuthor', 'testContent', 'test.com', 'test2.com', '2019-10-09T00:00:03');

@@ -90,12 +90,12 @@ class SlackMessageServiceTest {
     @Test
     @DisplayName("정상적으로 최근 슬랙 공지사항 메세지를 가져온다.")
     void findRecentlyNoticeMessage() {
-        SlackMessage slackMessage = new SlackMessage("전체_공지사항","author", "content", "test.com", "test2.com");
+        SlackMessage slackMessage = new SlackMessage("전체-공지사항","author", "content", "test.com", "test2.com");
 
         when(slackMessageInternalService.findRecentlyNoticeMessage()).thenReturn(slackMessage);
         SlackMessageResponseDto response = slackMessageService.findRecentlyNoticeMessage();
 
-        assertThat(response.getChannel()).isEqualTo("전체_공지사항");
+        assertThat(response.getChannel()).isEqualTo("전체-공지사항");
     }
 
     private List<SlackMessage> createSlackMessages(int slackMessageSize) {
