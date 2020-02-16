@@ -100,6 +100,15 @@ bootJar {
     }
 }
 
+apply plugin: 'jacoco'
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+
 apply plugin: 'com.moowork.node'
 
 node {

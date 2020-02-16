@@ -30,7 +30,8 @@ node {
                 sh "cp -f \$slack_test $JENKINS_HOME/workspace/WoowaCrew/src/test/resources/slack.yml"
                 sh "cp -f \$config $JENKINS_HOME/workspace/WoowaCrew/src/main/resources/application.yml"
             }
-            sh "./gradlew clean build"
+//             sh "./gradlew clean build --status"
+            sh "./gradlew clean build -x test -x acceptanceTest"
         } finally {
             junit allowEmptyResults: true, keepLongStdio: true, testResults: 'build/test-results/*.xml'
         }
@@ -38,7 +39,14 @@ node {
     }
 
     stage('Coverage Report', {
-//        TODO: Do Something
+//         println "Generate Coverage Report"
+//
+//         withCredentials([string(credentialsId: 'CODECOV_TOKEN', variable: 'codecov-token')]) {
+//             sh "./gradlew jacocoTestReport -x buildFrontEnd"
+//             sh '''#!/bin/bash
+//                     curl -s https://codecov.io/bash -t $codecov-token | bash
+//             '''
+//         }
     })
 
     stage('Push Dockerhub', {
