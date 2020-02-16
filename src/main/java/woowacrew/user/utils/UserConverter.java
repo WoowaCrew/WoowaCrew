@@ -8,6 +8,7 @@ import woowacrew.user.dto.UserContext;
 import woowacrew.user.dto.UserResponseDto;
 
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class UserConverter {
@@ -38,5 +39,13 @@ public class UserConverter {
         return users.stream()
                 .map(UserConverter::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public static String toMessage(List<User> users) {
+        StringJoiner stringJoiner = new StringJoiner(", ");
+        for (User user : users) {
+            stringJoiner.add(user.getDegree().getDegreeNumber() + "기 크루 - " + user.getNickname());
+        }
+        return stringJoiner.toString();
     }
 }

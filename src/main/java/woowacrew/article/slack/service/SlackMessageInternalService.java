@@ -18,8 +18,11 @@ import woowacrew.article.slack.exception.CreateSlackMessageFailException;
 import woowacrew.article.slack.exception.NotFoundRecentlySlackMessageException;
 import woowacrew.article.slack.exception.NotFoundSlackMessageException;
 import woowacrew.article.slack.utils.SlackMessageConverter;
+import woowacrew.search.exception.SendSlackBirthdayMessageFailException;
 
 import java.io.IOException;
+
+import static com.ullink.slack.simpleslackapi.impl.SlackSessionFactory.createWebSocketSlackSession;
 
 @Service
 @Transactional
@@ -46,7 +49,7 @@ public class SlackMessageInternalService {
     }
 
     private SlackMessage createSlackMessage(SlackMessageRequestDto slackMessageRequestDto) throws IOException {
-        SlackSession session = SlackSessionFactory.createWebSocketSlackSession(slackConfig.getToken());
+        SlackSession session = createWebSocketSlackSession(slackConfig.getToken());
         session.connect();
         SlackChannel channel = session.findChannelById(slackMessageRequestDto.getChannelId());
         SlackUser author = session.findUserById(slackMessageRequestDto.getAuthorId());
@@ -75,5 +78,18 @@ public class SlackMessageInternalService {
     public SlackMessage findRecentlyNoticeMessage() {
         return slackMessageRepository.findFirstByChannelOrderByCreatedDateDesc(NOTICE_CHANNEL_NAME)
                 .orElseThrow(NotFoundRecentlySlackMessageException::new);
+    }
+
+    public void sendMessage(String message) {
+        try {
+            SlackSession session = SlackSessionFactory.createWebSocketSlackSession(slackConfig.getToken());
+            session.connect();
+            SlackChannel channel = session.findChannelById(slackConfig.getChannelId());
+            session.sendMessage(channel, message);
+            session.disconnect();
+        } catch (Exception e) {
+            logger.error("Send slack birthday message fail : ", e);
+            throw new SendSlackBirthdayMessageFailException();
+        }
     }
 }
