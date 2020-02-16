@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface SlackMessageRepository extends JpaRepository<SlackMessage, Long> {
     Optional<SlackMessage> findFirstByOrderByCreatedDateDesc();
+
+    Optional<SlackMessage> findFirstByChannelOrderByCreatedDateDesc(String channel);
 }
