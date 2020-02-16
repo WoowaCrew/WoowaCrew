@@ -54,6 +54,13 @@ public class UserInternalService {
         return userRepository.findByDegreeIdAndNicknameNotNull(degreeId);
     }
 
+    public List<User> findBirthdayBy(LocalDate today) {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> user.isBirthday(today))
+                .collect(Collectors.toList());
+    }
+
     @Cacheable(value = "birthday", key = "#month")
     public List<User> findUpcomingBirthdayBy(Month month) {
         return userRepository.findAll()
