@@ -60,15 +60,6 @@ class SlackMessageServiceTest {
         assertEquals(result.getSlackMessages().size(), slackMessageSize);
     }
 
-    private List<SlackMessage> createSlackMessages(int slackMessageSize) {
-        List<SlackMessage> slackMessages = new ArrayList<>();
-        for (int i = 0; i < slackMessageSize; i++) {
-            SlackMessage slackMessage = new SlackMessage("channel", "author", "content", "test.com", "test2.com");
-            slackMessages.add(slackMessage);
-        }
-        return slackMessages;
-    }
-
     @Test
     @DisplayName("정상적으로 ID로 슬랙 메세지를 찾는다.")
     void findById() {
@@ -94,5 +85,25 @@ class SlackMessageServiceTest {
         when(slackMessageInternalService.findRecentlyMessage()).thenReturn(slackMessage);
 
         assertNotNull(slackMessageService.findRecentlyMessage());
+    }
+
+    @Test
+    @DisplayName("정상적으로 최근 슬랙 공지사항 메세지를 가져온다.")
+    void findRecentlyNoticeMessage() {
+        SlackMessage slackMessage = new SlackMessage("전체-공지사항","author", "content", "test.com", "test2.com");
+
+        when(slackMessageInternalService.findRecentlyNoticeMessage()).thenReturn(slackMessage);
+        SlackMessageResponseDto response = slackMessageService.findRecentlyNoticeMessage();
+
+        assertThat(response.getChannel()).isEqualTo("전체-공지사항");
+    }
+
+    private List<SlackMessage> createSlackMessages(int slackMessageSize) {
+        List<SlackMessage> slackMessages = new ArrayList<>();
+        for (int i = 0; i < slackMessageSize; i++) {
+            SlackMessage slackMessage = new SlackMessage("channel", "author", "content", "test.com", "test2.com");
+            slackMessages.add(slackMessage);
+        }
+        return slackMessages;
     }
 }

@@ -25,6 +25,7 @@ import java.io.IOException;
 @Transactional
 public class SlackMessageInternalService {
     private static final Logger logger = LoggerFactory.getLogger(SlackMessageInternalService.class);
+    private static final String NOTICE_CHANNEL_NAME = "전체-공지사항";
 
     private SlackConfig slackConfig;
     private SlackMessageRepository slackMessageRepository;
@@ -67,6 +68,12 @@ public class SlackMessageInternalService {
     @Transactional(readOnly = true)
     public SlackMessage findRecentlyMessage() {
         return slackMessageRepository.findFirstByOrderByCreatedDateDesc()
+                .orElseThrow(NotFoundRecentlySlackMessageException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public SlackMessage findRecentlyNoticeMessage() {
+        return slackMessageRepository.findFirstByChannelOrderByCreatedDateDesc(NOTICE_CHANNEL_NAME)
                 .orElseThrow(NotFoundRecentlySlackMessageException::new);
     }
 }
