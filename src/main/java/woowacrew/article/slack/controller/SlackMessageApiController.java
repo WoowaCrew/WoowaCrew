@@ -22,7 +22,7 @@ public class SlackMessageApiController {
 
     @GetMapping("/api/slack/notice")
     public ResponseEntity<SlackMessageResponseDto> notice() {
-        SlackMessageResponseDto slackMessage = slackMessageService.findRecentlyMessage();
+        SlackMessageResponseDto slackMessage = slackMessageService.findRecentlyNoticeMessage();
         return ResponseEntity.ok(slackMessage);
     }
 
