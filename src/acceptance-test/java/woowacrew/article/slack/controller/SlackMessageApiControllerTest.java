@@ -13,6 +13,8 @@ import woowacrew.article.slack.TestSlackConfig;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.common.controller.CommonTestController;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -164,5 +166,17 @@ class SlackMessageApiControllerTest extends CommonTestController {
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/login"));
+    }
+
+    @Test
+    @DisplayName("오늘 생일인 유저가 있으면 슬랙에 메세지를 보낸다")
+    void sendMessageToBirthdayUser() {
+        LocalDate date = LocalDate.of(1995, 6, 8);
+
+        webTestClient.post()
+                .uri("/api/slack/birthday")
+                .body(Mono.just(date.toString()), String.class)
+                .exchange()
+                .expectStatus().isOk();
     }
 }

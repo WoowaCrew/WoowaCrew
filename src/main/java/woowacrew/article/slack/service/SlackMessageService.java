@@ -8,13 +8,20 @@ import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDtos;
 import woowacrew.article.slack.utils.SlackMessageConverter;
+import woowacrew.user.domain.User;
+import woowacrew.user.service.UserInternalService;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class SlackMessageService {
     private SlackMessageInternalService slackMessageInternalService;
+    private UserInternalService userInternalService;
 
-    public SlackMessageService(SlackMessageInternalService slackMessageInternalService) {
+    public SlackMessageService(SlackMessageInternalService slackMessageInternalService, UserInternalService userInternalService) {
         this.slackMessageInternalService = slackMessageInternalService;
+        this.userInternalService = userInternalService;
     }
 
     public SlackMessageResponseDto save(SlackMessageRequestDto slackMessageRequestDto) {
@@ -40,5 +47,12 @@ public class SlackMessageService {
     public SlackMessageResponseDto findRecentlyNoticeMessage() {
         SlackMessage slackMessage = slackMessageInternalService.findRecentlyNoticeMessage();
         return SlackMessageConverter.toDto(slackMessage);
+    }
+
+    public void sendBirthdayMessage(LocalDate today) {
+        List<User> users = userInternalService.findBirthdayBy(today);
+        if (users.size() != 0) {
+            slackMessageInternalService.sendMessage(SlackMessageConverter.toMessage(users));
+        }
     }
 }

@@ -5,10 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.article.slack.service.SlackMessageService;
+
+import java.time.LocalDate;
 
 @RestController
 public class SlackMessageApiController {
@@ -36,6 +39,12 @@ public class SlackMessageApiController {
         }
         SlackMessageResponseDto savedSlackMessage = slackMessageService.save(slackMessageRequestDto);
         logger.debug("Successful saved of slack message : {}", savedSlackMessage.toString());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/api/slack/birthday")
+    public ResponseEntity<Void> sendBirthdayMessage(@RequestBody String today) {
+        slackMessageService.sendBirthdayMessage(LocalDate.parse(today));
         return ResponseEntity.ok().build();
     }
 }

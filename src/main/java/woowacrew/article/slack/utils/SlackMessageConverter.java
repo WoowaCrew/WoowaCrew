@@ -5,6 +5,8 @@ import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDtos;
+import woowacrew.user.domain.User;
+import woowacrew.user.utils.UserConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,5 +42,9 @@ public class SlackMessageConverter {
                 .map(SlackMessageConverter::toDto)
                 .collect(Collectors.toList());
         return new SlackMessageResponseDtos(slackMessages.getNumber(), slackMessages.getTotalPages(), convertSlackMessages);
+    }
+
+    public static String toMessage(List<User> users) {
+        return "오늘은 " + UserConverter.toMessage(users) + "의 생일 입니다!";
     }
 }
