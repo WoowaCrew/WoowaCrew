@@ -19,7 +19,7 @@ import woowacrew.user.service.UserInternalService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -121,13 +121,13 @@ class SlackMessageServiceTest {
         when(userInternalService.findBirthdayBy(any())).thenReturn(new ArrayList<>());
 
         slackMessageService.sendBirthdayMessage(LocalDate.now());
-        verify(slackMessageInternalService, times(1)).sendMessage(any());
+        verify(slackMessageInternalService, times(0)).sendMessage(any());
     }
 
     @Test
     @DisplayName("오늘 생일자가 있으면 슬랙 메세지를 보낸다")
     void sendBirthdayMessage() {
-        when(userInternalService.findBirthdayBy(any())).thenReturn(Arrays.asList(new User("test", new Degree())));
+        when(userInternalService.findBirthdayBy(any())).thenReturn(Collections.singletonList(new User("test", new Degree())));
 
         slackMessageService.sendBirthdayMessage(LocalDate.now());
         verify(slackMessageInternalService, times(1)).sendMessage(any());
