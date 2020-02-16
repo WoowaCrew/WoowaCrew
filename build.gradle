@@ -6,6 +6,8 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'jacoco'
+
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/snapshot' }
@@ -44,6 +46,10 @@ task acceptanceTest(type: Test) {
     testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
     classpath = sourceSets.acceptanceTest.runtimeClasspath
     outputs.dir snippetsDir
+    jacoco {
+        enabled = true
+        destinationFile = file("${buildDir}/jacoco/acceptance-test.exec")
+    }
 
     dependsOn test
 }
@@ -86,6 +92,10 @@ dependencies {
 test {
     useJUnitPlatform()
     outputs.dir snippetsDir
+    jacoco {
+        enabled = true
+        destinationFile = file("${buildDir}/jacoco/test.exec")
+    }
 }
 
 asciidoctor {
@@ -97,6 +107,14 @@ bootJar {
     dependsOn asciidoctor
     from("${asciidoctor.outputDir}/html5") {
         into 'static/docs'
+    }
+}
+
+jacocoTestReport {
+    executionData = fileTree(dir: project.buildDir, includes: ['jacoco/acceptance-test.exec', 'jacoco/test.exec'])
+    reports {
+        xml.enabled true
+        html.enabled false
     }
 }
 
@@ -133,5 +151,3 @@ task buildFrontEnd(type: NpmTask, dependsOn: axios) {
     description = "Build vue.js"
     args = ['run', 'build']
 }
-
-processResources.dependsOn 'buildFrontEnd'
