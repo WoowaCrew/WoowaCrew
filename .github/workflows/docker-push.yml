@@ -18,7 +18,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew build -x test -x acceptanceTest
+        run: ./gradlew build -x test -x acceptanceTest -x asciidoctor
       - name: Docker build
         run: |
           docker build . -t oeeen/woowacrew:lts
