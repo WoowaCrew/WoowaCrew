@@ -18,6 +18,7 @@ import woowacrew.article.slack.exception.NotFoundRecentlySlackMessageException;
 import woowacrew.article.slack.exception.NotFoundSlackMessageException;
 import woowacrew.article.slack.utils.SlackMessageConverter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,10 +26,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(properties = "spring.config.location=classpath:/slack.yml, classpath:/application.yml",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -43,14 +42,18 @@ class SlackMessageInternalServiceTest {
     @Mock
     private SlackConfig slackConfig;
 
+    @Mock
+    private SlackRequestService slackRequestService;
+
     @InjectMocks
     private SlackMessageInternalService slackMessageInternalService;
 
-    private SlackMessage saveSlackMessage(String token, String channelId, String authorId) {
+    private SlackMessage saveSlackMessage(String token, String channelId, String authorId) throws IOException {
         SlackMessageRequestDto slackMessageRequestDto = new SlackMessageRequestDto(channelId, authorId, "hi", "test.com", "test2.com", false);
         SlackMessage slackMessage = SlackMessageConverter.toEntity("channelName", "authorName", slackMessageRequestDto);
 
         when(slackConfig.getToken()).thenReturn(token);
+        when(slackRequestService.createSlackMessage(any())).thenReturn(slackMessage);
         when(slackMessageRepository.save(slackMessage)).thenReturn(slackMessage);
 
         return slackMessageInternalService.save(slackMessageRequestDto);
@@ -58,7 +61,7 @@ class SlackMessageInternalServiceTest {
 
     @Test
     @DisplayName("정상적으로 슬랙에서 온 메시지를 저장한다")
-    void save() {
+    void save() throws IOException {
         String token = testSlackConfig.getToken();
         String channelId = testSlackConfig.getChannelId();
         String authorId = testSlackConfig.getAuthorId();
@@ -73,33 +76,15 @@ class SlackMessageInternalServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 토큰인 경우 저장하는데 실패한다.")
-    void saveFailBecauseToken() {
+    @DisplayName("유효하지 않은 토큰인 경우 저장하는데 실패한다.")
+    void saveFailBecauseToken() throws IOException {
         String invalidToken = "Invalid token";
         String channelId = testSlackConfig.getChannelId();
         String authorId = testSlackConfig.getAuthorId();
 
+        when(slackRequestService.createSlackMessage(any())).thenThrow(CreateSlackMessageFailException.class);
+
         assertThrows(CreateSlackMessageFailException.class, () -> saveSlackMessage(invalidToken, channelId, authorId));
-    }
-
-    @Test
-    @DisplayName("존재하지 않는 채널 id인 경우 저장하는데 실패한다.")
-    void saveFailBecauseChannelId() {
-        String token = testSlackConfig.getToken();
-        String invalidChannelId = "Invalid Channel Id";
-        String authorId = testSlackConfig.getAuthorId();
-
-        assertThrows(CreateSlackMessageFailException.class, () -> saveSlackMessage(token, invalidChannelId, authorId));
-    }
-
-    @Test
-    @DisplayName("존재하지 않는 작성자 id인 경우 저장하는데 실패한다.")
-    void saveFailBecauseAuthorId() {
-        String token = testSlackConfig.getToken();
-        String channelId = testSlackConfig.getChannelId();
-        String invalidAuthorId = "invalid author id";
-
-        assertThrows(CreateSlackMessageFailException.class, () -> saveSlackMessage(token, channelId, invalidAuthorId));
     }
 
     @Test
@@ -136,7 +121,7 @@ class SlackMessageInternalServiceTest {
 
     @Test
     @DisplayName("최근 슬랙 메세지를 가져온다.")
-    void findRecentlyMessage() {
+    void findRecentlyMessage() throws IOException {
         SlackMessage slackMessage = saveSlackMessage(testSlackConfig.getToken(), testSlackConfig.getChannelId(), testSlackConfig.getAuthorId());
         when(slackMessageRepository.findFirstByOrderByCreatedDateDesc()).thenReturn(Optional.ofNullable(slackMessage));
 
