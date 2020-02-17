@@ -20,8 +20,8 @@ jobs:
         run: ./gradlew build -x test -x acceptanceTest -x asciidoctor
       - name: Docker build
         run: |
-          docker build . -t oeeen/woowacrew:lts
+          docker build . -t oeeen/woowacrew:latest
       - name: Dockerhub push
         run: |
           docker login -u ${{secrets.DOCKER_USER_NAME}} --password ${{secrets.DOCKER_USER_PASSWORD}}
-          docker push oeeen/woowacrew:lts
+          docker push oeeen/woowacrew:latest
