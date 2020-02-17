@@ -19,6 +19,13 @@ jobs:
           java-version: 1.8
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: copy secret
+        env:
+          application_config: ${{ secrets.APPLICATION_CONFIG }}
+          github_secret: ${{ secrets.GITHUB_CLIENT_AUTHORIZATION }}
+          slack_secret: ${{ secrets.SLACK_INFO }}
+          slack_test_secret: ${{ secrets.SLACK_TEST_INFO }}
+        run: echo "$application_config" > ./src/main/resources/application.yml | echo "$github_secret" > ./src/main/resources/github.yml | echo "$slack_secret" > ./src/main/resources/slack.yml | echo "$slack_test_secret" > ./src/test/resources/slack.yml
       - name: Build with Gradle
         run: ./gradlew build -x test -x acceptanceTest -x asciidoctor
       - name: Docker build
