@@ -151,3 +151,5 @@ task buildFrontEnd(type: NpmTask, dependsOn: axios) {
     description = "Build vue.js"
     args = ['run', 'build']
 }
+
+processResources.dependsOn 'buildFrontEnd'
