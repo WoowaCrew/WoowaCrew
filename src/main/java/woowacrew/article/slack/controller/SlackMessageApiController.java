@@ -3,10 +3,7 @@ package woowacrew.article.slack.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.article.slack.service.SlackMessageService;
@@ -14,6 +11,7 @@ import woowacrew.article.slack.service.SlackMessageService;
 import java.time.LocalDate;
 
 @RestController
+@RequestMapping("/api/slack")
 public class SlackMessageApiController {
     private static final Logger logger = LoggerFactory.getLogger(SlackMessageApiController.class);
 
@@ -23,13 +21,13 @@ public class SlackMessageApiController {
         this.slackMessageService = slackMessageService;
     }
 
-    @GetMapping("/api/slack/notice")
+    @GetMapping("/notice")
     public ResponseEntity<SlackMessageResponseDto> notice() {
         SlackMessageResponseDto slackMessage = slackMessageService.findRecentlyNoticeMessage();
         return ResponseEntity.ok(slackMessage);
     }
 
-    @PostMapping("/api/slack")
+    @PostMapping
     public ResponseEntity<String> save(SlackMessageRequestDto slackMessageRequestDto) {
         if (slackMessageRequestDto.getChallenge() != null) {
             return ResponseEntity.ok(slackMessageRequestDto.getChallenge());
@@ -42,7 +40,7 @@ public class SlackMessageApiController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/api/slack/birthday")
+    @PostMapping("/birthday-message")
     public ResponseEntity<Void> sendBirthdayMessage(@RequestBody String today) {
         slackMessageService.sendBirthdayMessage(LocalDate.parse(today));
         return ResponseEntity.ok().build();

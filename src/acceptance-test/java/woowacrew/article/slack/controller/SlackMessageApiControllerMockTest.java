@@ -86,7 +86,7 @@ public class SlackMessageApiControllerMockTest {
     void sendMessageToBirthdayUser() throws Exception {
         LocalDate date = LocalDate.of(1995, 6, 8);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/slack/birthday")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/slack/birthday-message")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(date.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
