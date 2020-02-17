@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - develop
-  pull_request:
-    branches:
-      - develop
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,8 +27,8 @@ jobs:
         run: ./gradlew clean build -x test -x acceptanceTest
       - name: Docker build
         run: |
-          docker build -t oeeen/woowacrew:v1 .
+          docker build -t oeeen/woowacrew:latest .
       - name: Dockerhub push
         run: |
           docker login -u ${{secrets.DOCKER_USER_NAME}} --password ${{secrets.DOCKER_USER_PASSWORD}}
-          docker push oeeen/woowacrew:v1
+          docker push oeeen/woowacrew:latest
