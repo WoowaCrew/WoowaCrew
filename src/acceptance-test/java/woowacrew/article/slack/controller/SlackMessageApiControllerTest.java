@@ -6,19 +6,13 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.TestPropertySource;
 import reactor.core.publisher.Mono;
 import woowacrew.article.slack.TestSlackConfig;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.common.controller.CommonTestController;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
 @TestPropertySource(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml,classpath:/application.yml")
 class SlackMessageApiControllerTest extends CommonTestController {
@@ -26,7 +20,7 @@ class SlackMessageApiControllerTest extends CommonTestController {
     @Autowired
     private TestSlackConfig slackConfig;
 
-    private JSONObject requestSlackMessageFromBot(String channelId, String authorId) throws JSONException {
+    public static JSONObject requestSlackMessageFromBot(String channelId, String authorId) throws JSONException {
         JSONObject result = requestSlackMessage(channelId, authorId);
         JSONObject event = (JSONObject) result.get("event");
 
@@ -35,7 +29,7 @@ class SlackMessageApiControllerTest extends CommonTestController {
         return result;
     }
 
-    private JSONObject requestSlackMessage(String channelId, String authorId) throws JSONException {
+    public static JSONObject requestSlackMessage(String channelId, String authorId) throws JSONException {
         JSONObject result = new JSONObject();
 
         JSONObject event = new JSONObject();
@@ -47,7 +41,7 @@ class SlackMessageApiControllerTest extends CommonTestController {
         return result;
     }
 
-    private JSONObject requestSlackMessageWithFile(String channelId, String authorId) throws JSONException {
+    public static JSONObject requestSlackMessageWithFile(String channelId, String authorId) throws JSONException {
         JSONObject result = requestSlackMessage(channelId, authorId);
         JSONObject event = (JSONObject) result.get("event");
 
@@ -58,72 +52,6 @@ class SlackMessageApiControllerTest extends CommonTestController {
         event.put("files", file);
         result.put("event", event);
         return result;
-    }
-
-    @Test
-    @DisplayName("정상적으로 슬랙 메시지를 저장한다.")
-    void createSlackMessage() throws JSONException {
-        String channelId = slackConfig.getChannelId();
-        String authorId = slackConfig.getAuthorId();
-
-        JSONObject request = requestSlackMessage(channelId, authorId);
-        webTestClient.post()
-                .uri("/api/slack")
-                .body(Mono.just(request.toString()), String.class)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    @DisplayName("정상적으로 파일이 포함된 슬랙 메시지를 저장한다.")
-    void createSlackMessageWithFile() throws JSONException {
-        String channelId = slackConfig.getChannelId();
-        String authorId = slackConfig.getAuthorId();
-
-        JSONObject request = requestSlackMessageWithFile(channelId, authorId);
-        webTestClient.post()
-                .uri("/api/slack")
-                .body(Mono.just(request.toString()), String.class)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .consumeWith(document("slack-api/create",
-                        requestFields(
-                                fieldWithPath("event.channel").type(JsonFieldType.STRING).description("채널 ID"),
-                                fieldWithPath("event.user").type(JsonFieldType.STRING).description("작성자 ID"),
-                                fieldWithPath("event.text").type(JsonFieldType.STRING).description("메세지 내용"),
-                                fieldWithPath("event.files.url_private_download").type(JsonFieldType.STRING).description("다운로드 링크"),
-                                fieldWithPath("event.files.permalink").type(JsonFieldType.STRING).description("슬랙으로 이동해서 다운받는 링크")
-                        )
-                ));
-    }
-
-    @Test
-    @DisplayName("올바르지 않은 채널 Id로 인해 슬랙 메세지를 저장하는데 실패한다.")
-    void createSlackMessageFailBecauseChannelId() throws JSONException {
-        String channelId = "invalid channel id";
-        String authorId = slackConfig.getAuthorId();
-
-        JSONObject request = requestSlackMessageWithFile(channelId, authorId);
-        webTestClient.post()
-                .uri("/api/slack")
-                .body(Mono.just(request.toString()), String.class)
-                .exchange()
-                .expectStatus().is5xxServerError();
-    }
-
-    @Test
-    @DisplayName("올바르지 않은 작성 Id로 인해 슬랙 메세지를 저장하는데 실패한다.")
-    void createSlackMessageFailBecauseAuthorId() throws JSONException {
-        String channelId = slackConfig.getChannelId();
-        String authorId = "invalid author id";
-
-        JSONObject request = requestSlackMessageWithFile(channelId, authorId);
-        webTestClient.post()
-                .uri("/api/slack")
-                .body(Mono.just(request.toString()), String.class)
-                .exchange()
-                .expectStatus().is5xxServerError();
     }
 
     @Test
@@ -166,17 +94,5 @@ class SlackMessageApiControllerTest extends CommonTestController {
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
                 .value("Location", Matchers.containsString("/login"));
-    }
-
-    @Test
-    @DisplayName("오늘 생일인 유저가 있으면 슬랙에 메세지를 보낸다")
-    void sendMessageToBirthdayUser() {
-        LocalDate date = LocalDate.of(1995, 6, 8);
-
-        webTestClient.post()
-                .uri("/api/slack/birthday")
-                .body(Mono.just(date.toString()), String.class)
-                .exchange()
-                .expectStatus().isOk();
     }
 }
