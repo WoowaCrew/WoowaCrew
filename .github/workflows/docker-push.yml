@@ -27,11 +27,11 @@ jobs:
           slack_test_secret: ${{ secrets.SLACK_TEST_INFO }}
         run: echo "$application_config" > ./src/main/resources/application.yml | echo "$github_secret" > ./src/main/resources/github.yml | echo "$slack_secret" > ./src/main/resources/slack.yml | echo "$slack_test_secret" > ./src/test/resources/slack.yml
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test -x acceptanceTest
       - name: Docker build
         run: |
-          docker build . -t oeeen/woowacrew:latest
+          docker build -t oeeen/woowacrew:v1 .
       - name: Dockerhub push
         run: |
           docker login -u ${{secrets.DOCKER_USER_NAME}} --password ${{secrets.DOCKER_USER_PASSWORD}}
-          docker push oeeen/woowacrew:latest
+          docker push oeeen/woowacrew:v1
