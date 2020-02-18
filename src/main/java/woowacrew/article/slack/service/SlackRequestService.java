@@ -35,7 +35,7 @@ public class SlackRequestService {
     public void sendMessage(String message) throws IOException {
         SlackSession session = SlackSessionFactory.createWebSocketSlackSession(slackConfig.getToken());
         session.connect();
-        SlackChannel channel = session.findChannelById(slackConfig.getChannelId());
+        SlackChannel channel = session.findChannelById(slackConfig.getNoticeChannelId());
         session.sendMessage(channel, message);
         session.disconnect();
     }
