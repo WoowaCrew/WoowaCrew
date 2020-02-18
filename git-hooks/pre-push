@@ -1,5 +1,6 @@
 # !/bin/bash
 
+echo "pre-push gogo"
 CURRENT_DIR=`pwd`
 PROJECT_ROOT="$( git rev-parse --show-toplevel )"
 
