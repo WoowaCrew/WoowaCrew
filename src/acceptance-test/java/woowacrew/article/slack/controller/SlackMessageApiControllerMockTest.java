@@ -5,10 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -26,9 +24,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static woowacrew.article.slack.controller.SlackMessageApiControllerTest.requestSlackMessage;
 import static woowacrew.article.slack.controller.SlackMessageApiControllerTest.requestSlackMessageWithFile;
 
-@WebMvcTest(controllers = SlackMessageApiController.class,
-        excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "woowacrew.security.*")})
-@AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
 public class SlackMessageApiControllerMockTest {
     @Autowired
     private MockMvc mockMvc;
