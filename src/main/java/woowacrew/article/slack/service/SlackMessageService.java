@@ -51,7 +51,7 @@ public class SlackMessageService {
 
     public void sendBirthdayMessage(LocalDate today) {
         List<User> users = userInternalService.findBirthdayBy(today);
-        if (users.size() != 0) {
+        if (!users.isEmpty()) {
             slackMessageInternalService.sendMessage(SlackMessageConverter.toMessage(users));
         }
     }
