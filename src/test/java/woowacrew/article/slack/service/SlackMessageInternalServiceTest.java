@@ -63,7 +63,7 @@ class SlackMessageInternalServiceTest {
     @DisplayName("정상적으로 슬랙에서 온 메시지를 저장한다")
     void save() throws IOException {
         String token = testSlackConfig.getToken();
-        String channelId = testSlackConfig.getChannelId();
+        String channelId = testSlackConfig.getTestChannelId();
         String authorId = testSlackConfig.getAuthorId();
 
         SlackMessage result = saveSlackMessage(token, channelId, authorId);
@@ -79,7 +79,7 @@ class SlackMessageInternalServiceTest {
     @DisplayName("유효하지 않은 토큰인 경우 저장하는데 실패한다.")
     void saveFailBecauseToken() throws IOException {
         String invalidToken = "Invalid token";
-        String channelId = testSlackConfig.getChannelId();
+        String channelId = testSlackConfig.getTestChannelId();
         String authorId = testSlackConfig.getAuthorId();
 
         when(slackRequestService.createSlackMessage(any())).thenThrow(CreateSlackMessageFailException.class);
@@ -122,7 +122,7 @@ class SlackMessageInternalServiceTest {
     @Test
     @DisplayName("최근 슬랙 메세지를 가져온다.")
     void findRecentlyMessage() throws IOException {
-        SlackMessage slackMessage = saveSlackMessage(testSlackConfig.getToken(), testSlackConfig.getChannelId(), testSlackConfig.getAuthorId());
+        SlackMessage slackMessage = saveSlackMessage(testSlackConfig.getToken(), testSlackConfig.getTestChannelId(), testSlackConfig.getAuthorId());
         when(slackMessageRepository.findFirstByOrderByCreatedDateDesc()).thenReturn(Optional.ofNullable(slackMessage));
 
         assertThat(slackMessageInternalService.findRecentlyMessage()).isEqualTo(slackMessage);

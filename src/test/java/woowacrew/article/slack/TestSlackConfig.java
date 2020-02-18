@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 @ConfigurationProperties(prefix = "slack")
 public class TestSlackConfig {
     private String token;
-    private String channelId;
+    private String testChannelId;
     private String authorId;
 
     public String getToken() {
@@ -20,12 +20,12 @@ public class TestSlackConfig {
         this.token = token;
     }
 
-    public String getChannelId() {
-        return channelId;
+    public String getTestChannelId() {
+        return testChannelId;
     }
 
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
+    public void setTestChannelId(String testChannelId) {
+        this.testChannelId = testChannelId;
     }
 
     public String getAuthorId() {

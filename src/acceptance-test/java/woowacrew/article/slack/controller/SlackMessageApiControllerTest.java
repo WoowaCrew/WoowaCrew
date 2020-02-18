@@ -57,7 +57,7 @@ class SlackMessageApiControllerTest extends CommonTestController {
     @Test
     @DisplayName("봇이 메세지를 보내는 경우 슬랙 메세지를 저장하는데 실패한다.")
     void createSlackMessageFailBecauseBot() throws JSONException {
-        String channelId = slackConfig.getChannelId();
+        String channelId = slackConfig.getTestChannelId();
         String authorId = slackConfig.getAuthorId();
 
         JSONObject request = requestSlackMessageFromBot(channelId, authorId);
