@@ -13,20 +13,28 @@ import woowacrew.article.slack.dto.SlackMessageRequestDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.article.slack.dto.SlackMessageResponseDtos;
 import woowacrew.article.slack.utils.SlackMessageConverter;
+import woowacrew.degree.domain.Degree;
+import woowacrew.user.domain.User;
+import woowacrew.user.service.UserInternalService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SlackMessageServiceTest {
     @Mock
     private SlackMessageInternalService slackMessageInternalService;
+
+    @Mock
+    private UserInternalService userInternalService;
 
     @InjectMocks
     private SlackMessageService slackMessageService;
@@ -105,5 +113,23 @@ class SlackMessageServiceTest {
             slackMessages.add(slackMessage);
         }
         return slackMessages;
+    }
+
+    @Test
+    @DisplayName("오늘 생일자가 없으면 슬랙 메세지를 보내지 않는다")
+    void sendBirthdayMessageFail() {
+        when(userInternalService.findBirthdayBy(any())).thenReturn(new ArrayList<>());
+
+        slackMessageService.sendBirthdayMessage(LocalDate.now());
+        verify(slackMessageInternalService, times(0)).sendMessage(any());
+    }
+
+    @Test
+    @DisplayName("오늘 생일자가 있으면 슬랙 메세지를 보낸다")
+    void sendBirthdayMessage() {
+        when(userInternalService.findBirthdayBy(any())).thenReturn(Collections.singletonList(new User("test", new Degree())));
+
+        slackMessageService.sendBirthdayMessage(LocalDate.now());
+        verify(slackMessageInternalService, times(1)).sendMessage(any());
     }
 }

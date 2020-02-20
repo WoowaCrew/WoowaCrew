@@ -8,11 +8,11 @@ import woowacrew.user.domain.exception.ForbiddenUserException;
 import woowacrew.user.domain.exception.NotExistNicknameException;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
     @Test
@@ -82,5 +82,23 @@ class UserTest {
         User user2 = new User("oauthId2", degree);
 
         assertThat(user1.isSameDegree(user2)).isTrue();
+    }
+
+    @Test
+    void isUpcomingBirthday() {
+        User user = new User("test", new Degree());
+        user.updateUserInfo("test", LocalDate.of(1995, 6, 8));
+
+        assertTrue(user.isUpcomingBirthday(Month.JUNE));
+        assertFalse(user.isUpcomingBirthday(Month.JULY));
+    }
+
+    @Test
+    void isBirthday() {
+        User user = new User("test", new Degree());
+        user.updateUserInfo("test", LocalDate.of(1995, 6, 8));
+
+        assertTrue(user.isBirthday(LocalDate.of(2020, 6, 8)));
+        assertFalse(user.isBirthday(LocalDate.of(2020, 6, 7)));
     }
 }
