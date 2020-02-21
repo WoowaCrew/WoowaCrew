@@ -3,10 +3,9 @@ package woowacrew.article.slack.controller;
 import org.hamcrest.Matchers;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.TestPropertySource;
 import reactor.core.publisher.Mono;
 import woowacrew.article.slack.TestSlackConfig;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
@@ -14,11 +13,14 @@ import woowacrew.common.controller.CommonTestController;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@TestPropertySource(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml,classpath:/application.yml")
 class SlackMessageApiControllerTest extends CommonTestController {
 
-    @Autowired
     private TestSlackConfig slackConfig;
+
+    @BeforeEach
+    void setUp() {
+        slackConfig = new TestSlackConfig();
+    }
 
     public static JSONObject requestSlackMessageFromBot(String channelId, String authorId) throws JSONException {
         JSONObject result = requestSlackMessage(channelId, authorId);

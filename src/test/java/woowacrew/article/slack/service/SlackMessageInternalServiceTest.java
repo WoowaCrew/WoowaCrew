@@ -1,10 +1,10 @@
 package woowacrew.article.slack.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -29,11 +29,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(properties = "spring.config.location=classpath:/slack.yml, classpath:/application.yml",
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SlackMessageInternalServiceTest {
 
-    @Autowired
     private TestSlackConfig testSlackConfig;
 
     @Mock
@@ -47,6 +45,11 @@ class SlackMessageInternalServiceTest {
 
     @InjectMocks
     private SlackMessageInternalService slackMessageInternalService;
+
+    @BeforeEach
+    void setUp() {
+        testSlackConfig = new TestSlackConfig();
+    }
 
     private SlackMessage saveSlackMessage(String token, String channelId, String authorId) throws IOException {
         SlackMessageRequestDto slackMessageRequestDto = new SlackMessageRequestDto(channelId, authorId, "hi", "test.com", "test2.com", false);
