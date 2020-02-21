@@ -1,0 +1,10 @@
+# !/bin/bash
+
+CURRENT_DIR=`pwd`
+PROJECT_ROOT="$( git rev-parse --show-toplevel )"
+
+cd $PROJECT_ROOT
+
+GRADLE_RESULT="$(./gradlew clean build)"
+
+exit $?
