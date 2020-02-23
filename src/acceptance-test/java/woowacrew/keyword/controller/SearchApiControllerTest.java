@@ -21,33 +21,23 @@ public class SearchApiControllerTest extends CommonTestController {
     void 정상적으로_검색어를_저장한다() {
         String cookie = loginWithCrew();
 
-        String result = webTestClient.post()
+        webTestClient.post()
                 .uri("/api/search")
                 .header("Cookie", cookie)
                 .body(BodyInserters.fromFormData("content", "testKeyword"))
                 .exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class)
-                .returnResult()
-                .getResponseBody();
-
-        assertThat(result).contains("testKeyword");
+                .expectStatus().isOk();
     }
 
     @Test
     void 키워드의_ID로_검색하여_조회수를_늘린다() {
         String cookie = loginWithCrew();
 
-        String result = webTestClient.post()
+        webTestClient.post()
                 .uri("/api/search/1")
                 .header("Cookie", cookie)
                 .exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class)
-                .returnResult()
-                .getResponseBody();
-
-        assertThat(result).isNotNull();
+                .expectStatus().isOk();
     }
 
     @Test
