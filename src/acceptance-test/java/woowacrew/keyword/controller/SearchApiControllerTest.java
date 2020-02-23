@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
+import woowacrew.keyword.domain.KeywordResponseDto;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,6 +51,22 @@ public class SearchApiControllerTest extends CommonTestController {
     }
 
     @Test
+    void 검색어_순위를_가져온다() {
+        String cookie = loginWithCrew();
+
+        List<KeywordResponseDto> result = webTestClient.get()
+                .uri("/api/search/rank")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(KeywordResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(result.size()).isNotEqualTo(0);
+    }
+
+    @Test
     void 로그인_하지_않으면_검색어를_저장하지_못한다() {
         webTestClient.post()
                 .uri("/api/search")
@@ -62,6 +81,16 @@ public class SearchApiControllerTest extends CommonTestController {
     void 로그인하지_않으면_검색어_ID로_검색하지_못한다() {
         webTestClient.post()
                 .uri("/api/search/1")
+                .exchange()
+                .expectStatus().is3xxRedirection()
+                .expectHeader()
+                .value("Location", Matchers.containsString("login"));
+    }
+
+    @Test
+    void 로그인하지_않으면_검색어_순위를_볼수없다() {
+        webTestClient.get()
+                .uri("/api/search/rank")
                 .exchange()
                 .expectStatus().is3xxRedirection()
                 .expectHeader()

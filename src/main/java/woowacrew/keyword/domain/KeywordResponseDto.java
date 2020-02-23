@@ -5,6 +5,9 @@ public class KeywordResponseDto {
     private String content;
     private Long views;
 
+    private KeywordResponseDto() {
+    }
+
     public KeywordResponseDto(Long id, String content, Long views) {
         this.id = id;
         this.content = content;
