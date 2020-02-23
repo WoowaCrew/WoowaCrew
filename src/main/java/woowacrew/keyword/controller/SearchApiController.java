@@ -3,6 +3,7 @@ package woowacrew.keyword.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import woowacrew.keyword.domain.KeywordConverter;
@@ -14,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 public class SearchApiController {
+
     private static final Logger logger = LoggerFactory.getLogger(SearchApiController.class);
 
     private KeywordService keywordService;
@@ -27,7 +29,14 @@ public class SearchApiController {
         KeywordResponseDto keywordResponseDto = keywordService.save(keywordRequestDto);
         logger.debug("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
 
-        String redirectUri = KeywordConverter.toRedirectUri(keywordResponseDto.getContent());
-        return ResponseEntity.ok(redirectUri);
+        return ResponseEntity.ok(KeywordConverter.toRedirectUri(keywordResponseDto.getContent()));
+    }
+
+    @PostMapping("/api/search/{id}")
+    public ResponseEntity<String> increaseViews(@PathVariable Long id) throws UnsupportedEncodingException {
+        KeywordResponseDto keywordResponseDto = keywordService.increaseViews(id);
+        logger.debug("Success keyword views to increase : {}", keywordResponseDto.getContent());
+
+        return ResponseEntity.ok(KeywordConverter.toRedirectUri(keywordResponseDto.getContent()));
     }
 }

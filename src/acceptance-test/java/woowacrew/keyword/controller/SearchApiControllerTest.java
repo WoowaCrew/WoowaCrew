@@ -32,10 +32,36 @@ public class SearchApiControllerTest extends CommonTestController {
     }
 
     @Test
+    void 키워드의_ID로_검색하여_조회수를_늘린다() {
+        String cookie = loginWithCrew();
+
+        String result = webTestClient.post()
+                .uri("/api/search/1")
+                .header("Cookie", cookie)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(result).isNotNull();
+    }
+
+    @Test
     void 로그인_하지_않으면_검색어를_저장하지_못한다() {
         webTestClient.post()
                 .uri("/api/search")
                 .body(BodyInserters.fromFormData("content", "test"))
+                .exchange()
+                .expectStatus().is3xxRedirection()
+                .expectHeader()
+                .value("Location", Matchers.containsString("login"));
+    }
+
+    @Test
+    void 로그인하지_않으면_검색어_ID로_검색하지_못한다() {
+        webTestClient.post()
+                .uri("/api/search/1")
                 .exchange()
                 .expectStatus().is3xxRedirection()
                 .expectHeader()
