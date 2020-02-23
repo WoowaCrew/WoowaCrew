@@ -31,13 +31,18 @@ export default {
     },
     search(key) {
       if (key.code === "Enter" || key.type === "click") {
-        axios
-          .post(this.$store.state.requestUrl + "/api/search", {
-            content: this.keyword
-          })
-          .finally(() => {
-            window.open("https://www.google.com/search?q=" + this.keyword);
-          });
+        if (this.keyword == null || this.keyword === "") {
+          return;
+        }
+        const formData = new FormData();
+        formData.append("content", this.keyword);
+        axios(this.$store.state.requestUrl + "/api/search", {
+          method: "post",
+          data: formData,
+          withCredentials: true
+        }).finally(() => {
+          window.open("https://www.google.com/search?q=" + this.keyword);
+        });
       }
     }
   }

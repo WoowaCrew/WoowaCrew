@@ -45,11 +45,15 @@ export default {
   }),
   methods: {
     updateKeywordRank() {
-      axios.get(this.$store.state.requestUrl + "/api/search/rank").then(response => {
-        if (response.request.responseURL.includes("/api/search/rank")) {
-          this.keywords = response.data;
-        }
-      });
+      axios
+        .get(this.$store.state.requestUrl + "/api/search/rank", {
+          withCredentials: true
+        })
+        .then(response => {
+          if (response.request.responseURL.includes("/api/search/rank")) {
+            this.keywords = response.data;
+          }
+        });
     }
   },
   created() {
