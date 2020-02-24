@@ -8,7 +8,6 @@ import woowacrew.keyword.domain.KeywordRequestDto;
 import woowacrew.keyword.domain.KeywordResponseDto;
 import woowacrew.keyword.service.KeywordService;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -30,7 +29,7 @@ public class SearchApiController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> search(KeywordRequestDto keywordRequestDto) throws UnsupportedEncodingException {
+    public ResponseEntity<Void> search(KeywordRequestDto keywordRequestDto) {
         KeywordResponseDto keywordResponseDto = keywordService.save(keywordRequestDto);
         logger.debug("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
 
@@ -38,7 +37,7 @@ public class SearchApiController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Void> increaseViews(@PathVariable Long id) throws UnsupportedEncodingException {
+    public ResponseEntity<Void> increaseViews(@PathVariable Long id) {
         KeywordResponseDto keywordResponseDto = keywordService.increaseViews(id);
         logger.debug("Success keyword views to increase : {}", keywordResponseDto.getContent());
 
