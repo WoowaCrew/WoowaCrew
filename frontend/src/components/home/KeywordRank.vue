@@ -11,7 +11,7 @@
         <v-list-item
           v-for="(keyword, index) in keywords"
           :key="keyword.id"
-          @click="move(keyword)"
+          @click="search(keyword)"
         >
           <v-list-item-icon>
             <v-icon color="black">
@@ -55,7 +55,7 @@ export default {
           }
         });
     },
-    move(keyword) {
+    search(keyword) {
       axios.get(this.$store.state.requestUrl + "/api/search/" + keyword.id, {
         withCredentials: true
       }).finally(() => {
