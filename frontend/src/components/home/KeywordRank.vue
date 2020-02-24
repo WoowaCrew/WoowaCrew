@@ -11,7 +11,7 @@
         <v-list-item
           v-for="(keyword, index) in keywords"
           :key="keyword.id"
-          @click="init"
+          @click="move(keyword)"
         >
           <v-list-item-icon>
             <v-icon color="black">
@@ -54,6 +54,13 @@ export default {
             this.keywords = response.data;
           }
         });
+    },
+    move(keyword) {
+      axios.get(this.$store.state.requestUrl + "/api/search/" + keyword.id, {
+        withCredentials: true
+      }).finally(() => {
+        window.open("https://www.google.com/search?q=" + keyword.content);
+      });
     }
   },
   created() {
