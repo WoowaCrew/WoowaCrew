@@ -33,7 +33,7 @@ public class SearchApiControllerTest extends CommonTestController {
     void 키워드의_ID로_검색하여_조회수를_늘린다() {
         String cookie = loginWithCrew();
 
-        webTestClient.post()
+        webTestClient.get()
                 .uri("/api/search/1")
                 .header("Cookie", cookie)
                 .exchange()
@@ -69,7 +69,7 @@ public class SearchApiControllerTest extends CommonTestController {
 
     @Test
     void 로그인하지_않으면_검색어_ID로_검색하지_못한다() {
-        webTestClient.post()
+        webTestClient.get()
                 .uri("/api/search/1")
                 .exchange()
                 .expectStatus().is3xxRedirection()

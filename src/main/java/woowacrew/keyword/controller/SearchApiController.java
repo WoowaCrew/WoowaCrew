@@ -28,18 +28,18 @@ public class SearchApiController {
         return ResponseEntity.ok(keywordResponseDtos);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> search(KeywordRequestDto keywordRequestDto) {
-        KeywordResponseDto keywordResponseDto = keywordService.save(keywordRequestDto);
-        logger.debug("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
+    @GetMapping("/{id}")
+    public ResponseEntity<Void> increaseViews(@PathVariable Long id) {
+        KeywordResponseDto keywordResponseDto = keywordService.increaseViews(id);
+        logger.debug("Success keyword views to increase : {}", keywordResponseDto.getContent());
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Void> increaseViews(@PathVariable Long id) {
-        KeywordResponseDto keywordResponseDto = keywordService.increaseViews(id);
-        logger.debug("Success keyword views to increase : {}", keywordResponseDto.getContent());
+    @PostMapping
+    public ResponseEntity<Void> search(KeywordRequestDto keywordRequestDto) {
+        KeywordResponseDto keywordResponseDto = keywordService.save(keywordRequestDto);
+        logger.debug("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
 
         return ResponseEntity.ok().build();
     }
