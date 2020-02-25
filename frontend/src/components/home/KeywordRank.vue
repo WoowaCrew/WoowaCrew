@@ -11,7 +11,7 @@
         <v-list-item
           v-for="(keyword, index) in keywords"
           :key="keyword.id"
-          @click="init"
+          @click="search(keyword)"
         >
           <v-list-item-icon>
             <v-icon color="black">
@@ -45,10 +45,21 @@ export default {
   }),
   methods: {
     updateKeywordRank() {
-      axios.get(this.$store.state.requestUrl + "/api/search/rank").then(response => {
-        if (response.request.responseURL.includes("/api/search/rank")) {
-          this.keywords = response.data;
-        }
+      axios
+        .get(this.$store.state.requestUrl + "/api/search/rank", {
+          withCredentials: true
+        })
+        .then(response => {
+          if (response.request.responseURL.includes("/api/search/rank")) {
+            this.keywords = response.data;
+          }
+        });
+    },
+    search(keyword) {
+      axios.get(this.$store.state.requestUrl + "/api/search/" + keyword.id, {
+        withCredentials: true
+      }).finally(() => {
+        window.open("https://www.google.com/search?q=" + keyword.content);
       });
     }
   },

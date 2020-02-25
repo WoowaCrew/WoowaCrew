@@ -44,7 +44,7 @@ public class SearchController {
     @PostMapping("/search")
     public String search(KeywordRequestDto keywordRequestDto) throws UnsupportedEncodingException {
         KeywordResponseDto keywordResponseDto = keywordService.save(keywordRequestDto);
-        logger.debug("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
+        logger.info("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
 
         return REDIRECT + GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponseDto.getContent(), UTF_8);
     }
@@ -55,6 +55,6 @@ public class SearchController {
         String url = GOOGLE_SEARCH_URL + URLEncoder.encode(keywordResponseDto.getContent(), UTF_8);
 
         response.setHeader("Location", url);
-        logger.debug("Success keyword views to increase : {}", keywordResponseDto.getContent());
+        logger.info("Success keyword views to increase : {}", keywordResponseDto.getContent());
     }
 }
