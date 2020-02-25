@@ -31,7 +31,7 @@ public class SearchApiController {
     @GetMapping("/{id}")
     public ResponseEntity<Void> increaseViews(@PathVariable Long id) {
         KeywordResponseDto keywordResponseDto = keywordService.increaseViews(id);
-        logger.debug("Success keyword views to increase : {}", keywordResponseDto.getContent());
+        logger.info("Success keyword views to increase : {}", keywordResponseDto.getContent());
 
         return ResponseEntity.ok().build();
     }
@@ -39,7 +39,7 @@ public class SearchApiController {
     @PostMapping
     public ResponseEntity<Void> search(KeywordRequestDto keywordRequestDto) {
         KeywordResponseDto keywordResponseDto = keywordService.save(keywordRequestDto);
-        logger.debug("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
+        logger.info("Google search : {}, Keyword Id : {}", keywordResponseDto.getContent(), keywordResponseDto.getId());
 
         return ResponseEntity.ok().build();
     }
