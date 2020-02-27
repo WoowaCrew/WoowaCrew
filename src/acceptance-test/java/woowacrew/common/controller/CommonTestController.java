@@ -13,6 +13,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import woowacrew.user.domain.UserRole;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
@@ -35,11 +36,11 @@ public class CommonTestController {
     protected WebTestClient webTestClient;
 
     protected String loginWithPrecourse() {
-        return loginWith("precousre", UserRole.ROLE_PRECOURSE.toString());
+        return loginWith(UUID.randomUUID().toString(), UserRole.ROLE_PRECOURSE.toString());
     }
 
     protected String loginWithCrew() {
-        return loginWith("crew", UserRole.ROLE_CREW.toString());
+        return loginWith(UUID.randomUUID().toString(), UserRole.ROLE_CREW.toString());
     }
 
     protected String loginWithCrew(String oauthId) {
@@ -48,11 +49,11 @@ public class CommonTestController {
     }
 
     protected String loginWithCoach() {
-        return loginWith("coach", UserRole.ROLE_COACH.toString());
+        return loginWith(UUID.randomUUID().toString(), UserRole.ROLE_COACH.toString());
     }
 
     protected String loginWithAdmin() {
-        return loginWith("admin", UserRole.ROLE_ADMIN.toString());
+        return loginWith(UUID.randomUUID().toString(), UserRole.ROLE_ADMIN.toString());
     }
 
     private String loginWith(String oauthId, String role) {
