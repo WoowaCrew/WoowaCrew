@@ -14,7 +14,6 @@ import woowacrew.common.controller.CommonTestController;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@TestPropertySource(properties = "spring.config.location=../WoowaCrew/src/test/resources/slack.yml,classpath:/application.yml")
 class SlackMessageApiControllerTest extends CommonTestController {
 
     @Autowired

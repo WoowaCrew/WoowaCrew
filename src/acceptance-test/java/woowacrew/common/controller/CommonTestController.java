@@ -8,6 +8,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseCookie;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import woowacrew.user.domain.UserRole;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
 @ExtendWith(RestDocumentationExtension.class)
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CommonTestController {
     @LocalServerPort
