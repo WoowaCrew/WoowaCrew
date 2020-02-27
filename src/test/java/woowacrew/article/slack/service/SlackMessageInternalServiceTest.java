@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import woowacrew.article.slack.TestSlackConfig;
+import org.springframework.test.context.ActiveProfiles;
 import woowacrew.article.slack.domain.SlackConfig;
 import woowacrew.article.slack.domain.SlackMessage;
 import woowacrew.article.slack.domain.SlackMessageRepository;
@@ -29,12 +29,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(properties = "spring.config.location=classpath:/slack.yml, classpath:/application.yml",
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class SlackMessageInternalServiceTest {
+    private static final String authorId = "UJ0NMF2M9";
 
     @Autowired
-    private TestSlackConfig testSlackConfig;
+    private SlackConfig testSlackConfig;
 
     @Mock
     private SlackMessageRepository slackMessageRepository;
@@ -47,6 +48,7 @@ class SlackMessageInternalServiceTest {
 
     @InjectMocks
     private SlackMessageInternalService slackMessageInternalService;
+
 
     private SlackMessage saveSlackMessage(String token, String channelId, String authorId) throws IOException {
         SlackMessageRequestDto slackMessageRequestDto = new SlackMessageRequestDto(channelId, authorId, "hi", "test.com", "test2.com", false);
@@ -63,8 +65,8 @@ class SlackMessageInternalServiceTest {
     @DisplayName("정상적으로 슬랙에서 온 메시지를 저장한다")
     void save() throws IOException {
         String token = testSlackConfig.getToken();
-        String channelId = testSlackConfig.getTestChannelId();
-        String authorId = testSlackConfig.getAuthorId();
+        String channelId = testSlackConfig.getNoticeChannelId();
+        String authorId = this.authorId;
 
         SlackMessage result = saveSlackMessage(token, channelId, authorId);
 
@@ -79,8 +81,8 @@ class SlackMessageInternalServiceTest {
     @DisplayName("유효하지 않은 토큰인 경우 저장하는데 실패한다.")
     void saveFailBecauseToken() throws IOException {
         String invalidToken = "Invalid token";
-        String channelId = testSlackConfig.getTestChannelId();
-        String authorId = testSlackConfig.getAuthorId();
+        String channelId = testSlackConfig.getNoticeChannelId();
+        String authorId = this.authorId;
 
         when(slackRequestService.createSlackMessage(any())).thenThrow(CreateSlackMessageFailException.class);
 
@@ -122,7 +124,7 @@ class SlackMessageInternalServiceTest {
     @Test
     @DisplayName("최근 슬랙 메세지를 가져온다.")
     void findRecentlyMessage() throws IOException {
-        SlackMessage slackMessage = saveSlackMessage(testSlackConfig.getToken(), testSlackConfig.getTestChannelId(), testSlackConfig.getAuthorId());
+        SlackMessage slackMessage = saveSlackMessage(testSlackConfig.getToken(), testSlackConfig.getNoticeChannelId(), this.authorId);
         when(slackMessageRepository.findFirstByOrderByCreatedDateDesc()).thenReturn(Optional.ofNullable(slackMessage));
 
         assertThat(slackMessageInternalService.findRecentlyMessage()).isEqualTo(slackMessage);
