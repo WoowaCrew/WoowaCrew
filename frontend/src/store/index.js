@@ -1,10 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
+import {AxiosSupplier} from "../api/httpClient/axios/axios.supplier";
 
 Vue.use(Vuex);
 
+var container = require("typedi").Container;
+let axiosSupplier = container.get(AxiosSupplier);
+let axiosInstance = axiosSupplier.get();
+
 export default new Vuex.Store({
+
   state: {
     userContext: null,
     requestUrl: window.location.origin
@@ -19,7 +24,7 @@ export default new Vuex.Store({
   },
   actions: {
     checkLogin({ commit, state }) {
-      axios
+      axiosInstance
         .get(state.requestUrl + "/login/info", {
           withCredentials: true
         })
@@ -35,7 +40,7 @@ export default new Vuex.Store({
         });
     },
     logout({ commit, state }) {
-      axios
+      axiosInstance
         .get(state.requestUrl + "/logout", {
           withCredentials: true
         })
