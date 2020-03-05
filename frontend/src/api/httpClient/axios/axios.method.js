@@ -1,13 +1,9 @@
-import {Method} from 'axios';
-
 export const method = {
   GET: "GET",
   POST: "POST",
   PUT: "PUT",
   DELETE: "DELETE",
 };
-
-const a = "a";
 
 const preparedMethods = new Map();
 preparedMethods.set(method.GET, (axiosInstance) => axiosInstance.get);
