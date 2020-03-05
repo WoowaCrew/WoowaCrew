@@ -1,14 +1,14 @@
-import {HttpClient} from "./http.client";
-import {AxiosSupplier} from "./axios/axios.supplier";
-import {method} from "./axios/axios.method";
+import {HttpClient} from "./httpClient";
+import {method} from "./axios/axiosMethod";
+import {AxiosSupplier} from "./axios/axiosSupplier";
 
 jest.mock('axios');
-jest.mock('./axios/axios.supplier');
-jest.mock('./axios/axios.method');
+jest.mock('./axios/axiosSupplier');
+jest.mock('./axios/axiosMethod');
 
 
 const mockAxios = require('axios');
-const mockAxiosSupplier = require('./axios/axios.supplier');
+const mockAxiosSupplier = require('./axios/axiosSupplier');
 mockAxiosSupplier.get = jest.fn().mockReturnValue(mockAxios);
 const container = require("typedi").Container;
 container.set(AxiosSupplier, mockAxiosSupplier);
@@ -25,7 +25,7 @@ describe('HttpClient', () => {
   });
 
   describe('#call()', () => {
-    const axiosMethod = require('./axios/axios.method');
+    const axiosMethod = require('./axios/axiosMethod');
     const httpClient = new HttpClient(container);
     test('should return response data', async () => {
       const responseData =  "response data";

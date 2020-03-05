@@ -1,5 +1,5 @@
-import {AxiosSupplier} from "./axios/axios.supplier";
-import {getMethod} from "./axios/axios.method";
+import {getMethod} from "./axios/axiosMethod";
+import {AxiosSupplier} from "./axios/axiosSupplier";
 
 
 export class HttpClient {

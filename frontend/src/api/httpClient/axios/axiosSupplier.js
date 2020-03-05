@@ -4,7 +4,7 @@ export class AxiosSupplier {
   axiosInstance;
   constructor() {
     this.axiosInstance = axios.create({
-      baseURL: window.location.origin,
+      baseURL: window.location.origin
     });
   }
 

@@ -1,5 +1,5 @@
-import {AxiosSupplier} from "./axios.supplier";
 import store from "../../../store/index.js";
+import {AxiosSupplier} from "./axiosSupplier";
 
 var Container = require("typedi").Container;
 

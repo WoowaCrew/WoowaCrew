@@ -1,4 +1,5 @@
-import {getMethod, method} from "./axios.method";
+import {getMethod, method} from "./axiosMethod";
+
 jest.mock('axios');
 let mockAxios = require('axios');
 
