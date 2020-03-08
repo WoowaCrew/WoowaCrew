@@ -36,3 +36,5 @@ log/
 
 ### fronted ###
 src/main/resources/static
+
+application-*.yml

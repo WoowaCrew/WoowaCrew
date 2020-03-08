@@ -3,24 +3,21 @@ package woowacrew.article.slack.controller;
 import org.hamcrest.Matchers;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
-import woowacrew.article.slack.TestSlackConfig;
+import woowacrew.article.slack.domain.SlackConfig;
 import woowacrew.article.slack.dto.SlackMessageResponseDto;
 import woowacrew.common.controller.CommonTestController;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SlackMessageApiControllerTest extends CommonTestController {
+    private static final String authorId = "UJ0NMF2M9";
 
-    private TestSlackConfig slackConfig;
-
-    @BeforeEach
-    void setUp() {
-        slackConfig = new TestSlackConfig();
-    }
+    @Autowired
+    private SlackConfig slackConfig;
 
     public static JSONObject requestSlackMessageFromBot(String channelId, String authorId) throws JSONException {
         JSONObject result = requestSlackMessage(channelId, authorId);
@@ -59,8 +56,8 @@ class SlackMessageApiControllerTest extends CommonTestController {
     @Test
     @DisplayName("봇이 메세지를 보내는 경우 슬랙 메세지를 저장하는데 실패한다.")
     void createSlackMessageFailBecauseBot() throws JSONException {
-        String channelId = slackConfig.getTestChannelId();
-        String authorId = slackConfig.getAuthorId();
+        String channelId = slackConfig.getNoticeChannelId();
+        String authorId = this.authorId;
 
         JSONObject request = requestSlackMessageFromBot(channelId, authorId);
         webTestClient.post()
