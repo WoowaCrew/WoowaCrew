@@ -2,6 +2,8 @@ package woowacrew.article.free.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.article.free.dto.ArticleResponseDto;
@@ -28,6 +30,7 @@ class ArticleApiControllerTest extends CommonTestController {
     private static final String CONTENT = "content";
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void 게시글_생성_테스트() {
         String cookie = loginWithCrew();
         String title = "title";
@@ -36,6 +39,7 @@ class ArticleApiControllerTest extends CommonTestController {
         webTestClient.post()
                 .uri("/api/articles")
                 .header("Cookie", cookie)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromFormData("title", title)
                         .with("content", content))
                 .exchange()

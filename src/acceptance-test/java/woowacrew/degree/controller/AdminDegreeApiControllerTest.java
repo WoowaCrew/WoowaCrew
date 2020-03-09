@@ -2,6 +2,7 @@ package woowacrew.degree.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.annotation.DirtiesContext;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.degree.dto.DegreeWithUserCountResponseDto;
 import woowacrew.user.dto.UserResponseDto;
@@ -16,6 +17,7 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 class AdminDegreeApiControllerTest extends CommonTestController {
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void 관리자가_아니면_접근이_거부된다() {
         String cookie = loginWithCrew();
         webTestClient.get()

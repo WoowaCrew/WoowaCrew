@@ -46,6 +46,10 @@ task acceptanceTest(type: Test) {
     testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
     classpath = sourceSets.acceptanceTest.runtimeClasspath
     outputs.dir snippetsDir
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+    }
     jacoco {
         enabled = true
         destinationFile = file("${buildDir}/jacoco/acceptance-test.exec")
