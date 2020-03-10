@@ -8,6 +8,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class AddressLoggingFilter extends GenericFilterBean {
@@ -15,7 +16,9 @@ public class AddressLoggingFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("Request Ip : {}, {}", request.getLocalAddr(), request.getRemoteAddr());
-        chain.doFilter(request,response);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        log.info("Request Ip : {}, {}", httpServletRequest.getHeader("x-real-ip"), httpServletRequest.getHeader("x-forwarded-for"));
+        log.info("Request api : {}", httpServletRequest.getRequestURI());
+        chain.doFilter(request, response);
     }
 }
