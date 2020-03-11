@@ -1,0 +1,44 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+
+group 'woowacrew'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'org.modelmapper:modelmapper:2.3.2'
+    implementation 'com.rometools:rome:1.12.0'
+    implementation 'com.ullink.slack:simpleslackapi:1.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.5.6'
+
+    runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
+
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit'
+    }
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+}

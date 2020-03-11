@@ -1,4 +1,7 @@
 include 'woowacrew'
 include 'woowacrew'
 include 'asdasd'
+include 'woowacrew-domain'
+include 'woowacrew-web'
+include 'woowacrew-web'
 
