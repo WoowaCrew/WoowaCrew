@@ -1,35 +1,72 @@
-//test {
-//    useJUnitPlatform()
-//    outputs.dir snippetsDir
-//    jacoco {
-//        enabled = true
-//        destinationFile = file("${buildDir}/jacoco/test.exec")
-//    }
-//}
-
-//asciidoctor {
-//    inputs.dir snippetsDir
-//    dependsOn acceptanceTest
-//}
-
-//bootJar {
-//    dependsOn asciidoctor
-//    from("${asciidoctor.outputDir}/html5") {
-//        into 'static/docs'
-//    }
-//}
-
-bootJar {
-    mainClassName = 'woowacrew.WoowaCrewApplication'
+ext {
+    acceptanceDir = 'src/acceptance-test'
+    set('snippetsDir', file("build/generated-snippets"))
 }
 
-//jacocoTestReport {
-//    executionData( [ file("${buildDir}/jacoco/acceptance-test.exec" ), file( "${buildDir}/jacoco/test.exec" ) ])
-//    reports {
-//        xml.enabled true
-//        html.enabled false
-//    }
-//}
+configurations {
+    developmentOnly
+
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+
+    acceptanceTestImplementation.extendsFrom(implementation, testImplementation, runtimeOnly)
+}
+
+sourceSets {
+    acceptanceTest {
+        compileClasspath += main.output + test.output + configurations.testRuntime
+        runtimeClasspath += output + compileClasspath
+        java.srcDir file("${acceptanceDir}/java")
+    }
+}
+
+task acceptanceTest(type: Test) {
+    useJUnitPlatform()
+    description = 'run acceptance test'
+    testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
+    outputs.dir snippetsDir
+    jacoco {
+        enabled = true
+        destinationFile = file("${buildDir}/jacoco/acceptance-test.exec")
+    }
+
+    dependsOn test
+}
+
+check {
+    dependsOn acceptanceTest
+}
+
+test {
+    useJUnitPlatform()
+    outputs.dir snippetsDir
+    jacoco {
+        enabled = true
+        destinationFile = file("${buildDir}/jacoco/test.exec")
+    }
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn acceptanceTest
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+
+jacocoTestReport {
+    executionData( [ file("${buildDir}/jacoco/acceptance-test.exec" ), file( "${buildDir}/jacoco/test.exec" ) ])
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
 
 apply plugin: 'com.moowork.node'
 

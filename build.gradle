@@ -40,6 +40,13 @@ project(':woowacrew-web'){
     }
 }
 
+project(':woowacrew-acceptance'){
+    dependencies {
+        compile project(':woowacrew-web')
+//        compile project(':woowacrew-domain')
+    }
+}
+
 //configure(javaProjects) {
 //    sourceCompatibility = 1.8
 //

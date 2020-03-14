@@ -2,3 +2,4 @@ rootProject.name = 'WoowaCrew'
 
 include 'woowacrew-domain'
 include 'woowacrew-web'
+include 'woowacrew-acceptance'
