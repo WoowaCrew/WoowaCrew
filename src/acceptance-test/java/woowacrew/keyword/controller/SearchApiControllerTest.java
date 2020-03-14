@@ -3,6 +3,7 @@ package woowacrew.keyword.controller;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
@@ -41,6 +42,7 @@ public class SearchApiControllerTest extends CommonTestController {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void 검색어_순위를_가져온다() {
         String cookie = loginWithCrew();
 
