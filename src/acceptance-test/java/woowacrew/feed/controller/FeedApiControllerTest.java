@@ -19,7 +19,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
-@AutoConfigureWebTestClient(timeout = "20000")
+@AutoConfigureWebTestClient(timeout = "40000")
 public class FeedApiControllerTest extends CommonTestController {
 
     @Test
