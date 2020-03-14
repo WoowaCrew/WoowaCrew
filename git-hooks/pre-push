@@ -5,6 +5,6 @@ PROJECT_ROOT="$( git rev-parse --show-toplevel )"
 
 cd $PROJECT_ROOT
 
-GRADLE_RESULT="$(./gradlew clean build)"
+GRADLE_RESULT="$(./gradlew --parallel clean build)"
 
 exit $?

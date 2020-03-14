@@ -1,15 +1,17 @@
 package woowacrew.security.provider;
 
-import woowacrew.degree.domain.Degree;
-import woowacrew.degree.domain.DegreeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import woowacrew.degree.domain.Degree;
+import woowacrew.degree.domain.DegreeRepository;
 import woowacrew.oauth.OauthService;
 import woowacrew.security.token.SocialPostAuthorizationToken;
-import woowacrew.user.domain.*;
+import woowacrew.user.domain.User;
+import woowacrew.user.domain.UserRepository;
+import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserContext;
 
 import java.util.Arrays;

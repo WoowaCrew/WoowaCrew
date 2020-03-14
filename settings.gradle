@@ -1,7 +1,4 @@
-include 'woowacrew'
-include 'woowacrew'
-include 'asdasd'
+rootProject.name = 'WoowaCrew'
+
 include 'woowacrew-domain'
 include 'woowacrew-web'
-include 'woowacrew-web'
-

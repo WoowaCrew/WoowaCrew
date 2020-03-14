@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import woowacrew.keyword.domain.Keyword;
-import woowacrew.keyword.domain.KeywordRequestDto;
 import woowacrew.keyword.domain.KeywordRepository;
+import woowacrew.keyword.domain.KeywordRequestDto;
 import woowacrew.keyword.domain.KeywordResponseDto;
 import woowacrew.keyword.exception.NotFoundKeyword;
 
