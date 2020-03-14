@@ -2,8 +2,7 @@ package woowacrew.keyword.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.reactive.function.BodyInserters;
 import woowacrew.common.controller.CommonTestController;
 import woowacrew.keyword.domain.KeywordResponseDto;
@@ -13,9 +12,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SearchApiControllerTest extends CommonTestController {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void 정상적으로_검색어를_저장한다() {
@@ -41,6 +37,7 @@ public class SearchApiControllerTest extends CommonTestController {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void 검색어_순위를_가져온다() {
         String cookie = loginWithCrew();
 
