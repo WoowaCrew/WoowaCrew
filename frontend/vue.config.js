@@ -1,4 +1,4 @@
 module.exports = {
   transpileDependencies: ["vuetify"],
-  outputDir: "../src/main/resources/static"
+  outputDir: "../woowacrew-web/src/main/resources/static"
 };

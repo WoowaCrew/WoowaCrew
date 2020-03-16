@@ -1,0 +1,138 @@
+ext {
+    acceptanceDir = 'src/acceptance-test'
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+configurations {
+    developmentOnly
+
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+
+    acceptanceTestImplementation.extendsFrom(implementation, testImplementation, runtimeOnly)
+}
+
+sourceSets {
+    acceptanceTest {
+        compileClasspath += main.output + test.output + configurations.testRuntime
+        runtimeClasspath += output + compileClasspath
+        java.srcDir file("${acceptanceDir}/java")
+    }
+}
+
+task acceptanceTest(type: Test) {
+    useJUnitPlatform()
+    description = 'run acceptance test'
+    testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
+    outputs.dir snippetsDir
+    jacoco {
+        enabled = true
+        destinationFile = file("${buildDir}/jacoco/acceptance-test.exec")
+    }
+
+    dependsOn test
+}
+
+check {
+    dependsOn acceptanceTest
+}
+
+test {
+    useJUnitPlatform()
+    outputs.dir snippetsDir
+    jacoco {
+        enabled = true
+        destinationFile = file("${buildDir}/jacoco/test.exec")
+    }
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn acceptanceTest
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+
+jacocoTestReport {
+    executionData( [ file("${buildDir}/jacoco/acceptance-test.exec" ), file( "${buildDir}/jacoco/test.exec" ) ])
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+
+apply plugin: 'com.moowork.node'
+
+node {
+    version = '12.13.1'
+    npmVersion = '6.12.1'
+    workDir = file("../frontend")
+    npmWorkDir = file("../frontend")
+    nodeModulesDir = file("../frontend")
+}
+
+task setUp(type: NpmTask) {
+    description = "Install Node.js packages"
+    args = ['install']
+    inputs.files file('package.json')
+    outputs.files file('node_modules')
+}
+
+task url(type: NpmTask, dependsOn: setUp) {
+    description = "Install url-search-params-polyfill packages"
+    args = ['install', 'url-search-params-polyfill', '--save']
+    outputs.files file('node_modules')
+}
+
+task axios(type: NpmTask, dependsOn: url) {
+    description = "Install Axios packages"
+    args = ['install', 'axios', '--save']
+    outputs.files file('node_modules')
+}
+
+task buildFrontEnd(type: NpmTask, dependsOn: axios) {
+    description = "Build vue.js"
+    args = ['run', 'build']
+}
+
+processResources.dependsOn 'buildFrontEnd'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'org.modelmapper:modelmapper:2.3.2'
+    implementation 'com.rometools:rome:1.12.0'
+    implementation 'com.ullink.slack:simpleslackapi:1.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.5.6'
+
+    runtimeOnly 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
+
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit'
+    }
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+}

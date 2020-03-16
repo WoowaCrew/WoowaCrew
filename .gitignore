@@ -1,5 +1,7 @@
 HELP.md
 .gradle
+**/out/
+**/build/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
@@ -35,6 +37,6 @@ slack.yml
 log/
 
 ### fronted ###
-src/main/resources/static
+woowacrew-web/src/main/resources/static
 
 application-*.yml
