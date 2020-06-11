@@ -2,17 +2,17 @@ package woowacrew.keyword.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.keyword.domain.Keyword;
-import woowacrew.keyword.domain.KeywordRequestDto;
 import woowacrew.keyword.domain.KeywordRepository;
+import woowacrew.keyword.domain.KeywordRequestDto;
 import woowacrew.keyword.domain.KeywordResponseDto;
 import woowacrew.keyword.exception.NotFoundKeyword;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 class KeywordServiceTest {
 
     @Mock
@@ -30,9 +29,6 @@ class KeywordServiceTest {
 
     @InjectMocks
     private KeywordService mockKeywordService;
-
-    @Autowired
-    private KeywordService keywordService;
 
     @Test
     void 정상적으로_검색어_저장() {
@@ -61,13 +57,29 @@ class KeywordServiceTest {
     @Test
     @DisplayName("조회수가 높은 순으로 검색어를 10개 정렬한다.")
     void 인기순으로_검색어를_10개_찾기() {
-        List<KeywordResponseDto> keywords = keywordService.keywordRank();
+        List<Keyword> keywords = getSortedKeywordsByViews();
 
-        assertTrue(keywords.size() <= 10);
+        when(mockKeywordRepository.findTop10ByOrderByViewsDesc()).thenReturn(keywords);
 
-        assertThat(keywords.get(0).getContent()).isEqualTo("최다 조회수 A");
-        assertThat(keywords.get(1).getContent()).isEqualTo("최다 조회수 B");
-        assertThat(keywords.get(2).getContent()).isEqualTo("최다 조회수 C");
+        List<KeywordResponseDto> result = mockKeywordService.keywordRank();
+
+        assertTrue(result.size() <= 10);
+
+        assertThat(result.get(0).getContent()).isEqualTo("최다 조회수 A");
+        assertThat(result.get(1).getContent()).isEqualTo("최다 조회수 B");
+        assertThat(result.get(2).getContent()).isEqualTo("최다 조회수 C");
+    }
+
+    private List<Keyword> getSortedKeywordsByViews() {
+        Keyword firstKeyword = new Keyword("최다 조회수 A");
+        Keyword secondKeyword = new Keyword("최다 조회수 B");
+        Keyword thirdKeyword = new Keyword("최다 조회수 C");
+
+        firstKeyword.increaseViews();
+        firstKeyword.increaseViews();
+        secondKeyword.increaseViews();
+
+        return Arrays.asList(firstKeyword, secondKeyword, thirdKeyword);
     }
 
     @Test
