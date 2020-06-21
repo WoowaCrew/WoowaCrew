@@ -21,7 +21,7 @@ jobs:
           application_config_dev: ${{ secrets.APPLICATION_CONFIG_DEV }}
           application_config_prod: ${{ secrets.APPLICATION_CONFIG_PROD }}
           application_config_test: ${{ secrets.APPLICATION_CONFIG_TEST }}
-        run: echo "$application_config_prod" > ./src/main/resources/application-prod.yml | echo "$application_config_dev" > ./src/main/resources/application-dev.yml | echo "$application_config_test" > ./src/test/resources/application-test.yml
+        run: echo "$application_config_prod" > ./application-prod.yml | echo "$application_config_dev" > ./application-dev.yml | echo "$application_config_test" > ./application-test.yml
       - name: Build with Gradle
         run: ./gradlew clean build jacocoTestReport
       - uses: codecov/codecov-action@v1
