@@ -57,12 +57,14 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, new Degree());
+        String githubId = "githubId";
+
+        User user = new User(userId, githubId, new Degree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
-        when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
+        when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId, githubId));
         when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(user));
 
         SocialPostAuthorizationToken postToken = (SocialPostAuthorizationToken) socialLoginAuthenticationProvider.authenticate(token);
@@ -76,12 +78,14 @@ class SocialLoginAuthenticationProviderTest {
         String code = "code";
         String accessToken = "accessToken";
         String userId = "woowacrew";
-        User user = new User(userId, new Degree());
+        String githubId = "githubId";
+
+        User user = new User(userId, githubId, new Degree());
 
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(code, code);
 
         when(oauthService.getAccessToken(code)).thenReturn(accessToken);
-        when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId));
+        when(oauthService.getUserInfo(accessToken)).thenReturn(new UserOauthDto(userId, githubId));
         when(userRepository.findByOauthId(userId)).thenReturn(Optional.ofNullable(null));
         when(degreeRepository.findByDegreeNumber(anyInt())).thenReturn(Optional.of(new Degree()));
         when(userRepository.save(any())).thenReturn(user);

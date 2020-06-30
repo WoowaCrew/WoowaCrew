@@ -16,5 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByDegreeIdAndNicknameNotNull(Long degreeId);
 
+    List<User> findByGithubIdIsNotNull();
+
     int countByDegreeIdAndNicknameNotNull(Long degreeId);
 }

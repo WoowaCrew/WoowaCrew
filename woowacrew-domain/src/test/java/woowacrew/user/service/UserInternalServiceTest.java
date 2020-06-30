@@ -97,4 +97,17 @@ class UserInternalServiceTest {
             assertTrue(user.isBirthday(today));
         }
     }
+
+    @Test
+    @DisplayName("유저의 모든 깃헙 아이디를 가져온다.")
+    void findAllGithubId() {
+        List<User> users = Arrays.asList(new User("oauthId", "githubId", new Degree()));
+
+        when(userRepository.findByGithubIdIsNotNull()).thenReturn(users);
+
+        List<String> result = userInternalService.findAllGithubId();
+
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0)).isEqualTo("githubId");
+    }
 }

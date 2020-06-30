@@ -17,6 +17,8 @@ public class User {
 
     private String oauthId;
 
+    private String githubId;
+
     private String nickname;
 
     private LocalDate birthday;
@@ -38,6 +40,13 @@ public class User {
     public User(String oauthId, UserRole role, Degree degree) {
         this.oauthId = oauthId;
         this.role = role;
+        this.degree = degree;
+    }
+
+    public User(String oauthId, String githubId, Degree degree) {
+        this.oauthId = oauthId;
+        this.githubId = githubId;
+        this.role = UserRole.ROLE_PRECOURSE;
         this.degree = degree;
     }
 
@@ -99,6 +108,8 @@ public class User {
     public String getOauthId() {
         return oauthId;
     }
+
+    public String getGithubId() { return githubId; }
 
     public String getNickname() {
         return nickname;
