@@ -1,3 +1,6 @@
+INSERT INTO DEGREE (id, degree_number) VALUES (1, 0);
+INSERT INTO DEGREE (id, degree_number) VALUES (2, 1);
+
 INSERT INTO user (id, oauth_id, nickname, role, degree_id) VALUES (1, '1234','woowacrew','ROLE_ADMIN',1);
 
 INSERT INTO article (id, title, content, author) VALUES (1, 'article A', 'content', 1);
