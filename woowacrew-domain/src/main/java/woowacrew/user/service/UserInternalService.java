@@ -102,4 +102,8 @@ public class UserInternalService {
                 .map(User::getGithubId)
                 .collect(Collectors.toList());
     }
+
+    public List<User> findByGithubIdIsNotNull() {
+        return userRepository.findByGithubIdIsNotNull();
+    }
 }

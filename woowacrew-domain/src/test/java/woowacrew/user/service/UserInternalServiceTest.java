@@ -110,4 +110,17 @@ class UserInternalServiceTest {
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0)).isEqualTo("githubId");
     }
+
+    @Test
+    @DisplayName("깃헙 아이디가 존재하는 유저를 모두 가져온다")
+    void findByGithubIdIsNotNull() {
+        List<User> users = Arrays.asList(new User("oauthId", "githubId", new Degree()));
+
+        when(userRepository.findByGithubIdIsNotNull()).thenReturn(users);
+
+        List<User> result = userInternalService.findByGithubIdIsNotNull();
+
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getGithubId()).isEqualTo("githubId");
+    }
 }
