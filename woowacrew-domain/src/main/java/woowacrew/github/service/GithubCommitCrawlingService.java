@@ -23,11 +23,11 @@ public class GithubCommitCrawlingService {
     private static final Logger log = LoggerFactory.getLogger(GithubCommitCrawlingService.class);
     private static final String GITHUB_DOMAIN = "https://github.com/";
 
-    public List<GithubCommitStateDto> fetchCommitState(String githubId, LocalDate currentDate) {
+    public List<GithubCommitStateDto> fetchCommitState(String githubId, LocalDate date) {
         try {
             Elements fullCommitState = this.fetchFullCommitState(githubId);
-            this.checkContainsDate(fullCommitState, currentDate);
-            return this.getCommitState(fullCommitState, currentDate.getYear(), currentDate.getMonthValue());
+            this.checkContainsDate(fullCommitState, date);
+            return this.getCommitState(fullCommitState, date.getYear(), date.getMonthValue());
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new GithubCommitCrawlingFailException();
@@ -40,13 +40,13 @@ public class GithubCommitCrawlingService {
         return document.getElementsByTag("g").get(0).getElementsByClass("day");
     }
 
-    private void checkContainsDate(Elements fullCommitState, LocalDate currentDate) {
+    private void checkContainsDate(Elements fullCommitState, LocalDate date) {
         int firstIndex = 0;
         int lastIndex = fullCommitState.size() - 1;
 
         LocalDate startDate = getDate(fullCommitState, firstIndex);
         LocalDate endDate = getDate(fullCommitState, lastIndex);
-        if (!isContainsDate(currentDate, startDate, endDate)) {
+        if (!isContainsDate(date, startDate, endDate)) {
             throw new DateRangeException();
         }
     }
@@ -55,11 +55,11 @@ public class GithubCommitCrawlingService {
         return LocalDate.parse(fullCommitState.get(index).attr("data-date"));
     }
 
-    private boolean isContainsDate(LocalDate currentDate, LocalDate startDate, LocalDate endDate) {
-        if (currentDate.isEqual(startDate) || currentDate.isEqual(endDate)) {
+    private boolean isContainsDate(LocalDate date, LocalDate startDate, LocalDate endDate) {
+        if (date.isEqual(startDate) || date.isEqual(endDate)) {
             return true;
         }
-        return currentDate.isAfter(startDate) && currentDate.isBefore(endDate);
+        return date.isAfter(startDate) && date.isBefore(endDate);
     }
 
     private List<GithubCommitStateDto> getCommitState(Elements fullDate, int currentYear, int currentMonth) {
