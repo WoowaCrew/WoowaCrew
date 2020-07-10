@@ -21,9 +21,9 @@ jobs:
           application_config_dev: ${{ secrets.APPLICATION_CONFIG_DEV }}
           application_config_prod: ${{ secrets.APPLICATION_CONFIG_PROD }}
           application_config_test: ${{ secrets.APPLICATION_CONFIG_TEST }}
-        run: echo "$application_config_prod" > ./src/main/resources/application-prod.yml | echo "$application_config_dev" > ./src/main/resources/application-dev.yml | echo "$application_config_test" > ./src/test/resources/application-test.yml
+        run: echo "$application_config_prod" > ./woowacrew-web/src/main/resources/application-prod.yml | echo "$application_config_dev" > ./woowacrew-web/src/main/resources/application-dev.yml | echo "$application_config_test" > ./woowacrew-web/src/main/resources/application-test.yml
       - name: Build with Gradle
-        run: ./gradlew clean build jacocoTestReport
+        run: ./gradlew woowacrew-web:clean woowacrew-web:build woowacrew-web:jacocoTestReport
       - uses: codecov/codecov-action@v1
         name: Upload report
         with:
