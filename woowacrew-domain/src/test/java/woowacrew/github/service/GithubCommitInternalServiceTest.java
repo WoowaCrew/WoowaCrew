@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
+import woowacrew.github.exception.GithubCommitCrawlingFailException;
 import woowacrew.user.domain.User;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -54,11 +56,7 @@ class GithubCommitInternalServiceTest {
         LocalDate date = LocalDate.of(2020, 6, 1);
         List<GithubCommitStateDto> commitState = createGithubCommitStateDto(date);
         User mockUser = mock(User.class);
-        List<User> users = new ArrayList<>();
-        users.add(mockUser);
-        users.add(mockUser);
-        users.add(mockUser);
-        users.add(mockUser);
+        List<User> users = getMockUsers(mockUser, 4);
 
         when(mockUser.getGithubId()).thenReturn("githubId");
         when(githubCommitCrawlingService.fetchCommitState(anyString(), any())).thenReturn(commitState);
@@ -66,5 +64,29 @@ class GithubCommitInternalServiceTest {
         githubCommitInternalService.save(users, date);
 
         verify(githubCommitRepository, times(users.size())).save(any());
+    }
+
+    private List<User> getMockUsers(User mockUser, int repetitionCount) {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < repetitionCount; i++) {
+            users.add(mockUser);
+        }
+        return users;
+    }
+
+    @Test
+    void 크롤링하는데_실패하는_경우_예외가_발생한다() {
+        User mockUser = mock(User.class);
+        List<User> users = getMockUsers(mockUser, 5);
+        LocalDate date = LocalDate.of(2020, 6, 1);
+
+        when(mockUser.getGithubId()).thenReturn("githubId");
+        when(githubCommitCrawlingService.fetchCommitState(anyString(), any()))
+                .thenThrow(GithubCommitCrawlingFailException.class);
+
+        assertThrows(GithubCommitCrawlingFailException.class, () -> githubCommitInternalService.save(users, date));
+
+        verify(githubCommitRepository, times(0)).save(any());
+        verify(githubCommitCrawlingService, times(1)).fetchCommitState(anyString(), any());
     }
 }
