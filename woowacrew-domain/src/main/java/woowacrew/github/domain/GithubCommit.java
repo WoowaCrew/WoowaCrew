@@ -23,7 +23,7 @@ public class GithubCommit {
         this.point = point;
     }
 
-    public void validateDate(LocalDate date) {
+    private void validateDate(LocalDate date) {
         if (date.getDayOfMonth() != 1) {
             throw new RuntimeException();
         }
