@@ -95,4 +95,15 @@ public class UserInternalService {
 
         return userRepository.save(user);
     }
+
+    public List<String> findAllGithubId() {
+        return userRepository.findByGithubIdIsNotNull()
+                .stream()
+                .map(User::getGithubId)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> findByGithubIdIsNotNull() {
+        return userRepository.findByGithubIdIsNotNull();
+    }
 }

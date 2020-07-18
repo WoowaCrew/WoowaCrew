@@ -48,6 +48,6 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
     private User registerUser(UserOauthDto userOauthDto) {
         Degree degree = degreeRepository.findByDegreeNumber(0)
                 .orElseThrow(DegreeBoundException::new);
-        return userRepository.save(new User(userOauthDto.getOauthId(), degree));
+        return userRepository.save(new User(userOauthDto.getOauthId(), userOauthDto.getGithubId(), degree));
     }
 }

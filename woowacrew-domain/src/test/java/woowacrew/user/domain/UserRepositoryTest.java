@@ -62,4 +62,11 @@ class UserRepositoryTest {
 
         assertThat(numberOfUser).isNotZero();
     }
+
+    @Test
+    void 깃헙_아이디가_있으면_가져온다() {
+        List<User> result = userRepository.findByGithubIdIsNotNull();
+
+        assertThat(result.size()).isNotZero();
+    }
 }
