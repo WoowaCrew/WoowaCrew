@@ -29,7 +29,7 @@
                     </div>
                 </v-list-item-content>
                 <span style="font-size: 0.9rem">
-                    {{ user.point }} Point
+                    {{ numberWithCommas(user.point) }} Point
                 </span>
             </v-list-item>
         </v-list-item-group>
@@ -80,6 +80,9 @@
                     case 2:
                         return "bronze"
                 }
+            },
+            numberWithCommas(point) {
+                return point.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
             }
         }
     }
