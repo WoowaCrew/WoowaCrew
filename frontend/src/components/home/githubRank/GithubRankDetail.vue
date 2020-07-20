@@ -3,8 +3,10 @@
             dark
             color="rgba(66,66,66)"
             height="100px"
-            class="d-flex align-center mb-6"
+            class="d-flex align-center mb-6 rank-hover"
             style="font-weight: bold"
+            :href="'https://github.com/' + githubId"
+            target="_blank"
     >
         <v-list-item>
             <v-list-item-avatar
@@ -51,5 +53,11 @@
 </script>
 
 <style scoped>
+    .rank-hover {
+        transition: 0.3s;
+    }
 
+    .rank-hover:hover {
+        box-shadow: 3px 5px 9px 6px rgba(0, 0, 0, 0.2);
+    }
 </style>
