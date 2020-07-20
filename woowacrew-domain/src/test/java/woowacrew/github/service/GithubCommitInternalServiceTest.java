@@ -5,16 +5,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import woowacrew.github.domain.GithubCommit;
 import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
+import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.exception.GithubCommitCrawlingFailException;
 import woowacrew.user.domain.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -88,5 +92,30 @@ class GithubCommitInternalServiceTest {
 
         verify(githubCommitRepository, times(0)).save(any());
         verify(githubCommitCrawlingService, times(1)).fetchCommitState(anyString(), any());
+    }
+
+    @Test
+    void 정상적으로_유저로_커밋_정보를_찾는다() {
+        User mockUser = mock(User.class);
+        GithubCommit mockGithubCommit = mock(GithubCommit.class);
+
+        when(githubCommitRepository.findByOrderByPointDesc()).thenReturn(Collections.singletonList(mockGithubCommit));
+        when(mockGithubCommit.isSameUser(any())).thenReturn(true);
+        when(mockGithubCommit.getPoint()).thenReturn(200);
+
+        UserCommitRankAndPointDto result = githubCommitInternalService.getCommitRankByUser(mockUser);
+
+        assertNotNull(result);
+        assertThat(result.getRank()).isEqualTo(1);
+        assertThat(result.getPoint()).isEqualTo(200);
+    }
+
+    @Test
+    void 커밋_정보를_못찾는_경우_예외가_발생한다() {
+        User mockUser = mock(User.class);
+
+        when(githubCommitRepository.findByOrderByPointDesc()).thenReturn(new ArrayList<>());
+
+        assertThrows(RuntimeException.class, () -> githubCommitInternalService.getCommitRankByUser(mockUser));
     }
 }

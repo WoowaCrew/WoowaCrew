@@ -2,7 +2,10 @@ package woowacrew.github.service;
 
 import org.springframework.stereotype.Service;
 import woowacrew.github.dto.GithubCommitRequestDto;
+import woowacrew.github.dto.UserCommitRankAndPointDto;
+import woowacrew.github.dto.UserCommitRankDetailResponseDto;
 import woowacrew.user.domain.User;
+import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.UserInternalService;
 
 import java.time.LocalDate;
@@ -27,5 +30,12 @@ public class GithubCommitService {
 
     private LocalDate createDate(GithubCommitRequestDto requestDto) {
         return LocalDate.of(requestDto.getYear(), requestDto.getMonth(), 1);
+    }
+
+    public UserCommitRankDetailResponseDto getMyCommitRank(UserContext userContext) {
+        User user = userInternalService.findById(userContext.getId());
+        int degree = user.getDegree().getDegreeNumber();
+        UserCommitRankAndPointDto userCommitRankAndPointDto = githubCommitInternalService.getCommitRankByUser(user);
+        return UserCommitRankDetailResponseDto.of(userCommitRankAndPointDto, degree, user.getGithubId(), user.getNickname());
     }
 }

@@ -4,6 +4,7 @@ import woowacrew.user.domain.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class GithubCommit {
@@ -27,5 +28,36 @@ public class GithubCommit {
         if (date.getDayOfMonth() != 1) {
             throw new RuntimeException();
         }
+    }
+
+    public boolean isSameUser(User user) {
+        return this.user.isSameUser(user);
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GithubCommit that = (GithubCommit) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "GithubCommit{" +
+                "id=" + id +
+                ", user=" + user +
+                ", date=" + date +
+                ", point=" + point +
+                '}';
     }
 }

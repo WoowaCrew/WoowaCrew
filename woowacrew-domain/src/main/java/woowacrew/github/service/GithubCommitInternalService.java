@@ -1,15 +1,17 @@
 package woowacrew.github.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import woowacrew.github.domain.GithubCommit;
 import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
+import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.utils.GithubCommitCalculator;
 import woowacrew.user.domain.User;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class GithubCommitInternalService {
@@ -33,5 +35,19 @@ public class GithubCommitInternalService {
     public int calculateCommitPoint(String githubId, LocalDate date) {
         List<GithubCommitStateDto> commitState = githubCommitCrawlingService.fetchCommitState(githubId, date);
         return GithubCommitCalculator.calculate(commitState);
+    }
+
+    @Transactional(readOnly = true)
+    public UserCommitRankAndPointDto getCommitRankByUser(User user) {
+        AtomicInteger rank = new AtomicInteger();
+        return this.githubCommitRepository.findByOrderByPointDesc()
+                .stream()
+                .filter(githubCommit -> {
+                    rank.set(rank.get() + 1);
+                    return githubCommit.isSameUser(user);
+                })
+                .findAny()
+                .map(githubCommit -> new UserCommitRankAndPointDto(rank.get(), githubCommit.getPoint()))
+                .orElseThrow(RuntimeException::new);
     }
 }
