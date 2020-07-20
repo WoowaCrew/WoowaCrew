@@ -20,7 +20,7 @@
                 <div style="font-weight: normal; font-size: 0.8rem">
                     {{ githubId }}
                 </div>
-                <div>
+                <div style="margin-top: 3px">
                     <span>{{ degree }}기 </span>
                     <span>{{ nickname }}</span>
                 </div>
@@ -58,6 +58,7 @@
     }
 
     .rank-hover:hover {
-        box-shadow: 3px 5px 9px 6px rgba(0, 0, 0, 0.2);
+        box-shadow: 1px 3px 7px 4px rgba(0, 0, 0, 0.2);
+        background-color: rgba(66, 66, 66, 0.9) !important;
     }
 </style>
