@@ -11,6 +11,7 @@ import woowacrew.github.dto.GithubCommitStateDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.exception.GithubCommitCrawlingFailException;
 import woowacrew.github.exception.NotFoundCommitRankException;
+import woowacrew.github.exception.SaveGithubCommitFailException;
 import woowacrew.user.domain.User;
 
 import java.time.LocalDate;
@@ -89,7 +90,7 @@ class GithubCommitInternalServiceTest {
         when(githubCommitCrawlingService.fetchCommitState(anyString(), any()))
                 .thenThrow(GithubCommitCrawlingFailException.class);
 
-        assertThrows(GithubCommitCrawlingFailException.class, () -> githubCommitInternalService.save(users, date));
+        assertThrows(SaveGithubCommitFailException.class, () -> githubCommitInternalService.save(users, date));
 
         verify(githubCommitRepository, times(0)).save(any());
         verify(githubCommitCrawlingService, times(1)).fetchCommitState(anyString(), any());
