@@ -11,7 +11,7 @@
         <v-list-item>
             <v-list-item-avatar
                     size="62"
-                    color="rgb(250,250,250)"
+                    :class="setBadgeColor(rank)"
                     style="color: #424242; box-shadow: 1px 1px 4px gray inset"
             >
                 {{ rank }}위
@@ -42,9 +42,18 @@
                 nickname: "효오",
                 githubId: "hyojaekim",
                 point: 31232,
+                badgeColor: {
+                    1: "gold",
+                    2: "silver",
+                    3: "bronze",
+                }
             }
         },
         methods: {
+            setBadgeColor(rank) {
+                let badgeColor = this.badgeColor[rank];
+                return badgeColor ? badgeColor : "default";
+            },
             numberWithCommas(point) {
                 return point.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
             }
@@ -60,5 +69,9 @@
     .rank-hover:hover {
         box-shadow: 1px 3px 7px 4px rgba(0, 0, 0, 0.2);
         background-color: rgba(66, 66, 66, 0.9) !important;
+    }
+
+    .default {
+        background: rgb(250, 250, 250);
     }
 </style>

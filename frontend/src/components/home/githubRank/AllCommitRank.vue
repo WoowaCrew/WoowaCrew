@@ -14,7 +14,7 @@
             >
                 <v-list-item-avatar
                         size="62"
-                        :class="setRankColor(rank)"
+                        :class="setBadgeColor(rank + 1)"
                         style="box-shadow: 1px 1px 4px gray inset"
                 >
                     {{ rank + 1 }}위
@@ -67,19 +67,17 @@
                         point: 3000,
                     },
                 ],
+                badgeColor: {
+                    1: "gold",
+                    2: "silver",
+                    3: "bronze",
+                },
             }
         },
         methods: {
-            setRankColor(rank) {
-                if (rank > 2) return "default"
-                switch (rank) {
-                    case 0:
-                        return "gold"
-                    case 1:
-                        return "silver"
-                    case 2:
-                        return "bronze"
-                }
+            setBadgeColor(rank) {
+                let badgeColor = this.badgeColor[rank];
+                return badgeColor ? badgeColor : "default";
             },
             numberWithCommas(point) {
                 return point.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
