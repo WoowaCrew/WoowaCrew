@@ -5,43 +5,47 @@
             height="100px"
             class="d-flex align-center mb-6 rank-hover"
             style="font-weight: bold"
-            :href="'https://github.com/' + githubId"
+            :href="'https://github.com/' + user.githubId"
             target="_blank"
     >
         <v-list-item>
             <v-list-item-avatar
                     size="62"
-                    :class="setBadgeColor(rank)"
+                    :class="setBadgeColor(user.rank)"
                     style="color: #424242; box-shadow: 1px 1px 4px gray inset"
             >
-                {{ rank }}위
+                {{ user.rank }}위
             </v-list-item-avatar>
             <v-list-item-content style="font-size: 1.3rem">
                 <div style="font-weight: normal; font-size: 0.8rem">
-                    {{ githubId }}
+                    {{ user.githubId }}
                 </div>
                 <div style="margin-top: 3px">
-                    <span>{{ degree }}기 </span>
-                    <span>{{ nickname }}</span>
+                    <span>{{ user.degree }}기 </span>
+                    <span>{{ user.nickname }}</span>
                 </div>
             </v-list-item-content>
             <span>
-                {{ numberWithCommas(point) }} Point
+                {{ numberWithCommas(user.point) }} Point
             </span>
         </v-list-item>
     </v-card>
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "MyCommitRank",
         data() {
             return {
-                rank: 1,
-                degree: 1,
-                nickname: "효오",
-                githubId: "hyojaekim",
-                point: 31232,
+                user: {
+                    rank: "",
+                    degree: "",
+                    nickname: "",
+                    githubId: "",
+                    point: "",
+                },
                 badgeColor: {
                     1: "gold",
                     2: "silver",
@@ -57,6 +61,17 @@
             numberWithCommas(point) {
                 return point.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
             }
+        },
+        created() {
+            axios
+                .get(this.$store.state.requestUrl + "/api/github/commit/rank/me", {
+                    withCredentials: true
+                })
+                .then(res => {
+                    if (res.status === 200) {
+                        this.user = res.data
+                    }
+                });
         }
     }
 </script>

@@ -39,7 +39,7 @@
 
       <BirthdayList style="padding-top: 70px"/>
     </v-row>
-    <GithubRank></GithubRank>
+<!--    <GithubRank></GithubRank>-->
   </div>
 </template>
 
