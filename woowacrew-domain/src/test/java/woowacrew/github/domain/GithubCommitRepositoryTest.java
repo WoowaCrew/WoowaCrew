@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -41,5 +41,23 @@ class GithubCommitRepositoryTest {
             assertNotNull(githubCommit);
         }
         assertThat(result.size()).isEqualTo(users.size());
+    }
+
+    @Test
+    void 유저와_날짜를_받아서_존재하는_정보가_없는_경우() {
+        userRepository.findById(1L).ifPresent(user -> {
+            boolean result = githubCommitRepository.existsByUserAndDate(user, LocalDate.of(1990, 5, 1));
+            assertFalse(result);
+        });
+    }
+
+    @Test
+    void 유저와_날짜를_받아서_존재하는_정보가_있는_경우() {
+        userRepository.findById(1L).ifPresent(user -> {
+            LocalDate date = LocalDate.of(2020, 6, 1);
+            githubCommitRepository.save(new GithubCommit(user, date, 100));
+            boolean result = githubCommitRepository.existsByUserAndDate(user, date);
+            assertTrue(result);
+        });
     }
 }
