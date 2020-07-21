@@ -1,19 +1,19 @@
 <template>
     <v-row>
         <v-col sm="7">
-            <GithubRankDetail></GithubRankDetail>
-            <AllRank></AllRank>
+            <MyCommitRank></MyCommitRank>
+            <AllCommitRank></AllCommitRank>
         </v-col>
     </v-row>
 </template>
 
 <script>
-    import AllRank from "./githubRank/AllRank";
-    import GithubRankDetail from "./githubRank/GithubRankDetail";
+    import AllCommitRank from "./githubRank/AllCommitRank";
+    import MyCommitRank from "./githubRank/MyCommitRank";
 
     export default {
         name: "GithubRank",
-        components: {GithubRankDetail, AllRank}
+        components: {MyCommitRank, AllCommitRank}
     }
 </script>
 

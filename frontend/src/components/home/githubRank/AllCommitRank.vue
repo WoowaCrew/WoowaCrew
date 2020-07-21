@@ -38,7 +38,7 @@
 
 <script>
     export default {
-        name: "AllRank",
+        name: "AllCommitRank",
         data() {
             return {
                 users: [

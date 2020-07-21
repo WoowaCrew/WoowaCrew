@@ -34,7 +34,7 @@
 
 <script>
     export default {
-        name: "GithubRankDetail",
+        name: "MyCommitRank",
         data() {
             return {
                 rank: 1,
