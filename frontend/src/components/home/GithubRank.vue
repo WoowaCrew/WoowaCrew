@@ -1,7 +1,7 @@
 <template>
     <v-row>
         <v-col sm="7">
-            <MyCommitRank></MyCommitRank>
+            <MyCommitRank v-if="isCrew"></MyCommitRank>
             <AllCommitRank></AllCommitRank>
         </v-col>
     </v-row>
@@ -13,7 +13,15 @@
 
     export default {
         name: "GithubRank",
-        components: {MyCommitRank, AllCommitRank}
+        components: {MyCommitRank, AllCommitRank},
+        computed: {
+            isCrew() {
+                if (this.$store.state.userContext === null) {
+                    return false;
+                }
+                return this.$store.state.userContext.role !== "ROLE_PRECOURSE";
+            }
+        },
     }
 </script>
 
