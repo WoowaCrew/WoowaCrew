@@ -30,14 +30,15 @@ class GithubCommitRepositoryTest {
     @Test
     void 정상적으로_1위부터_50위까지_커밋_랭킹을_가져온다() {
         List<User> users = userRepository.findAll();
+        LocalDate date = LocalDate.of(2020, 6, 1);
+
         for (int i = 0; i < users.size(); i++) {
-            githubCommitRepository.save(new GithubCommit(users.get(i), LocalDate.of(2020, 6, 1), i * 100));
+            githubCommitRepository.save(new GithubCommit(users.get(i), date, i * 100));
         }
 
-        List<GithubCommit> result = githubCommitRepository.findByOrderByPointDesc();
+        List<GithubCommit> result = githubCommitRepository.findByDateOrderByPointDesc(date);
         for (GithubCommit githubCommit : result) {
             assertNotNull(githubCommit);
-            System.out.println(githubCommit.getPoint());
         }
         assertThat(result.size()).isEqualTo(users.size());
     }

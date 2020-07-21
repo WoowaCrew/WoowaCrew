@@ -7,6 +7,7 @@ import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.exception.NotFoundCommitRankException;
+import woowacrew.github.utils.DateConverter;
 import woowacrew.github.utils.GithubCommitCalculator;
 import woowacrew.user.domain.User;
 
@@ -41,7 +42,8 @@ public class GithubCommitInternalService {
     @Transactional(readOnly = true)
     public UserCommitRankAndPointDto getCommitRankByUser(User user) {
         AtomicInteger rank = new AtomicInteger();
-        return this.githubCommitRepository.findByOrderByPointDesc()
+        LocalDate date = DateConverter.toFirstDay(LocalDate.now());
+        return this.githubCommitRepository.findByDateOrderByPointDesc(date)
                 .stream()
                 .filter(githubCommit -> {
                     rank.set(rank.get() + 1);

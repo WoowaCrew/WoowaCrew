@@ -100,7 +100,7 @@ class GithubCommitInternalServiceTest {
         User mockUser = mock(User.class);
         GithubCommit mockGithubCommit = mock(GithubCommit.class);
 
-        when(githubCommitRepository.findByOrderByPointDesc()).thenReturn(Collections.singletonList(mockGithubCommit));
+        when(githubCommitRepository.findByDateOrderByPointDesc(any())).thenReturn(Collections.singletonList(mockGithubCommit));
         when(mockGithubCommit.isSameUser(any())).thenReturn(true);
         when(mockGithubCommit.getPoint()).thenReturn(200);
 
@@ -115,7 +115,7 @@ class GithubCommitInternalServiceTest {
     void 커밋_정보를_못찾는_경우_예외가_발생한다() {
         User mockUser = mock(User.class);
 
-        when(githubCommitRepository.findByOrderByPointDesc()).thenReturn(new ArrayList<>());
+        when(githubCommitRepository.findByDateOrderByPointDesc(any())).thenReturn(new ArrayList<>());
 
         assertThrows(NotFoundCommitRankException.class, () -> githubCommitInternalService.getCommitRankByUser(mockUser));
     }
