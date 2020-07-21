@@ -10,6 +10,7 @@ import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.exception.GithubCommitCrawlingFailException;
+import woowacrew.github.exception.NotFoundCommitRankException;
 import woowacrew.user.domain.User;
 
 import java.time.LocalDate;
@@ -116,6 +117,6 @@ class GithubCommitInternalServiceTest {
 
         when(githubCommitRepository.findByOrderByPointDesc()).thenReturn(new ArrayList<>());
 
-        assertThrows(RuntimeException.class, () -> githubCommitInternalService.getCommitRankByUser(mockUser));
+        assertThrows(NotFoundCommitRankException.class, () -> githubCommitInternalService.getCommitRankByUser(mockUser));
     }
 }

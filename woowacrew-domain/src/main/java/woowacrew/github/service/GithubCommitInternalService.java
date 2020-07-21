@@ -6,6 +6,7 @@ import woowacrew.github.domain.GithubCommit;
 import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
+import woowacrew.github.exception.NotFoundCommitRankException;
 import woowacrew.github.utils.GithubCommitCalculator;
 import woowacrew.user.domain.User;
 
@@ -46,8 +47,8 @@ public class GithubCommitInternalService {
                     rank.set(rank.get() + 1);
                     return githubCommit.isSameUser(user);
                 })
-                .findAny()
+                .findFirst()
                 .map(githubCommit -> new UserCommitRankAndPointDto(rank.get(), githubCommit.getPoint()))
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(NotFoundCommitRankException::new);
     }
 }
