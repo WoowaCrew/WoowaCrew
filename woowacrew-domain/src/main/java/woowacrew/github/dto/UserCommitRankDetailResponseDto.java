@@ -3,34 +3,32 @@ package woowacrew.github.dto;
 public class UserCommitRankDetailResponseDto {
 
     private int rank;
-    private int degree;
     private int point;
+    private int degree;
     private String githubId;
     private String nickname;
 
     private UserCommitRankDetailResponseDto() {
     }
 
-    public static UserCommitRankDetailResponseDto of(UserCommitRankAndPointDto userCommitRankAndPointDto, int degree, String githubId, String nickname) {
-        UserCommitRankDetailResponseDto result = new UserCommitRankDetailResponseDto();
-        result.rank = userCommitRankAndPointDto.getRank();
-        result.degree = degree;
-        result.point = userCommitRankAndPointDto.getPoint();
-        result.githubId = githubId;
-        result.nickname = nickname;
-        return result;
+    public UserCommitRankDetailResponseDto(int rank, int point, int degree, String githubId, String nickname) {
+        this.rank = rank;
+        this.point = point;
+        this.degree = degree;
+        this.githubId = githubId;
+        this.nickname = nickname;
     }
 
     public int getRank() {
         return rank;
     }
 
-    public int getDegree() {
-        return degree;
-    }
-
     public int getPoint() {
         return point;
+    }
+
+    public int getDegree() {
+        return degree;
     }
 
     public String getGithubId() {

@@ -36,6 +36,8 @@ public class GithubCommitService {
         User user = userInternalService.findById(userContext.getId());
         int degree = user.getDegree().getDegreeNumber();
         UserCommitRankAndPointDto userCommitRankAndPointDto = githubCommitInternalService.getCommitRankByUser(user);
-        return UserCommitRankDetailResponseDto.of(userCommitRankAndPointDto, degree, user.getGithubId(), user.getNickname());
+        int rank = userCommitRankAndPointDto.getRank();
+        int point = userCommitRankAndPointDto.getPoint();
+        return new UserCommitRankDetailResponseDto(rank, point, degree, user.getGithubId(), user.getNickname());
     }
 }

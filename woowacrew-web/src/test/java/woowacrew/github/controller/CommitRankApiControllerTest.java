@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
-import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.dto.UserCommitRankDetailResponseDto;
 import woowacrew.github.service.GithubCommitService;
 import woowacrew.security.SecurityContextSupport;
@@ -43,9 +42,7 @@ class CommitRankApiControllerTest {
 
     @Test
     void 정상적으로_로그인중인_유저의_커밋_랭킹_정보를_가져온다() throws Exception {
-        UserCommitRankAndPointDto userCommitRankAndPointDto = new UserCommitRankAndPointDto(1, 300);
-        UserCommitRankDetailResponseDto userCommitRankDetailResponseDto = UserCommitRankDetailResponseDto.of(userCommitRankAndPointDto, 1, "hyo", "hyoo");
-
+        UserCommitRankDetailResponseDto userCommitRankDetailResponseDto = new UserCommitRankDetailResponseDto(1, 300, 1, "hyo", "hyoo");
         when(githubCommitService.getMyCommitRank(userContext)).thenReturn(userCommitRankDetailResponseDto);
 
         mockMvc.perform(get("/api/github/commit/rank/me"))
