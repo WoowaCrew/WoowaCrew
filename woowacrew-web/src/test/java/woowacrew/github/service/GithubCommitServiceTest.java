@@ -38,7 +38,7 @@ class GithubCommitServiceTest {
         githubCommitService.save(new GithubCommitRequestDto(2020, 6));
 
         verify(userInternalService, times(1)).findByGithubIdIsNotNull();
-        verify(githubCommitInternalService, times(1)).save(any(), any());
+        verify(githubCommitInternalService, times(1)).save(anyList(), any(LocalDate.class));
     }
 
     @Test
@@ -48,7 +48,7 @@ class GithubCommitServiceTest {
 
         UserContext userContext = new UserContext(1L, user.getOauthId(), user.getNickname(), UserRole.ROLE_PRECOURSE);
 
-        when(userInternalService.findById(any())).thenReturn(user);
+        when(userInternalService.findById(anyLong())).thenReturn(user);
         when(githubCommitInternalService.getCommitRankByUser(user)).thenReturn(new UserCommitRankAndPointDto(1, 200));
 
         UserCommitRankDetailResponseDto result = githubCommitService.getMyCommitRank(userContext);

@@ -1,5 +1,6 @@
 package woowacrew.github.service;
 
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -65,11 +66,11 @@ class GithubCommitInternalServiceTest {
         List<User> users = getMockUsers(mockUser, 4);
 
         when(mockUser.getGithubId()).thenReturn("githubId");
-        when(githubCommitCrawlingService.fetchCommitState(anyString(), any())).thenReturn(commitState);
+        when(githubCommitCrawlingService.fetchCommitState(anyString(), any(LocalDate.class))).thenReturn(commitState);
 
         githubCommitInternalService.save(users, date);
 
-        verify(githubCommitRepository, times(users.size())).save(any());
+        verify(githubCommitRepository, times(users.size())).save(any(GithubCommit.class));
     }
 
     private List<User> getMockUsers(User mockUser, int repetitionCount) {
@@ -87,13 +88,13 @@ class GithubCommitInternalServiceTest {
         LocalDate date = LocalDate.of(2020, 6, 1);
 
         when(mockUser.getGithubId()).thenReturn("githubId");
-        when(githubCommitCrawlingService.fetchCommitState(anyString(), any()))
+        when(githubCommitCrawlingService.fetchCommitState(anyString(), any(LocalDate.class)))
                 .thenThrow(GithubCommitCrawlingFailException.class);
 
         assertThrows(SaveGithubCommitFailException.class, () -> githubCommitInternalService.save(users, date));
 
-        verify(githubCommitRepository, times(0)).save(any());
-        verify(githubCommitCrawlingService, times(1)).fetchCommitState(anyString(), any());
+        verify(githubCommitRepository, times(0)).save(any(GithubCommit.class));
+        verify(githubCommitCrawlingService, times(1)).fetchCommitState(anyString(), any(LocalDate.class));
     }
 
     @Test
@@ -101,8 +102,8 @@ class GithubCommitInternalServiceTest {
         User mockUser = mock(User.class);
         GithubCommit mockGithubCommit = mock(GithubCommit.class);
 
-        when(githubCommitRepository.findByDateOrderByPointDesc(any())).thenReturn(Collections.singletonList(mockGithubCommit));
-        when(mockGithubCommit.isSameUser(any())).thenReturn(true);
+        when(githubCommitRepository.findByDateOrderByPointDesc(any(LocalDate.class))).thenReturn(Collections.singletonList(mockGithubCommit));
+        when(mockGithubCommit.isSameUser(any(User.class))).thenReturn(true);
         when(mockGithubCommit.getPoint()).thenReturn(200);
 
         UserCommitRankAndPointDto result = githubCommitInternalService.getCommitRankByUser(mockUser);
@@ -116,7 +117,7 @@ class GithubCommitInternalServiceTest {
     void 커밋_정보를_못찾는_경우_예외가_발생한다() {
         User mockUser = mock(User.class);
 
-        when(githubCommitRepository.findByDateOrderByPointDesc(any())).thenReturn(new ArrayList<>());
+        when(githubCommitRepository.findByDateOrderByPointDesc(any(LocalDate.class))).thenReturn(Lists.emptyList());
 
         assertThrows(NotFoundCommitRankException.class, () -> githubCommitInternalService.getCommitRankByUser(mockUser));
     }

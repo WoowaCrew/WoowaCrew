@@ -35,7 +35,7 @@ class GithubCommitTest {
         User mockUser = mock(User.class);
         GithubCommit githubCommit = new GithubCommit(mockUser, LocalDate.of(2020, 6, 1), 300);
 
-        when(mockUser.isSameUser(any())).thenReturn(true);
+        when(mockUser.isSameUser(any(User.class))).thenReturn(true);
 
         assertTrue(githubCommit.isSameUser(mockUser));
     }
