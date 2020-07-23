@@ -32,7 +32,7 @@ public class GithubCommitService {
         return LocalDate.of(requestDto.getYear(), requestDto.getMonth(), 1);
     }
 
-    public UserCommitRankDetailResponseDto getMyCommitRank(UserContext userContext) {
+    public UserCommitRankDetailResponseDto getLoginUserCommitRank(UserContext userContext) {
         User user = userInternalService.findById(userContext.getId());
         int degree = user.getDegree().getDegreeNumber();
         UserCommitRankAndPointDto userCommitRankAndPointDto = githubCommitInternalService.getCommitRankByUser(user);

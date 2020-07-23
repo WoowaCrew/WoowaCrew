@@ -43,7 +43,7 @@ class CommitRankApiControllerTest {
     @Test
     void 정상적으로_로그인중인_유저의_커밋_랭킹_정보를_가져온다() throws Exception {
         UserCommitRankDetailResponseDto userCommitRankDetailResponseDto = new UserCommitRankDetailResponseDto(1, 300, 1, "hyo", "hyoo");
-        when(githubCommitService.getMyCommitRank(userContext)).thenReturn(userCommitRankDetailResponseDto);
+        when(githubCommitService.getLoginUserCommitRank(userContext)).thenReturn(userCommitRankDetailResponseDto);
 
         mockMvc.perform(get("/api/github/commit/rank/me"))
                 .andExpect(status().isOk());

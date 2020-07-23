@@ -51,7 +51,7 @@ class GithubCommitServiceTest {
         when(userInternalService.findById(anyLong())).thenReturn(user);
         when(githubCommitInternalService.getCommitRankByUser(user)).thenReturn(new UserCommitRankAndPointDto(1, 200));
 
-        UserCommitRankDetailResponseDto result = githubCommitService.getMyCommitRank(userContext);
+        UserCommitRankDetailResponseDto result = githubCommitService.getLoginUserCommitRank(userContext);
 
         assertNotNull(result);
         assertThat(result.getRank()).isEqualTo(1);

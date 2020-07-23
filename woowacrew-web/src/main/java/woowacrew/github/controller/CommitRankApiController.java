@@ -20,7 +20,7 @@ public class CommitRankApiController {
 
     @GetMapping("/me")
     public ResponseEntity<UserCommitRankDetailResponseDto> getMyCommitRank(UserContext userContext) {
-        UserCommitRankDetailResponseDto result = githubCommitService.getMyCommitRank(userContext);
+        UserCommitRankDetailResponseDto result = githubCommitService.getLoginUserCommitRank(userContext);
         return ResponseEntity.ok(result);
     }
 }
