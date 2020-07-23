@@ -20,7 +20,7 @@ public class GithubCommit {
     private GithubCommit() {
     }
 
-    public GithubCommit(User user, LocalDate date, Integer point) {
+    public GithubCommit(User user, LocalDate date, int point) {
         validateDate(date);
         this.user = user;
         this.date = date;
