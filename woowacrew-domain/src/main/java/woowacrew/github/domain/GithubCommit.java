@@ -9,6 +9,8 @@ import java.util.Objects;
 @Entity
 public class GithubCommit {
 
+    private static final int FIRST_DAY = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +30,7 @@ public class GithubCommit {
     }
 
     private void validateDate(LocalDate date) {
-        if (date.getDayOfMonth() != 1) {
+        if (date.getDayOfMonth() != FIRST_DAY) {
             throw new RuntimeException();
         }
     }
