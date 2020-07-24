@@ -67,7 +67,7 @@ public class GithubCommitInternalService {
         return this.githubCommitRepository.findByDateOrderByPointDesc(date)
                 .stream()
                 .filter(githubCommit -> {
-                    rank.set(rank.get() + 1);
+                    rank.getAndIncrement();
                     return githubCommit.isSameUser(user);
                 })
                 .findFirst()
