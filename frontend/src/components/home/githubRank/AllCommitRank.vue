@@ -9,7 +9,7 @@
                     :key="user.githubId"
                     class="rank-hover"
                     style="height: 100px; font-weight: bold"
-                    :href="'https://github.com/' + user.githubId"
+                    :href="`https://github.com/${user.githubId}`"
                     target="_blank"
             >
                 <v-list-item-avatar

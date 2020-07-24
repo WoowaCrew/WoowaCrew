@@ -33,20 +33,23 @@
 
   export default {
     name: "App",
-    data: () => ({
-      drawer: true
-    }),
+    data() {
+      return {
+        drawer: true
+      }
+    },
     components: {
       LoginHeader,
       SideNav
     },
     methods: {
       toggle() {
-      this.drawer = !this.drawer;
+        this.drawer = !this.drawer;
+      }
     }
-  }
-};
+  };
 </script>
+
 <style>
   .gold {
     background-color: #fec84e;

@@ -5,7 +5,7 @@
             height="100px"
             class="d-flex align-center mb-6 rank-hover"
             style="font-weight: bold"
-            :href="'https://github.com/' + user.githubId"
+            :href="`https://github.com/${user.githubId}`"
             target="_blank"
     >
         <v-list-item>
@@ -64,7 +64,7 @@
         },
         created() {
             axios
-                .get(this.$store.state.requestUrl + "/api/github/commit/rank/me", {
+                .get(`${this.$store.state.requestUrl}/api/github/commit/rank/me`, {
                     withCredentials: true
                 })
                 .then(res => {
