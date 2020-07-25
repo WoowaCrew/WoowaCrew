@@ -5,9 +5,8 @@
         <SearchBox/>
         <v-window
                 v-model="window"
-                class="elevation-1"
+                class="elevation-1 main-card-content"
                 vertical
-                style="height: 500px; max-height: 500px; overflow: scroll; background-color: white"
         >
           <v-window-item
                   v-for="indexContent in indexContents"
@@ -63,8 +62,17 @@
       indexContents: [
         {id: 1, button: NoticeButton, content: Notice},
         {id: 2, button: KeywordRankButton, content: KeywordRank}
-    ],
-    window: 0
-  })
-};
+      ],
+      window: 0
+    })
+  };
 </script>
+
+<style scoped>
+  .main-card-content {
+    height: 500px;
+    max-height: 500px;
+    overflow: scroll;
+    background-color: white;
+  }
+</style>

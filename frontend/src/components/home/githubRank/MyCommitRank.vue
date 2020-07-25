@@ -3,21 +3,20 @@
             dark
             color="rgba(66,66,66)"
             height="100px"
-            class="d-flex align-center mb-6 rank-hover"
-            style="font-weight: bold"
+            class="d-flex align-center mb-6 rank"
             :href="`https://github.com/${user.githubId}`"
             target="_blank"
     >
         <v-list-item>
             <v-list-item-avatar
                     size="62"
+                    class="badge"
                     :class="setBadgeColor(user.rank)"
-                    style="color: #424242; box-shadow: 1px 1px 4px gray inset"
             >
                 {{ user.rank }}위
             </v-list-item-avatar>
             <v-list-item-content style="font-size: 1.3rem">
-                <div style="font-weight: normal; font-size: 0.8rem">
+                <div class="github-id">
                     {{ user.githubId }}
                 </div>
                 <div style="margin-top: 3px">
@@ -77,13 +76,24 @@
 </script>
 
 <style scoped>
-    .rank-hover {
+    .rank {
+        font-weight: bold;
         transition: 0.3s;
     }
 
-    .rank-hover:hover {
+    .rank:hover {
         box-shadow: 1px 3px 7px 4px rgba(0, 0, 0, 0.2);
         background-color: rgba(66, 66, 66, 0.9) !important;
+    }
+
+    .badge {
+        color: #424242;
+        box-shadow: 1px 1px 4px gray inset;
+    }
+
+    .github-id {
+        font-weight: normal;
+        font-size: 0.8rem;
     }
 
     .default {

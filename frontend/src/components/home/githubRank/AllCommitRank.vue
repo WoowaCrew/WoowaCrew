@@ -7,20 +7,19 @@
             <v-list-item
                     v-for="(user, rank) in users"
                     :key="user.githubId"
-                    class="rank-hover"
-                    style="height: 100px; font-weight: bold"
+                    class="rank"
                     :href="`https://github.com/${user.githubId}`"
                     target="_blank"
             >
                 <v-list-item-avatar
                         size="62"
+                        class="badge"
                         :class="setBadgeColor(rank + 1)"
-                        style="box-shadow: 1px 1px 4px gray inset"
                 >
                     {{ rank + 1 }}위
                 </v-list-item-avatar>
                 <v-list-item-content style="font-size: 1.1rem">
-                    <div style="font-weight: normal; font-size: 0.8rem">
+                    <div class="github-id">
                         {{ user.githubId }}
                     </div>
                     <div style="margin-top: 3px;">
@@ -87,12 +86,23 @@
 </script>
 
 <style scoped>
-    .rank-hover {
+    .rank {
+        height: 100px;
+        font-weight: bold;
         transition: 0.3s;
     }
 
-    .rank-hover:hover {
+    .rank:hover {
         box-shadow: 2px 3px 8px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .badge {
+        box-shadow: 1px 1px 4px gray inset;
+    }
+
+    .github-id {
+        font-weight: normal;
+        font-size: 0.8rem;
     }
 
     .default {
