@@ -57,18 +57,27 @@ export default {
     },
     numberWithCommas(point) {
       return point.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    },
+    async setMyCommitRank() {
+      const user = await this.fetchMyCommitRank();
+      if (!user) {
+        this.user = user;
+      }
+    },
+    fetchMyCommitRank() {
+      axios
+        .get(`${this.$store.state.requestUrl}/api/github/commit/rank/me`, {
+          withCredentials: true
+        })
+        .then(res => {
+          if (res.status === 200) {
+            return res.data;
+          }
+        });
     }
   },
   created() {
-    axios
-      .get(`${this.$store.state.requestUrl}/api/github/commit/rank/me`, {
-        withCredentials: true
-      })
-      .then(res => {
-        if (res.status === 200) {
-          this.user = res.data;
-        }
-      });
+    this.setMyCommitRank();
   }
 };
 </script>
