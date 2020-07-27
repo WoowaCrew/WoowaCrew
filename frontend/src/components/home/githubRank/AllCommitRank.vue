@@ -16,7 +16,7 @@
           class="badge"
           :class="setBadgeColor(rank + 1)"
         >
-          {{ rank + 1 }}위
+          <span>{{ rank + 1 }}위</span>
         </v-list-item-avatar>
         <v-list-item-content style="font-size: 1.1rem">
           <div class="github-id">

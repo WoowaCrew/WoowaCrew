@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-left: 40px; margin-top: 50px">
+  <v-container style="margin-left: 40px; margin-top: 30px">
     <v-row>
       <v-col sm="7">
         <SearchBox />
@@ -12,7 +12,7 @@
             v-for="indexContent in indexContents"
             :key="indexContent.id"
           >
-            <div v-bind:is="indexContent.content" />
+            <v-content :is="indexContent.content" />
           </v-window-item>
         </v-window>
 
@@ -27,8 +27,8 @@
             :key="indexContent.id"
             v-slot:default="{ active, toggle }"
           >
-            <div
-              v-bind:is="indexContent.button"
+            <v-content
+              :is="indexContent.button"
               :input-value="active"
               @click="toggle"
             />
@@ -39,7 +39,7 @@
       <BirthdayList style="padding-top: 70px" />
     </v-row>
     <!--    <GithubRank></GithubRank>-->
-  </div>
+  </v-container>
 </template>
 
 <script>
