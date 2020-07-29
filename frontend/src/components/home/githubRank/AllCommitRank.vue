@@ -36,36 +36,13 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "AllCommitRank",
   data() {
     return {
-      users: [
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        },
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        },
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        },
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        }
-      ],
+      users: [],
       badgeColor: {
         1: "gold",
         2: "silver",
@@ -80,7 +57,25 @@ export default {
     },
     numberWithCommas(point) {
       return point.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    },
+    async setTotalCommitRank() {
+      const totalCommitRank = await this.fetchTotalCommitRank();
+      if (totalCommitRank) {
+        this.users = totalCommitRank;
+      }
+    },
+    fetchTotalCommitRank() {
+      return axios
+        .get(`${this.$store.state.requestUrl}/api/github/commit/rank`)
+        .then(res => {
+          if (res.status === 200) {
+            return res.data;
+          }
+        });
     }
+  },
+  created() {
+    this.setTotalCommitRank();
   }
 };
 </script>
