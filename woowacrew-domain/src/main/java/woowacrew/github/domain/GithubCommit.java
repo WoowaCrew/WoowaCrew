@@ -43,6 +43,10 @@ public class GithubCommit {
         return point;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

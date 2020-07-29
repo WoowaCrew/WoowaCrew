@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.degree.domain.Degree;
+import woowacrew.github.domain.GithubCommit;
 import woowacrew.github.dto.GithubCommitRequestDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.dto.UserCommitRankDetailResponseDto;
@@ -15,6 +16,8 @@ import woowacrew.user.dto.UserContext;
 import woowacrew.user.service.UserInternalService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -59,5 +62,35 @@ class GithubCommitServiceTest {
         assertThat(result.getPoint()).isEqualTo(200);
         assertThat(result.getGithubId()).isEqualTo("githubId");
         assertThat(result.getNickname()).isEqualTo("hyo");
+    }
+
+    @Test
+    void 전체_커밋_랭킹을_가져온다() {
+        int count = 3;
+        List<GithubCommit> githubCommits = getGithubCommits(count);
+
+        when(githubCommitInternalService.getTotalCommitRank(any(LocalDate.class))).thenReturn(githubCommits);
+
+        List<UserCommitRankDetailResponseDto> result = githubCommitService.getTotalCommitRank();
+
+        assertNotNull(result);
+        assertThat(result.size()).isEqualTo(count);
+    }
+
+    private List<GithubCommit> getGithubCommits(int count) {
+        List<GithubCommit> result = new ArrayList<>();
+        GithubCommit mockGithubCommit = mock(GithubCommit.class);
+        User mockUser = mock(User.class);
+        Degree degree = mock(Degree.class);
+        for (int i = 0; i < count; i++) {
+            result.add(mockGithubCommit);
+        }
+        when(mockGithubCommit.getPoint()).thenReturn(100);
+        when(mockGithubCommit.getUser()).thenReturn(mockUser);
+        when(mockUser.getGithubId()).thenReturn("githubId");
+        when(mockUser.getDegree()).thenReturn(degree);
+        when(mockUser.getNickname()).thenReturn("nickname");
+        when(degree.getDegreeNumber()).thenReturn(1);
+        return result;
     }
 }

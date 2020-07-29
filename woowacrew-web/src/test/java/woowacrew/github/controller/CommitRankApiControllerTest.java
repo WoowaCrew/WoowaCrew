@@ -48,4 +48,10 @@ class CommitRankApiControllerTest {
         mockMvc.perform(get("/api/github/commit/rank/me"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void 정상적으로_전체_랭킹을_가져온다() throws Exception {
+        mockMvc.perform(get("/api/github/commit/rank"))
+                .andExpect(status().isOk());
+    }
 }

@@ -8,6 +8,8 @@ import woowacrew.github.dto.UserCommitRankDetailResponseDto;
 import woowacrew.github.service.GithubCommitService;
 import woowacrew.user.dto.UserContext;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/github/commit/rank")
 public class CommitRankApiController {
@@ -16,6 +18,12 @@ public class CommitRankApiController {
 
     public CommitRankApiController(GithubCommitService githubCommitService) {
         this.githubCommitService = githubCommitService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserCommitRankDetailResponseDto>> getTotalCommitRank() {
+        List<UserCommitRankDetailResponseDto> commitRank = githubCommitService.getTotalCommitRank();
+        return ResponseEntity.ok(commitRank);
     }
 
     @GetMapping("/me")

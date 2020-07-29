@@ -10,6 +10,7 @@ import woowacrew.user.service.UserInternalService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GithubCommitService {
@@ -29,7 +30,16 @@ public class GithubCommitService {
     }
 
     private LocalDate createDate(GithubCommitRequestDto requestDto) {
-        return LocalDate.of(requestDto.getYear(), requestDto.getMonth(), 1);
+        return createDate(requestDto.getYear(), requestDto.getMonth());
+    }
+
+    private LocalDate createDate() {
+        LocalDate date = LocalDate.now();
+        return createDate(date.getYear(), date.getMonthValue());
+    }
+
+    private LocalDate createDate(int year, int month) {
+        return LocalDate.of(year, month, 1);
     }
 
     public UserCommitRankDetailResponseDto getLoginUserCommitRank(UserContext userContext) {
@@ -39,5 +49,20 @@ public class GithubCommitService {
         int rank = userCommitRankAndPointDto.getRank();
         int point = userCommitRankAndPointDto.getPoint();
         return new UserCommitRankDetailResponseDto(rank, point, degree, user.getGithubId(), user.getNickname());
+    }
+
+    public List<UserCommitRankDetailResponseDto> getTotalCommitRank() {
+        LocalDate date = createDate();
+        return this.githubCommitInternalService.getTotalCommitRank(date)
+                .stream()
+                .map(githubCommit -> {
+                    User user = githubCommit.getUser();
+                    return new UserCommitRankDetailResponseDto(
+                            githubCommit.getPoint(),
+                            user.getDegree().getDegreeNumber(),
+                            user.getGithubId(),
+                            user.getNickname());
+                })
+                .collect(Collectors.toList());
     }
 }
