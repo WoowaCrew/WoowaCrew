@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
+@Transactional
 public class GithubCommitInternalService {
 
     private static final Logger log = LoggerFactory.getLogger(GithubCommitInternalService.class);
@@ -31,7 +32,6 @@ public class GithubCommitInternalService {
         this.githubCommitRepository = githubCommitRepository;
     }
 
-    @Transactional
     public void save(List<User> users, LocalDate date) {
         for (User user : users) {
             saveGithubCommit(user, date);
@@ -53,7 +53,6 @@ public class GithubCommitInternalService {
         return GithubCommitCalculator.calculate(commitState);
     }
 
-    @Transactional
     public UserCommitRankAndPointDto getCommitRankByUser(User user) {
         LocalDate date = DateConverter.toFirstDay(LocalDate.now());
         if (!githubCommitRepository.existsByUserAndDate(user, date)) {
@@ -73,5 +72,10 @@ public class GithubCommitInternalService {
                 .findFirst()
                 .map(githubCommit -> new UserCommitRankAndPointDto(rank.get(), githubCommit.getPoint()))
                 .orElseThrow(NotFoundCommitRankException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GithubCommit> getTotalCommitRank(LocalDate date) {
+        return githubCommitRepository.findByDateOrderByPointDesc(date);
     }
 }
