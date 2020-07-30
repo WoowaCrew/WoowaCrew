@@ -9,6 +9,7 @@ import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.exception.NotFoundCommitRankException;
+import woowacrew.github.exception.NotFoundMyTodayCommitRankException;
 import woowacrew.github.exception.SaveGithubCommitFailException;
 import woowacrew.github.utils.DateConverter;
 import woowacrew.github.utils.GithubCommitCalculator;
@@ -56,7 +57,7 @@ public class GithubCommitInternalService {
     public UserCommitRankAndPointDto getCommitRankByUser(User user) {
         LocalDate date = DateConverter.toFirstDay(LocalDate.now());
         if (!githubCommitRepository.existsByUserAndDate(user, date)) {
-            saveGithubCommit(user, date);
+            throw new NotFoundMyTodayCommitRankException();
         }
         return findMyCommitRank(user, date);
     }

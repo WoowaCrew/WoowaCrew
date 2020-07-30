@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/github/commit/rank")
 public class CommitRankApiController {
 
-    private GithubCommitService githubCommitService;
+    private final GithubCommitService githubCommitService;
 
     public CommitRankApiController(GithubCommitService githubCommitService) {
         this.githubCommitService = githubCommitService;
