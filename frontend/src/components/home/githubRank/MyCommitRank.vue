@@ -36,13 +36,7 @@ export default {
   name: "MyCommitRank",
   data() {
     return {
-      user: {
-        rank: "",
-        degree: "",
-        nickname: "",
-        githubId: "",
-        point: ""
-      },
+      user: {},
       badgeColor: {
         1: "gold",
         2: "silver",
@@ -60,12 +54,12 @@ export default {
     },
     async setMyCommitRank() {
       const user = await this.fetchMyCommitRank();
-      if (!user) {
+      if (user) {
         this.user = user;
       }
     },
     fetchMyCommitRank() {
-      axios
+      return axios
         .get(`${this.$store.state.requestUrl}/api/github/commit/rank/me`, {
           withCredentials: true
         })
