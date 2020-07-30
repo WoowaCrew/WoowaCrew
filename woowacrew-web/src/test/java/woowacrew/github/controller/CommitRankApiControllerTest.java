@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import woowacrew.github.dto.UserCommitRankDetailResponseDto;
+import woowacrew.github.exception.NotFoundMyTodayCommitRankException;
 import woowacrew.github.service.GithubCommitService;
 import woowacrew.security.SecurityContextSupport;
 import woowacrew.user.domain.UserRole;
@@ -53,5 +54,13 @@ class CommitRankApiControllerTest {
     void 정상적으로_전체_랭킹을_가져온다() throws Exception {
         mockMvc.perform(get("/api/github/commit/rank"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void 오늘_유저의_랭킹_정보가_없으면_400에러가_발생한다() throws Exception {
+        when(githubCommitService.getLoginUserCommitRank(userContext)).thenThrow(NotFoundMyTodayCommitRankException.class);
+
+        mockMvc.perform(get("/api/github/commit/rank/me"))
+                .andExpect(status().isBadRequest());
     }
 }
