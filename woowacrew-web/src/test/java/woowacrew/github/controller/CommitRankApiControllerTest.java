@@ -17,6 +17,10 @@ import woowacrew.security.SecurityContextSupport;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserContext;
 
+import java.util.Collections;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,17 +47,39 @@ class CommitRankApiControllerTest {
 
     @Test
     void 정상적으로_로그인중인_유저의_커밋_랭킹_정보를_가져온다() throws Exception {
-        UserCommitRankDetailResponseDto userCommitRankDetailResponseDto = new UserCommitRankDetailResponseDto(1, 300, 1, "hyo", "hyoo");
-        when(githubCommitService.getLoginUserCommitRank(userContext)).thenReturn(userCommitRankDetailResponseDto);
+        UserCommitRankDetailResponseDto myCommitRank = new UserCommitRankDetailResponseDto(1, 300, 1, "hyo", "hyoo");
+        when(githubCommitService.getLoginUserCommitRank(userContext)).thenReturn(myCommitRank);
 
-        mockMvc.perform(get("/api/github/commit/rank/me"))
-                .andExpect(status().isOk());
+        String result = mockMvc.perform(get("/api/github/commit/rank/me"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        checkContainsData(result, myCommitRank);
+    }
+
+    private void checkContainsData(String result, UserCommitRankDetailResponseDto myCommitRank) {
+        assertThat(result).contains(myCommitRank.getGithubId())
+                .contains(myCommitRank.getNickname())
+                .contains(String.valueOf(myCommitRank.getDegree()))
+                .contains(String.valueOf(myCommitRank.getPoint()));
     }
 
     @Test
     void 정상적으로_전체_랭킹을_가져온다() throws Exception {
-        mockMvc.perform(get("/api/github/commit/rank"))
-                .andExpect(status().isOk());
+        UserCommitRankDetailResponseDto myCommitRank = new UserCommitRankDetailResponseDto(300, 1, "githubId", "nickname");
+        List<UserCommitRankDetailResponseDto> commitRank = Collections.singletonList(myCommitRank);
+
+        when(githubCommitService.getTotalCommitRank()).thenReturn(commitRank);
+
+        String result = mockMvc.perform(get("/api/github/commit/rank"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        checkContainsData(result, myCommitRank);
     }
 
     @Test
