@@ -4,6 +4,7 @@
     color="rgba(66,66,66)"
     height="100px"
     class="d-flex align-center mb-6 rank"
+    v-if="user"
     :href="`https://github.com/${user.githubId}`"
     target="_blank"
   >
@@ -36,7 +37,7 @@ export default {
   name: "MyCommitRank",
   data() {
     return {
-      user: {},
+      user: null,
       badgeColor: {
         1: "gold",
         2: "silver",
@@ -67,7 +68,8 @@ export default {
           if (res.status === 200) {
             return res.data;
           }
-        });
+        })
+        .catch(() => {});
     }
   },
   created() {
