@@ -1,5 +1,6 @@
 package woowacrew.github.service;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import woowacrew.github.dto.GithubCommitRequestDto;
@@ -16,6 +17,7 @@ public class GithubCommitSchedulerService {
     }
 
     @Scheduled(cron = "0 0 9 * * *")
+    @CacheEvict(value = "totalCommitRank")
     public void save() {
         LocalDate now = LocalDate.now();
         GithubCommitRequestDto requestDto = new GithubCommitRequestDto(now.getYear(), now.getMonthValue());

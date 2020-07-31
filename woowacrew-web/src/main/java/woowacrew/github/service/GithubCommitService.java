@@ -1,5 +1,6 @@
 package woowacrew.github.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import woowacrew.github.dto.GithubCommitRequestDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
@@ -51,6 +52,7 @@ public class GithubCommitService {
         return new UserCommitRankDetailResponseDto(rank, point, degree, user.getGithubId(), user.getNickname());
     }
 
+    @Cacheable(value = "totalCommitRank")
     public List<UserCommitRankDetailResponseDto> getTotalCommitRank() {
         LocalDate date = createDate();
         return this.githubCommitInternalService.getTotalCommitRank(date)
