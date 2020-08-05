@@ -15,6 +15,8 @@ public class GithubCommitCalculator {
 
     private static final int MIN_BONUS_POINT = 0;
     private static final int MAX_BONUS_POINT = 3;
+    private static final int DEFAULT_BASE = 2;
+    private static final int DEFAULT_MULTIPLIER = 10;
 
     private GithubCommitCalculator() {
     }
@@ -31,8 +33,8 @@ public class GithubCommitCalculator {
     }
 
     private static int calculate(int commitCount, int bonusPoint) {
-        bonusPoint = (int) Math.pow(2, bonusPoint);
-        return (commitCount * 10) * bonusPoint;
+        bonusPoint = (int) Math.pow(DEFAULT_BASE, bonusPoint);
+        return (commitCount * DEFAULT_MULTIPLIER) * bonusPoint;
     }
 
     private static int getBonusPoint(int commitCount, int bonusPoint) {

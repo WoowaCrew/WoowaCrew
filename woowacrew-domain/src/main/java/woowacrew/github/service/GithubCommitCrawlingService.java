@@ -21,7 +21,11 @@ import java.util.stream.Collectors;
 public class GithubCommitCrawlingService {
 
     private static final Logger log = LoggerFactory.getLogger(GithubCommitCrawlingService.class);
+    private static final int FIRST_INDEX = 0;
     private static final String GITHUB_DOMAIN = "https://github.com/";
+    private static final String G_TAG = "g";
+    private static final String DAY_CLASS = "day";
+    private static final String DATE = "data-date";
 
     public List<GithubCommitStateDto> fetchCommitState(String githubId, LocalDate date) {
         try {
@@ -37,14 +41,13 @@ public class GithubCommitCrawlingService {
     private Elements fetchFullCommitState(String githubId) throws IOException {
         String url = GITHUB_DOMAIN + githubId;
         Document document = Jsoup.connect(url).get();
-        return document.getElementsByTag("g").get(0).getElementsByClass("day");
+        return document.getElementsByTag(G_TAG).get(FIRST_INDEX).getElementsByClass(DAY_CLASS);
     }
 
     private void checkContainsDate(Elements fullCommitState, LocalDate date) {
-        int firstIndex = 0;
         int lastIndex = fullCommitState.size() - 1;
 
-        LocalDate startDate = getDate(fullCommitState, firstIndex);
+        LocalDate startDate = getDate(fullCommitState, FIRST_INDEX);
         LocalDate endDate = getDate(fullCommitState, lastIndex);
         if (!isContainsDate(date, startDate, endDate)) {
             throw new DateRangeException();
@@ -52,7 +55,7 @@ public class GithubCommitCrawlingService {
     }
 
     private LocalDate getDate(Elements fullCommitState, int index) {
-        return LocalDate.parse(fullCommitState.get(index).attr("data-date"));
+        return LocalDate.parse(fullCommitState.get(index).attr(DATE));
     }
 
     private boolean isContainsDate(LocalDate date, LocalDate startDate, LocalDate endDate) {
