@@ -12,8 +12,8 @@ import woowacrew.user.domain.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -28,19 +28,31 @@ class GithubCommitRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    void 정상적으로_1위부터_50위까지_커밋_랭킹을_가져온다() {
-        List<User> users = userRepository.findAll();
+    void 정상적으로_전체_랭킹을_가져온다() {
         LocalDate date = LocalDate.of(2020, 6, 1);
-
-        for (int i = 0; i < users.size(); i++) {
-            githubCommitRepository.save(new GithubCommit(users.get(i), date, i * 100));
-        }
+        generateGithubCommit(date);
 
         List<GithubCommit> result = githubCommitRepository.findByDateOrderByPointDesc(date);
         for (GithubCommit githubCommit : result) {
             assertNotNull(githubCommit);
         }
-        assertThat(result.size()).isEqualTo(users.size());
+    }
+
+    @Test
+    void 정상적으로_1위부터_50위까지_커밋_랭킹을_가져온다() {
+        LocalDate date = LocalDate.of(2020, 6, 1);
+        generateGithubCommit(date);
+
+        List<GithubCommit> result = githubCommitRepository.findTop50ByDateOrderByPointDesc(date);
+        assertTrue(result.size() <= 50);
+    }
+
+    private void generateGithubCommit(LocalDate date) {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            int randomPoint = new Random().nextInt(300);
+            githubCommitRepository.save(new GithubCommit(user, date, randomPoint));
+        }
     }
 
     @Test

@@ -77,6 +77,6 @@ public class GithubCommitInternalService {
 
     @Transactional(readOnly = true)
     public List<GithubCommit> getTotalCommitRank(LocalDate date) {
-        return githubCommitRepository.findByDateOrderByPointDesc(date);
+        return githubCommitRepository.findTop50ByDateOrderByPointDesc(date);
     }
 }

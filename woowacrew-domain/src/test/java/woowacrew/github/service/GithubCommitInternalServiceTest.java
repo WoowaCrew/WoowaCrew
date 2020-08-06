@@ -138,10 +138,10 @@ class GithubCommitInternalServiceTest {
     void 전체_커밋_랭킹을_가져온다() {
         LocalDate date = LocalDate.now();
 
-        when(githubCommitRepository.findByDateOrderByPointDesc(any(LocalDate.class))).thenReturn(Lists.emptyList());
+        when(githubCommitRepository.findTop50ByDateOrderByPointDesc(any(LocalDate.class))).thenReturn(Lists.emptyList());
 
         githubCommitInternalService.getTotalCommitRank(date);
 
-        verify(githubCommitRepository, times(1)).findByDateOrderByPointDesc(any(LocalDate.class));
+        verify(githubCommitRepository, times(1)).findTop50ByDateOrderByPointDesc(any(LocalDate.class));
     }
 }
