@@ -23,7 +23,7 @@ jobs:
           application_config_test: ${{ secrets.APPLICATION_CONFIG_TEST }}
         run: echo "$application_config_prod" > ./woowacrew-web/src/main/resources/application-prod.yml | echo "$application_config_dev" > ./woowacrew-web/src/main/resources/application-dev.yml | echo "$application_config_test" > ./woowacrew-web/src/main/resources/application-test.yml
       - name: Build with Gradle
-        run: ./gradlew woowacrew-web:clean woowacrew-web:build
+        run: ./gradlew woowacrew-web:clean woowacrew-web:build --scan
       - name: Docker build
         run: |
           docker build -t oeeen/woowacrew:latest .
