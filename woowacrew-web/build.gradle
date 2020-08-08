@@ -61,24 +61,29 @@ node {
     nodeModulesDir = file("../frontend")
 }
 
-task setUp(type: NpmTask) {
+task npmClean(type: NpmTask) {
+    description = "Clean npm cache"
+    args = ['cache', 'clean', '--force']
+}
+
+task vueCli(type: NpmTask, dependsOn: npmClean) {
+    description = "Install vue cli"
+    args = ['install', '@vue/cli']
+}
+
+task npmUpdate(type: NpmTask, dependsOn: vueCli) {
+    description = "Update npm"
+    args = ['update']
+}
+
+task setUp(type: NpmTask, dependsOn: npmUpdate) {
     description = "Install Node.js packages"
     args = ['install']
     inputs.files file('package.json')
     outputs.files file('node_modules')
 }
 
-task vueCli(type: NpmTask, dependsOn: setUp) {
-    description = "Install vue cli"
-    args = ['install', '-g', 'vue-cli']
-}
-
-task npmClean(type: NpmTask, dependsOn: vueCli) {
-    description = "Clean npm cache"
-    args = ['cache', 'clean', '--force']
-}
-
-task buildFrontEnd(type: NpmTask, dependsOn: npmClean) {
+task buildFrontEnd(type: NpmTask, dependsOn: setUp) {
     description = "Build vue.js"
     args = ['run', 'build']
 }
