@@ -1,7 +1,7 @@
 name: Dockerhub Push
 
 on:
-  push:
+  pull_request:
     branches:
       - develop
 jobs:
