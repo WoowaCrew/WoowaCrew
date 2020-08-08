@@ -68,7 +68,12 @@ task setUp(type: NpmTask) {
     outputs.files file('node_modules')
 }
 
-task npmClean(type: NpmTask, dependsOn: setUp) {
+task vueCli(type: NpmTask, dependsOn: setUp) {
+    description = "Install vue cli"
+    args = ['install', '-g', 'vue-cli']
+}
+
+task npmClean(type: NpmTask, dependsOn: vueCli) {
     description = "Clean npm cache"
     args = ['cache', 'clean', '--force']
 }
