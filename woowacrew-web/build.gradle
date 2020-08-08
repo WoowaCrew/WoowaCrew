@@ -56,7 +56,6 @@ apply plugin: 'com.moowork.node'
 node {
     version = '12.13.1'
     npmVersion = '6.14.2'
-    download = true
     workDir = file("../frontend")
     npmWorkDir = file("../frontend")
     nodeModulesDir = file("../frontend")
