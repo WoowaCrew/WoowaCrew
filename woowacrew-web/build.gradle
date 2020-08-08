@@ -65,23 +65,15 @@ task setUp(type: NpmTask) {
     description = "Install Node.js packages"
     args = ['install']
     inputs.files file('package.json')
-    inputs.file file('package-lock.json')
     outputs.files file('node_modules')
 }
-//
-//task url(type: NpmTask, dependsOn: setUp) {
-//    description = "Install url-search-params-polyfill packages"
-//    args = ['install', 'url-search-params-polyfill', '--save']
-//    outputs.files file('node_modules')
-//}
-//
-//task axios(type: NpmTask, dependsOn: url) {
-//    description = "Install Axios packages"
-//    args = ['install', 'axios', '--save']
-//    outputs.files file('node_modules')
-//}
 
-task buildFrontEnd(type: NpmTask, dependsOn: setUp) {
+task npmClean(type: NpmTask, dependsOn: setUp) {
+    description = "Clean npm cache"
+    args = ['cache', 'clean', '--force']
+}
+
+task buildFrontEnd(type: NpmTask, dependsOn: npmClean) {
     description = "Build vue.js"
     args = ['run', 'build']
 }
