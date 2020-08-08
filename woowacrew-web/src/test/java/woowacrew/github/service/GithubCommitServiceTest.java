@@ -1,5 +1,6 @@
 package woowacrew.github.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -8,8 +9,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.degree.domain.Degree;
 import woowacrew.github.domain.GithubCommit;
 import woowacrew.github.dto.GithubCommitRequestDto;
+import woowacrew.github.dto.TotalCommitRankRequestDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.dto.UserCommitRankDetailResponseDto;
+import woowacrew.github.exception.CommitRankBoundaryException;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserContext;
@@ -21,6 +24,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -92,5 +96,65 @@ class GithubCommitServiceTest {
         when(mockUser.getNickname()).thenReturn("nickname");
         when(degree.getDegreeNumber()).thenReturn(1);
         return result;
+    }
+
+    @Test
+    void 마지막_랭크를_가져온다() {
+        assertThat(githubCommitService.getEndRank(1, 50)).isEqualTo(10);
+        assertThat(githubCommitService.getEndRank(41, 50)).isEqualTo(50);
+
+        assertThat(githubCommitService.getEndRank(21, 27)).isEqualTo(27);
+        assertThat(githubCommitService.getEndRank(41, 41)).isEqualTo(41);
+    }
+
+    @Test
+    void 유효하지_않은_시작하는_랭크로_마지막_랭크를_가져오면_예외가_발생한다() {
+        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(0, 50));
+        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(51, 50));
+    }
+
+    @Test
+    void 유효하지_않은_최대_랭크로_마지막_랭크를_가져오는_경우_예외가_발생한다() {
+        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(1, 0));
+        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(11, 10));
+        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(1, 51));
+    }
+
+    @Test
+    void 전체_랭킹에서_1위에서_10위까지_가져온다() {
+        List<UserCommitRankDetailResponseDto> totalCommitRank = generateTotalCommitRank(20);
+        int startRank = 1;
+        int endRank = 10;
+        TotalCommitRankRequestDto totalCommitRankRequestDto = new TotalCommitRankRequestDto(totalCommitRank, startRank);
+
+        List<UserCommitRankDetailResponseDto> result = githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
+        assertThat(result.size()).isEqualTo(10);
+        checkStartRankAndEndRank(result, startRank, endRank);
+    }
+
+    @Test
+    @DisplayName("전체 랭킹(21위)에서 21위를 가져온다")
+    void 전체_랭킹에서_21위를_가져온다() {
+        List<UserCommitRankDetailResponseDto> totalCommitRank = generateTotalCommitRank(21);
+        int startRank = 21;
+        int endRank = 21;
+        TotalCommitRankRequestDto totalCommitRankRequestDto = new TotalCommitRankRequestDto(totalCommitRank, startRank);
+
+        List<UserCommitRankDetailResponseDto> result = githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
+        assertThat(result.size()).isEqualTo(1);
+        checkStartRankAndEndRank(result, startRank, endRank);
+    }
+
+    private void checkStartRankAndEndRank(List<UserCommitRankDetailResponseDto> result, int startRank, int endRank) {
+        assertThat(result.get(0).getRank()).isEqualTo(startRank);
+        assertThat(result.get(result.size() - 1).getRank()).isEqualTo(endRank);
+    }
+
+    private List<UserCommitRankDetailResponseDto> generateTotalCommitRank(int size) {
+        List<UserCommitRankDetailResponseDto> totalCommitRank = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            totalCommitRank.add(new UserCommitRankDetailResponseDto(i + 1, 300, 1, "githubId", "nickname"));
+        }
+        return totalCommitRank;
     }
 }
