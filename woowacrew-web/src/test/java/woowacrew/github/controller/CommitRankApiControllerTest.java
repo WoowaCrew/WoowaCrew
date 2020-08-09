@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import woowacrew.github.dto.TotalCommitRankRequestDto;
 import woowacrew.github.dto.TotalCommitRankResponseDto;
 import woowacrew.github.dto.UserCommitRankDetailResponseDto;
+import woowacrew.github.exception.CommitRankBoundaryException;
 import woowacrew.github.exception.NotFoundMyTodayCommitRankException;
 import woowacrew.github.service.GithubCommitService;
 import woowacrew.security.SecurityContextSupport;
@@ -102,5 +103,16 @@ class CommitRankApiControllerTest {
             result.add(new UserCommitRankDetailResponseDto(i + 1, 300, 1, "githubId", "nickname"));
         }
         return result;
+    }
+
+    @Test
+    void 커밋_랭킹의_범위가_넘어가면_400에러가_발생한다() throws Exception {
+        when(githubCommitService.getTotalCommitRank()).thenReturn(generateTotalCommitRank(10));
+        when(githubCommitService.fetchRankFromStartRank(any(TotalCommitRankRequestDto.class))).thenThrow(CommitRankBoundaryException.class);
+
+        mockMvc.perform(
+                get("/api/github/commit/rank")
+                        .param("startRank", "2"))
+                .andExpect(status().isBadRequest());
     }
 }
