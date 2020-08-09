@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import woowacrew.github.dto.TotalCommitRankRequestDto;
+import woowacrew.github.dto.TotalCommitRankResponseDto;
 import woowacrew.github.dto.UserCommitRankDetailResponseDto;
 import woowacrew.github.service.GithubCommitService;
 import woowacrew.user.dto.UserContext;
@@ -23,11 +24,11 @@ public class CommitRankApiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserCommitRankDetailResponseDto>> getTotalCommitRank(@RequestParam int startRank) {
+    public ResponseEntity<TotalCommitRankResponseDto> getTotalCommitRank(@RequestParam int startRank) {
         List<UserCommitRankDetailResponseDto> totalCommitRank = this.githubCommitService.getTotalCommitRank();
         TotalCommitRankRequestDto totalCommitRankRequestDto = new TotalCommitRankRequestDto(totalCommitRank, startRank);
 
-        List<UserCommitRankDetailResponseDto> result = this.githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
+        TotalCommitRankResponseDto result = this.githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
         return ResponseEntity.ok(result);
     }
 

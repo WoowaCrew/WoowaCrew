@@ -8,10 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.degree.domain.Degree;
 import woowacrew.github.domain.GithubCommit;
-import woowacrew.github.dto.GithubCommitRequestDto;
-import woowacrew.github.dto.TotalCommitRankRequestDto;
-import woowacrew.github.dto.UserCommitRankAndPointDto;
-import woowacrew.github.dto.UserCommitRankDetailResponseDto;
+import woowacrew.github.dto.*;
 import woowacrew.github.exception.CommitRankBoundaryException;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRole;
@@ -127,9 +124,9 @@ class GithubCommitServiceTest {
         int endRank = 10;
         TotalCommitRankRequestDto totalCommitRankRequestDto = new TotalCommitRankRequestDto(totalCommitRank, startRank);
 
-        List<UserCommitRankDetailResponseDto> result = githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
-        assertThat(result.size()).isEqualTo(10);
-        checkStartRankAndEndRank(result, startRank, endRank);
+        TotalCommitRankResponseDto result = githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
+        assertThat(result.getCommitRank().size()).isEqualTo(10);
+        checkStartRankAndEndRank(result.getCommitRank(), startRank, endRank);
     }
 
     @Test
@@ -140,14 +137,14 @@ class GithubCommitServiceTest {
         int endRank = 21;
         TotalCommitRankRequestDto totalCommitRankRequestDto = new TotalCommitRankRequestDto(totalCommitRank, startRank);
 
-        List<UserCommitRankDetailResponseDto> result = githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
-        assertThat(result.size()).isEqualTo(1);
-        checkStartRankAndEndRank(result, startRank, endRank);
+        TotalCommitRankResponseDto result = githubCommitService.fetchRankFromStartRank(totalCommitRankRequestDto);
+        assertThat(result.getCommitRank().size()).isEqualTo(1);
+        checkStartRankAndEndRank(result.getCommitRank(), startRank, endRank);
     }
 
-    private void checkStartRankAndEndRank(List<UserCommitRankDetailResponseDto> result, int startRank, int endRank) {
-        assertThat(result.get(0).getRank()).isEqualTo(startRank);
-        assertThat(result.get(result.size() - 1).getRank()).isEqualTo(endRank);
+    private void checkStartRankAndEndRank(List<UserCommitRankDetailResponseDto> commitRank, int startRank, int endRank) {
+        assertThat(commitRank.get(0).getRank()).isEqualTo(startRank);
+        assertThat(commitRank.get(commitRank.size() - 1).getRank()).isEqualTo(endRank);
     }
 
     private List<UserCommitRankDetailResponseDto> generateTotalCommitRank(int size) {

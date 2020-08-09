@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import woowacrew.github.dto.GithubCommitRequestDto;
-import woowacrew.github.dto.TotalCommitRankRequestDto;
-import woowacrew.github.dto.UserCommitRankAndPointDto;
-import woowacrew.github.dto.UserCommitRankDetailResponseDto;
+import woowacrew.github.dto.*;
 import woowacrew.github.exception.CommitRankBoundaryException;
 import woowacrew.user.domain.User;
 import woowacrew.user.dto.UserContext;
@@ -78,11 +75,14 @@ public class GithubCommitService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserCommitRankDetailResponseDto> fetchRankFromStartRank(TotalCommitRankRequestDto totalCommitRankRequestDto) {
+    public TotalCommitRankResponseDto fetchRankFromStartRank(TotalCommitRankRequestDto totalCommitRankRequestDto) {
         List<UserCommitRankDetailResponseDto> totalCommitRank = totalCommitRankRequestDto.getTotalCommitRank();
+        int maxRank = totalCommitRank.size();
         int startRank = totalCommitRankRequestDto.getStartRank();
-        int endRank = getEndRank(startRank, totalCommitRank.size());
-        return fetchRankFromStartRank(totalCommitRank, startRank, endRank);
+        int endRank = getEndRank(startRank, maxRank);
+        List<UserCommitRankDetailResponseDto> commitRank = fetchRankFromStartRank(totalCommitRank, startRank, endRank);
+        boolean isMaxRank = (endRank == maxRank);
+        return new TotalCommitRankResponseDto(commitRank, isMaxRank);
     }
 
     private List<UserCommitRankDetailResponseDto> fetchRankFromStartRank(List<UserCommitRankDetailResponseDto> totalCommitRank, int startRank, int endRank) {
