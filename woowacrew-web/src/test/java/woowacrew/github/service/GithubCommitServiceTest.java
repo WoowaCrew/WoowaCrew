@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import woowacrew.degree.domain.Degree;
 import woowacrew.github.domain.GithubCommit;
 import woowacrew.github.dto.*;
-import woowacrew.github.exception.CommitRankBoundaryException;
 import woowacrew.user.domain.User;
 import woowacrew.user.domain.UserRole;
 import woowacrew.user.dto.UserContext;
@@ -21,7 +20,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -93,28 +91,6 @@ class GithubCommitServiceTest {
         when(mockUser.getNickname()).thenReturn("nickname");
         when(degree.getDegreeNumber()).thenReturn(1);
         return result;
-    }
-
-    @Test
-    void 마지막_랭크를_가져온다() {
-        assertThat(githubCommitService.getEndRank(1, 50)).isEqualTo(10);
-        assertThat(githubCommitService.getEndRank(41, 50)).isEqualTo(50);
-
-        assertThat(githubCommitService.getEndRank(21, 27)).isEqualTo(27);
-        assertThat(githubCommitService.getEndRank(41, 41)).isEqualTo(41);
-    }
-
-    @Test
-    void 유효하지_않은_시작하는_랭크로_마지막_랭크를_가져오면_예외가_발생한다() {
-        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(0, 50));
-        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(51, 50));
-    }
-
-    @Test
-    void 유효하지_않은_최대_랭크로_마지막_랭크를_가져오는_경우_예외가_발생한다() {
-        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(1, 0));
-        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(11, 10));
-        assertThrows(CommitRankBoundaryException.class, () -> githubCommitService.getEndRank(1, 51));
     }
 
     @Test

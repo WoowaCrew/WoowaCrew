@@ -95,7 +95,7 @@ public class GithubCommitService {
         }
     }
 
-    public int getEndRank(int startRank, int maxRank) {
+    private int getEndRank(int startRank, int maxRank) {
         checkMaxRank(maxRank);
         checkStartRank(startRank, maxRank);
         int startRankIndex = startRank - 1;
