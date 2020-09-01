@@ -32,22 +32,18 @@ public class GithubCommitService {
     }
 
     public void save(ThisMonthCommitRankRequestDto requestDto) {
-        LocalDate date = createDate(requestDto);
+        LocalDate date = getFirstDateByYearAndMonth(requestDto.getYear(), requestDto.getMonth());
         List<User> users = this.userInternalService.findByGithubIdIsNotNull();
         this.githubCommitInternalService.save(users, date);
     }
 
-    private LocalDate createDate(ThisMonthCommitRankRequestDto requestDto) {
-        return createDate(requestDto.getYear(), requestDto.getMonth());
-    }
-
-    private LocalDate createDate() {
-        LocalDate date = LocalDate.now();
-        return createDate(date.getYear(), date.getMonthValue());
-    }
-
-    private LocalDate createDate(int year, int month) {
+    private LocalDate getFirstDateByYearAndMonth(int year, int month) {
         return LocalDate.of(year, month, 1);
+    }
+
+    private LocalDate getFirstDateOfThisMonth() {
+        LocalDate date = LocalDate.now();
+        return getFirstDateByYearAndMonth(date.getYear(), date.getMonthValue());
     }
 
     public UserCommitRankDetailResponseDto getLoginUserCommitRank(UserContext userContext) {
@@ -61,7 +57,7 @@ public class GithubCommitService {
 
     @Cacheable(value = "totalCommitRank")
     public List<UserCommitRankDetailResponseDto> getTotalCommitRank() {
-        LocalDate date = createDate();
+        LocalDate date = getFirstDateOfThisMonth();
         return this.githubCommitInternalService.getTotalCommitRank(date)
                 .stream()
                 .map(githubCommit -> {
