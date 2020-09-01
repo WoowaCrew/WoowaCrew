@@ -37,7 +37,7 @@ class GithubCommitServiceTest {
 
     @Test
     void 정상적으로_커밋_정보들을_저장한다() {
-        githubCommitService.save(new GithubCommitRequestDto(2020, 6));
+        githubCommitService.save(new ThisMonthCommitRankRequestDto(2020, 6));
 
         verify(userInternalService, times(1)).findByGithubIdIsNotNull();
         verify(githubCommitInternalService, times(1)).save(anyList(), any(LocalDate.class));

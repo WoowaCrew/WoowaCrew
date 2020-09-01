@@ -31,13 +31,13 @@ public class GithubCommitService {
         this.userInternalService = userInternalService;
     }
 
-    public void save(GithubCommitRequestDto requestDto) {
+    public void save(ThisMonthCommitRankRequestDto requestDto) {
         LocalDate date = createDate(requestDto);
         List<User> users = this.userInternalService.findByGithubIdIsNotNull();
         this.githubCommitInternalService.save(users, date);
     }
 
-    private LocalDate createDate(GithubCommitRequestDto requestDto) {
+    private LocalDate createDate(ThisMonthCommitRankRequestDto requestDto) {
         return createDate(requestDto.getYear(), requestDto.getMonth());
     }
 
