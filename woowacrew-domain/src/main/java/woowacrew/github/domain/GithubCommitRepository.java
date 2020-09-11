@@ -12,5 +12,7 @@ public interface GithubCommitRepository extends JpaRepository<GithubCommit, Long
 
     List<GithubCommit> findByDateOrderByPointDesc(LocalDate date);
 
+    List<GithubCommit> findTop50ByDateOrderByPointDesc(LocalDate date);
+
     boolean existsByUserAndDate(User user, LocalDate date);
 }

@@ -11,6 +11,13 @@ public class UserCommitRankDetailResponseDto {
     private UserCommitRankDetailResponseDto() {
     }
 
+    public UserCommitRankDetailResponseDto(int point, int degree, String githubId, String nickname) {
+        this.point = point;
+        this.degree = degree;
+        this.githubId = githubId;
+        this.nickname = nickname;
+    }
+
     public UserCommitRankDetailResponseDto(int rank, int point, int degree, String githubId, String nickname) {
         this.rank = rank;
         this.point = point;

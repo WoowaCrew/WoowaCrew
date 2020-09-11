@@ -4,6 +4,7 @@
     color="rgba(66,66,66)"
     height="100px"
     class="d-flex align-center mb-6 rank"
+    v-if="user"
     :href="`https://github.com/${user.githubId}`"
     target="_blank"
   >
@@ -36,13 +37,7 @@ export default {
   name: "MyCommitRank",
   data() {
     return {
-      user: {
-        rank: "",
-        degree: "",
-        nickname: "",
-        githubId: "",
-        point: ""
-      },
+      user: null,
       badgeColor: {
         1: "gold",
         2: "silver",
@@ -60,12 +55,12 @@ export default {
     },
     async setMyCommitRank() {
       const user = await this.fetchMyCommitRank();
-      if (!user) {
+      if (user) {
         this.user = user;
       }
     },
     fetchMyCommitRank() {
-      axios
+      return axios
         .get(`${this.$store.state.requestUrl}/api/github/commit/rank/me`, {
           withCredentials: true
         })
@@ -73,7 +68,8 @@ export default {
           if (res.status === 200) {
             return res.data;
           }
-        });
+        })
+        .catch(() => {});
     }
   },
   created() {

@@ -1,5 +1,5 @@
 <template>
-  <v-card height="1000px">
+  <v-card>
     <v-card-title style="color: #1d1d1f">
       Top 50
     </v-card-title>
@@ -36,36 +36,14 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "AllCommitRank",
   data() {
     return {
-      users: [
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        },
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        },
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        },
-        {
-          degree: 1,
-          githubId: "hyojaekim",
-          nickname: "효오",
-          point: 3000
-        }
-      ],
+      users: [],
+      isMaxRank: false,
       badgeColor: {
         1: "gold",
         2: "silver",
@@ -80,7 +58,47 @@ export default {
     },
     numberWithCommas(point) {
       return point.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    },
+    async setTotalCommitRank() {
+      const { commitRank, maxRank } = await this.fetchTotalCommitRank();
+      if (commitRank) {
+        this.users = commitRank;
+        this.isMaxRank = maxRank;
+      }
+    },
+    fetchTotalCommitRank() {
+      if (!this.isMaxRank) {
+        const startRank = this.users.length + 1;
+        return axios
+          .get(`${this.$store.state.requestUrl}/api/github/commit/rank`, {
+            params: {
+              startRank: startRank
+            }
+          })
+          .then(res => {
+            return res.data;
+          });
+      }
+    },
+    isBottom() {
+      const scrollHeight = document.body.scrollHeight;
+      const totalHeight = window.scrollY + window.innerHeight;
+      return totalHeight >= scrollHeight;
     }
+  },
+  created() {
+    this.setTotalCommitRank();
+  },
+  mounted() {
+    window.onscroll = async () => {
+      if (this.isBottom() && !this.isMaxRank) {
+        const { commitRank, maxRank } = await this.fetchTotalCommitRank();
+        if (commitRank) {
+          this.users = this.users.concat(commitRank);
+          this.isMaxRank = maxRank;
+        }
+      }
+    };
   }
 };
 </script>

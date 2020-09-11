@@ -9,6 +9,7 @@ import woowacrew.github.domain.GithubCommitRepository;
 import woowacrew.github.dto.GithubCommitStateDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.exception.NotFoundCommitRankException;
+import woowacrew.github.exception.NotFoundMyTodayCommitRankException;
 import woowacrew.github.exception.SaveGithubCommitFailException;
 import woowacrew.github.utils.DateConverter;
 import woowacrew.github.utils.GithubCommitCalculator;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
+@Transactional
 public class GithubCommitInternalService {
 
     private static final Logger log = LoggerFactory.getLogger(GithubCommitInternalService.class);
@@ -31,7 +33,6 @@ public class GithubCommitInternalService {
         this.githubCommitRepository = githubCommitRepository;
     }
 
-    @Transactional
     public void save(List<User> users, LocalDate date) {
         for (User user : users) {
             saveGithubCommit(user, date);
@@ -53,11 +54,10 @@ public class GithubCommitInternalService {
         return GithubCommitCalculator.calculate(commitState);
     }
 
-    @Transactional
     public UserCommitRankAndPointDto getCommitRankByUser(User user) {
         LocalDate date = DateConverter.toFirstDay(LocalDate.now());
         if (!githubCommitRepository.existsByUserAndDate(user, date)) {
-            saveGithubCommit(user, date);
+            throw new NotFoundMyTodayCommitRankException();
         }
         return findMyCommitRank(user, date);
     }
@@ -73,5 +73,10 @@ public class GithubCommitInternalService {
                 .findFirst()
                 .map(githubCommit -> new UserCommitRankAndPointDto(rank.get(), githubCommit.getPoint()))
                 .orElseThrow(NotFoundCommitRankException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GithubCommit> getTotalCommitRank(LocalDate date) {
+        return githubCommitRepository.findTop50ByDateOrderByPointDesc(date);
     }
 }

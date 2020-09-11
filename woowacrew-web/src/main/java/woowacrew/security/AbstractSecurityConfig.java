@@ -72,6 +72,7 @@ public abstract class AbstractSecurityConfig extends WebSecurityConfigurerAdapte
                 .access("hasRole('ROLE_ADMIN') or hasIpAddress('" + jenkinsIpv4Address + "') or hasIpAddress('" + jenkinsIpv6Address + "')")
                 .antMatchers("/h2-console", "/h2-console**", "/h2-console/", "/h2-console/**").permitAll()
                 .antMatchers("/", "/error", "/login", "/login/**", "/search", "/search/**", "/docs/**", "/api/slack", "/api/slack/birthday-message").permitAll()
+                .antMatchers("/api/github/commit/rank").permitAll()
                 .antMatchers("/accessdeny", "/user/edit", "/users/update").authenticated()
                 .anyRequest().hasAnyRole(UserRole.ROLE_CREW.getRoleName(), UserRole.ROLE_COACH.getRoleName(), UserRole.ROLE_ADMIN.getRoleName())
                 .and()

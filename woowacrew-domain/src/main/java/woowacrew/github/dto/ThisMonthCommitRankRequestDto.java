@@ -1,11 +1,11 @@
 package woowacrew.github.dto;
 
-public class GithubCommitRequestDto {
+public class ThisMonthCommitRankRequestDto {
 
     private int year;
     private int month;
 
-    public GithubCommitRequestDto(int year, int month) {
+    public ThisMonthCommitRankRequestDto(int year, int month) {
         this.year = year;
         this.month = month;
     }

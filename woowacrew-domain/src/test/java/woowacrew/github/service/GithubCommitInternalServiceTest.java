@@ -12,6 +12,7 @@ import woowacrew.github.dto.GithubCommitStateDto;
 import woowacrew.github.dto.UserCommitRankAndPointDto;
 import woowacrew.github.exception.GithubCommitCrawlingFailException;
 import woowacrew.github.exception.NotFoundCommitRankException;
+import woowacrew.github.exception.NotFoundMyTodayCommitRankException;
 import woowacrew.github.exception.SaveGithubCommitFailException;
 import woowacrew.user.domain.User;
 
@@ -102,6 +103,7 @@ class GithubCommitInternalServiceTest {
         User mockUser = mock(User.class);
         GithubCommit mockGithubCommit = mock(GithubCommit.class);
 
+        when(githubCommitRepository.existsByUserAndDate(any(User.class), any(LocalDate.class))).thenReturn(true);
         when(githubCommitRepository.findByDateOrderByPointDesc(any(LocalDate.class))).thenReturn(Collections.singletonList(mockGithubCommit));
         when(mockGithubCommit.isSameUser(any(User.class))).thenReturn(true);
         when(mockGithubCommit.getPoint()).thenReturn(200);
@@ -117,8 +119,29 @@ class GithubCommitInternalServiceTest {
     void 커밋_정보를_못찾는_경우_예외가_발생한다() {
         User mockUser = mock(User.class);
 
+        when(githubCommitRepository.existsByUserAndDate(any(User.class), any(LocalDate.class))).thenReturn(true);
         when(githubCommitRepository.findByDateOrderByPointDesc(any(LocalDate.class))).thenReturn(Lists.emptyList());
 
         assertThrows(NotFoundCommitRankException.class, () -> githubCommitInternalService.getCommitRankByUser(mockUser));
+    }
+
+    @Test
+    void 오늘의_랭킹이_없다면_예외가_발생한다() {
+        User mockUser = mock(User.class);
+
+        when(githubCommitRepository.existsByUserAndDate(any(User.class), any(LocalDate.class))).thenReturn(false);
+
+        assertThrows(NotFoundMyTodayCommitRankException.class, () -> githubCommitInternalService.getCommitRankByUser(mockUser));
+    }
+
+    @Test
+    void 전체_커밋_랭킹을_가져온다() {
+        LocalDate date = LocalDate.now();
+
+        when(githubCommitRepository.findTop50ByDateOrderByPointDesc(any(LocalDate.class))).thenReturn(Lists.emptyList());
+
+        githubCommitInternalService.getTotalCommitRank(date);
+
+        verify(githubCommitRepository, times(1)).findTop50ByDateOrderByPointDesc(any(LocalDate.class));
     }
 }
