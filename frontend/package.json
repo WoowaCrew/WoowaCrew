@@ -10,7 +10,7 @@
   "dependencies": {
     "@toast-ui/vue-editor": "^1.1.1",
     "@vue/cli": "^4.5.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "typedi": "^0.8.0",
     "url-search-params-polyfill": "^8.1.0",
